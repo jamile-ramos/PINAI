@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('usuario', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->enum('tipousuario', ['admin', 'comum'])-> default('comum');
             $table->string('nome', 255);
             $table->string('email', 255)->unique();

@@ -95,6 +95,18 @@
     width: 200px;
 }
 
+.custom-dropdown-link {
+    font-size: 1rem; 
+}
+
+.logo img{
+    height: revert-layer;
+}
+
+.edit-profile{
+    margin-top: 80px;
+}
+
 @media screen and (min-width: 320px) and (max-width: 778px){
     .home-text h1{
         font-size: 25px;

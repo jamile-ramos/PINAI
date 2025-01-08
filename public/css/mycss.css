@@ -1,0 +1,110 @@
+.content-home{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+.home-text h1, h3{
+    display: flex;
+    justify-content: center;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: justify;
+}
+
+.home-text h3{
+    margin:30px 100px 0 100px;
+    font-size: 20px;
+}
+
+.content-card{
+    display: flex;
+    justify-content: center;
+    align-items: stretch; 
+    gap: 30px;
+    margin-top: 60px;
+    flex-wrap: wrap;
+}
+
+.card-functions{
+    background-color: #ADD8E6;
+    border-radius: 10px;
+}
+
+.btn-home{
+    background-color: #FFD700;
+    border: #FFC107;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    bottom: 5px;
+    position: absolute;
+    left: 30%;
+    right: 30%;
+    bottom: 0;
+    margin-bottom: 25px;
+}
+
+.btn-home:hover{
+    background: #FFC107;
+}
+
+.card-functions i{
+    font-size: 50px;
+    color: #011C37;
+    margin: 10px 0 20px 0;
+    position: relative;
+}
+
+.card-text{
+    margin-bottom: 50px;
+}
+
+.home-news{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+    margin-bottom: 50px;
+    margin-top: 40px;
+    gap: 40px;
+}
+
+.card-new{
+    background: transparent !important;
+    box-shadow: 0px 0px 0px 0px;
+    border: 0;
+}
+
+.card-new img{
+    border-radius: 5px 5px 5px 5px;
+}
+
+.title-new a:hover{
+    color: #4FBCFE;
+}  
+
+.card-action{
+    margin-top: 20px;
+}
+
+.logo-login img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+}
+
+@media screen and (min-width: 320px) and (max-width: 778px){
+    .home-text h1{
+        font-size: 25px;
+    }
+    .home-text h3{
+        font-size: 18px;
+        text-align: justify;
+        margin: 10px 40px 0 40px;
+    }
+    .logo-login img{
+        width: 100px;
+    }
+}

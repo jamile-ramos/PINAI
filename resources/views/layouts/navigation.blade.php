@@ -24,8 +24,17 @@
       <div class="sidebar-wrapper scrollbar scrollbar-inner">
         <div class="sidebar-content">
           <ul class="nav nav-secondary">
-            <li class="nav-item active">
-              <a data-bs-toggle="collapse" href="#base">
+            <li class="nav-item">
+              <a
+                href="/dashboard"
+                class="collapsed"
+                aria-expanded="false">
+                <i class="fas fa-home"></i>
+                <p>Dashboard</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/painelUsuarios">
                 <i class="fas fa-users"></i>
                 <p>Painel de usuários</p>
               </a>
@@ -37,7 +46,7 @@
             </li>
             <li class="nav-item">
               <a data-bs-toggle="collapse" href="#sidebarLayouts">
-              <i class="fas fa-comments"></i>
+                <i class="fas fa-comments"></i>
                 <p>Fórum de discurssão</p>
               </a>
             </li>
@@ -114,7 +123,7 @@
               </li>
               <li class="nav-item topbar-icon dropdown hidden-caret">
                 <a class="nav-link" data-bs-toggle="dropdown" href="#" aria-expanded="false">
-                <i class="fas fa-font"></i><sup><i class="fas fa-minus"></i></sup>
+                  <i class="fas fa-font"></i><sup><i class="fas fa-minus"></i></sup>
                 </a>
               </li>
 
@@ -124,14 +133,14 @@
                     <img src="img/sauro.jpg" alt="..." class="avatar-img rounded-circle" />
                   </div>
                   <span class="profile-username">
-                  <span class="fw-bold">{{ Auth::user()->name }}</span>
+                    <span class="fw-bold">{{ Auth::user()->name }}</span>
                   </span>
                 </a>
                 <ul class="dropdown-menu dropdown-user animated fadeIn">
                   <div class="dropdown-user-scroll scrollbar-outer">
                     <li>
                       <div class="user-box">
-                        
+
                         <div class="u-text">
                           <h4>{{ Auth::user()->name }}</h4>
                           <p class="text-muted">{{ Auth::user()->email }}</p>
@@ -141,20 +150,20 @@
                     <li>
                       <div class="dropdown-divider"></div>
                       <x-dropdown-link :href="route('profile.edit')" class="custom-dropdown-link">
-                            {{ __('Meu perfil') }}
-                        </x-dropdown-link>
-                        <div class="dropdown-divider"></div>
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
+                        {{ __('Meu perfil') }}
+                      </x-dropdown-link>
+                      <div class="dropdown-divider"></div>
+                      <!-- Authentication -->
+                      <form method="POST" action="{{ route('logout') }}">
+                        @csrf
 
-                            <x-dropdown-link :href="route('logout')"
-                                    class="custom-dropdown-link"
-                                    onclick="event.preventDefault();
+                        <x-dropdown-link :href="route('logout')"
+                          class="custom-dropdown-link"
+                          onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Sair') }}
-                            </x-dropdown-link>
-                        </form>
+                          {{ __('Sair') }}
+                        </x-dropdown-link>
+                      </form>
                     </li>
                   </div>
                 </ul>

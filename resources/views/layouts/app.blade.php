@@ -129,6 +129,37 @@
             lineColor: "#ffa534",
             fillColor: "rgba(255, 165, 52, .14)",
         });
+
+        // Add Row
+        $("#add-row").DataTable({
+            pageLength: 10,
+            lengthChange: false,
+            searching: false,   
+            language: {
+                "paginate": {
+                    "previous": "Anterior", // Alterar "Previous" para "Anterior"
+                    "next": "Próximo" // Alterar "Next" para "Próximo"
+                },
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas", // Alterar a frase para português
+                "infoEmpty": "Mostrando 0 a 0 de 0 entradas", // Quando não houver dados
+                "infoFiltered": "(filtrado de _MAX_ entradas)" // Quando houver filtro ativo
+            }
+        });
+
+        var action =
+            '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+
+        $("#addRowButton").click(function() {
+            $("#add-row")
+                .dataTable()
+                .fnAddData([
+                    $("#addName").val(),
+                    $("#addPosition").val(),
+                    $("#addOffice").val(),
+                    action,
+                ]);
+            $("#addRowModal").modal("hide");
+        });
     </script>
 </body>
 

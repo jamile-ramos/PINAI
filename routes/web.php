@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UsuarioController;
 
 Route::middleware('guest')->get('/', function () {
     return view('auth.login'); 
@@ -18,3 +19,6 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/painelUsuarios', [UsuarioController::class, 'index'])->name('painel.usuarios');
+

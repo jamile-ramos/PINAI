@@ -4,7 +4,7 @@
       <div class="sidebar-logo">
         <!-- Logo Header -->
         <div class="logo-header" data-background-color="dark">
-          <a href="index.html" class="logo">
+          <a href="/dashboard " class="logo">
             <img src="/img/pinai-branca.svg" alt="navbar brand" class=" -brand" height="55" />
           </a>
           <div class="nav-toggle">
@@ -25,11 +25,10 @@
         <div class="sidebar-content">
           <ul class="nav nav-secondary">
             <li class="nav-item active">
-              <a data-bs-toggle="collapse" href="#" class="collapsed">
+              <a data-bs-toggle="collapse" href="#base">
                 <i class="fas fa-users"></i>
                 <p>Painel de usuários</p>
               </a>
-            </li>
             <li class="nav-item">
               <a data-bs-toggle="collapse" href="#base">
                 <i class="fas fa-newspaper"></i>
@@ -78,7 +77,7 @@
           <!-- Logo Header -->
           <div class="logo-header" data-background-color="dark">
             <a href="index.html" class="logo">
-              <img src="/img/logo-PINAI.svg" alt="navbar brand" class="navbar-brand" height="40" />
+              <img src="/img/pinai-branca.svg" alt="navbar brand" class="navbar-brand" height="40" />
             </a>
             <div class="nav-toggle">
               <button class="btn btn-toggle toggle-sidebar">
@@ -122,7 +121,7 @@
               <li class="nav-item topbar-user dropdown hidden-caret">
                 <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
                   <div class="avatar-sm">
-                    <img src="/img/profile.jpg" alt="..." class="avatar-img rounded-circle" />
+                    <img src="img/sauro.jpg" alt="..." class="avatar-img rounded-circle" />
                   </div>
                   <span class="profile-username">
                   <span class="fw-bold">{{ Auth::user()->name }}</span>

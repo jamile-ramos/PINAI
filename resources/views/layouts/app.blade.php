@@ -7,6 +7,9 @@
 
     <title>@yield('title')</title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="img/Favicon-azul.svg">
+
     <!-- CSS Files -->
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/plugins.min.css" />

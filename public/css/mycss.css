@@ -9,8 +9,9 @@
 .home-text h1, h3{
     display: flex;
     justify-content: center;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: justify;
+    font-size: 30px;
+    font-weight: bold;
 }
 
 .home-text h3{
@@ -68,6 +69,11 @@
     margin-bottom: 50px;
     margin-top: 40px;
     gap: 40px;
+}
+
+.home-news h2{
+    font-size: 25px;
+    font-weight: bold;
 }
 
 .card-new{

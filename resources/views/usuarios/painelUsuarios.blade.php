@@ -8,15 +8,15 @@
     <div class="bg-light">
         <div class="navbar navbar-light bg-light barra-filtros">
             <div class="filtros">
-                <button>Todos</button>
+                <a href="/painelUsuarios?query" class="active">Todos</a>
             </div>
 
             <div class="ml-auto d-flex align-items-center barra-pesquisa">
                 <!-- Campo de pesquisa inicialmente escondido -->
-                <form action="/pesquisar" method="GET" class="search-form" style="display: none;">
+                <form action="/painelUsuarios" method="GET" class="search-form" style="display: none;">
                     <div class="search-container">
                         <i class="fas fa-search mr-2"></i>
-                        <input type="text" class="search-input" name="query" placeholder="Pesquisar..." />
+                        <input type="text" class="search-input" name="query" placeholder="Pesquisar..." value="{{ request('query') }}" />
                     </div>
                 </form>
 

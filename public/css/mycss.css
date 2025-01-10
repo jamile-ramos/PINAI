@@ -146,7 +146,7 @@ h3 {
     font-size: 15px;
 }
 
-.filtros button {
+.filtros a {
     border: none;
     background-color: transparent;
     color: #000;
@@ -156,9 +156,9 @@ h3 {
     transition: all 0.3s ease;
 }
 
-.filtros button.active {
-    color: #E75321;
-    border-bottom: 2px solid #E75321;
+.filtros a.active {
+    color: #0d6efd;
+    border-bottom: 2px solid #0d6efd;
 }
 
 .filtros button:focus {
@@ -258,7 +258,7 @@ form.search-form {
 
 /* Cor dos ícones dos itens ativos */
 .sidebar .nav.nav-secondary>.nav-item.active a i, .sidebar[data-background-color=white] .nav.nav-secondary>.nav-item.active a i {
-    color: #007be9 !important;
+    color: #0d6efd !important;
 }
 
 @media screen and (min-width: 320px) and (max-width: 778px) {

@@ -9,12 +9,20 @@ use App\Models\User;
 class UsuarioController extends Controller
 {
 
-    public function index(Request $request)
+    public function index()
     {
 
-        $usuarios = User::all();
+        $query = request('query');
 
-        return view('usuarios.painelUsuarios', compact('usuarios'));
+        if($query){
+            $usuarios = User::where([ 
+                ['name', 'like', '%'.$query.'%']
+            ])->get();
+        } else{
+            $usuarios = User::all();
+        }
+
+        return view('usuarios.painelUsuarios', compact('usuarios','query'));
     }
 
     public function update(Request $request, $id)

@@ -33,11 +33,6 @@ class ConfirmablePasswordController extends Controller
             ]);
         }
 
-        if($request->user()->status == 1){
-            Auth::logout();
-            return redirect()->route('login')->withErrors(['email' => 'Sua conta está inativa.']);
-        }
-
         $request->session()->put('auth.password_confirmed_at', time());
 
         return redirect()->intended(route('dashboard', absolute: false));

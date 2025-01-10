@@ -6852,6 +6852,7 @@ fieldset:disabled .btn {
     display: none;
     float: left;
     width: 100%;
+    height: 400px !important;
     margin-right: -100%;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;

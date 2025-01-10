@@ -114,7 +114,7 @@ h3 {
     margin-top: 80px;
 }
 
-.table-usuarios {
+.container-all {
     padding: 100px 34px 100px 30px;
 }
 
@@ -259,6 +259,12 @@ form.search-form {
 /* Cor dos ícones dos itens ativos */
 .sidebar .nav.nav-secondary>.nav-item.active a i, .sidebar[data-background-color=white] .nav.nav-secondary>.nav-item.active a i {
     color: #0d6efd !important;
+}
+
+/* Tamanho personalizado do slider das noticias*/
+#carouselExampleCaptions .carousel-inner img {
+    height: 400px;
+    object-fit: cover; 
 }
 
 @media screen and (min-width: 320px) and (max-width: 778px) {

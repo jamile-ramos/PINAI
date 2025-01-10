@@ -39,7 +39,7 @@
                 <p>Painel de usuários</p>
               </a>
             <li class="nav-item">
-              <a data-bs-toggle="collapse" href="#base">
+              <a href="/noticias">
                 <i class="fas fa-newspaper"></i>
                 <p>Portal de Notícias</p>
               </a>

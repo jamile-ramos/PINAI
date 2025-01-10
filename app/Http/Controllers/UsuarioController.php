@@ -34,7 +34,7 @@ class UsuarioController extends Controller
 
         $post->update(['tipoUsuario' => $tipoUsuario]);
 
-        return redirect('/painelUsuarios')->with('sucesso', 'Tipo de usuário alterado com sucesso!');
+        return redirect('/painelUsuarios')->with('sucess', 'Tipo de usuário alterado com sucesso!');
     }
 
     public function updateStatus(Request $request, $id)
@@ -46,6 +46,6 @@ class UsuarioController extends Controller
 
         $user->update(['status' => $status]);
 
-        return redirect('/painelUsuarios')->with('sucesso', 'Status atualizado com sucesso!');
+        return redirect('/painelUsuarios')->with('sucess-status', 'Status atualizado com sucesso!');
     }
 }

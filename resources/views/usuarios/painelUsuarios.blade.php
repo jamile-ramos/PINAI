@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="col-md-12 table-usuarios">
+<div class="col-md-12 container-all">
     <div class="bg-light">
         <div class="navbar navbar-light bg-light barra-filtros">
             <div class="filtros">
@@ -30,6 +30,24 @@
             </div>
         </div>
     </div>
+
+    @if(session('sucess'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert" id="sucess-alert">
+        <strong>{{ session('sucess') }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+
+    @if(session('sucess-status'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert" id="sucess-status-alert">
+        <strong>{{ session('sucess-status') }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
 
     <div class="card">
         <div class="card-header">

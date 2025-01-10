@@ -47,6 +47,8 @@
                             <th>Nome</th>
                             <th>Email</th>
                             <th>Tipo de usuário</th>
+                            <th>Status</th>
+                            <th>Data de criação</th>
                             <th style="width: 26%">Ação</th>
                         </tr>
                     </thead>
@@ -55,6 +57,8 @@
                             <th>Nome</th>
                             <th>Email</th>
                             <th>Tipo de usuário</th>
+                            <th>Status</th>
+                            <th>Data de criação</th>
                             <th>Ação</th>
                         </tr>
                     </tfoot>
@@ -65,18 +69,8 @@
                             <td>{{ $usuario->name }}</td>
                             <td>{{ $usuario->email }}</td>
                             <td>{{ $usuario->tipoUsuario == 0 ? 'Comum' : 'Admin'}}</td>
-                            <td>
-                                <div class="form-button-action">
-                                    <button type="button" class="btn btn-info d-inline">Alterar tipo</button>
-                                    <button type="button" class="btn btn-danger">Excluir</button>
-                                </div>
-                            </td>
-                        </tr>
-                        @else
-                        <tr>
-                            <td>{{ $usuario->name }}</td>
-                            <td>{{ $usuario->email }}</td>
-                            <td>{{ $usuario->tipoUsuario == 0 ? 'Comum' : 'Admin'}}</td>
+                            <td>{{ $usuario->status == 0 ? 'Ativo' : 'Inativo'}}</td>
+                            <td>{{ \Carbon\Carbon::parse($usuario->created_at)->format('d/m/Y') }}</td>
                             <td>
                                 <div class="form-button-action">
                                     <button
@@ -88,7 +82,41 @@
                                         data-type="{{ $usuario->tipoUsuario }}">
                                         Alterar tipo
                                     </button>
-                                    <button type="button" class="btn btn-danger">Excluir</button>
+                                    <button
+                                        type="button"
+                                        class="btn toggle-status btn-status {{ $usuario->status == 0 ? 'btn-danger' : 'btn-success' }}"
+                                        data-id="{{ $usuario->id }}"
+                                        data-status="{{ $usuario->status }}">
+                                        {{ $usuario->status == 0 ? 'Desabilitar' : 'Ativar' }}
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        @else
+                        <tr>
+                            <td>{{ $usuario->name }}</td>
+                            <td>{{ $usuario->email }}</td>
+                            <td>{{ $usuario->tipoUsuario == 0 ? 'Comum' : 'Admin'}}</td>
+                            <td>{{ $usuario->status == 0 ? 'Ativo' : 'Inativo'}}</td>
+                            <td>{{ \Carbon\Carbon::parse($usuario->created_at)->format('d/m/Y') }}</td>
+                            <td>
+                                <div class="form-button-action">
+                                    <button
+                                        type="button"
+                                        class="btn btn-info d-inline"
+                                        data-id="{{ $usuario->id }}"
+                                        data-name="{{ $usuario->name }}"
+                                        data-email="{{ $usuario->email }}"
+                                        data-type="{{ $usuario->tipoUsuario }}">
+                                        Alterar tipo
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="btn toggle-status btn-status {{ $usuario->status == 0 ? 'btn-danger' : 'btn-success' }}"
+                                        data-id="{{ $usuario->id }}"
+                                        data-status="{{ $usuario->status }}">
+                                        {{ $usuario->status == 0 ? 'Desabilitar' : 'Ativar' }}
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -115,9 +143,9 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="editUserForm" action="">
+                <form id="editUserForm" method="POST" data-route="{{ route('painel.update', ':id') }}">
                     @csrf
-                    @method('put')
+                    @method('PUT')
                     <input type="hidden" id="userId" name="userId">
                     <div class="form-group">
                         <label for="userName">Nome</label>
@@ -136,13 +164,43 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn-primary" id="saveUserChanges">Salvar alterações</button>
+                        <button type="submit" class="btn btn-primary">Salvar alterações</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Modal de Confirmação de Ativação/Desativação -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Confirmar Ação</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body body-confirmar">
+                <div class="texto-confirmar">
+                    <p>Tem certeza de que deseja desativar este usuário?</p>
+                </div>
+                <!-- Formulário para desativar o usuário -->
+                <form id="confirmForm" data-route="{{ route('painel.updateStatus', ':id') }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="status" id="status">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" id="confirmActionBtn" class="btn">Desabilitar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 @endsection

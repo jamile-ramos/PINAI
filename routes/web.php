@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuarioController;
@@ -28,3 +29,5 @@ Route::put('/painelUsuarios/status/{id}', [UsuarioController::class, 'updateStat
 
 // Portal de Notícias
 Route::get('/noticias', [NoticiaController::class, 'index'])->name('noticias.index');
+Route::get('/categorias/{tipo}', [CategoriaController::class, 'index'])->name('categorias.index');
+Route::post('/categorias/store/{tipo}', [CategoriaController::class, 'store'])->name('categorias.store');

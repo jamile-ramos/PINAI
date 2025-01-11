@@ -34,7 +34,7 @@
     @include('layouts.navigation')
 
     <div class="col-md-12 container-all">
-    @yield('content')
+        @yield('content')
     </div>
 
     <footer class="footer">
@@ -75,6 +75,9 @@
     <script src="/js/core/bootstrap.min.js"></script> <!-- Se necessário -->
 
     <!-- Carregar o JS personalizado -->
+    <script>
+        var categoriasUrl = "{{ route('categorias.index', ['tipo' => 'noticias']) }}";
+    </script>
     <script src="js/myjs.js"></script>
 
     <!-- Carregar plugins adicionais -->

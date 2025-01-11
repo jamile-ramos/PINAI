@@ -108,3 +108,20 @@ $(document).ready(function() {
         $('.alert').fadeOut('slow');
     }, 3000); 
 });
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('.toggle-categorias').addEventListener('click', function() {
+        const categoriasUrl = '/categorias/noticia'; 
+
+        fetch(categoriasUrl)
+            .then(response => response.text())  
+            .then(data => {
+                document.getElementById('conteudo-categorias').innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Erro ao carregar categorias:', error);
+            });
+    });
+});
+

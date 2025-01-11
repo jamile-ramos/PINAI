@@ -1,5 +1,5 @@
 // Quando qualquer botão de "Alterar tipo" for clicado
-document.querySelectorAll('.btn-info').forEach(button => {
+document.querySelectorAll('.btn-primary').forEach(button => {
     button.addEventListener('click', function () {
         // Captura os dados do botão clicado
         const userId = this.getAttribute('data-id');

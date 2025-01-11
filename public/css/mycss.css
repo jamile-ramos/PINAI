@@ -109,10 +109,6 @@ h3 {
     height: revert-layer;
 }
 
-.edit-profile {
-    margin-top: 80px;
-}
-
 .container-all {
     padding: 100px 60px 100px 60px;
 }
@@ -148,7 +144,7 @@ h3 {
 .filtros a {
     border: none;
     background-color: transparent;
-    color: #000;
+    color: #011C37;
     font-weight: bolder;
     padding: 10px 15px;
     cursor: pointer;
@@ -204,10 +200,6 @@ h3 {
 .navbar.search-mode .close-search {
     display: inline-block;
 }
-
-/*.navbar.search-mode .btn-add {
-    display: none;
-}*/
 
 form.search-form {
     width: 100%;
@@ -265,6 +257,12 @@ form.search-form {
     height: 400px;
     border-radius: 10px;
     object-fit: cover; 
+}
+
+.titulo-categoria h2{
+    text-align: start;
+    width: 100%;
+    padding-left: 10px;
 }
 
 @media screen and (min-width: 320px) and (max-width: 778px) {

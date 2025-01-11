@@ -93,7 +93,7 @@
                                 <div class="form-button-action">
                                     <button
                                         type="button"
-                                        class="btn btn-info d-inline"
+                                        class="btn btn-primary d-inline"
                                         data-id="{{ $usuario->id }}"
                                         data-name="{{ $usuario->name }}"
                                         data-email="{{ $usuario->email }}"
@@ -121,7 +121,7 @@
                                 <div class="form-button-action">
                                     <button
                                         type="button"
-                                        class="btn btn-info d-inline"
+                                        class="btn btn-primary d-inline"
                                         data-id="{{ $usuario->id }}"
                                         data-name="{{ $usuario->name }}"
                                         data-email="{{ $usuario->email }}"

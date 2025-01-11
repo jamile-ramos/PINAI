@@ -6,7 +6,9 @@
 <div class="bg-light">
     <div class="navbar navbar-light bg-light barra-filtros">
         <div class="filtros">
-            <a href="/painelUsuarios?query" class="active">Todos</a>
+            <a href="/painelUsuarios?query" class="active">Todas</a>
+            <a href="/painelUsuarios?query">Minhas Notícias</a>
+            <a href="/painelUsuarios?query">Categorias</a>
         </div>
 
         <div class="ml-auto d-flex align-items-center barra-pesquisa">
@@ -17,8 +19,11 @@
                     <input type="text" class="search-input" name="query" placeholder="Pesquisar..." value="{{ request('query') }}" />
                 </div>
             </form>
-            <button type="button" class="btn btn-secsondary mr-2 toggle-search">
-                Adicionar notícia
+            <button type="button" class="btn btn-primary mr-2 toggle-search">
+                Adicionar Notícia
+            </button>
+            <button type="button" class="btn btn-dark mr-2 toggle-search">
+                Adicionar Categoria
             </button>
             <!-- Ícone de pesquisa que ativa a barra de pesquisa -->
             <div class="botao-pesquisar">
@@ -70,8 +75,8 @@
     </div>
 </div>
 
-<div class="home-news">
-    <h2>NOTÍCIAS</h2>
+<div class="home-news titulo-categoria">
+    <h2>Categoria</h2>
     <div class="card card-new mb-3" style="max-width: 98%;">
         <div class="row g-0">
             <div class="col-md-4">

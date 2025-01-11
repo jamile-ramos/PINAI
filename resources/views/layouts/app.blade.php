@@ -33,7 +33,9 @@
 
     @include('layouts.navigation')
 
+    <div class="col-md-12 container-all">
     @yield('content')
+    </div>
 
     <footer class="footer">
         <div class="container-fluid d-flex justify-content-between">

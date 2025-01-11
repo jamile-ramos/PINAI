@@ -52,7 +52,7 @@
   <!-- Card de Noticias -->
   <div class="home-news">
     <h2>NOTÍCIAS</h2>
-    <div class="card card-new mb-3" style="max-width: 90%;">
+    <div class="card card-new mb-3" style="max-width: 100%;">
       <div class="row g-0">
         <div class="col-md-4">
           <img src="img/blogpost.jpg" class="img-fluid rounded-start" alt="...">

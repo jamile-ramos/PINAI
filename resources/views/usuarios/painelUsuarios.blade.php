@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="col-md-12 container-all">
+
     <div class="bg-light">
         <div class="navbar navbar-light bg-light barra-filtros">
             <div class="filtros">
@@ -147,7 +147,7 @@
             </div>
         </div>
     </div>
-</div>
+
 
 
 <!-- Modal -->

@@ -23,7 +23,7 @@
                 Adicionar Notícia
             </button>
 
-            <button type="button" class="btn btn-dark mr-2 toggle-search" data-toggle="modal" data-target="#modalCategoria">
+            <button type="button" class="btn btn-dark mr-2 toggle-categorias" id="abrirModalCategoria">
                 Adicionar Categoria
             </button>
 

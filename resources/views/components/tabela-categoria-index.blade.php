@@ -1,4 +1,10 @@
 <!-- Tabel de Categorias -->
+@if (session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
+
 <div class="card" id="tabela-categorias">
     <div class="card-header">
         <div class="d-flex align-items-center">
@@ -88,7 +94,7 @@
                     <input type="hidden" id="categoriaId" name="categoriaId">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-danger .delete-btn">Excluir</button>
                 </div>
             </form>

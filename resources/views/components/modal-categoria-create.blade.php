@@ -8,7 +8,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('categorias.store', ['tipo' => 'noticia']) }}" method="POST">
+            <form id="createFormCategoria" action="{{ route('categorias.store', ['tipo' => 'noticia']) }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     <input type="hidden" name="idUsuario" value="{{ Auth::user()->id }}">
@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                     <button type="submit" class="btn btn-primary">Salvar</button>
                 </div>
             </form>

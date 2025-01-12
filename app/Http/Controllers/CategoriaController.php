@@ -63,9 +63,9 @@ class CategoriaController extends Controller
 
         $categoriaModel->save();
 
-        // Retornar a nova tabela de categorias
         $categorias = $this->getCategoriasByTipo($tipo);
-        return view('components.tabela-categoria-index', compact('categorias', 'tipo'))->render();
+        return view('components.tabela-categoria-index', compact('categorias', 'tipo'))
+        ->with('success', 'Categoria salva com sucesso!');
     }
 
     public function delete(Request $request, $tipo)
@@ -90,9 +90,9 @@ class CategoriaController extends Controller
                 break;
         }
 
-        // Retornar a nova tabela de categorias
         $categorias = $this->getCategoriasByTipo($tipo);
-        return view('components.tabela-categoria-index', compact('categorias', 'tipo'))->render();
+        return view('components.tabela-categoria-index', compact('categorias', 'tipo'))
+        ->with('success', 'Categoria excluida com sucesso!');
     }
 
     private function getCategoriasByTipo($tipo)

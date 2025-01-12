@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Evento para botões "Alterar tipo"
-    document.querySelectorAll('.btn-primary').forEach(button => {
+    document.querySelectorAll('.btn-alterar').forEach(button => {
         button.addEventListener('click', function () {
             const userId = this.getAttribute('data-id');
             const userName = this.getAttribute('data-name');
@@ -73,8 +73,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-
-
     // Evento para toggle categorias
     const toggleCategorias = document.querySelector('.toggle-categorias');
     if (toggleCategorias) {
@@ -135,12 +133,52 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Fecha o modal
                     $('#confirmDeleteModal').modal('hide');
 
-                    // Esconde o backdrop após a execução bem-sucedida
-                    $('.modal-backdrop').css('display', 'none');
+                    $('.modal-backdrop').remove();
+                    // Garante que o corpo da página esteja rolando normalmente
+                    $('html, body').css('overflow', 'auto');
                 },
                 error: function (xhr, status, error) {
                     console.error('Erro ao excluir categoria:', error);
                     alert('Ocorreu um erro ao tentar excluir a categoria.');
+                }
+            });
+        });
+    });
+
+    $(document).ready(function () {
+        $('#abrirModalCategoria').on('click', function () {
+            $('#modalCategoria').modal('show');
+        });
+
+        $('#createFormCategoria').submit(function (event) {
+            event.preventDefault();
+
+            const form = $(this);
+            const actionUrl = form.attr('action');
+            const formData = form.serialize();
+
+            // Enviar a requisição AJAX
+            $.ajax({
+                url: actionUrl,
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    // Após a criação bem-sucedida, atualiza a tabela de categorias
+                    console.log('Resposta recebida:', response);
+                    $('#conteudo-categorias').html(response);
+
+                    // Fecha o modal
+                    $('#modalCategoria').modal('hide');
+
+                    $('.filtros a').removeClass('active');
+                    $('.filtros .toggle-categorias').addClass('active');
+
+
+                    $('#createFormCategoria')[0].reset();
+                },
+                error: function (xhr, status, error) {
+                    console.error('Erro ao criar categoria:', error);
+                    alert('Ocorreu um erro ao tentar criar a categoria.');
                 }
             });
         });

@@ -1,5 +1,5 @@
 <!-- Tabel de Categorias -->
-<div class="card">
+<div class="card" id="tabela-categorias">
     <div class="card-header">
         <div class="d-flex align-items-center">
             <h4 class="card-title">Categorias</h4>
@@ -32,9 +32,14 @@
                         <td>{{ $categoria->nomeCategoria }}</td>
                         <td>
                             <div class="form-button-action">
-                                <button type="button" class="btn btn-danger">Excluir</button>
+                                <button type="button"
+                                    class="btn btn-danger btn-action"
+                                    data-tipo="{{ $tipo }}"
+                                    data-id="{{ $categoria->id }}">Excluir
+                                </button>
                             </div>
                         </td>
+
                     </tr>
                     @else
                     <tr>
@@ -42,7 +47,11 @@
                         <td>{{ $categoria->nomeCategoria }}</td>
                         <td>
                             <div class="form-button-action">
-                                <button type="button" class="btn btn-danger">Excluir</button>
+                                <button type="button"
+                                    class="btn btn-danger btn-action"
+                                    data-tipo="{{ $tipo }}"
+                                    data-id="{{ $categoria->id }}">Excluir
+                                </button>
                             </div>
                         </td>
                     </tr>
@@ -50,8 +59,39 @@
 
                     @endforeach
 
+                    @if($categorias->isEmpty())
+                    <tr>
+                        <td colspan="3">Não há categorias registradas</td>
+                    </tr>
+                    @endif
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Confirmação de Exclusão -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="deleteForm" method="POST" action="{{ route('categorias.delete', ['tipo' => ':tipo']) }}">
+                @csrf
+                @method('DELETE')
+                <div class="modal-body">
+                    <p>Tem certeza de que deseja excluir esta categoria?</p>
+                    <input type="hidden" id="categoriaId" name="categoriaId">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger .delete-btn">Excluir</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

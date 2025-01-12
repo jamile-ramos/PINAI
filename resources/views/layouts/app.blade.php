@@ -96,6 +96,7 @@
 
     <!-- Métodos de demonstração do Kaiadmin, não inclua no seu projeto -->
     <script src="/js/setting-demo.js"></script>
+    
 </body>
 
 </html>

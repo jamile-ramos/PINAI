@@ -6,9 +6,9 @@
 <div class="bg-light">
     <div class="navbar navbar-light bg-light barra-filtros">
         <div class="filtros">
-            <a href="/painelUsuarios?query" class="active">Todas</a>
+            <a href="/noticias?query" class="active">Todas</a>
             <a href="/painelUsuarios?query">Minhas Notícias</a>
-            <a href="javascript:void(0);" class="toggle-categorias">Categorias</a>
+            <a href="javascript:void(0);" class="toggle-categorias" data-tipo='noticia'>Categorias</a>
         </div>
 
         <div class="ml-auto d-flex align-items-center barra-pesquisa">

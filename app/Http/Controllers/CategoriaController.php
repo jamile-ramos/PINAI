@@ -12,8 +12,9 @@ use App\Models\CategoriaTopico;
 class CategoriaController extends Controller
 {
 
-    public function index($tipo) {
-        
+    public function index($tipo)
+    {
+
         $categorias = [];
 
         switch ($tipo) {
@@ -34,12 +35,11 @@ class CategoriaController extends Controller
                 break;
         }
 
-        return view('components.tabela-categoria-index', compact('categorias'));
+        return view('components.tabela-categoria-index', compact('categorias', 'tipo'));
     }
 
     public function store(Request $request, $tipo)
     {
-
         switch ($tipo) {
             case 'noticia':
                 $categoriaModel = new CategoriaNoticia();
@@ -63,6 +63,51 @@ class CategoriaController extends Controller
 
         $categoriaModel->save();
 
-        return redirect()->route('noticias.index');
+        // Retornar a nova tabela de categorias
+        $categorias = $this->getCategoriasByTipo($tipo);
+        return view('components.tabela-categoria-index', compact('categorias', 'tipo'))->render();
+    }
+
+    public function delete(Request $request, $tipo)
+    {
+        $id = $request->categoriaId;
+
+        switch ($tipo) {
+            case 'noticia':
+                CategoriaNoticia::destroy($id);
+                break;
+            case 'documento':
+                CategoriaDocumento::destroy($id);
+                break;
+            case 'topico':
+                CategoriaTopico::destroy($id);
+                break;
+            case 'solucao':
+                CategoriaSolucao::destroy($id);
+                break;
+            default:
+                return response()->json(['error' => 'Tipo de categoria inválido'], 400);
+                break;
+        }
+
+        // Retornar a nova tabela de categorias
+        $categorias = $this->getCategoriasByTipo($tipo);
+        return view('components.tabela-categoria-index', compact('categorias', 'tipo'))->render();
+    }
+
+    private function getCategoriasByTipo($tipo)
+    {
+        switch ($tipo) {
+            case 'noticia':
+                return CategoriaNoticia::all();
+            case 'documento':
+                return CategoriaDocumento::all();
+            case 'topico':
+                return CategoriaTopico::all();
+            case 'solucao':
+                return CategoriaSolucao::all();
+            default:
+                return [];
+        }
     }
 }

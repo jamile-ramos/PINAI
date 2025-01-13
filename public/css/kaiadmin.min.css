@@ -4134,11 +4134,11 @@ label {
 }
 
 .form-control {
-   font-size: 1rem;
-   border-color: #ebedf2;
-   padding: .6rem 1rem;
+   font-size: 1rem !important;
+   border-color: #ebedf2 !important;
+   padding: .6rem 1rem !important;
    height: inherit !important;
-   border-width: 2px
+   border-width: 2px !important
 }
 
 .form-control:focus {

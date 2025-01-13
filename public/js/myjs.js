@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+
     // Evento para botões "Alterar tipo"
     document.querySelectorAll('.btn-alterar').forEach(button => {
         button.addEventListener('click', function () {
@@ -38,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const route = form.getAttribute('data-route');
             form.action = route.replace(':id', userId);
 
-            console.log('id usuario', userId);
+            console.log('ID do usuário', userId);
             console.log('Action do formulário:', form.action);
 
             $('#confirmModal').modal('show');
@@ -73,32 +74,34 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Evento para toggle categorias
-    const toggleCategorias = document.querySelector('.toggle-categorias');
-    if (toggleCategorias) {
-        toggleCategorias.addEventListener('click', function () {
-            const categoriasUrl = '/categorias/noticia';
+    // Função para conteudo dinamico de categoria
+    function AbriCategorias() {
+        const categoriasUrl = '/categorias/noticia';
 
-            fetch(categoriasUrl)
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('conteudo-categorias').innerHTML = data;
-                })
-                .catch(error => {
-                    console.error('Erro ao carregar categorias:', error);
-                });
-        });
+        fetch(categoriasUrl)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('conteudo-categorias').innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Erro ao carregar categorias:', error);
+            });
     }
 
+    // Evento para toggle categorias
+    const toggleCategoriasButton = document.querySelector('.toggle-categorias');
+    if (toggleCategoriasButton) {
+        toggleCategoriasButton.addEventListener('click', AbriCategorias);
+    }
+
+    // Evento para abrir o modal de exclusão
     document.body.addEventListener('click', function (event) {
         if (event.target && event.target.matches('.btn-action')) {
             const categoriaId = event.target.getAttribute('data-id');
             const tipo = event.target.getAttribute('data-tipo');
 
-            // Define o ID da categoria no campo oculto do modal
             document.getElementById('categoriaId').value = categoriaId;
 
-            // Ajusta a URL do formulário de exclusão
             const form = document.getElementById('deleteForm');
             const route = form.getAttribute('action');
             form.action = route.replace(':tipo', tipo);
@@ -107,7 +110,6 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('Tipo:', tipo);
             console.log('Ação do formulário de exclusão:', form.action);
 
-            // Abre o modal de confirmação
             $('#confirmDeleteModal').modal('show');
         }
 
@@ -116,25 +118,19 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         $('#deleteForm').submit(function (event) {
-            event.preventDefault(); // Previne o envio tradicional do formulário
+            event.preventDefault();
 
             const form = $(this);
-            const actionUrl = form.attr('action');  // URL do formulário (com o tipo de categoria)
+            const actionUrl = form.attr('action');
 
-            // Enviar a requisição AJAX
             $.ajax({
                 url: actionUrl,
                 type: 'DELETE',
-                data: form.serialize(),  // Serializa o formulário para enviar os dados
+                data: form.serialize(),
                 success: function (response) {
-                    // Após a exclusão bem-sucedida, atualiza a tabela de categorias
                     $('#conteudo-categorias').html(response);
-
-                    // Fecha o modal
                     $('#confirmDeleteModal').modal('hide');
-
                     $('.modal-backdrop').remove();
-                    // Garante que o corpo da página esteja rolando normalmente
                     $('html, body').css('overflow', 'auto');
                 },
                 error: function (xhr, status, error) {
@@ -145,10 +141,15 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // Evento para abrir o modal de criação de categoria e criar categoria
     $(document).ready(function () {
         $('#abrirModalCategoria').on('click', function () {
             $('#modalCategoria').modal('show');
         });
+
+        $('#abrirModalCategoriaMenor').on('click', function(){
+            $('#modalCategoria').modal('show');
+        })
 
         $('#createFormCategoria').submit(function (event) {
             event.preventDefault();
@@ -157,22 +158,18 @@ document.addEventListener('DOMContentLoaded', function () {
             const actionUrl = form.attr('action');
             const formData = form.serialize();
 
-            // Enviar a requisição AJAX
             $.ajax({
                 url: actionUrl,
                 type: 'POST',
                 data: formData,
                 success: function (response) {
-                    // Após a criação bem-sucedida, atualiza a tabela de categorias
                     console.log('Resposta recebida:', response);
                     $('#conteudo-categorias').html(response);
 
-                    // Fecha o modal
                     $('#modalCategoria').modal('hide');
 
                     $('.filtros a').removeClass('active');
                     $('.filtros .toggle-categorias').addClass('active');
-
 
                     $('#createFormCategoria')[0].reset();
                 },
@@ -184,6 +181,55 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // Evento para abrir o modal de criação de notícia 
+    const abrirModalBtn = document.getElementById('abrirModalNoticia');
+    abrirModalBtn.addEventListener('click', function () {
+        $('#criarNoticiaModal').modal('show');
+        console.log('clicou')
+    })
+
+    const abrirModalBtnMenor = document.getElementById('abrirModalNoticiaMenor');
+    abrirModalBtnMenor.addEventListener('click', function () {
+        $('#criarNoticiaModal').modal('show');
+        console.log('clicou')
+    })    
+
+    // Codigo para barra de filtros responsiva
+    const filtrosSelect = document.getElementById('filtrosSelect');
+    const selectedOption = filtrosSelect.querySelector('.selected-option');
+    const options = filtrosSelect.querySelector('.options');
+
+    filtrosSelect.addEventListener('click', () => {
+        const isOptionsVisible = options.style.display === 'block';
+        options.style.display = isOptionsVisible ? 'none' : 'block';
+    });
+
+    document.addEventListener('click', (event) => {
+        if (!filtrosSelect.contains(event.target)) {
+            options.style.display = 'none';
+        }
+    });
+
+    options.addEventListener('click', (event) => {
+        const button = event.target.closest('.option');
+        if (button) {
+            const value = button.dataset.value;
+            selectedOption.textContent = button.textContent;
+
+            if (value === 'todas') {
+                window.location.href = '/noticias?query';
+            } else if (value === 'minhas-noticias') {
+
+            } else if (value === 'categorias') {
+                AbriCategorias();
+            }
+            setTimeout(() => {
+                options.style.display = 'none';
+            }, 50);
+        }
+    });
+
+
 });
 
 // Evento para ocultar alertas com jQuery
@@ -192,5 +238,3 @@ $(document).ready(function () {
         $('.alert').fadeOut('slow');
     }, 3000);
 });
-
-

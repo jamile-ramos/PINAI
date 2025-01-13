@@ -5,10 +5,31 @@
 @section('content')
 <div class="bg-light">
     <div class="navbar navbar-light bg-light barra-filtros">
+        <!-- Botões de filtros -->
         <div class="filtros">
             <a href="/noticias?query" class="active">Todas</a>
             <a href="/painelUsuarios?query">Minhas Notícias</a>
             <a href="javascript:void(0);" class="toggle-categorias" data-tipo='noticia'>Categorias</a>
+        </div>
+
+        <!-- Filtros como Select para telas menores -->
+        <div class="filtros-select" id="filtrosSelect">
+            <div class="selected-option">
+                Todas
+            </div>
+            <div class="options" style="display: none;">
+                <button type="button" class="option" data-value="todas">Todas</button>
+                <button type="button" class="option" data-value="minhas-noticias">Minhas Notícias</button>
+                <button type="button" class="option toggle-categorias" data-value="categorias">Categorias</button>
+                <div class="line-button"></div>
+                <button type="button" class="btn btn-primary mr-2 toggle-search" id="abrirModalNoticiaMenor">
+                    Adicionar Notícia
+                </button>
+                <button type="button" class="btn btn-dark mr-2 toggle-categorias" id="abrirModalCategoriaMenor">
+                    Adicionar Categoria
+                </button>
+            </div>
+            <i class="dropdown-icon fas fa-chevron-down"></i>
         </div>
 
         <div class="ml-auto d-flex align-items-center barra-pesquisa">
@@ -19,16 +40,22 @@
                     <input type="text" class="search-input" name="query" placeholder="Pesquisar..." value="{{ request('query') }}" />
                 </div>
             </form>
-            <button type="button" class="btn btn-primary mr-2 toggle-search">
-                Adicionar Notícia
-            </button>
-
-            <button type="button" class="btn btn-dark mr-2 toggle-categorias" id="abrirModalCategoria">
-                Adicionar Categoria
-            </button>
+           
+            <!-- Filtro para telas maiores-->
+            <div class="button-hide">
+                <button type="button" class="btn btn-primary mr-2 toggle-search" id="abrirModalNoticia">
+                    Adicionar Notícia
+                </button>
+                <button type="button" class="btn btn-dark mr-2 toggle-categorias" id="abrirModalCategoria">
+                    Adicionar Categoria
+                </button>
+            </div>
 
             <!-- Modal de categoria-->
             @include('components.modal-categoria-create', ['tipo' => 'noticia'])
+
+            <!-- Moda de noticias -->
+            @include('noticias.create')
 
             <!-- Ícone de pesquisa que ativa a barra de pesquisa -->
             <div class="botao-pesquisar">

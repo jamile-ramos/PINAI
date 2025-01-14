@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-
     // Evento para botões "Alterar tipo"
     document.querySelectorAll('.btn-alterar').forEach(button => {
         button.addEventListener('click', function () {
@@ -7,11 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const userName = this.getAttribute('data-name');
             const userEmail = this.getAttribute('data-email');
             const userType = this.getAttribute('data-type');
-
-            console.log('ID do Usuário:', userId);
-            console.log('Nome do Usuário:', userName);
-            console.log('Email do Usuário:', userEmail);
-            console.log('Tipo de Usuário:', userType);
 
             document.getElementById('userId').value = userId;
             document.getElementById('userName').value = userName;
@@ -21,8 +15,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const form = document.getElementById('editUserForm');
             const route = form.getAttribute('data-route');
             form.action = route.replace(':id', userId);
-
-            console.log('Action do formulário:', form.action);
 
             $('#editUserModal').modal('show');
         });
@@ -38,9 +30,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const form = document.getElementById('confirmForm');
             const route = form.getAttribute('data-route');
             form.action = route.replace(':id', userId);
-
-            console.log('ID do usuário', userId);
-            console.log('Action do formulário:', form.action);
 
             $('#confirmModal').modal('show');
         });
@@ -67,17 +56,13 @@ document.addEventListener('DOMContentLoaded', function () {
             const route = form.getAttribute('data-route');
             form.action = route.replace(':id', userId);
 
-            console.log('ID do usuário:', userId);
-            console.log('Ação do formulário:', form.action);
-
             $('#confirmModal').modal('show');
         });
     });
 
-    // Função para conteudo dinamico de categoria
-    function AbriCategorias() {
-        const categoriasUrl = '/categorias/noticia';
+    function AbriCategorias(tipo) {
 
+        const categoriasUrl = `/categorias/${tipo}`;
         fetch(categoriasUrl)
             .then(response => response.text())
             .then(data => {
@@ -91,7 +76,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Evento para toggle categorias
     const toggleCategoriasButton = document.querySelector('.toggle-categorias');
     if (toggleCategoriasButton) {
-        toggleCategoriasButton.addEventListener('click', AbriCategorias);
+        toggleCategoriasButton.addEventListener('click', function () {
+            const tipo = this.dataset.tipo;
+            AbriCategorias(tipo); 
+        });
     }
 
     // Evento para abrir o modal de exclusão
@@ -105,10 +93,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const form = document.getElementById('deleteForm');
             const route = form.getAttribute('action');
             form.action = route.replace(':tipo', tipo);
-
-            console.log('ID da Categoria:', categoriaId);
-            console.log('Tipo:', tipo);
-            console.log('Ação do formulário de exclusão:', form.action);
 
             $('#confirmDeleteModal').modal('show');
         }
@@ -146,8 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
         $('#abrirModalCategoria').on('click', function () {
             $('#modalCategoria').modal('show');
         });
-
-        $('#abrirModalCategoriaMenor').on('click', function(){
+        $('#abrirModalCategoriaMenor').on('click', function () {
             $('#modalCategoria').modal('show');
         })
 
@@ -163,7 +146,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 type: 'POST',
                 data: formData,
                 success: function (response) {
-                    console.log('Resposta recebida:', response);
                     $('#conteudo-categorias').html(response);
 
                     $('#modalCategoria').modal('hide');
@@ -185,28 +167,26 @@ document.addEventListener('DOMContentLoaded', function () {
     const abrirModalBtn = document.getElementById('abrirModalNoticia');
     abrirModalBtn.addEventListener('click', function () {
         $('#criarNoticiaModal').modal('show');
-        console.log('clicou')
     })
 
     const abrirModalBtnMenor = document.getElementById('abrirModalNoticiaMenor');
     abrirModalBtnMenor.addEventListener('click', function () {
         $('#criarNoticiaModal').modal('show');
-        console.log('clicou')
-    })    
+    });
 
     // Codigo para barra de filtros responsiva
-    const filtrosSelect = document.getElementById('filtrosSelect');
     const selectedOption = filtrosSelect.querySelector('.selected-option');
     const options = filtrosSelect.querySelector('.options');
 
     filtrosSelect.addEventListener('click', () => {
-        const isOptionsVisible = options.style.display === 'block';
-        options.style.display = isOptionsVisible ? 'none' : 'block';
+        options.classList.toggle('hidden');
+        options.classList.toggle('visible');
     });
 
     document.addEventListener('click', (event) => {
         if (!filtrosSelect.contains(event.target)) {
-            options.style.display = 'none';
+            options.classList.add('hidden');
+            options.classList.remove('visible');
         }
     });
 
@@ -219,17 +199,61 @@ document.addEventListener('DOMContentLoaded', function () {
             if (value === 'todas') {
                 window.location.href = '/noticias?query';
             } else if (value === 'minhas-noticias') {
-
+                console.log('Opção "minhas-noticias" selecionada');
             } else if (value === 'categorias') {
-                AbriCategorias();
+                const tipo = button.dataset.tipo;
+                AbriCategorias(tipo);
             }
             setTimeout(() => {
-                options.style.display = 'none';
+                options.classList.add('hidden');
             }, 50);
         }
     });
 
+    //Código para quando a tela for aumentada ou diminuida a opcao selecionada persista
+    const links = document.querySelectorAll('.filtros a');
 
+    function activeToSelect() {
+        const activeLink = document.querySelector('.filtros a.active');
+        console.log('Link ativo: ', activeLink);
+        if (activeLink) {
+            const activeValue = activeLink.innerText.trim();
+            selectedOption.textContent = activeValue;
+            console.log('Valor active', activeValue);   
+        }
+    }
+
+    function selectToActive() {
+        const selectedValue = selectedOption.textContent.trim();
+        console.log('Valor selecionado: ', selectedValue);
+        links.forEach(link => {
+            if (link.dataset.tipo === selectedValue || link.innerText.trim() === selectedValue) {
+                links.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            }
+        });
+    }
+
+    links.forEach(link => {
+        link.addEventListener('click', function () {
+            links.forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+            activeToSelect();
+        });
+    });
+
+    options.forEach(option => {
+        option.addEventListener('click', function () {
+            const selectedValue = this.dataset.value || this.innerText.trim();
+            selectedOption.textContent = selectedValue;
+            selectToActive();
+        });
+    });
+
+    activeToSelect();
+
+    window.addEventListener('resize', activeToSelect);
+    
 });
 
 // Evento para ocultar alertas com jQuery

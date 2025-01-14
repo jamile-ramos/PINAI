@@ -294,6 +294,9 @@ select {
     display: none;
 }
 
+/* Css do footer */
+
+
 @media screen and (min-width: 320px) and (max-width: 778px) {
     .home-text h1 {
         font-size: 25px;
@@ -314,7 +317,7 @@ select {
     }
 }
 
-@media screen and (max-width: 906px) {
+@media screen and (max-width: 1170px) {
     .filtros {
         display: none;
     }
@@ -328,6 +331,7 @@ select {
         cursor: pointer;
         background-color: #fff;
         width: 190px;
+        visibility: visible;
     }
 
     .selected-option {
@@ -376,8 +380,8 @@ select {
     .barra-pesquisa {
         align-items: flex-start;
     }
-    
-    .btn-dark{
+
+    .btn-dark {
         background: #343a40 !important;
     }
 
@@ -387,6 +391,15 @@ select {
         right: 10px;
     }
 
+    .hidden {
+        display: none;
+    }
+
+    .visible {
+        display: block;
+    }
+
+
 }
 
 @media screen and (max-width: 755px) {
@@ -394,7 +407,7 @@ select {
         display: none;
     }
 
-    .line-button{
+    .line-button {
         width: 100%;
         height: 1px;
         border-bottom: 1px solid #ccc;
@@ -414,7 +427,11 @@ select {
     .filtros-select {
         width: 120px;
     }
+
     .search-icon {
         margin: 0px 2px 0 2px;
+    }
+    .close-search {
+        margin-right: 2px;
     }
 }

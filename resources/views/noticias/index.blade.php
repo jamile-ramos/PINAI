@@ -3,68 +3,26 @@
 @section('title', 'Portal de Notícias')
 
 @section('content')
-<div class="bg-light">
-    <div class="navbar navbar-light bg-light barra-filtros">
-        <!-- Botões de filtros -->
-        <div class="filtros">
-            <a href="/noticias?query" class="active">Todas</a>
-            <a href="/painelUsuarios?query">Minhas Notícias</a>
-            <a href="javascript:void(0);" class="toggle-categorias" data-tipo='noticia'>Categorias</a>
-        </div>
 
-        <!-- Filtros como Select para telas menores -->
-        <div class="filtros-select" id="filtrosSelect">
-            <div class="selected-option">
-                Todas
-            </div>
-            <div class="options" style="display: none;">
-                <button type="button" class="option" data-value="todas">Todas</button>
-                <button type="button" class="option" data-value="minhas-noticias">Minhas Notícias</button>
-                <button type="button" class="option toggle-categorias" data-value="categorias">Categorias</button>
-                <div class="line-button"></div>
-                <button type="button" class="btn btn-primary mr-2 toggle-search" id="abrirModalNoticiaMenor">
-                    Adicionar Notícia
-                </button>
-                <button type="button" class="btn btn-dark mr-2 toggle-categorias" id="abrirModalCategoriaMenor">
-                    Adicionar Categoria
-                </button>
-            </div>
-            <i class="dropdown-icon fas fa-chevron-down"></i>
-        </div>
-
-        <div class="ml-auto d-flex align-items-center barra-pesquisa">
-            <!-- Campo de pesquisa inicialmente escondido -->
-            <form action="/" method="GET" class="search-form" style="display: none;">
-                <div class="search-container">
-                    <i class="fas fa-search mr-2"></i>
-                    <input type="text" class="search-input" name="query" placeholder="Pesquisar..." value="{{ request('query') }}" />
-                </div>
-            </form>
-           
-            <!-- Filtro para telas maiores-->
-            <div class="button-hide">
-                <button type="button" class="btn btn-primary mr-2 toggle-search" id="abrirModalNoticia">
-                    Adicionar Notícia
-                </button>
-                <button type="button" class="btn btn-dark mr-2 toggle-categorias" id="abrirModalCategoria">
-                    Adicionar Categoria
-                </button>
-            </div>
-
-            <!-- Modal de categoria-->
-            @include('components.modal-categoria-create', ['tipo' => 'noticia'])
-
-            <!-- Moda de noticias -->
-            @include('noticias.create')
-
-            <!-- Ícone de pesquisa que ativa a barra de pesquisa -->
-            <div class="botao-pesquisar">
-                <a href="javascript:void(0);" class="search-icon"><i class="fas fa-search mr-2"></i></a>
-                <a href="javascript:void(0);" class="close-search" style="display: none;"><i class="fas fa-times mr-2"></i></a>
-            </div>
-        </div>
-    </div>
-</div>
+<x-barra-filtros 
+    :links="[
+        ['href' => '/noticias?query', 'nome' => 'Todas', 'class' => 'active', 'data-value' => 'todas'],
+        ['href' => '/painelUsuarios?query', 'nome' => 'Minhas Notícias', 'data-value' => 'minhas-noticias'],
+        ['href' => 'javascript:void(0);', 'nome' => 'Categorias', 'class' => 'toggle-categorias', 'tipo' => 'noticia', 'data-value' => 'categorias']
+    ]"
+    :actionsMenor="[
+        ['class' => 'btn-primary mr-2 toggle-search', 'id' => 'abrirModalNoticiaMenor', 'nome' => 'Adicionar Notícia'],
+        ['class' => 'btn-dark mr-2 toggle-categorias', 'id' => 'abrirModalCategoriaMenor', 'nome' => 'Adicionar Categoria']
+    ]"
+    :actions="[
+        ['class' => 'btn-primary mr-2 toggle-search', 'id' => 'abrirModalNoticia', 'nome' => 'Adicionar Notícia'],
+        ['class' => 'btn-dark mr-2 toggle-categorias', 'id' => 'abrirModalCategoria', 'nome' => 'Adicionar Categoria']
+    ]"
+    :modals="[
+        ['view' => 'components.modal-categoria-create', 'data' => ['tipo' => 'noticia']],
+        ['view' => 'noticias.create']
+    ]"
+/>
 
 <div id="conteudo-categorias">
     <div class="bd-example">
@@ -128,5 +86,5 @@
         </div>
     </div>
 </div>
-
+</div>
 @endsection

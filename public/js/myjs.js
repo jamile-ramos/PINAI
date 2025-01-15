@@ -223,24 +223,24 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function selectToActive() {
-        const selectedValue = selectedOption.innerText.trim().toLowerCase();; 
-    
+        const selectedValue = selectedOption.innerText.trim().toLowerCase();;
+
         if (!selectedValue) {
             console.log('Nenhum valor selecionado encontrado!');
         }
-    
+
         links.forEach(link => {
-    
-            if (link.innerText.trim().toLowerCase() === selectedValue) {    
+
+            if (link.innerText.trim().toLowerCase() === selectedValue) {
                 links.forEach(l => {
                     l.classList.remove('active');
                 });
-    
+
                 link.classList.add('active');
             }
         });
     }
-    
+
     links.forEach(link => {
         link.addEventListener('click', function () {
             links.forEach(l => l.classList.remove('active'));
@@ -263,12 +263,38 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     activeToSelect();
 
-    // Listar categorias no formulario de criacao de noticia/topico/solucao/documentos
-    const campoSelect = document.getElementById('campo-select');
+    // Listar categorias no formulário de criação de notícia/tópico/solução/documentos
+    $('#criarNoticiaModal').on('show.bs.modal', function () {
 
-    async function carregarCategorias() {
-        
-    }
+        const select = document.getElementById('categoria');
+        const tipo = select.getAttribute('data-tipo');
+        console.log('Tipo', tipo);
+
+        fetch(`/categorias/create/${tipo}`)
+            .then(response => {
+                if (!response.ok) {
+                    console.error(`[DEPRECATION WARNING] Falha ao buscar categorias para o tipo: ${tipo}.`);
+                    throw new Error('Erro na resposta da API.');
+                }
+                return response.json();
+            })
+            .then(data => {     
+                select.innerHTML = '<option value="" disabled selected>Selecione uma categoria</option>';
+
+                data.forEach(categoria => {
+                    const option = document.createElement('option');
+                    option.value = categoria.id;
+                    console.log('Valor: ', option.value);
+                    option.textContent = categoria.nomeCategoria;
+                    console.log('Nome: ', option.textContent);
+                    select.appendChild(option);
+                });
+            })  
+            .catch(error => {
+                console.error(`[DEPRECATION WARNING] Erro ao carregar categorias para o tipo: ${tipo}. Detalhes:`, error);
+            });
+    });
+
 
 });
 

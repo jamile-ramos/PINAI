@@ -4,9 +4,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div class="card-header">
-                    <div class="card-title">Adicionar Notícia</div>
+                    <div class="card-title">Adicionar Categoria</div>
                 </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>

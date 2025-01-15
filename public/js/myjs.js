@@ -60,26 +60,60 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // Funcao para aparecer o conteudo de categorias
     function AbriCategorias(tipo) {
 
         const categoriasUrl = `/categorias/${tipo}`;
+        console.log('Url', categoriasUrl);
         fetch(categoriasUrl)
             .then(response => response.text())
             .then(data => {
                 document.getElementById('conteudo-categorias').innerHTML = data;
+                console.log('Dados: ', document.getElementById('conteudo-categorias').innerHTML = data);
             })
             .catch(error => {
                 console.error('Erro ao carregar categorias:', error);
             });
     }
 
+    // Funcao para aparecer o conteudo de My publicacoes(pode ser noticias, topicos, documetos, solucoes)
+    function AbrirMys(model, tipo, id) {
+        const modelUrl = `${model}/${tipo}/${id}`
+
+        fetch(modelUrl)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('conteudo-categorias').innerHTML = data;
+                const toggleMy = document.querySelector('.toggle-my');
+                const titulo = document.querySelector('.title-my');
+                titulo.textContent = 'Minhas Notícias';
+                console.log('Novo título:', titulo.textContent);
+            })
+            .catch(error => {
+                console.error('Erro ao carregar', error);
+            });
+    }
+
     // Evento para toggle categorias
     const toggleCategoriasButton = document.querySelector('.toggle-categorias');
+    console.log('ToggkeCategorias: ', toggleCategoriasButton);
     if (toggleCategoriasButton) {
         toggleCategoriasButton.addEventListener('click', function () {
             const tipo = this.dataset.tipo;
+            console.log('Tipo: ', tipo);
             AbriCategorias(tipo);
         });
+    }
+
+    // Evento para toggle my
+    const toggleMy = document.querySelector('.toggle-my');
+    if (toggleMy) {
+        toggleMy.addEventListener('click', function () {
+            const model = this.dataset.model;
+            const tipo = this.dataset.value;
+            const idUser = this.dataset.user;
+            AbrirMys(model, tipo, idUser);
+        })
     }
 
     // Evento para abrir o modal de exclusão
@@ -174,6 +208,44 @@ document.addEventListener('DOMContentLoaded', function () {
         $('#criarNoticiaModal').modal('show');
     });
 
+    // Evento para abrir o modal de criação de noticia e criar noticia
+    /*$(document).ready(function () {
+        $('#abrirModalNoticia').on('click', function () {
+            $('#criarNoticiaModal').modal('show');
+        });
+        $('#abrirModalNoticiaMenorr').on('click', function () {
+            $('#criarNoticiaModal').modal('show');
+        })
+
+        $('#criarNoticiaModal').submit(function (event) {
+            event.preventDefault();
+
+            const form = $(this);
+            const actionUrl = form.attr('action');
+            const formData = form.serialize();
+
+            $.ajax({
+                url: actionUrl,
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    $('#conteudo-categorias').html(response);
+
+                    $('#criarNoticiaModal').modal('hide');
+
+                    $('.filtros a').removeClass('active');
+                    $('.filtros .toggle-my').addClass('active');
+
+                    $('#formulario-modal')[0].reset();
+                },
+                error: function (xhr, status, error) {
+                    console.error('Erro ao criar categoria:', error);
+                    alert('Ocorreu um erro ao tentar criar a noticia.');
+                }
+            });
+        });
+    });*/
+
     // Codigo para barra de filtros responsiva
     const selectedOption = filtrosSelect.querySelector('.selected-option');
     const options = filtrosSelect.querySelector('.options');
@@ -199,7 +271,10 @@ document.addEventListener('DOMContentLoaded', function () {
             if (value === 'todas') {
                 window.location.href = '/noticias?query';
             } else if (value === 'minhas-noticias') {
-                console.log('Opção "minhas-noticias" selecionada');
+                const model = toggleMy.dataset.model;
+                const tipo = toggleMy.dataset.value;
+                const idUser = toggleMy.dataset.user;
+                AbrirMys(model, tipo, idUser);
             } else if (value === 'categorias') {
                 const tipo = button.dataset.tipo;
                 AbriCategorias(tipo);
@@ -278,7 +353,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 return response.json();
             })
-            .then(data => {     
+            .then(data => {
                 select.innerHTML = '<option value="" disabled selected>Selecione uma categoria</option>';
 
                 data.forEach(categoria => {
@@ -289,7 +364,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.log('Nome: ', option.textContent);
                     select.appendChild(option);
                 });
-            })  
+            })
             .catch(error => {
                 console.error(`[DEPRECATION WARNING] Erro ao carregar categorias para o tipo: ${tipo}. Detalhes:`, error);
             });

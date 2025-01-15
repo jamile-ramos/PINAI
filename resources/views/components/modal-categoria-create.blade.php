@@ -10,7 +10,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="createFormCategoria" action="{{ route('categorias.store', ['tipo' => 'noticia']) }}" method="POST">
+            <form id="createFormCategoria" action="{{ route('categorias.store', ['tipo' => 'noticias']) }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     <input type="hidden" name="idUsuario" value="{{ Auth::user()->id }}">

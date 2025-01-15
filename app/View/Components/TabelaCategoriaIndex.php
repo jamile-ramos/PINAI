@@ -2,20 +2,20 @@
 
 namespace App\View\Components;
 
-use Closure;
-use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class TabelaCategoriaIndex extends Component
 {
+    public $categorias;
     public $tipo;
 
-    public function __construct($tipo)
+    public function __construct($categorias, $tipo)
     {
+        $this->categorias = $categorias;
         $this->tipo = $tipo;
     }
 
-    public function render(): View|Closure|string
+    public function render()
     {
         return view('components.tabela-categoria-index');
     }

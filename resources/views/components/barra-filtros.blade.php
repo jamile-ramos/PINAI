@@ -5,9 +5,15 @@
         <!-- Botões de filtros -->
         <div class="filtros">
             @foreach($links as $link)
-            <a href="{{ $link['href'] }}" class="{{ $link['class'] ?? '' }}" data-tipo="{{ $link['tipo'] ?? '' }}">{{ $link['nome'] }}</a>
+            <a href="{{ $link['href'] }}"
+                class="{{ $link['class'] ?? '' }}"
+                data-value="{{ $link['data-value'] ?? '' }}"
+                data-model="{{ $link['data-model'] ?? '' }}"
+                data-tipo="{{ $link['data-tipo'] ?? '' }}"
+                data-user="{{ $link['data-user'] ?? '' }}">
+                {{ $link['nome'] }}
+            </a>
             @endforeach
-
         </div>
 
         <!-- Filtros como Select para telas menores -->
@@ -15,12 +21,22 @@
             <div class="selected-option">Todas</div>
             <div class="options hidden">
                 @foreach($links as $link)
-                <button type="button" class="option" data-value="{{ $link['data-value'] }}" data-tipo="{{ $link['tipo'] ?? '' }}">{{ $link['nome'] }}</button>
+                <button type="button" class="option {{ $link['class'] ?? '' }}"
+                    data-value="{{ $link['data-value'] ?? '' }}"
+                    data-value="{{ $link['data-value'] ?? '' }}"
+                    data-model="{{ $link['data-model'] ?? '' }}"
+                    data-tipo="{{ $link['data-tipo'] ?? '' }}"
+                    data-user="{{ $link['data-user'] ?? '' }}">
+                    {{ $link['nome'] }}
+                </button>
                 @endforeach
                 <div class="line-button"></div>
 
                 @foreach($actionsMenor as $action)
-                <button type="button" class="btn {{ $action['class'] }}" id="{{ $action['id'] }}">{{ $action['nome'] }}</button>
+                <button type="button" 
+                class="btn {{ $action['class'] }}" 
+                id="{{ $action['id'] }}">
+                {{ $action['nome'] }}</button>
                 @endforeach
             </div>
             <i class="dropdown-icon fas fa-chevron-down"></i>

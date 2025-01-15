@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Noticia;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,7 +21,9 @@ class NoticiaController extends Controller
             $noticias = Noticia::all();
         }
 
-        return view('noticias.index', compact('noticias'));
+        $user = Auth::user();
+
+        return view('noticias.index', compact('noticias', 'user'));
     }
 
     public function store(Request $request)
@@ -50,4 +53,17 @@ class NoticiaController extends Controller
 
         return redirect('/noticias');
     }
+
+    public function minhasNoticias($idUsuario){
+       $user = User::findOrFail($idUsuario);
+
+       $noticias = $user->noticias;
+
+       return view('noticias.minhasNoticias', compact('noticias'));
+    }
+
+    public function delete($id){
+        Noticia::destroy($id);                
+    }
+
 }

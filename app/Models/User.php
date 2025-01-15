@@ -48,5 +48,7 @@ class User extends Authenticatable
         ];
     }
 
-    
+    public function noticias() {
+        return $this->hasMany(Noticia::class, 'idUsuario');
+    }    
 }

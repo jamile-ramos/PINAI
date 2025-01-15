@@ -14,8 +14,4 @@ class CategoriaNoticia extends Model
     public function user() {
         return $this->belongsTo(User::class, 'idUsuario');
     }
-
-    public function categoriaNoticia(){
-        return $this->belongsTo(CategoriaNoticia::class, 'idUsuario');
-    }
 }

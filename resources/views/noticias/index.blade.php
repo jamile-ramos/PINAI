@@ -7,8 +7,8 @@
 <x-barra-filtros 
     :links="[
         ['href' => '/noticias?query', 'nome' => 'Todas', 'class' => 'active', 'data-value' => 'todas'],
-        ['href' => '/painelUsuarios?query', 'nome' => 'Minhas Notícias', 'data-value' => 'minhas-noticias'],
-        ['href' => 'javascript:void(0);', 'nome' => 'Categorias', 'class' => 'toggle-categorias', 'tipo' => 'noticia', 'data-value' => 'categorias']
+        ['href' => 'javascript:void(0);', 'nome' => 'Minhas Notícias', 'class' => 'toggle-my', 'data-value' => 'minhas-noticias', 'data-model' => 'noticias', 'data-user' => $user->id],
+        ['href' => 'javascript:void(0);', 'nome' => 'Categorias', 'class' => 'toggle-categorias', 'data-tipo' => 'noticias', 'data-value' => 'categorias']
     ]"
     :actionsMenor="[
         ['class' => 'btn-primary mr-2 toggle-search', 'id' => 'abrirModalNoticiaMenor', 'nome' => 'Adicionar Notícia'],
@@ -19,7 +19,7 @@
         ['class' => 'btn-dark mr-2 toggle-categorias', 'id' => 'abrirModalCategoria', 'nome' => 'Adicionar Categoria']
     ]"
     :modals="[
-        ['view' => 'components.modal-categoria-create', 'data' => ['tipo' => 'noticia']],
+        ['view' => 'components.modal-categoria-create', 'data' => ['tipo' => 'noticias']],
         ['view' => 'noticias.create']
     ]"
 />

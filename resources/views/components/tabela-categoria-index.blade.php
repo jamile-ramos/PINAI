@@ -1,9 +1,4 @@
-<!-- Tabel de Categorias -->
-@if (session('success'))
-<div class="alert alert-success">
-    {{ session('success') }}
-</div>
-@endif
+@props(['categorias' => [],'tipo' => ''])
 
 <div class="card" id="tabela-categorias">
     <div class="card-header">
@@ -65,7 +60,7 @@
 
                     @endforeach
 
-                    @if($categorias->isEmpty())
+                    @if (empty($categorias))
                     <tr>
                         <td colspan="3">Não há categorias registradas</td>
                     </tr>

@@ -11,7 +11,7 @@ use Illuminate\Contracts\View\View;
 class CategoriaController extends Controller
 {
     private $modelMap = [
-        'noticia' => CategoriaNoticia::class,
+        'noticias' => CategoriaNoticia::class,
         'documento' => CategoriaDocumento::class,
         'topico' => CategoriaTopico::class,
         'solucao' => CategoriaSolucao::class,
@@ -25,7 +25,9 @@ class CategoriaController extends Controller
             return response()->json(['error' => 'Tipo de categoria inválido'], 400);
         }
 
-        return view('components.tabela-categoria-index', compact('categorias', 'tipo'));
+        $viewPath = "{$tipo}.categorias";
+
+        return view($viewPath, compact('categorias', 'tipo'));
     }
 
     public function create($tipo)

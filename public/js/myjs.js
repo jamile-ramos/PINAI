@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (toggleCategoriasButton) {
         toggleCategoriasButton.addEventListener('click', function () {
             const tipo = this.dataset.tipo;
-            AbriCategorias(tipo); 
+            AbriCategorias(tipo);
         });
     }
 
@@ -212,28 +212,35 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //Código para quando a tela for aumentada ou diminuida a opcao selecionada persista
     const links = document.querySelectorAll('.filtros a');
+    const opcoes = document.querySelectorAll('.options .option');
 
     function activeToSelect() {
         const activeLink = document.querySelector('.filtros a.active');
-        console.log('Link ativo: ', activeLink);
         if (activeLink) {
             const activeValue = activeLink.innerText.trim();
             selectedOption.textContent = activeValue;
-            console.log('Valor active', activeValue);   
         }
     }
 
     function selectToActive() {
-        const selectedValue = selectedOption.textContent.trim();
-        console.log('Valor selecionado: ', selectedValue);
+        const selectedValue = selectedOption.innerText.trim().toLowerCase();; 
+    
+        if (!selectedValue) {
+            console.log('Nenhum valor selecionado encontrado!');
+        }
+    
         links.forEach(link => {
-            if (link.dataset.tipo === selectedValue || link.innerText.trim() === selectedValue) {
-                links.forEach(l => l.classList.remove('active'));
+    
+            if (link.innerText.trim().toLowerCase() === selectedValue) {    
+                links.forEach(l => {
+                    l.classList.remove('active');
+                });
+    
                 link.classList.add('active');
             }
         });
     }
-
+    
     links.forEach(link => {
         link.addEventListener('click', function () {
             links.forEach(l => l.classList.remove('active'));
@@ -242,7 +249,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    options.forEach(option => {
+    opcoes.forEach(option => {
         option.addEventListener('click', function () {
             const selectedValue = this.dataset.value || this.innerText.trim();
             selectedOption.textContent = selectedValue;
@@ -250,10 +257,19 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    window.addEventListener('resize', () => {
+        activeToSelect();
+        selectToActive();
+    });
     activeToSelect();
 
-    window.addEventListener('resize', activeToSelect);
-    
+    // Listar categorias no formulario de criacao de noticia/topico/solucao/documentos
+    const campoSelect = document.getElementById('campo-select');
+
+    async function carregarCategorias() {
+        
+    }
+
 });
 
 // Evento para ocultar alertas com jQuery

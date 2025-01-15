@@ -294,7 +294,10 @@ select {
     display: none;
 }
 
-/* Css do footer */
+.card-header{
+    background-color: transparent !important;
+    border-bottom: 0;
+}
 
 
 @media screen and (min-width: 320px) and (max-width: 778px) {

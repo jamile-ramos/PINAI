@@ -3,7 +3,9 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalCategoriaLabel">Adicionar Categoria</h5>
+                <div class="card-header">
+                    <div class="card-title">Adicionar Notícia</div>
+                </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

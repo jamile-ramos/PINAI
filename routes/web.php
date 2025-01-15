@@ -30,6 +30,9 @@ Route::put('/painelUsuarios/status/{id}', [UsuarioController::class, 'updateStat
 // Portal de Notícias
 Route::get('/noticias', [NoticiaController::class, 'index'])->name('noticias.index');
 Route::get('/noticias/create', [NoticiaController::class, 'create'])->name('noticias.create');
+
+// Categorias de noticias, topicos, documentos e solucoes
 Route::get('/categorias/{tipo}', [CategoriaController::class, 'index'])->name('categorias.index');
+Route::get('/categorias/create/{tipo}', [CategoriaController::class, 'create'])->name('categorias.create');
 Route::post('/categorias/store/{tipo}', [CategoriaController::class, 'store'])->name('categorias.store');
 Route::delete('/categorias/delete/{tipo}', [CategoriaController::class, 'delete'])->name('categorias.delete');

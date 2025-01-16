@@ -33,7 +33,7 @@ class NoticiaController extends Controller
         $noticia->titulo = $request->titulo;
         $noticia->subtitulo = $request->subtitulo;
         $noticia->conteudo = $request->conteudo;
-        $noticia->idCategoriaNoticia = $request->categoria;
+        $noticia->idCategoria = $request->categoria;
         $noticia->idUsuario = Auth::id();
 
         // Image upload
@@ -51,7 +51,8 @@ class NoticiaController extends Controller
 
         $noticia->save();
 
-        return redirect('/noticias');
+        $noticias = Noticia::all();
+        return view('noticias.minhasNoticias', compact('noticias'));
     }
 
     public function minhasNoticias($idUsuario){
@@ -63,7 +64,9 @@ class NoticiaController extends Controller
     }
 
     public function delete($id){
-        Noticia::destroy($id);                
+        Noticia::destroy($id); 
+        $noticias = Noticia::all();
+        return view('noticias.minhasNoticias', compact('noticias'));    
     }
 
 }

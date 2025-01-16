@@ -1,10 +1,10 @@
-@props(['noticias' => [], 'routeName' => ''])
+@props(['publicacoes' => [], 'routeName' => '', 'tipo' => '', 'titulo' => ''])
 
 <!-- Tabel de Categorias -->
 <div class="card" id="tabela-categorias">
     <div class="card-header">
         <div class="d-flex align-items-center">
-            <h4 class="card-title title-my">Meu</h4>
+            <h4 class="card-title title-my">{{ $titulo }}</h4>
         </div>
     </div>
     <div class="card-body">
@@ -15,7 +15,8 @@
                 <thead>
                     <tr>
                         <th>Título</th>
-                        <th>Data de publicacao</th>
+                        <th>Categoria</th>
+                        <th>Data de publicação</th>
                         <th>Ação</th>
                     </tr>
                 </thead>
@@ -23,16 +24,18 @@
                     <tr>
                         <th>Usuário resposavel pela publicação</th>
                         <th>Categoria</th>
+                        <th>Data de publicação</th>
                         <th>Ação</th>
                     </tr>
                 </tfoot>
                 <tbody>
-                    @foreach ($noticias as $noticia)
+                    @foreach ($publicacoes as $publicacao)
                     @if ($loop->index % 2 == 0)
                     <tr>
-                        <td>{{ $noticia->titulo }}</td>
-                        <td>{{ $noticia->categoriaNoticia->nomeCategoria }}</td>
-                        <td>
+                        <td>{{ $publicacao->titulo }}</td>
+                        <td>{{ $publicacao->categoria->nomeCategoria }}</td>
+                        <td>{{ \Carbon\Carbon::parse($publicacao->created_at)->format('d/m/Y') }}</td>
+                        <td class="buttons-table">
                             <div class="form-button-action">
                                 <button type="button"
                                     class="btn btn-warning btn-edit">Ver
@@ -46,18 +49,19 @@
                             <div class="form-button-action">
                                 <button type="button"
                                     class="btn btn-danger btn-excluirNoticia"
-                                    data-id = "{{ $noticia->id }}"
+                                    data-id = "{{ $publicacao->id }}"
+                                    data-tipo = "{{ $tipo }}"
                                     >Excluir
                                 </button>
                             </div>
                         </td>
-
                     </tr>
                     @else
                     <tr>
-                        <td>{{ $noticia->titulo }}</td>
-                        <td>{{ $noticia->categoriaNoticia->nomeCategoria }}</td>
-                        <td>
+                        <td>{{ $publicacao->titulo }}</td>
+                        <td>{{ $publicacao->categoria->nomeCategoria }}</td>
+                        <td>{{ \Carbon\Carbon::parse($publicacao->created_at)->format('d/m/Y') }}</td>
+                        <td class="buttons-table">
                             <div class="form-button-action">
                                 <button type="button"
                                     class="btn btn-warning btn-edit">Ver 
@@ -71,6 +75,8 @@
                             <div class="form-button-action">
                                 <button type="button"
                                     class="btn btn-danger btn-excluirNoticia"
+                                    data-id = "{{ $publicacao->id }}"
+                                    data-tipo = "{{ $tipo }}"
                                     >Excluir
                                 </button>
                             </div>
@@ -80,9 +86,9 @@
 
                     @endforeach
 
-                    @if(empty($noticias))
+                    @if(empty($publicacoes))
                     <tr>
-                        <td colspan="3">Não há noticias registradas</td>
+                        <td colspan="3">Não há registros</td>
                     </tr>
                     @endif
                 </tbody>
@@ -92,6 +98,6 @@
 </div>
 
 <!-- Modal de Confirmação de Exclusão -->
-<x-modal-exclusao :id="$noticia->id" :routeName="$routeName">
+<x-modal-exclusao :id="$publicacao->id" :routeName="$routeName">
 
 </x-modal-exclusao>

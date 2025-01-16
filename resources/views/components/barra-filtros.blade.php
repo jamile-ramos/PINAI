@@ -1,4 +1,4 @@
-@props(['links' => [],'actionsMenor' => [], 'actions' => [], 'modals' => []])
+@props(['links' => [], 'actions' => [], 'modals' => []])
 
 <div class="bg-light">
     <div class="navbar navbar-light bg-light barra-filtros">
@@ -23,7 +23,6 @@
                 @foreach($links as $link)
                 <button type="button" class="option {{ $link['class'] ?? '' }}"
                     data-value="{{ $link['data-value'] ?? '' }}"
-                    data-value="{{ $link['data-value'] ?? '' }}"
                     data-model="{{ $link['data-model'] ?? '' }}"
                     data-tipo="{{ $link['data-tipo'] ?? '' }}"
                     data-user="{{ $link['data-user'] ?? '' }}">
@@ -32,10 +31,11 @@
                 @endforeach
                 <div class="line-button"></div>
 
-                @foreach($actionsMenor as $action)
+                @foreach($actions as $action)
                 <button type="button" 
                 class="btn {{ $action['class'] }}" 
-                id="{{ $action['id'] }}">
+                data-toggle="{{ $action['data-toggle'] ?? '' }}"
+                data-target="{{ $action['data-target'] ?? ''}}">
                 {{ $action['nome'] }}</button>
                 @endforeach
             </div>
@@ -55,7 +55,11 @@
             <!-- Filtro para telas maiores-->
             <div class="button-hide">
                 @foreach($actions as $action)
-                <button type="button" class="btn {{ $action['class'] }}" id="{{ $action['id'] }}">{{ $action['nome'] }}</button>
+                <button type="button" 
+                class="btn {{ $action['class'] }}" 
+                data-toggle="{{ $action['data-toggle'] ?? '' }}"
+                data-target="{{ $action['data-target'] ?? ''}}"               >
+                {{ $action['nome'] }}</button>
                 @endforeach
             </div>
 

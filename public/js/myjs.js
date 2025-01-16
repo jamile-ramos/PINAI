@@ -64,12 +64,10 @@ document.addEventListener('DOMContentLoaded', function () {
     function AbriCategorias(tipo) {
 
         const categoriasUrl = `/categorias/${tipo}`;
-        console.log('Url', categoriasUrl);
         fetch(categoriasUrl)
             .then(response => response.text())
             .then(data => {
                 document.getElementById('conteudo-categorias').innerHTML = data;
-                console.log('Dados: ', document.getElementById('conteudo-categorias').innerHTML = data);
             })
             .catch(error => {
                 console.error('Erro ao carregar categorias:', error);
@@ -84,10 +82,6 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.text())
             .then(data => {
                 document.getElementById('conteudo-categorias').innerHTML = data;
-                const toggleMy = document.querySelector('.toggle-my');
-                const titulo = document.querySelector('.title-my');
-                titulo.textContent = 'Minhas Notícias';
-                console.log('Novo título:', titulo.textContent);
             })
             .catch(error => {
                 console.error('Erro ao carregar', error);
@@ -96,11 +90,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Evento para toggle categorias
     const toggleCategoriasButton = document.querySelector('.toggle-categorias');
-    console.log('ToggkeCategorias: ', toggleCategoriasButton);
     if (toggleCategoriasButton) {
         toggleCategoriasButton.addEventListener('click', function () {
             const tipo = this.dataset.tipo;
-            console.log('Tipo: ', tipo);
             AbriCategorias(tipo);
         });
     }
@@ -116,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
     }
 
-    // Evento para abrir o modal de exclusão
+    // Evento para abrir o modal de exclusão categoria
     document.body.addEventListener('click', function (event) {
         if (event.target && event.target.matches('.btn-action')) {
             const categoriaId = event.target.getAttribute('data-id');
@@ -159,8 +151,54 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // Evento para abrir o modal de exclusão mys
+    document.body.addEventListener('click', function (event) {
+        if (event.target && event.target.matches('.btn-excluirNoticia')) {
+            const publicacaoId = event.target.getAttribute('data-id');
+            const tipo = event.target.getAttribute('data-tipo');
+
+            document.getElementById('publicacaoId').value = publicacaoId;
+
+            const form = document.getElementById('deleteFormPubli');
+            const route = form.getAttribute('action');
+            form.action = route.replace(':tipo', tipo);
+
+            $('#confirmDeleteModalPubli').modal('show');
+        }
+
+        $('.close').click(function () {
+            $('#confirmDeleteModalPubli').modal('hide');
+        });
+
+        $('#deleteFormPubli').submit(function (event) {
+            event.preventDefault();
+
+            const form = $(this);
+            const actionUrl = form.attr('action');
+
+            $.ajax({
+                url: actionUrl,
+                type: 'DELETE',
+                data: form.serialize(),
+                success: function (response) {
+                    $('#conteudo-categorias').html(response);
+                    $('#confirmDeleteModalPubli').modal('hide');
+                    $('.modal-backdrop').remove();
+                    $('html, body').css('overflow', 'auto');
+                    $('.filtros a').removeClass('active');
+                    $('.filtros .toggle-my').addClass('active');
+                },
+                error: function (xhr, status, error) {
+                    console.error('Erro ao excluir:', error);
+                    alert('Ocorreu um erro ao tentar excluir a categoria.');
+                }
+            });
+        });
+    });
+
+
     // Evento para abrir o modal de criação de categoria e criar categoria
-    $(document).ready(function () {
+    /*$(document).ready(function () {
         $('#abrirModalCategoria').on('click', function () {
             $('#modalCategoria').modal('show');
         });
@@ -195,29 +233,85 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
         });
-    });
-
-    // Evento para abrir o modal de criação de notícia 
-    const abrirModalBtn = document.getElementById('abrirModalNoticia');
-    abrirModalBtn.addEventListener('click', function () {
-        $('#criarNoticiaModal').modal('show');
-    })
-
-    const abrirModalBtnMenor = document.getElementById('abrirModalNoticiaMenor');
-    abrirModalBtnMenor.addEventListener('click', function () {
-        $('#criarNoticiaModal').modal('show');
-    });
+    });*/
 
     // Evento para abrir o modal de criação de noticia e criar noticia
     /*$(document).ready(function () {
-        $('#abrirModalNoticia').on('click', function () {
-            $('#criarNoticiaModal').modal('show');
-        });
-        $('#abrirModalNoticiaMenorr').on('click', function () {
+        const abrirModalBtn = document.getElementById('abrirModalNoticia');
+        abrirModalBtn.addEventListener('click', function () {
             $('#criarNoticiaModal').modal('show');
         })
 
-        $('#criarNoticiaModal').submit(function (event) {
+        const abrirModalBtnMenor = document.getElementById('abrirModalNoticiaMenor');
+        abrirModalBtnMenor.addEventListener('click', function () {
+            $('#criarNoticiaModal').modal('show');
+        });
+
+        $('#formulario-modal-create').submit(function (event) {
+            event.preventDefault();
+
+            const form = $(this);
+            console.log('Formulario: ', form);
+            const actionUrl = form.attr('action');
+            console.log("URL do formulário obtida:", actionUrl);
+
+            const formData = form.serialize();
+            console.log("Dados do formulário serializados:", formData);
+
+            $.ajax({
+                url: actionUrl,
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    $('#conteudo-categorias').html(response);
+                    console.log("Conteúdo atualizado no elemento '#conteudo-categorias'.");
+
+                    $('#criarNoticiaModal').modal('hide');
+                    console.log("Modal 'criarNoticiaModal' ocultado.");
+
+                    $('.filtros a').removeClass('active');
+                    $('.filtros .toggle-my').addClass('active');
+                    console.log("Filtros atualizados: remove 'active' de todos os links e adiciona 'active' em '.toggle-my'.");
+
+                    $('#formulario-modal-create')[0].reset();
+                    console.log("Formulário resetado.");
+                },
+                error: function (xhr, status, error) {
+                    console.error("Resposta do servidor:", xhr.responseText);
+                    alert('Ocorreu um erro ao tentar criar a notícia.');
+                }
+            });
+        });
+
+        console.log("Script carregado com sucesso.");
+    });*/
+
+    // Evento para abrir o modal de criação 
+    $(document).ready(function () {
+        $('[data-toggle="modal"]').on('click', function () {
+
+            const modalId = $(this).data('target');
+            $(modalId).modal('show');
+
+        });
+        // Fechar modal e remover backdrop quando clicar no botao fechar
+        document.querySelectorAll('[data-dismiss="modal"]').forEach(button => {
+            button.addEventListener('click', function () {
+                const modal = $(this).closest('.modal');
+                modal.modal('hide');
+                $('.modal-backdrop').remove();
+            });
+        });
+        // Fechar modal e remover backdrop quando clicar no icone close
+        document.querySelectorAll('[data-dismiss="modal"], .close').forEach(button => {
+            button.addEventListener('click', function () {
+                const modal = $(this).closest('.modal');
+                modal.modal('hide');
+                $('.modal-backdrop').remove();
+            });
+        });
+
+        $('form[data-modal="true"]').on('submit', function (event) {
             event.preventDefault();
 
             const form = $(this);
@@ -231,20 +325,23 @@ document.addEventListener('DOMContentLoaded', function () {
                 success: function (response) {
                     $('#conteudo-categorias').html(response);
 
-                    $('#criarNoticiaModal').modal('hide');
+                    const modalId = form.closest('.modal').attr('id');
+                    $(`#${modalId}`).modal('hide');
+                    form[0].reset();
 
                     $('.filtros a').removeClass('active');
                     $('.filtros .toggle-my').addClass('active');
 
-                    $('#formulario-modal')[0].reset();
+                    $('.modal-backdrop').remove();
+
                 },
                 error: function (xhr, status, error) {
-                    console.error('Erro ao criar categoria:', error);
-                    alert('Ocorreu um erro ao tentar criar a noticia.');
+                    console.error("Erro:", error);
+                    alert('Ocorreu um erro. Tente novamente.');
                 }
             });
         });
-    });*/
+    });
 
     // Codigo para barra de filtros responsiva
     const selectedOption = filtrosSelect.querySelector('.selected-option');
@@ -267,12 +364,12 @@ document.addEventListener('DOMContentLoaded', function () {
         if (button) {
             const value = button.dataset.value;
             selectedOption.textContent = button.textContent;
+            const tipo = toggleMy.dataset.value;
 
-            if (value === 'todas') {
-                window.location.href = '/noticias?query';
-            } else if (value === 'minhas-noticias') {
+            if (value === 'all') {
+                window.location.href = '/{$tipo}?query';
+            } else if (value === 'mys') {
                 const model = toggleMy.dataset.model;
-                const tipo = toggleMy.dataset.value;
                 const idUser = toggleMy.dataset.user;
                 AbrirMys(model, tipo, idUser);
             } else if (value === 'categorias') {
@@ -343,7 +440,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const select = document.getElementById('categoria');
         const tipo = select.getAttribute('data-tipo');
-        console.log('Tipo', tipo);
 
         fetch(`/categorias/create/${tipo}`)
             .then(response => {
@@ -359,9 +455,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 data.forEach(categoria => {
                     const option = document.createElement('option');
                     option.value = categoria.id;
-                    console.log('Valor: ', option.value);
                     option.textContent = categoria.nomeCategoria;
-                    console.log('Nome: ', option.textContent);
                     select.appendChild(option);
                 });
             })

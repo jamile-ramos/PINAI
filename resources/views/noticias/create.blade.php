@@ -11,7 +11,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="formulario-modal" action="/noticias/store" method="post" enctype="multipart/form-data">
+                <form data-modal="true" id="formulario-modal-create" action="/noticias/store" method="post" enctype="multipart/form-data">
                     @csrf
                     <!-- Campo Título -->
                     <div class="form-group">
@@ -54,7 +54,7 @@
                     <!-- Campo Categoria -->
                     <div class="form-group">
                         <label for="categoria">Categoria</label>
-                        <select name="categoria" class="form-select form-control" id="categoria" data-tipo='noticia'>
+                        <select name="categoria" class="form-select form-control" id="categoria" data-tipo='noticias'>
                             <option value="" disabled selected>Carregando categorias...</option>
                         </select>
                     </div>
@@ -62,8 +62,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                <button type="submit" class="btn btn-primary" form="formulario-modal">Salvar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="submit" class="btn btn-primary" form="formulario-modal-create">Salvar</button>
             </div>
         </div>
     </div>

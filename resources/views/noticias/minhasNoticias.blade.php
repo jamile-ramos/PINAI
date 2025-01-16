@@ -1,4 +1,6 @@
 <x-minhas-publicacoes 
-    :noticias="$noticias"
+    :publicacoes="$noticias"
     :routeName="'noticias.delete'"
+    tipo="noticias"
+    titulo="Minhas Notícias"
 />

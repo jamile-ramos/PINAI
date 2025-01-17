@@ -16,7 +16,7 @@
     ]"
     :modals="[
         ['view' => 'components.modal-categoria-create', 'data' => ['tipo' => 'noticias']],
-        ['view' => 'noticias.create']
+        ['view' => 'noticias.form']
     ]"
 />
 

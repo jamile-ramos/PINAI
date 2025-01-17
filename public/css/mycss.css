@@ -302,8 +302,7 @@ select {
 .buttons-table{
     display: flex;
     gap: 10px;
-}
-
+}  
 
 @media screen and (min-width: 320px) and (max-width: 778px) {
     .home-text h1 {

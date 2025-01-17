@@ -27,7 +27,6 @@ class UsuarioController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $tipoUsuario = $request->tipoUsuario;
 
         $post = User::findOrFail($id);

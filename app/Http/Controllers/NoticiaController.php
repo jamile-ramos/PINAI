@@ -11,7 +11,6 @@ class NoticiaController extends Controller
 {
     public function index()
     {
-
         $query = request('query');
         if ($query) {
             $noticias = Noticia::where([
@@ -20,16 +19,17 @@ class NoticiaController extends Controller
         } else {
             $noticias = Noticia::all();
         }
-
         $user = Auth::user();
-
         return view('noticias.index', compact('noticias', 'user'));
+    }
+
+    public function create(){
+        
     }
 
     public function store(Request $request)
     {
         $noticia = new Noticia;
-
         $noticia->titulo = $request->titulo;
         $noticia->subtitulo = $request->subtitulo;
         $noticia->conteudo = $request->conteudo;
@@ -48,37 +48,34 @@ class NoticiaController extends Controller
 
             $noticia->imagem = $imageName;
         }
-
         $noticia->save();
-
         $noticias = Noticia::all();
         return view('noticias.minhasNoticias', compact('noticias'));
     }
 
-    public function edit($id){
-
+    public function edit($id)
+    {
         $noticia = Noticia::findOrFail($id);
-
-        return response()->json($noticia);
+        return view('noticias.form', compact('noticia'));
     }
 
-    public function update($id){
-
-
+    public function update(Request $request, $id) {
+        
     }
 
-    public function minhasNoticias($idUsuario){
-       $user = User::findOrFail($idUsuario);
+    public function minhasNoticias($idUsuario)
+    {
+        $user = User::findOrFail($idUsuario);
 
-       $noticias = $user->noticias;
+        $noticias = $user->noticias;
 
-       return view('noticias.minhasNoticias', compact('noticias'));
+        return view('noticias.minhasNoticias', compact('noticias'));
     }
 
-    public function delete($id){
-        Noticia::destroy($id); 
+    public function delete($id)
+    {
+        Noticia::destroy($id);
         $noticias = Noticia::all();
-        return view('noticias.minhasNoticias', compact('noticias'));    
+        return view('noticias.minhasNoticias', compact('noticias'));
     }
-
 }

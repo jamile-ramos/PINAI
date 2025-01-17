@@ -352,7 +352,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Listar categorias no formulário de criação de notícia/tópico/solução/documentos
     $('#criarNoticiaModal').on('show.bs.modal', function () {
-
         const select = document.getElementById('categoria');
         const tipo = select.getAttribute('data-tipo');
 
@@ -379,41 +378,19 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 
-    // Abrir modal para editar noticia
+    // Abrir o modal e editar noticia
     document.body.addEventListener('click', function (event) {
         if (event.target && event.target.matches('.btn-edit')) {
-            const publicacaoId = event.target.getAttribute('data-id');
+            const noticiaId = event.target.getAttribute('data-id');
             const tipo = event.target.getAttribute('data-tipo');
-            const modalId = event.target.getAttribute('data-edit');
-            const modalElement = document.querySelector(modalId);
 
-            document.getElementById('publicacaoId').value = publicacaoId;
+            document.getElementById('noticiaId').value = noticiaId;
 
-            const form = modalElement.querySelector('form[data-modal="true"]');
-            console.log('Form', form)
-            const route = `/${tipo}/edit/${publicacaoId}`;
-            console.log('Rota', route);
-            
-            //tentar criar uma funcao com o codigo acima para depois usar nos outros edits
+            const form = document.getElementById('formNoticia');
+            const route = form.getAttribute('action');
+            form.action = route.replace(':tipo', tipo);
 
-            fetch(route)
-                .then(response => response.json())
-                .then(data => {
-                    if (form) {
-                        form.action = route;
-                        console.log('Form', form);
-                        console.log('Data recebida:', data);
-
-                        form.querySelector('#titulo').value = data.titulo;
-                        form.querySelector('#subtitulo').value = data.subtitulo;
-                        form.querySelector('#conteudo').value = data.conteudo;
-                        form.querySelector('#categoria').value = data.categoria;
-                        console.log('Categoria atribuído:', data.categoria);//ver como acessar                
-
-
-                        $(modalId).modal('show');
-                    }
-                });
+            $('#criarNoticiaModal').modal('show');
         }
     });
 

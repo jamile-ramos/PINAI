@@ -1,4 +1,4 @@
-@props(['publicacoes' => [], 'routeName' => '', 'tipo' => '', 'titulo' => ''])
+@props(['publicacoes' => [], 'routeName' => '', 'tipo' => '', 'titulo' => '', 'dataEdit' => ''])
 
 <!-- Tabel de Categorias -->
 <div class="card" id="tabela-categorias">
@@ -43,7 +43,11 @@
                             </div>
                             <div class="form-button-action">
                                 <button type="button"
-                                    class="btn btn-info btn-edit">Editar
+                                    class="btn btn-info btn-edit"
+                                    data-id = "{{ $publicacao->id }}"
+                                    data-tipo = "{{ $tipo }}"
+                                    data-edit="{{ $dataEdit }}"
+                                    >Editar
                                 </button>
                             </div>
                             <div class="form-button-action">
@@ -64,12 +68,15 @@
                         <td class="buttons-table">
                             <div class="form-button-action">
                                 <button type="button"
-                                    class="btn btn-warning btn-edit">Ver 
+                                    class="btn btn-warning btn-view">Ver 
                                 </button>
                             </div>
                             <div class="form-button-action">
                                 <button type="button"
-                                    class="btn btn-info btn-edit">Editar
+                                    class="btn btn-info btn-edit"
+                                    data-id = "{{ $publicacao->id }}"
+                                    data-tipo = "{{ $tipo }}"
+                                    data-edit="{{ $dataEdit }}">Editar
                                 </button>
                             </div>
                             <div class="form-button-action">
@@ -98,6 +105,6 @@
 </div>
 
 <!-- Modal de Confirmação de Exclusão -->
-<x-modal-exclusao :id="$publicacao->id" :routeName="$routeName">
+<x-modal-exclusao :routeName="$routeName">
 
 </x-modal-exclusao>

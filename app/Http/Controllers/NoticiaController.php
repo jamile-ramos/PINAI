@@ -55,6 +55,18 @@ class NoticiaController extends Controller
         return view('noticias.minhasNoticias', compact('noticias'));
     }
 
+    public function edit($id){
+
+        $noticia = Noticia::findOrFail($id);
+
+        return response()->json($noticia);
+    }
+
+    public function update($id){
+
+
+    }
+
     public function minhasNoticias($idUsuario){
        $user = User::findOrFail($idUsuario);
 

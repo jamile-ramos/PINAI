@@ -8,12 +8,10 @@ use Illuminate\View\Component;
 
 class modalExclusao extends Component
 {
-    public $id;
     public $routeName;
 
-    public function __construct($id, $routeName)
+    public function __construct($routeName)
     {
-        $this->id = $id;
         $this->routeName = $routeName;  
     }
 

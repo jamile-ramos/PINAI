@@ -1,4 +1,4 @@
-@props(['id' => '', 'routeName' => ''])
+@props(['routeName' => ''])
 
 <!-- Modal de Confirmação de Exclusão -->
 <div class="modal fade" id="confirmDeleteModalPubli" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
@@ -10,12 +10,12 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="deleteFormPubli" method="POST" action="{{ route($routeName, ['id' => $id]) }}"            >
+            <form id="deleteFormPubli" method="POST" action="{{ route($routeName, ['id' => ':id']) }}">
                 @csrf
                 @method('DELETE')
                 <div class="modal-body">
                     <p>Tem certeza de que deseja excluir esta notícia?</p>
-                    <input type="hidden" id="publicacaoId" name="publicacaoId" value="{{ $id }}">
+                    <input type="hidden" id="publicacaoId" name="publicacaoId" value="">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>

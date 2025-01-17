@@ -11,14 +11,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form data-modal="true" id="formulario-modal-create" action="/noticias/store" method="post" enctype="multipart/form-data">
+                <form data-modal="true" action="/noticias/store" method="post" enctype="multipart/form-data">
                     @csrf
                     <!-- Campo Título -->
                     <div class="form-group">
                         <label for="titulo">Título</label>
                         <input
                             name="titulo"
-                            type="text"
+                            type="text" 
                             class="form-control form-control"
                             id="titulo"
                             placeholder="Digite o subtítulo" />

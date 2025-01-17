@@ -3,4 +3,5 @@
     :routeName="'noticias.delete'"
     tipo="noticias"
     titulo="Minhas Notícias"
+    dataEdit="#criarNoticiaModal"
 />

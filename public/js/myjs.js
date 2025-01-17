@@ -142,6 +142,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     $('#confirmDeleteModal').modal('hide');
                     $('.modal-backdrop').remove();
                     $('html, body').css('overflow', 'auto');
+                    $('.filtros a').removeClass('active');
+                    $('.filtros .toggle-categorias').addClass('active');
                 },
                 error: function (xhr, status, error) {
                     console.error('Erro ao excluir categoria:', error);
@@ -196,105 +198,14 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-
-    // Evento para abrir o modal de criação de categoria e criar categoria
-    /*$(document).ready(function () {
-        $('#abrirModalCategoria').on('click', function () {
-            $('#modalCategoria').modal('show');
-        });
-        $('#abrirModalCategoriaMenor').on('click', function () {
-            $('#modalCategoria').modal('show');
-        })
-
-        $('#createFormCategoria').submit(function (event) {
-            event.preventDefault();
-
-            const form = $(this);
-            const actionUrl = form.attr('action');
-            const formData = form.serialize();
-
-            $.ajax({
-                url: actionUrl,
-                type: 'POST',
-                data: formData,
-                success: function (response) {
-                    $('#conteudo-categorias').html(response);
-
-                    $('#modalCategoria').modal('hide');
-
-                    $('.filtros a').removeClass('active');
-                    $('.filtros .toggle-categorias').addClass('active');
-
-                    $('#createFormCategoria')[0].reset();
-                },
-                error: function (xhr, status, error) {
-                    console.error('Erro ao criar categoria:', error);
-                    alert('Ocorreu um erro ao tentar criar a categoria.');
-                }
-            });
-        });
-    });*/
-
-    // Evento para abrir o modal de criação de noticia e criar noticia
-    /*$(document).ready(function () {
-        const abrirModalBtn = document.getElementById('abrirModalNoticia');
-        abrirModalBtn.addEventListener('click', function () {
-            $('#criarNoticiaModal').modal('show');
-        })
-
-        const abrirModalBtnMenor = document.getElementById('abrirModalNoticiaMenor');
-        abrirModalBtnMenor.addEventListener('click', function () {
-            $('#criarNoticiaModal').modal('show');
-        });
-
-        $('#formulario-modal-create').submit(function (event) {
-            event.preventDefault();
-
-            const form = $(this);
-            console.log('Formulario: ', form);
-            const actionUrl = form.attr('action');
-            console.log("URL do formulário obtida:", actionUrl);
-
-            const formData = form.serialize();
-            console.log("Dados do formulário serializados:", formData);
-
-            $.ajax({
-                url: actionUrl,
-                type: 'POST',
-                data: formData,
-                success: function (response) {
-                    $('#conteudo-categorias').html(response);
-                    console.log("Conteúdo atualizado no elemento '#conteudo-categorias'.");
-
-                    $('#criarNoticiaModal').modal('hide');
-                    console.log("Modal 'criarNoticiaModal' ocultado.");
-
-                    $('.filtros a').removeClass('active');
-                    $('.filtros .toggle-my').addClass('active');
-                    console.log("Filtros atualizados: remove 'active' de todos os links e adiciona 'active' em '.toggle-my'.");
-
-                    $('#formulario-modal-create')[0].reset();
-                    console.log("Formulário resetado.");
-                },
-                error: function (xhr, status, error) {
-                    console.error("Resposta do servidor:", xhr.responseText);
-                    alert('Ocorreu um erro ao tentar criar a notícia.');
-                }
-            });
-        });
-
-        console.log("Script carregado com sucesso.");
-    });*/
-
-    // Evento para abrir o modal de criação 
+    // Evento para abrir o modal de criação de categorias, noticias, topico, solucoes
     $(document).ready(function () {
         $('[data-toggle="modal"]').on('click', function () {
-
             const modalId = $(this).data('target');
             $(modalId).modal('show');
 
         });
-        // Fechar modal e remover backdrop quando clicar no botao fechar
+
         document.querySelectorAll('[data-dismiss="modal"]').forEach(button => {
             button.addEventListener('click', function () {
                 const modal = $(this).closest('.modal');
@@ -302,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 $('.modal-backdrop').remove();
             });
         });
-        // Fechar modal e remover backdrop quando clicar no icone close
+
         document.querySelectorAll('[data-dismiss="modal"], .close').forEach(button => {
             button.addEventListener('click', function () {
                 const modal = $(this).closest('.modal');
@@ -329,8 +240,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     $(`#${modalId}`).modal('hide');
                     form[0].reset();
 
-                    $('.filtros a').removeClass('active');
-                    $('.filtros .toggle-my').addClass('active');
+                    if (modalId === 'criarCategoria') {
+                        $('.filtros a').removeClass('active');
+                        $('.filtros .toggle-categorias').addClass('active');
+                    } else {
+                        $('.filtros a').removeClass('active');
+                        $('.filtros .toggle-my').addClass('active');
+                    }
 
                     $('.modal-backdrop').remove();
 
@@ -402,7 +318,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         links.forEach(link => {
-
             if (link.innerText.trim().toLowerCase() === selectedValue) {
                 links.forEach(l => {
                     l.classList.remove('active');
@@ -464,6 +379,43 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 
+    // Abrir modal para editar noticia
+    document.body.addEventListener('click', function (event) {
+        if (event.target && event.target.matches('.btn-edit')) {
+            const publicacaoId = event.target.getAttribute('data-id');
+            const tipo = event.target.getAttribute('data-tipo');
+            const modalId = event.target.getAttribute('data-edit');
+            const modalElement = document.querySelector(modalId);
+
+            document.getElementById('publicacaoId').value = publicacaoId;
+
+            const form = modalElement.querySelector('form[data-modal="true"]');
+            console.log('Form', form)
+            const route = `/${tipo}/edit/${publicacaoId}`;
+            console.log('Rota', route);
+            
+            //tentar criar uma funcao com o codigo acima para depois usar nos outros edits
+
+            fetch(route)
+                .then(response => response.json())
+                .then(data => {
+                    if (form) {
+                        form.action = route;
+                        console.log('Form', form);
+                        console.log('Data recebida:', data);
+
+                        form.querySelector('#titulo').value = data.titulo;
+                        form.querySelector('#subtitulo').value = data.subtitulo;
+                        form.querySelector('#conteudo').value = data.conteudo;
+                        form.querySelector('#categoria').value = data.categoria;
+                        console.log('Categoria atribuído:', data.categoria);//ver como acessar                
+
+
+                        $(modalId).modal('show');
+                    }
+                });
+        }
+    });
 
 });
 

@@ -32,11 +32,12 @@
                 <div class="line-button"></div>
 
                 @foreach($actions as $action)
-                <button type="button" 
-                class="btn {{ $action['class'] }}" 
-                data-toggle="{{ $action['data-toggle'] ?? '' }}"
-                data-target="{{ $action['data-target'] ?? ''}}">
-                {{ $action['nome'] }}</button>
+                <a href="{{ $action['href'] ?? ''}}" 
+                data-toggle = "{{ $action['data-toggle'] ?? ''}}"
+                data-target = "{{ $action['data-target'] ?? ''}}"
+                type="button" 
+                class="btn {{ $action['class'] }}" >
+                {{ $action['nome'] }}</a>
                 @endforeach
             </div>
             <i class="dropdown-icon fas fa-chevron-down"></i>
@@ -55,11 +56,12 @@
             <!-- Filtro para telas maiores-->
             <div class="button-hide">
                 @foreach($actions as $action)
-                <button type="button" 
-                class="btn {{ $action['class'] }}" 
-                data-toggle="{{ $action['data-toggle'] ?? '' }}"
-                data-target="{{ $action['data-target'] ?? ''}}"               >
-                {{ $action['nome'] }}</button>
+                <a href="{{ $action['href'] ?? ''}}" 
+                type="button" 
+                data-toggle = "{{ $action['data-toggle'] ?? ''}}"
+                data-target = "{{ $action['data-target'] ?? ''}}"
+                class="btn {{ $action['class'] }}"         >
+                {{ $action['nome'] }}</a>
                 @endforeach
             </div>
 

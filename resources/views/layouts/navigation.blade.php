@@ -130,7 +130,9 @@
               <li class="nav-item topbar-user dropdown hidden-caret">
                 <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
                   <div class="avatar-sm">
-                    <img src="img/sauro.jpg" alt="..." class="avatar-img rounded-circle" />
+                    <div class="user-icon-circle">
+                      <i class="fa fa-user"></i>
+                    </div>
                   </div>
                   <span class="profile-username">
                     <span class="fw-bold">{{ Auth::user()->name }}</span>

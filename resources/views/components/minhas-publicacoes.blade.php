@@ -1,4 +1,4 @@
-@props(['publicacoes' => [], 'routeName' => '', 'tipo' => '', 'titulo' => '', 'dataEdit' => ''])
+@props(['publicacoes' => [], 'routeName' => '', 'tipo' => '', 'titulo' => ''])
 
 <!-- Tabel de Categorias -->
 <div class="card" id="tabela-categorias">
@@ -36,26 +36,21 @@
                         <td>{{ $publicacao->categoria->nomeCategoria }}</td>
                         <td>{{ \Carbon\Carbon::parse($publicacao->created_at)->format('d/m/Y') }}</td>
                         <td class="buttons-table">
-                            <div class="form-button-action">
+                            <div class="form-button-action btn-view">
                                 <button type="button"
-                                    class="btn btn-warning btn-edit">Ver
+                                    class="btn btn-warning">Ver
                                 </button>
                             </div>
                             <div class="form-button-action">
-                                <button type="button"
-                                    class="btn btn-info btn-edit"
-                                    data-id = "{{ $publicacao->id }}"
-                                    data-tipo = "{{ $tipo }}"
-                                    data-edit="{{ $dataEdit }}"
-                                    >Editar
-                                </button>
+                                <a href="/noticias/edit/{{ $publicacao->id }}" type="button"
+                                    class="btn btn-info btn-edit">Editar
+                                </a>
                             </div>
                             <div class="form-button-action">
                                 <button type="button"
                                     class="btn btn-danger btn-excluirNoticia"
-                                    data-id = "{{ $publicacao->id }}"
-                                    data-tipo = "{{ $tipo }}"
-                                    >Excluir
+                                    data-id="{{ $publicacao->id }}"
+                                    data-tipo="{{ $tipo }}">Excluir
                                 </button>
                             </div>
                         </td>
@@ -68,23 +63,19 @@
                         <td class="buttons-table">
                             <div class="form-button-action">
                                 <button type="button"
-                                    class="btn btn-warning btn-view">Ver 
+                                    class="btn btn-warning btn-view">Ver
                                 </button>
                             </div>
                             <div class="form-button-action">
                                 <button type="button"
-                                    class="btn btn-info btn-edit"
-                                    data-id = "{{ $publicacao->id }}"
-                                    data-tipo = "{{ $tipo }}"
-                                    data-edit="{{ $dataEdit }}">Editar
+                                    class="btn btn-info btn-edit">Editar
                                 </button>
                             </div>
                             <div class="form-button-action">
                                 <button type="button"
                                     class="btn btn-danger btn-excluirNoticia"
-                                    data-id = "{{ $publicacao->id }}"
-                                    data-tipo = "{{ $tipo }}"
-                                    >Excluir
+                                    data-id="{{ $publicacao->id }}"
+                                    data-tipo="{{ $tipo }}">Excluir
                                 </button>
                             </div>
                         </td>

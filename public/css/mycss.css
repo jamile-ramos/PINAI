@@ -304,7 +304,42 @@ select {
     gap: 10px;
 }  
 
+.p-6 {
+    margin-top: 50px;
+}
+
+.max-w-xl {
+    max-width: 100rem !important;
+}
+
+/* Estilazação do avatar de usuario */
+.user-icon-circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    color: #011c37;
+    font-size: 15px;
+}
+
+.avatar-sm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-icon-circle i {
+    margin: 0;
+}
+
+
 @media screen and (min-width: 320px) and (max-width: 778px) {
+    body {
+        overflow-x: auto;
+    }
     .home-text h1 {
         font-size: 25px;
     }

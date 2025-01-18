@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Evento para abrir o modal de criação de categorias, noticias, topico, solucoes
+    // Evento para abrir o modal de criação de categorias
     $(document).ready(function () {
         $('[data-toggle="modal"]').on('click', function () {
             const modalId = $(this).data('target');
@@ -351,7 +351,7 @@ document.addEventListener('DOMContentLoaded', function () {
     activeToSelect();
 
     // Listar categorias no formulário de criação de notícia/tópico/solução/documentos
-    $('#criarNoticiaModal').on('show.bs.modal', function () {
+    /*$('#criarNoticiaModal').on('show.bs.modal', function () {
         const select = document.getElementById('categoria');
         const tipo = select.getAttribute('data-tipo');
 
@@ -376,24 +376,8 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => {
                 console.error(`[DEPRECATION WARNING] Erro ao carregar categorias para o tipo: ${tipo}. Detalhes:`, error);
             });
-    });
-
-    // Abrir o modal e editar noticia
-    document.body.addEventListener('click', function (event) {
-        if (event.target && event.target.matches('.btn-edit')) {
-            const noticiaId = event.target.getAttribute('data-id');
-            const tipo = event.target.getAttribute('data-tipo');
-
-            document.getElementById('noticiaId').value = noticiaId;
-
-            const form = document.getElementById('formNoticia');
-            const route = form.getAttribute('action');
-            form.action = route.replace(':tipo', tipo);
-
-            $('#criarNoticiaModal').modal('show');
-        }
-    });
-
+    });*/
+    
 });
 
 // Evento para ocultar alertas com jQuery

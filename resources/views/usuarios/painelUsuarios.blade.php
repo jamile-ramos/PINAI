@@ -5,31 +5,10 @@
 @section('content')
 
 
-    <div class="bg-light">
-        <div class="navbar navbar-light bg-light barra-filtros">
-            <div class="filtros">
-                <a href="/painelUsuarios?query" class="active">Todos</a>
-            </div>
-
-            <div class="ml-auto d-flex align-items-center barra-pesquisa">
-                <!-- Campo de pesquisa inicialmente escondido -->
-                <form action="/painelUsuarios" method="GET" class="search-form" style="display: none;">
-                    <div class="search-container">
-                        <i class="fas fa-search mr-2"></i>
-                        <input type="text" class="search-input" name="query" placeholder="Pesquisar..." value="{{ request('query') }}" />
-                    </div>
-                </form>
-
-                <!-- Ícone de pesquisa que ativa a barra de pesquisa -->
-                <div class="botao-pesquisar">
-                    <!--<button type="button" class="btn btn-secondary btn-add">Secondary</button>-->
-                    <a href="javascript:void(0);" class="search-icon"><i class="fas fa-search mr-2"></i></a>
-                    <!-- Ícone de X que será exibido quando a barra de pesquisa estiver ativa -->
-                    <a href="javascript:void(0);" class="close-search" style="display: none;"><i class="fas fa-times mr-2"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
+<x-barra-filtros
+    :links="[
+        ['href' => '/painelUsuarios?query', 'nome' => 'Todo s', 'class' => 'active', 'data-value' => 'all'],
+    ]" />
 
     @if(session('sucess'))
     <div class="alert alert-success alert-dismissible fade show" role="alert" id="sucess-alert">

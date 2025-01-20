@@ -335,6 +335,17 @@ select {
     margin: 0;
 }
 
+#imagem-preview-edit{
+    max-width: 400px; 
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+}
+
+#imagem-preview-container-edit{
+    margin: 20px;
+}
+
 
 @media screen and (min-width: 320px) and (max-width: 778px) {
     body {

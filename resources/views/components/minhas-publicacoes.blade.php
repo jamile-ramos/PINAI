@@ -42,7 +42,8 @@
                                 </button>
                             </div>
                             <div class="form-button-action">
-                                <a href="/noticias/edit/{{ $publicacao->id }}" type="button"
+                                <a href="/noticias/edit/{{ $publicacao->id }}" 
+                                    type="button"
                                     class="btn btn-info btn-edit">Editar
                                 </a>
                             </div>
@@ -67,9 +68,10 @@
                                 </button>
                             </div>
                             <div class="form-button-action">
-                                <button type="button"
+                                <a href="/noticias/edit/{{ $publicacao->id }}" 
+                                    type="button"
                                     class="btn btn-info btn-edit">Editar
-                                </button>
+                                </a>
                             </div>
                             <div class="form-button-action">
                                 <button type="button"

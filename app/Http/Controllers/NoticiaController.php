@@ -52,7 +52,8 @@ class NoticiaController extends Controller
 
     public function edit($id){
         $noticia = Noticia::findOrFail($id);
-        return view('noticias.edit', compact('noticia'));
+        $categorias = CategoriaNoticia::all();
+        return view('noticias.edit', compact('noticia', 'categorias'));
     }
 
     public function update(Request $request, $id) {

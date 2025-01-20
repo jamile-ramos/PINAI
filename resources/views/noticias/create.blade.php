@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Portal de Notícias')
+@section('title', 'Adicionar Notícia')
 
 @section('content')
 
@@ -44,7 +44,7 @@
                     name="conteudo"
                     class="form-control"
                     id="conteudo"
-                    rows="6"
+                    rows="20"
                     placeholder="Escreva o conteúdo da notícia"
                     required></textarea>
             </div>

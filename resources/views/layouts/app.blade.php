@@ -78,7 +78,7 @@
     <script>
         var categoriasUrl = "{{ route('categorias.index', ['tipo' => 'noticias']) }}";
     </script>
-    <script src="js/myjs.js"></script>
+    <script src="{{ asset('js/myjs.js') }}"></script>
 
     <!-- Carregar plugins adicionais -->
     <script src="/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>

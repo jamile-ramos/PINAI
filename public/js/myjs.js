@@ -156,14 +156,14 @@ document.addEventListener('DOMContentLoaded', function () {
     // Evento para abrir o modal de exclusão mys
     document.body.addEventListener('click', function (event) {
         if (event.target && event.target.matches('.btn-excluirNoticia')) {
+            console.log('Clicou excuir')
             const publicacaoId = event.target.getAttribute('data-id');
             const tipo = event.target.getAttribute('data-tipo');
-
             document.getElementById('publicacaoId').value = publicacaoId;
 
             const form = document.getElementById('deleteFormPubli');
             const route = form.getAttribute('action');
-            form.action = route.replace(':tipo', tipo);
+            form.action = route.replace(':tipo', tipo).replace(':id', publicacaoId);
 
             $('#confirmDeleteModalPubli').modal('show');
         }
@@ -260,7 +260,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Codigo para barra de filtros responsiva
+    const filtrosSelect = document.getElementById('filtrosSelect');
     const selectedOption = filtrosSelect.querySelector('.selected-option');
+    console.log(selectedOption)
     const options = filtrosSelect.querySelector('.options');
 
     filtrosSelect.addEventListener('click', () => {
@@ -281,12 +283,12 @@ document.addEventListener('DOMContentLoaded', function () {
             const value = button.dataset.value;
             selectedOption.textContent = button.textContent;
             const tipo = toggleMy.dataset.value;
+            const model = toggleMy.dataset.model;
+            const idUser = toggleMy.dataset.user;
 
             if (value === 'all') {
-                window.location.href = '/{$tipo}?query';
+                window.location.href = `/${model}?query`;
             } else if (value === 'mys') {
-                const model = toggleMy.dataset.model;
-                const idUser = toggleMy.dataset.user;
                 AbrirMys(model, tipo, idUser);
             } else if (value === 'categorias') {
                 const tipo = button.dataset.tipo;
@@ -350,33 +352,19 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     activeToSelect();
 
-    // Listar categorias no formulário de criação de notícia/tópico/solução/documentos
-    /*$('#criarNoticiaModal').on('show.bs.modal', function () {
-        const select = document.getElementById('categoria');
-        const tipo = select.getAttribute('data-tipo');
-
-        fetch(`/categorias/create/${tipo}`)
-            .then(response => {
-                if (!response.ok) {
-                    console.error(`[DEPRECATION WARNING] Falha ao buscar categorias para o tipo: ${tipo}.`);
-                    throw new Error('Erro na resposta da API.');
-                }
-                return response.json();
-            })
-            .then(data => {
-                select.innerHTML = '<option value="" disabled selected>Selecione uma categoria</option>';
-
-                data.forEach(categoria => {
-                    const option = document.createElement('option');
-                    option.value = categoria.id;
-                    option.textContent = categoria.nomeCategoria;
-                    select.appendChild(option);
-                });
-            })
-            .catch(error => {
-                console.error(`[DEPRECATION WARNING] Erro ao carregar categorias para o tipo: ${tipo}. Detalhes:`, error);
-            });
-    });*/
+    //Remover imagem do formulario edit
+    document.body.addEventListener('click', function (event) {
+        if (event.target && event.target.matches('#remove-imagem-edit')) {
+            console.log('Clicou')
+            document.getElementById('imagem-preview-container-edit').style.display = 'none';
+            
+            // Exibe o campo de upload de imagem
+            document.querySelector('.campo-img-edit').style.display = 'block';
+            
+            // Opcional: Limpa o campo de upload de imagem
+            document.getElementById('imagem').value = ''; // Limpa a seleção da imagem
+        }
+    });
     
 });
 

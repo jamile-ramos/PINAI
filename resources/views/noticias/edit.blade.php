@@ -11,7 +11,7 @@
                 <h4 class="card-title">Editar Notícia</h4>
             </div>
         </div>
-        <form id="formNoticia" action="{{ route('noticias.store') }}" method="post" enctype="multipart/form-data">
+        <form id="formNoticiaEdit" action="{{ route('noticias.update', $noticia->id) }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <!-- Campo Título -->
@@ -52,12 +52,6 @@
                     required>{{ $noticia->conteudo }}</textarea>
             </div>
 
-            @if($noticia->imagem)
-            <div id="imagem-preview-container-edit">
-                <img id="imagem-preview-edit" src="{{ asset('img/imgNoticias/' . $noticia->imagem) }}" alt="Imagem Atual">
-                <button type="button" id="remove-imagem-edit" class="btn btn-danger">Remover Imagem</button>
-            </div>
-            @else
             <!-- Campo Imagem -->
             <div class="form-group mb-4 campo-img-edit">
                 <label for="imagem" class="form-label">Imagem</label>
@@ -66,6 +60,12 @@
                     type="file"
                     class="form-control-file"
                     id="imagem" />
+            </div>
+
+            @if($noticia->imagem)
+            <div id="imagem-preview-container-edit">
+                <img id="imagem-preview-edit" src="{{ asset('img/imgNoticias/' . $noticia->imagem) }}" alt="Imagem Atual">
+                <button type="button" id="remove-imagem-edit" class="btn btn-danger">Remover</button>
             </div>
             @endif
 

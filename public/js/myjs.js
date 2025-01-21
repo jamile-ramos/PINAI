@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const tipo = this.dataset.value;
             const idUser = this.dataset.user;
             AbrirMys(model, tipo, idUser);
-        })
+        });
     }
 
     // Evento para abrir o modal de exclusão categoria
@@ -261,44 +261,57 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Codigo para barra de filtros responsiva
     const filtrosSelect = document.getElementById('filtrosSelect');
-    const selectedOption = filtrosSelect.querySelector('.selected-option');
-    console.log(selectedOption)
-    const options = filtrosSelect.querySelector('.options');
+    let selectedOption, options;
 
-    filtrosSelect.addEventListener('click', () => {
-        options.classList.toggle('hidden');
-        options.classList.toggle('visible');
-    });
+    if (filtrosSelect) {
+        selectedOption = filtrosSelect.querySelector('.selected-option');
+        options = filtrosSelect.querySelector('.options');
 
-    document.addEventListener('click', (event) => {
-        if (!filtrosSelect.contains(event.target)) {
-            options.classList.add('hidden');
-            options.classList.remove('visible');
-        }
-    });
+        filtrosSelect.addEventListener('click', () => {
+            options.classList.toggle('hidden');
+            options.classList.toggle('visible');
+        });
 
-    options.addEventListener('click', (event) => {
-        const button = event.target.closest('.option');
-        if (button) {
-            const value = button.dataset.value;
-            selectedOption.textContent = button.textContent;
-            const tipo = toggleMy.dataset.value;
-            const model = toggleMy.dataset.model;
-            const idUser = toggleMy.dataset.user;
-
-            if (value === 'all') {
-                window.location.href = `/${model}?query`;
-            } else if (value === 'mys') {
-                AbrirMys(model, tipo, idUser);
-            } else if (value === 'categorias') {
-                const tipo = button.dataset.tipo;
-                AbriCategorias(tipo);
-            }
-            setTimeout(() => {
+        document.addEventListener('click', (event) => {
+            if (!filtrosSelect.contains(event.target)) {
                 options.classList.add('hidden');
-            }, 50);
-        }
-    });
+                options.classList.remove('visible');
+            }
+        });
+
+        options.addEventListener('click', (event) => {
+            const button = event.target.closest('.option');
+            if (button) {
+                const value = button.dataset.value;
+                selectedOption.textContent = button.textContent;
+
+                let model, tipo, idUser;
+                const toggleMy = document.querySelector('.toggle-my');
+                const toggleAll = document.querySelector('.toggle-all');
+
+                if (toggleMy) {
+                    tipo = toggleMy.dataset.value;
+                    model = toggleMy.dataset.model;
+                    idUser = toggleMy.dataset.user;
+                } else if (toggleAll) {
+                    model = toggleAll.dataset.model;
+                }
+
+                if (value === 'all') {
+                    window.location.href = `/${model}?query`;
+                } else if (value === 'mys') {
+                    AbrirMys(model, tipo, idUser);
+                } else if (value === 'categorias') {
+                    const tipo = button.dataset.tipo;
+                    AbriCategorias(tipo);
+                }
+
+                setTimeout(() => {
+                    options.classList.add('hidden');
+                }, 50);
+            }
+        });
+    }
 
     //Código para quando a tela for aumentada ou diminuida a opcao selecionada persista
     const links = document.querySelectorAll('.filtros a');
@@ -352,20 +365,33 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     activeToSelect();
 
-    //Remover imagem do formulario edit
-    document.body.addEventListener('click', function (event) {
-        if (event.target && event.target.matches('#remove-imagem-edit')) {
-            console.log('Clicou')
-            document.getElementById('imagem-preview-container-edit').style.display = 'none';
-            
-            // Exibe o campo de upload de imagem
-            document.querySelector('.campo-img-edit').style.display = 'block';
-            
-            // Opcional: Limpa o campo de upload de imagem
-            document.getElementById('imagem').value = ''; // Limpa a seleção da imagem
+    // Ocultar botao de remover ou nao
+    const removeButton = document.getElementById('remove-imagem-edit');
+    const imageField = document.querySelector('.campo-img-edit');
+    if (removeButton !== null && imageField !== null) {
+        if (removeButton.style.display === 'none') {
+            imageField.style.display = 'block';
+        } else {
+            imageField.style.display = 'none';
         }
-    });
-    
+
+        document.body.addEventListener('click', function (event) {
+            if (event.target && event.target.matches('#remove-imagem-edit')) {
+                const previewContainer = document.getElementById('imagem-preview-container-edit');
+                if (previewContainer) {
+                    previewContainer.style.display = 'none';
+                }
+                if (imageField) {
+                    imageField.style.display = 'block';
+                }
+                const fileInput = document.getElementById('imagem');
+                if (fileInput) {
+                    fileInput.value = '';
+                }
+            }
+        });
+    }
+
 });
 
 // Evento para ocultar alertas com jQuery

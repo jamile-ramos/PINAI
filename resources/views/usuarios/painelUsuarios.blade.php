@@ -7,7 +7,7 @@
 
 <x-barra-filtros
     :links="[
-        ['href' => '/painelUsuarios?query', 'nome' => 'Todo s', 'class' => 'active', 'data-value' => 'all'],
+        ['href' => '/painelUsuarios?query', 'nome' => 'Todas', 'class' => 'active toggle-all', 'data-value' => 'all', 'data-model' => 'painelUsuarios'],
     ]" />
 
     @if(session('sucess'))

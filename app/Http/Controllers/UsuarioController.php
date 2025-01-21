@@ -21,7 +21,6 @@ class UsuarioController extends Controller
         } else{
             $usuarios = User::all();
         }
-
         return view('usuarios.painelUsuarios', compact('usuarios','query'));
     }
 

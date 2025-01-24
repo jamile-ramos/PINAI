@@ -76,7 +76,8 @@ class NoticiaController extends Controller
         $noticia = Noticia::findOrFail($id);
         $noticia->update($data);
         $noticias = Noticia::all();
-        return view('noticias.index', compact('noticias'));
+        $user = Auth::user();
+        return view('noticias.index', compact('noticias', 'user'));
     }
 
     public function minhasNoticias($idUsuario)

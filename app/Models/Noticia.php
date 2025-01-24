@@ -9,4 +9,12 @@ class Noticia extends Model
     public function categoria(){
         return $this->belongsTo(CategoriaNoticia::class, 'idCategoria');
     }
+
+    protected $fillable = [
+        'titulo', 
+        'subtitulo', 
+        'conteudo',
+        'imagem', 
+        'idCategoria'
+    ];
 }

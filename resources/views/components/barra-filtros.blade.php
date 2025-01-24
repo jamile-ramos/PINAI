@@ -5,7 +5,8 @@
         <!-- Botões de filtros -->
         <div class="filtros">
             @foreach($links as $link)
-            <a href="{{ $link['href'] }}"
+            <a 
+                href="{{ $link['href'] }}"
                 class="{{ $link['class'] ?? '' }}"
                 data-value="{{ $link['data-value'] ?? '' }}"
                 data-model="{{ $link['data-model'] ?? '' }}"
@@ -21,7 +22,9 @@
             <div class="selected-option">Todas</div>
             <div class="options hidden">
                 @foreach($links as $link)
-                <button type="button" class="option {{ $link['class'] ?? '' }}"
+                <button 
+                    type="button" 
+                    class="option {{ $link['class'] ?? '' }}"
                     data-value="{{ $link['data-value'] ?? '' }}"
                     data-model="{{ $link['data-model'] ?? '' }}"
                     data-tipo="{{ $link['data-tipo'] ?? '' }}"
@@ -32,12 +35,14 @@
                 <div class="line-button"></div>
 
                 @foreach($actions as $action)
-                <a href="{{ $action['href'] ?? ''}}" 
-                data-toggle = "{{ $action['data-toggle'] ?? ''}}"
-                data-target = "{{ $action['data-target'] ?? ''}}"
-                type="button" 
-                class="btn {{ $action['class'] }}" >
-                {{ $action['nome'] }}</a>
+                <a  
+                    href="{{ $action['href'] ?? ''}}" 
+                    data-toggle = "{{ $action['data-toggle'] ?? ''}}"
+                    data-target = "{{ $action['data-target'] ?? ''}}"
+                    type="button" 
+                    class="btn {{ $action['class'] }}" >
+                    {{ $action['nome'] }}
+                </a>
                 @endforeach
             </div>
             <i class="dropdown-icon fas fa-chevron-down"></i>
@@ -56,12 +61,14 @@
             <!-- Filtro para telas maiores-->
             <div class="button-hide">
                 @foreach($actions as $action)
-                <a href="{{ $action['href'] ?? ''}}" 
-                type="button" 
-                data-toggle = "{{ $action['data-toggle'] ?? ''}}"
-                data-target = "{{ $action['data-target'] ?? ''}}"
-                class="btn {{ $action['class'] }}"         >
-                {{ $action['nome'] }}</a>
+                <a 
+                    href="{{ $action['href'] ?? ''}}" 
+                    type="button" 
+                    data-toggle = "{{ $action['data-toggle'] ?? ''}}"
+                    data-target = "{{ $action['data-target'] ?? ''}}"
+                    class="btn {{ $action['class'] }}"         >
+                    {{ $action['nome'] }}
+                </a>
                 @endforeach
             </div>
 

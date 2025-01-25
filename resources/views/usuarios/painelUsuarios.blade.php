@@ -10,122 +10,122 @@
         ['href' => '/painelUsuarios?query', 'nome' => 'Todas', 'class' => 'active toggle-all', 'data-value' => 'all', 'data-model' => 'painelUsuarios'],
     ]" />
 
-    @if(session('sucess'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert" id="sucess-alert">
-        <strong>{{ session('sucess') }}</strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    @endif
+@if(session('sucess'))
+<div class="alert alert-success alert-dismissible fade show" role="alert" id="sucess-alert">
+    <strong>{{ session('sucess') }}</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@endif
 
-    @if(session('sucess-status'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert" id="sucess-status-alert">
-        <strong>{{ session('sucess-status') }}</strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    @endif
+@if(session('sucess-status'))
+<div class="alert alert-success alert-dismissible fade show" role="alert" id="sucess-status-alert">
+    <strong>{{ session('sucess-status') }}</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@endif
 
-    <div class="card">
-        <div class="card-header">
-            <div class="d-flex align-items-center">
-                <h4 class="card-title">Painel de Usuários</h4>
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table
-                    id="add-row"
-                    class="display table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Email</th>
-                            <th>Tipo de usuário</th>
-                            <th>Status</th>
-                            <th>Data de criação</th>
-                            <th style="width: 26%">Ação</th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Email</th>
-                            <th>Tipo de usuário</th>
-                            <th>Status</th>
-                            <th>Data de criação</th>
-                            <th>Ação</th>
-                        </tr>
-                    </tfoot>
-                    <tbody>
-                        @foreach ($usuarios as $usuario)
-                        @if ($loop->index % 2 == 0)
-                        <tr>
-                            <td>{{ $usuario->name }}</td>
-                            <td>{{ $usuario->email }}</td>
-                            <td>{{ $usuario->tipoUsuario == 0 ? 'Comum' : 'Admin'}}</td>
-                            <td>{{ $usuario->status == 0 ? 'Ativo' : 'Inativo'}}</td>
-                            <td>{{ \Carbon\Carbon::parse($usuario->created_at)->format('d/m/Y') }}</td>
-                            <td>
-                                <div class="form-button-action">
-                                    <button
-                                        type="button"
-                                        class="btn btn-primary d-inline btn-alterar"
-                                        data-id="{{ $usuario->id }}"
-                                        data-name="{{ $usuario->name }}"
-                                        data-email="{{ $usuario->email }}"
-                                        data-type="{{ $usuario->tipoUsuario }}">
-                                        Alterar tipo
-                                    </button>
-                                    <button
-                                        type="button"
-                                        class="btn toggle-status btn-status {{ $usuario->status == 0 ? 'btn-danger' : 'btn-success' }}"
-                                        data-id="{{ $usuario->id }}"
-                                        data-status="{{ $usuario->status }}">
-                                        {{ $usuario->status == 0 ? 'Desabilitar' : 'Ativar' }}
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        @else
-                        <tr>
-                            <td>{{ $usuario->name }}</td>
-                            <td>{{ $usuario->email }}</td>
-                            <td>{{ $usuario->tipoUsuario == 0 ? 'Comum' : 'Admin'}}</td>
-                            <td>{{ $usuario->status == 0 ? 'Ativo' : 'Inativo'}}</td>
-                            <td>{{ \Carbon\Carbon::parse($usuario->created_at)->format('d/m/Y') }}</td>
-                            <td>
-                                <div class="form-button-action">
-                                    <button
-                                        type="button"
-                                        class="btn btn-primary d-inline btn-alterar"
-                                        data-id="{{ $usuario->id }}"
-                                        data-name="{{ $usuario->name }}"
-                                        data-email="{{ $usuario->email }}"
-                                        data-type="{{ $usuario->tipoUsuario }}">
-                                        Alterar tipo
-                                    </button>
-                                    <button
-                                        type="button"
-                                        class="btn toggle-status btn-status {{ $usuario->status == 0 ? 'btn-danger' : 'btn-success' }}"
-                                        data-id="{{ $usuario->id }}"
-                                        data-status="{{ $usuario->status }}">
-                                        {{ $usuario->status == 0 ? 'Desabilitar' : 'Ativar' }}
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        @endif
-
-                        @endforeach
-
-                    </tbody>
-                </table>
-            </div>
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex align-items-center">
+            <h4 class="card-title">Painel de Usuários</h4>
         </div>
     </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table
+                id="add-row"
+                class="display table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Tipo de usuário</th>
+                        <th>Status</th>
+                        <th>Data de criação</th>
+                        <th style="width: 26%">Ação</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Tipo de usuário</th>
+                        <th>Status</th>
+                        <th>Data de criação</th>
+                        <th>Ação</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach ($usuarios as $usuario)
+                    @if ($loop->index % 2 == 0)
+                    <tr>
+                        <td>{{ $usuario->name }}</td>
+                        <td>{{ $usuario->email }}</td>
+                        <td>{{ $usuario->tipoUsuario == 0 ? 'Comum' : 'Admin'}}</td>
+                        <td>{{ $usuario->status == 0 ? 'Ativo' : 'Inativo'}}</td>
+                        <td>{{ \Carbon\Carbon::parse($usuario->created_at)->format('d/m/Y') }}</td>
+                        <td>
+                            <div class="form-button-action">
+                                <button
+                                    type="button"
+                                    class="btn btn-primary d-inline btn-alterar"
+                                    data-id="{{ $usuario->id }}"
+                                    data-name="{{ $usuario->name }}"
+                                    data-email="{{ $usuario->email }}"
+                                    data-type="{{ $usuario->tipoUsuario }}">
+                                    Alterar tipo
+                                </button>
+                                <button
+                                    type="button"
+                                    class="btn toggle-status btn-status {{ $usuario->status == 0 ? 'btn-danger' : 'btn-success' }}"
+                                    data-id="{{ $usuario->id }}"
+                                    data-status="{{ $usuario->status }}">
+                                    {{ $usuario->status == 0 ? 'Desabilitar' : 'Ativar' }}
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    @else
+                    <tr>
+                        <td>{{ $usuario->name }}</td>
+                        <td>{{ $usuario->email }}</td>
+                        <td>{{ $usuario->tipoUsuario == 0 ? 'Comum' : 'Admin'}}</td>
+                        <td>{{ $usuario->status == 0 ? 'Ativo' : 'Inativo'}}</td>
+                        <td>{{ \Carbon\Carbon::parse($usuario->created_at)->format('d/m/Y') }}</td>
+                        <td>
+                            <div class="form-button-action">
+                                <button
+                                    type="button"
+                                    class="btn btn-primary d-inline btn-alterar"
+                                    data-id="{{ $usuario->id }}"
+                                    data-name="{{ $usuario->name }}"
+                                    data-email="{{ $usuario->email }}"
+                                    data-type="{{ $usuario->tipoUsuario }}">
+                                    Alterar tipo
+                                </button>
+                                <button
+                                    type="button"
+                                    class="btn toggle-status btn-status {{ $usuario->status == 0 ? 'btn-danger' : 'btn-success' }}"
+                                    data-id="{{ $usuario->id }}"
+                                    data-status="{{ $usuario->status }}">
+                                    {{ $usuario->status == 0 ? 'Desabilitar' : 'Ativar' }}
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    @endif
+
+                    @endforeach
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 
 
@@ -197,7 +197,7 @@
         </div>
     </div>
 </div>
-
+</div>
 
 
 @endsection

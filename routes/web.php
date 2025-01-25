@@ -29,6 +29,8 @@ Route::put('/painelUsuarios/status/{id}', [UsuarioController::class, 'updateStat
 
 // Portal de Notícias
 Route::get('/noticias', [NoticiaController::class, 'index'])->name('noticias.index');
+
+
 Route::get('/noticias/create', [NoticiaController::class, 'create'])->name('noticias.create');
 Route::post('/noticias/store', [NoticiaController::class, 'store'])->name('noticias.store');
 Route::get('/noticias/mys/{id}', [NoticiaController::class, 'minhasNoticias'])->name('noticias.minhasNoticias');

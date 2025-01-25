@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Evento para botões "toggle-status"
-    const toggleStatusButtons = document.querySelectorAll('.toggle-status');
+    /*const toggleStatusButtons = document.querySelectorAll('.toggle-status');
     toggleStatusButtons.forEach(button => {
         button.addEventListener('click', function () {
             const userId = this.getAttribute('data-id');
@@ -57,205 +57,6 @@ document.addEventListener('DOMContentLoaded', function () {
             form.action = route.replace(':id', userId);
 
             $('#confirmModal').modal('show');
-        });
-    });
-
-    // Funcao para aparecer o conteudo de categorias
-    function AbriCategorias(tipo) {
-
-        const categoriasUrl = `/categorias/${tipo}`;
-        fetch(categoriasUrl)
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('conteudo-categorias').innerHTML = data;
-            })
-            .catch(error => {
-                console.error('Erro ao carregar categorias:', error);
-            });
-    }
-
-    // Funcao para aparecer o conteudo de My publicacoes(pode ser noticias, topicos, documetos, solucoes)
-    function AbrirMys(model, tipo, id) {
-        const modelUrl = `${model}/${tipo}/${id}`
-
-        fetch(modelUrl)
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('conteudo-categorias').innerHTML = data;
-            })
-            .catch(error => {
-                console.error('Erro ao carregar', error);
-            });
-    }
-
-    // Evento para toggle categorias
-    const toggleCategoriasButton = document.querySelector('.toggle-categorias');
-    if (toggleCategoriasButton) {
-        toggleCategoriasButton.addEventListener('click', function () {
-            const tipo = this.dataset.tipo;
-            AbriCategorias(tipo);
-        });
-    }
-
-    // Evento para toggle my
-    const toggleMy = document.querySelector('.toggle-my');
-    if (toggleMy) {
-        toggleMy.addEventListener('click', function () {
-            const model = this.dataset.model;
-            const tipo = this.dataset.value;
-            const idUser = this.dataset.user;
-            AbrirMys(model, tipo, idUser);
-        });
-    }
-
-    // Evento para abrir o modal de exclusão categoria
-    document.body.addEventListener('click', function (event) {
-        if (event.target && event.target.matches('.btn-action')) {
-            const categoriaId = event.target.getAttribute('data-id');
-            const tipo = event.target.getAttribute('data-tipo');
-
-            document.getElementById('categoriaId').value = categoriaId;
-
-            const form = document.getElementById('deleteForm');
-            const route = form.getAttribute('action');
-            form.action = route.replace(':tipo', tipo);
-
-            $('#confirmDeleteModal').modal('show');
-        }
-
-        $('.close').click(function () {
-            $('#confirmDeleteModal').modal('hide');
-        });
-
-        $('#deleteForm').submit(function (event) {
-            event.preventDefault();
-
-            const form = $(this);
-            const actionUrl = form.attr('action');
-
-            $.ajax({
-                url: actionUrl,
-                type: 'DELETE',
-                data: form.serialize(),
-                success: function (response) {
-                    $('#conteudo-categorias').html(response);
-                    $('#confirmDeleteModal').modal('hide');
-                    $('.modal-backdrop').remove();
-                    $('html, body').css('overflow', 'auto');
-                    $('.filtros a').removeClass('active');
-                    $('.filtros .toggle-categorias').addClass('active');
-                },
-                error: function (xhr, status, error) {
-                    console.error('Erro ao excluir categoria:', error);
-                    alert('Ocorreu um erro ao tentar excluir a categoria.');
-                }
-            });
-        });
-    });
-
-    // Evento para abrir o modal de exclusão mys
-    document.body.addEventListener('click', function (event) {
-        if (event.target && event.target.matches('.btn-excluirNoticia')) {
-            console.log('Clicou excuir')
-            const publicacaoId = event.target.getAttribute('data-id');
-            const tipo = event.target.getAttribute('data-tipo');
-            document.getElementById('publicacaoId').value = publicacaoId;
-
-            const form = document.getElementById('deleteFormPubli');
-            const route = form.getAttribute('action');
-            form.action = route.replace(':tipo', tipo).replace(':id', publicacaoId);
-
-            $('#confirmDeleteModalPubli').modal('show');
-        }
-
-        $('.close').click(function () {
-            $('#confirmDeleteModalPubli').modal('hide');
-        });
-
-        $('#deleteFormPubli').submit(function (event) {
-            event.preventDefault();
-
-            const form = $(this);
-            const actionUrl = form.attr('action');
-
-            $.ajax({
-                url: actionUrl,
-                type: 'DELETE',
-                data: form.serialize(),
-                success: function (response) {
-                    $('#conteudo-categorias').html(response);
-                    $('#confirmDeleteModalPubli').modal('hide');
-                    $('.modal-backdrop').remove();
-                    $('html, body').css('overflow', 'auto');
-                    $('.filtros a').removeClass('active');
-                    $('.filtros .toggle-my').addClass('active');
-                },
-                error: function (xhr, status, error) {
-                    console.error('Erro ao excluir:', error);
-                    alert('Ocorreu um erro ao tentar excluir a categoria.');
-                }
-            });
-        });
-    });
-
-    // Evento para abrir o modal de criação de categorias
-    $(document).ready(function () {
-        $('[data-toggle="modal"]').on('click', function () {
-            const modalId = $(this).data('target');
-            $(modalId).modal('show');
-
-        });
-
-        document.querySelectorAll('[data-dismiss="modal"]').forEach(button => {
-            button.addEventListener('click', function () {
-                const modal = $(this).closest('.modal');
-                modal.modal('hide');
-                $('.modal-backdrop').remove();
-            });
-        });
-
-        document.querySelectorAll('[data-dismiss="modal"], .close').forEach(button => {
-            button.addEventListener('click', function () {
-                const modal = $(this).closest('.modal');
-                modal.modal('hide');
-                $('.modal-backdrop').remove();
-            });
-        });
-
-        $('form[data-modal="true"]').on('submit', function (event) {
-            event.preventDefault();
-
-            const form = $(this);
-            const actionUrl = form.attr('action');
-            const formData = form.serialize();
-
-            $.ajax({
-                url: actionUrl,
-                type: 'POST',
-                data: formData,
-                success: function (response) {
-                    $('#conteudo-categorias').html(response);
-
-                    const modalId = form.closest('.modal').attr('id');
-                    $(`#${modalId}`).modal('hide');
-                    form[0].reset();
-
-                    if (modalId === 'criarCategoria') {
-                        $('.filtros a').removeClass('active');
-                        $('.filtros .toggle-categorias').addClass('active');
-                    } else {
-                        $('.filtros a').removeClass('active');
-                        $('.filtros .toggle-my').addClass('active');
-                    }
-
-                    $('.modal-backdrop').remove();
-
-                },
-                error: function (xhr, status, error) {
-                    console.error("Erro:", error);
-                    alert('Ocorreu um erro. Tente novamente.');
-                }
-            });
         });
     });
 
@@ -390,6 +191,24 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         });
+    }*/
+
+    // Js dos content-links da barra
+    const tabs = document.querySelectorAll('.tab-btn');
+    tabs.forEach(tab => tab.addEventListener('click', () => tabClicked(tab)));
+
+    const tabClicked = (tab) => {
+        tabs.forEach(tab => tab.classList.remove('active'));
+        tab.classList.add('active')
+
+        const contents = document.querySelectorAll('.content-link');
+
+        contents.forEach(content => content.classList.remove('show'));
+
+        const contentId = tab.getAttribute('content-id');
+        const content = document.getElementById(contentId);
+
+        content.classList.add('show')
     }
 
 });

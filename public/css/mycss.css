@@ -346,6 +346,64 @@ select {
     margin: 20px;
 }
 
+.content-link{
+    display: none;
+}
+
+.show{
+    display: flex;
+}
+
+.tab-buttons {
+    background: #fff;
+    width: 100%;
+    display: flex;
+    padding: 10px 25px 10px 25px;
+    gap: 45px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 30px;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    position: relative;
+}
+
+.tab-buttons .active {
+    color: #0d6efd;
+    border-bottom: 2px solid #0d6efd;
+}
+
+.tab-buttons button:focus {
+    outline: none;
+}
+
+.tab-buttons button:hover {
+    color: #1572e8 ;
+}
+
+.tab-btn{
+    margin-left: 10px;
+    padding: 6px 15px; 
+}
+
+.add {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    right: 10px;
+    top: 15%;
+    bottom: 15%;
+    position: absolute;
+}
+
+.add-btn:hover{
+    color: #fff !important;
+}
+
+.infos {
+    width: 100%;
+}
 
 @media screen and (min-width: 320px) and (max-width: 778px) {
     body {

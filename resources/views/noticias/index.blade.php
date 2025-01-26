@@ -6,18 +6,43 @@
 
 <div class="container-abas">
     <div class="tab-buttons">
+        <form action="/" method="GET" class="search-form" style="display: none;">
+            <div class="search-container">
+                <i class="fas fa-search mr-2"></i>
+                <input type="text" class="search-input" name="query" placeholder="Pesquisar..." value="{{ request('query') }}" />
+            </div>
+        </form>
+
+        <!-- Select para telas menores -->
+        <div class="select-btn">
+            <div class="select-option">Todas</div>
+            <i class="dropdown-icon fas fa-chevron-down"></i>
+            <div class="dropdown close-drop">
+                <button class="option-btn" content-id="all">Todos</button>
+                <button class="option-btn" content-id="mys">Minhas Notícias</button>
+                <button class="option-btn" content-id="categorias">Categorias</button>
+                <div class="line-button"></div>
+                <div class="btns-select">
+                    <button class="option-add btn btn-primary" content-id="mys">Criar Notícias</button>
+                    <button class="option-add btn btn-dark" content-id="categorias">Criar Categoria</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Abas para telas maiores -->
         <button class="tab-btn active" content-id="all">
             Todos
         </button>
 
         <button class="tab-btn" content-id="mys">
-            Mys
+            Minhas Noticias
         </button>
 
         <button class="tab-btn" content-id="categorias">
             Categorias
         </button>
 
+        <!-- Botões para telas maiores -->
         <div class="add">
             <button class="add-btn btn btn-primary">
                 Adicionar Notícia
@@ -33,6 +58,7 @@
         </div>
     </div>
 
+    <!-- Conteúdo das abas -->
     <div class="tab-contents">
         <div class="content-link show" id="all">
             <div class="infos">
@@ -52,11 +78,10 @@
 
         <div class="content-link" id="categorias">
             <div class="infos">
-            @include('noticias.categorias')
+                @include('noticias.categorias')
             </div>
         </div>
     </div>
-
 </div>
 
 @endsection

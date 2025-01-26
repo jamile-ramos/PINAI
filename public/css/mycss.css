@@ -117,15 +117,6 @@ h3 {
     gap: 10px
 }
 
-.barra-filtros {
-    background-color: #fff;
-    border-bottom: 1px solid #ebecec;
-    margin-bottom: 30px;
-    border-radius: 10px;
-    box-shadow: 2px 6px 15px 0 rgba(69, 65, 78, .1);
-    height: 60px;
-}
-
 .add-pesquisa {
     gap: 20px;
     margin-right: 20px;
@@ -134,34 +125,6 @@ h3 {
 .botao-pesquisar {
     padding: 5px;
     font-size: 18px;
-}
-
-.filtros {
-    margin-left: 20px;
-    font-size: 15px;
-}
-
-.filtros a {
-    border: none;
-    background-color: transparent;
-    color: #011C37;
-    font-weight: bolder;
-    padding: 10px 15px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.filtros a.active {
-    color: #0d6efd;
-    border-bottom: 2px solid #0d6efd;
-}
-
-.filtros button:focus {
-    outline: none;
-}
-
-.filtros button:hover {
-    color: #035ab1;
 }
 
 /* Inicialmente, o campo de pesquisa está escondido */
@@ -176,19 +139,6 @@ h3 {
 }
 
 /* Quando a barra se transforma em barra de pesquisa */
-.navbar.search-mode .filtros {
-    display: none;
-}
-
-.navbar.search-mode .barra-pesquisa {
-    width: 100%;
-    transition: width 0.3s ease;
-}
-
-.navbar.search-mode .search-icon {
-    display: none;
-}
-
 .search-icon {
     margin: 0px 20px 0 20px;
 }
@@ -203,14 +153,6 @@ h3 {
 
 form.search-form {
     width: 100%;
-}
-
-.navbar.search-mode .search-input {
-    display: block;
-    width: 100%;
-    padding: 8px;
-    margin-left: 5px;
-    transition: width 0.3s ease, padding 0.3s ease;
 }
 
 .search-container {
@@ -285,15 +227,6 @@ select {
     border-radius: 5px !important;
 }
 
-.filtros-links {
-    display: flex;
-    gap: 15px;
-}
-
-.filtros-select {
-    display: none;
-}
-
 .card-header{
     background-color: transparent !important;
     border-bottom: 0;
@@ -359,7 +292,7 @@ select {
     width: 100%;
     display: flex;
     padding: 10px 25px 10px 25px;
-    gap: 45px;
+    gap: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     margin-bottom: 30px;
     border-radius: 10px;
@@ -405,6 +338,110 @@ select {
     width: 100%;
 }
 
+input.search-input {
+    width: 100%;
+}
+
+.select-btn {
+    position: relative;
+    display: none;
+    width: 200px;
+    cursor: pointer;
+}
+
+/* Estilo da opção principal (botão visível) */
+.select-option {
+    background-color: #f9f9f9;
+    padding: 10px 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.select-option:hover {
+    background-color: #e0e0e0;
+}
+
+/* Dropdown */
+.dropdown {
+    display: none; /* Inicialmente escondido */
+    position: absolute;
+    top: calc(100% + 5px); /* Logo abaixo do botão principal */
+    left: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Mesma largura do botão principal */
+    z-index: 1000;
+}
+
+/* Estilo dos botões dentro do dropdown */
+.dropdown .option-btn,
+.dropdown .option-add {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 14px;
+    text-align: left;
+    border: none;
+    background: none;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dropdown .option-btn:hover,
+.dropdown .option-add:hover {
+    background-color: #f0f0f0;
+}
+
+/* Linha separadora */
+.dropdown .line-button {
+    height: 1px;
+    background-color: #ccc;
+    margin: 8px 0;
+}
+
+/* Mostrar o dropdown quando ativo */
+.select-btn.active .dropdown {
+    display: block;
+}
+
+/* Estilo para botões de criar */
+.option-add.btn-primary {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.option-add.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.option-add.btn-dark {
+    background-color: #343a40;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.option-add.btn-dark:hover {
+    background-color: #23272b;
+}
+
+.btns-select{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 10px;
+}
+
 @media screen and (min-width: 320px) and (max-width: 778px) {
     body {
         overflow-x: auto;
@@ -428,70 +465,7 @@ select {
     }
 }
 
-@media screen and (max-width: 1170px) {
-    .filtros {
-        display: none;
-    }
-
-    .filtros-select {
-        display: block;
-        position: relative;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        padding: 10px;
-        cursor: pointer;
-        background-color: #fff;
-        width: 190px;
-        visibility: visible;
-    }
-
-    .selected-option {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 16px;
-        color: #333;
-        justify-content: space-between;
-    }
-
-    .options {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: #fff;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        z-index: 100;
-        padding: 10px;
-    }
-
-    .options button {
-        display: block;
-        width: 100%;
-        text-align: left;
-        padding: 10px;
-        margin: 5px 0;
-        background: #f9f9f9;
-        border: none;
-        cursor: pointer;
-    }
-
-    .options button:hover {
-        background: #eee;
-    }
-
-    .options .btn {
-        margin: 5px 0;
-        text-align: center;
-        display: none;
-    }
-
-    .barra-pesquisa {
-        align-items: flex-start;
-    }
-
+@media screen and (max-width: 1195px) {
     .btn-dark {
         background: #343a40 !important;
     }
@@ -510,35 +484,31 @@ select {
         display: block;
     }
 
+    .select-btn {
+        display: inline-block;
+    }
 
-}
-
-@media screen and (max-width: 755px) {
-    .button-hide {
+    .tab-btn{
         display: none;
     }
 
-    .line-button {
-        width: 100%;
-        height: 1px;
-        border-bottom: 1px solid #ccc;
+    .line-button, .btns-select{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1040px) {
+
+    .line-button, .btns-select{
         display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 20px 0 20px 0;
     }
 
-    .options .btn {
-        display: block;
+    .add-btn{
+        display: none;
     }
-
 }
 
 @media screen and (max-width: 390px) {
-    .filtros-select {
-        width: 120px;
-    }
-
     .search-icon {
         margin: 0px 2px 0 2px;
     }

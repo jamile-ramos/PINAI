@@ -1,4 +1,136 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // Mantém um item de sidebar ativo mesmo após recarregar ou navegar para outra página
+    $(document).ready(function () {
+        var activeItem = localStorage.getItem("active_nav_item");
+
+        if (window.location.href.indexOf("dashboard") > -1) {
+            activeItem = "/dashboard";
+        }
+
+        if (activeItem) {
+            $(".nav-item").removeClass("submenu active");
+            $(".nav-item i").removeClass("icon-active");
+
+            var activeLink = $(".nav-item a[href='" + activeItem + "']");
+            activeLink.parent().addClass("submenu active");
+            activeLink.find("i").addClass("icon-active");
+        }
+
+        $(".nav-item a").on("click", function () {
+            $(".nav-item").removeClass("submenu active");
+            $(".nav-item i").removeClass("icon-active");
+
+            $(this).parent().addClass("submenu active");
+            $(this).find("i").addClass("icon-active");
+
+            localStorage.setItem("active_nav_item", $(this).attr('href'));
+        });
+    });
+
+    // Adiciona a classe 'active' ao link clicado
+    $(document).ready(function () {
+        $(".filtros a").on("click", function (event) {
+            $(".filtros a").removeClass("active");
+
+            $(this).addClass("active");
+        });
+    });
+
+    // Clicar no icone e aparece a barra de pesquisa
+    $(document).ready(function () {
+        $(".search-icon").on("click", function () {
+            $(".search-input").blur();
+            $(".search-input").css({
+                "border": "1px solid transparent",
+                "background-color": "transparent"
+            });
+
+            $(".navbar").addClass("search-mode");
+
+            const filtrosSelect = document.getElementById('filtrosSelect');
+            $(".search-icon").hide();
+            $('.tab-btn').hide();
+            $('.add-btn').hide();
+            $(".close-search").show();
+
+            $(".search-form").show();
+            $(".search-input").show().focus();
+        });
+
+        $(".close-search").on("click", function () {
+            $(".navbar").removeClass("search-mode");
+
+            $(".close-search").hide();
+            $('.tab-btn').show();
+            $('.add-btn').show();
+            $(".search-icon").show();
+
+
+            $(".search-form").hide();
+            $(".search-input").hide();
+
+            $(".search-input").blur();
+            $(".search-input").css({
+                "border": "1px solid transparent",
+                "background-color": "transparent"
+            });
+        });
+    });
+    
+    /* Dropdonw do menu */
+    document.querySelector(".select-option").addEventListener("click", function () {
+        const dropdown = document.querySelector(".select-btn");
+        dropdown.classList.toggle("active"); 
+    });
+    
+    // Fechar dropdown ao clicar fora
+    document.addEventListener("click", function (e) {
+        const dropdown = document.querySelector(".select-btn");
+        if (!dropdown.contains(e.target)) {
+            dropdown.classList.remove("active");
+        }
+    });
+
+    //Alterar tipo no painel de usuários
+    $(document).ready(function () {
+        $('.btn-info').on('click', function () {
+            var userId = $(this).data('id');
+            var userName = $(this).data('name');
+            var userEmail = $(this).data('email');
+            var userType = $(this).data('type');
+
+            $('#userId').val(userId);
+            $('#userName').val(userName);
+            $('#userEmail').val(userEmail);
+            $('#userType').val(userType);
+
+            $('#editUserModal').modal('show');
+        });
+
+        $('#saveUserChanges').on('click', function () {
+            var userId = $('#userId').val();
+            var userType = $('#userType').val();
+
+            $.ajax({
+                url: '/usuarios/' + userId + '/update',
+                method: 'PUT',
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    userId: userId,
+                    userType: userType
+                },
+                success: function (response) {
+                    $('#editUserModal').modal('hide');
+
+                    location.reload();
+                },
+                error: function (response) {
+                    alert("Erro ao atualizar tipo de usuário.");
+                }
+            });
+        });
+    });
+
     // Evento para botões "Alterar tipo"
     document.querySelectorAll('.btn-alterar').forEach(button => {
         button.addEventListener('click', function () {
@@ -36,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Evento para botões "toggle-status"
-    /*const toggleStatusButtons = document.querySelectorAll('.toggle-status');
+    const toggleStatusButtons = document.querySelectorAll('.toggle-status');
     toggleStatusButtons.forEach(button => {
         button.addEventListener('click', function () {
             const userId = this.getAttribute('data-id');
@@ -61,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Codigo para barra de filtros responsiva
-    const filtrosSelect = document.getElementById('filtrosSelect');
+    /*const filtrosSelect = document.getElementById('filtrosSelect');
     let selectedOption, options;
 
     if (filtrosSelect) {
@@ -193,7 +325,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }*/
 
-    // Js dos content-links da barra
+    // Js dos content das abas links
     const tabs = document.querySelectorAll('.tab-btn');
     tabs.forEach(tab => tab.addEventListener('click', () => tabClicked(tab)));
 
@@ -209,7 +341,19 @@ document.addEventListener('DOMContentLoaded', function () {
         const content = document.getElementById(contentId);
 
         content.classList.add('show')
+
+        const selectOption = document.querySelector('.select-option');
+        if(selectOption){
+            const textSelect = tab.innerText;
+            selectOption.textContent = textSelect;
+            const dropdown = document.querySelector(".select-btn");
+            dropdown.classList.remove("active");
+        }
     }
+
+    // Js dos content das abas select
+    const tabsSelect = document.querySelectorAll('.option-btn');
+    tabsSelect.forEach(tab => tab.addEventListener('click', () => tabClicked(tab)));
 
 });
 

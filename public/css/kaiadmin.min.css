@@ -770,7 +770,7 @@ body {
    border-top: 1px solid #eee;
    padding: 15px;
    background: #fff;
-   position: absolute;
+   /*position: absolute;*/
    width: 100%;
 }
 

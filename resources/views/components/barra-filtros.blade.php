@@ -1,4 +1,4 @@
-@props(['links' => [], 'actions' => [], 'modals' => []])
+@props(['links' => [], 'actions' => []])
 
 <div class="container-abas">
     <div class="tab-buttons">
@@ -9,19 +9,36 @@
             </div>
         </form>
 
+        <!-- Select para telas menores -->
+        <div class="select-btn">
+            <div class="select-option">Todos</div>
+            <i class="dropdown-icon fas fa-chevron-down"></i>
+            <div class="dropdown close-drop">
+                @foreach($links as $link)
+                <button class="option-btn" content-id="{{ $link['content-id'] ?? '' }}">{{ $link['nomeAba'] ?? ''}}</button>
+                @endforeach
+                <div class="line-button"></div>
+                <div class="btns-select">
+                    @foreach($actions as $action)
+                    <button class="option-add btn {{ $action['classBtn'] ?? ''}}" content-id="{{ $action['content-id'] ?? ''}}">{{ $action['nomeButton'] ?? ''}}</button>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
         <!-- Link da aba para telas maiores -->
         @foreach($links as $link)
-            <button class="tab-btn active" content-id="{{ $link['contentId'] }}">
-                {{ $link['data-aba'] }}
-            </button>
+        <button class="tab-btn {{ $link['classActive'] ?? ''}}" content-id="{{ $link['content-id'] ?? ''}}">
+            {{ $link['nomeAba'] ?? ''}}
+        </button>
         @endforeach
 
         <!-- Botões para telas maiores -->
         <div class="add">
             @foreach($actions as $action)
-                <button class="add-btn btn {{ $action['data-btn'] }}">
-                    {{ $action['data-button'] }}
-                </button>
+            <button class="add-btn btn {{ $action['classBtn'] ?? ''}}">
+                {{ $action['nomeButton'] ?? ''}}
+            </button>
             @endforeach
 
             <div class="botao-pesquisar">
@@ -31,27 +48,4 @@
         </div>
     </div>
 
-    <div class="tab-contents">
-        <div class="content-link show" id="all">
-            <div class="infos">
-                <h1 class="content-title">
-                    Home
-                </h1>
-
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis eaque eos cum voluptatibus repudiandae autem, voluptate ex dicta officiis odio illo magni, dolores quibusdam temporibus alias expedita eligendi et nam?</p>
-            </div>
-        </div>
-
-        <div class="content-link" id="mys">
-            <div class="infos">
-                @include('noticias.minhasNoticias')
-            </div>
-        </div>
-
-        <div class="content-link" id="categorias">
-            <div class="infos">
-                @include('noticias.categorias')
-            </div>
-        </div>
-    </div>
 </div>

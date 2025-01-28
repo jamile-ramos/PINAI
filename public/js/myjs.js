@@ -340,7 +340,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const contentId = tab.getAttribute('content-id');
         const content = document.getElementById(contentId);
 
-        content.classList.add('show')
+        content.classList.add('show');
 
         const selectOption = document.querySelector('.select-option');
         if(selectOption){

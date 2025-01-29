@@ -6,7 +6,8 @@ use App\Models\CategoriaDocumento;
 use App\Models\CategoriaNoticia;
 use App\Models\CategoriaSolucao;
 use App\Models\CategoriaTopico;
-use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
+
 
 class CategoriaController extends Controller
 {
@@ -16,30 +17,6 @@ class CategoriaController extends Controller
         'topico' => CategoriaTopico::class,
         'solucao' => CategoriaSolucao::class,
     ];
-
-    public function index($tipo)
-    {
-        $categorias = $this->getCategoriasByTipo($tipo);
-
-        if ($categorias === null) {
-            return response()->json(['error' => 'Tipo de categoria inválido'], 400);
-        }
-
-        $viewPath = "{$tipo}.categorias";
-
-        return view($viewPath, compact('categorias', 'tipo'));
-    }
-
-    public function create($tipo)
-    {
-        $categorias = $this->getCategoriasByTipo($tipo);
-
-        if ($categorias === null) {
-            return response()->json(['error' => 'Tipo de categoria inválido'], 400);
-        }
-
-        return response()->json($categorias);
-    }
 
     public function store(Request $request, $tipo)
     {
@@ -51,12 +28,11 @@ class CategoriaController extends Controller
 
         $categoriaModel = new $model;
         $categoriaModel->nomeCategoria = $request->nomeCategoria;
-        $categoriaModel->idUsuario = $request->idUsuario;
+        $categoriaModel->idUsuario = Auth::User()->id;
         $categoriaModel->save();
 
         $categorias = $this->getCategoriasByTipo($tipo);
-        return view('components.tabela-categoria-index', compact('categorias', 'tipo'))
-            ->with('success', 'Categoria salva com sucesso!');
+        return view('noticias.index', compact('categorias'))->with('sucess', 'Categoria criada com sucesso!');
     }
 
     public function delete(Request $request, $tipo)

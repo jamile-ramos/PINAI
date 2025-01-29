@@ -75,9 +75,6 @@
     <script src="/js/core/bootstrap.min.js"></script> <!-- Se necessário -->
 
     <!-- Carregar o JS personalizado -->
-    <script>
-        var categoriasUrl = "{{ route('categorias.index', ['tipo' => 'noticias']) }}";
-    </script>
     <script src="{{ asset('js/myjs.js') }}"></script>
 
     <!-- Carregar plugins adicionais -->

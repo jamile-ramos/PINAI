@@ -27,15 +27,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Adiciona a classe 'active' ao link clicado
-    $(document).ready(function () {
-        $(".filtros a").on("click", function (event) {
-            $(".filtros a").removeClass("active");
-
-            $(this).addClass("active");
-        });
-    });
-
     // Clicar no icone e aparece a barra de pesquisa
     $(document).ready(function () {
         $(".search-icon").on("click", function () {
@@ -76,19 +67,31 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     });
-    
-    /* Dropdonw do menu */
-    document.querySelector(".select-option").addEventListener("click", function () {
-        const dropdown = document.querySelector(".select-btn");
-        dropdown.classList.toggle("active"); 
+
+    // Abre o dropdown
+    document.querySelector(".select-option").addEventListener("click", function (e) {
+        e.stopPropagation(); // Evita que o clique feche o dropdown imediatamente
+
+        const dropdown = document.querySelector(".dropdown-select");
+        dropdown.classList.toggle("active");
     });
-    
+
     // Fechar dropdown ao clicar fora
     document.addEventListener("click", function (e) {
-        const dropdown = document.querySelector(".select-btn");
+        const dropdown = document.querySelector(".dropdown-select");
+
         if (!dropdown.contains(e.target)) {
             dropdown.classList.remove("active");
         }
+    });
+
+    // Fecha o dropdown quando qualquer opção for clicada
+    const optionBtns = document.querySelectorAll(".dropdown-select .option-btn");
+    optionBtns.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+            const dropdown = document.querySelector(".dropdown-select");
+            dropdown.classList.remove("active");
+        });
     });
 
     //Alterar tipo no painel de usuários
@@ -192,168 +195,102 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Codigo para barra de filtros responsiva
-    /*const filtrosSelect = document.getElementById('filtrosSelect');
-    let selectedOption, options;
+    // Funcao para iniciar aba
+    function iniciarAbar(barraId) {
+        const container = document.getElementById(barraId);
+        const tabs = container.querySelectorAll('.tab-btn');
+        const tabsSelect = container.querySelectorAll('.option-btn');
 
-    if (filtrosSelect) {
-        selectedOption = filtrosSelect.querySelector('.selected-option');
-        options = filtrosSelect.querySelector('.options');
+        tabs.forEach(tab => tab.addEventListener('click', function () {
+            tabClicked(tab, barraId); // Passando diretamente o tab
+        }));
 
-        filtrosSelect.addEventListener('click', () => {
-            options.classList.toggle('hidden');
-            options.classList.toggle('visible');
-        });
-
-        document.addEventListener('click', (event) => {
-            if (!filtrosSelect.contains(event.target)) {
-                options.classList.add('hidden');
-                options.classList.remove('visible');
-            }
-        });
-
-        options.addEventListener('click', (event) => {
-            const button = event.target.closest('.option');
-            if (button) {
-                const value = button.dataset.value;
-                selectedOption.textContent = button.textContent;
-
-                let model, tipo, idUser;
-                const toggleMy = document.querySelector('.toggle-my');
-                const toggleAll = document.querySelector('.toggle-all');
-
-                if (toggleMy) {
-                    tipo = toggleMy.dataset.value;
-                    model = toggleMy.dataset.model;
-                    idUser = toggleMy.dataset.user;
-                } else if (toggleAll) {
-                    model = toggleAll.dataset.model;
-                }
-
-                if (value === 'all') {
-                    window.location.href = `/${model}?query`;
-                } else if (value === 'mys') {
-                    AbrirMys(model, tipo, idUser);
-                } else if (value === 'categorias') {
-                    const tipo = button.dataset.tipo;
-                    AbriCategorias(tipo);
-                }
-
-                setTimeout(() => {
-                    options.classList.add('hidden');
-                }, 50);
-            }
-        });
+        tabsSelect.forEach(tab => tab.addEventListener('click', function () {
+            tabClicked(tab, barraId); // Passando diretamente o tab
+        }));
     }
 
-    //Código para quando a tela for aumentada ou diminuida a opcao selecionada persista
-    const links = document.querySelectorAll('.filtros a');
-    const opcoes = document.querySelectorAll('.options .option');
+    const tabClicked = (tab, barraId) => {
+        const containerElement = document.getElementById(barraId);
+        const tabs = containerElement.querySelectorAll('.tab-btn');
+        const contents = containerElement.querySelectorAll('.content-link');
 
-    function activeToSelect() {
-        const activeLink = document.querySelector('.filtros a.active');
-        if (activeLink) {
-            const activeValue = activeLink.innerText.trim();
-            selectedOption.textContent = activeValue;
-        }
-    }
-
-    function selectToActive() {
-        const selectedValue = selectedOption.innerText.trim().toLowerCase();;
-
-        if (!selectedValue) {
-            console.log('Nenhum valor selecionado encontrado!');
-        }
-
-        links.forEach(link => {
-            if (link.innerText.trim().toLowerCase() === selectedValue) {
-                links.forEach(l => {
-                    l.classList.remove('active');
-                });
-
-                link.classList.add('active');
-            }
-        });
-    }
-
-    links.forEach(link => {
-        link.addEventListener('click', function () {
-            links.forEach(l => l.classList.remove('active'));
-            this.classList.add('active');
-            activeToSelect();
-        });
-    });
-
-    opcoes.forEach(option => {
-        option.addEventListener('click', function () {
-            const selectedValue = this.dataset.value || this.innerText.trim();
-            selectedOption.textContent = selectedValue;
-            selectToActive();
-        });
-    });
-
-    window.addEventListener('resize', () => {
-        activeToSelect();
-        selectToActive();
-    });
-    activeToSelect();
-
-    // Ocultar botao de remover ou nao
-    const removeButton = document.getElementById('remove-imagem-edit');
-    const imageField = document.querySelector('.campo-img-edit');
-    if (removeButton !== null && imageField !== null) {
-        if (removeButton.style.display === 'none') {
-            imageField.style.display = 'block';
-        } else {
-            imageField.style.display = 'none';
-        }
-
-        document.body.addEventListener('click', function (event) {
-            if (event.target && event.target.matches('#remove-imagem-edit')) {
-                const previewContainer = document.getElementById('imagem-preview-container-edit');
-                if (previewContainer) {
-                    previewContainer.style.display = 'none';
-                }
-                if (imageField) {
-                    imageField.style.display = 'block';
-                }
-                const fileInput = document.getElementById('imagem');
-                if (fileInput) {
-                    fileInput.value = '';
-                }
-            }
-        });
-    }*/
-
-    // Js dos content das abas links
-    const tabs = document.querySelectorAll('.tab-btn');
-    tabs.forEach(tab => tab.addEventListener('click', () => tabClicked(tab)));
-
-    const tabClicked = (tab) => {
-        tabs.forEach(tab => tab.classList.remove('active'));
-        tab.classList.add('active')
-
-        const contents = document.querySelectorAll('.content-link');
+        tabs.forEach(tabElement => tabElement.classList.remove('active'));
+        tab.classList.add('active');
 
         contents.forEach(content => content.classList.remove('show'));
 
         const contentId = tab.getAttribute('content-id');
         const content = document.getElementById(contentId);
-
         content.classList.add('show');
 
-        const selectOption = document.querySelector('.select-option');
-        if(selectOption){
-            const textSelect = tab.innerText;
-            selectOption.textContent = textSelect;
-            const dropdown = document.querySelector(".select-btn");
-            dropdown.classList.remove("active");
+        const selectOption = containerElement.querySelector('.select-option');
+        if (selectOption) {
+            selectOption.textContent = tab.innerText;
         }
+
+        localStorage.setItem(`active_tab_${barraId}`, contentId);
+    };
+
+    //Pegando o id do container aba clicado
+    const updateTabs = () => {
+        document.querySelectorAll('.container-abas').forEach(container => {
+            const barraId = container.id;
+            iniciarAbar(barraId);
+        })
     }
 
-    // Js dos content das abas select
-    const tabsSelect = document.querySelectorAll('.option-btn');
-    tabsSelect.forEach(tab => tab.addEventListener('click', () => tabClicked(tab)));
+    updateTabs();
+
+    // Função que restaura o estado da aba ativa ao redimensionar a página
+    const restoreActiveTabOnResize = () => {
+        document.querySelectorAll('.container-abas').forEach(container => {
+            const barraId = container.id;
+            const activeTabId = localStorage.getItem(`active_tab_${barraId}`);
+
+            if (activeTabId) {
+                const tabs = container.querySelectorAll('.tab-btn');
+                tabs.forEach(tab => {
+                    const contentId = tab.getAttribute('content-id');
+                    if (contentId === activeTabId) {
+                        tab.classList.add('active');
+
+                        const content = document.getElementById(contentId);
+                        if (content) {
+                            content.classList.add('show');
+                        }
+                    } else {
+                        tab.classList.remove('active');
+                        const content = document.getElementById(contentId);
+                        if (content) {
+                            content.classList.remove('show');
+                        }
+                    }
+                });
+            }
+        })
+    }
+
+    window.addEventListener("resize", restoreActiveTabOnResize);
+
+    // Abrir modais de criação: Categoria
+    document.querySelectorAll('.container-abas').forEach(container => {
+        const addBtns = container.querySelectorAll('.add-btn'); 
+        addBtns.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const buttonText = btn.textContent.trim();
+                console.log('Botão clicado:', buttonText); 
+
+                if (buttonText === 'Criar Categoria') {
+                    const modal = document.getElementById('modalAddCategoria');
+                    console.log('Modal encontrado:', modal); 
+                    $(modal).modal('show');
+                    $(modal).removeClass('fade').addClass('show'); 
+                    $(modal).css('display', 'block'); 
+                }
+            });
+        });
+    });
 
 });
 

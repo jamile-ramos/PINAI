@@ -40,7 +40,6 @@ Route::put('/noticias/update/{id}', [NoticiaController::class, 'update'])->name(
 
 
 // Categorias de noticias, topicos, documentos e solucoes
-Route::get('/categorias/{tipo}', [CategoriaController::class, 'index'])->name('categorias.index');
 Route::get('/categorias/create/{tipo}', [CategoriaController::class, 'create'])->name('categorias.create');
 Route::post('/categorias/store/{tipo}', [CategoriaController::class, 'store'])->name('categorias.store');
 Route::delete('/categorias/delete/{tipo}', [CategoriaController::class, 'delete'])->name('categorias.delete');

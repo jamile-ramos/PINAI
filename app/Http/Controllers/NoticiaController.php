@@ -14,7 +14,8 @@ class NoticiaController extends Controller
         $categorias = CategoriaNoticia::all();
         $minhasNoticias = $this->myNoticias();
         $noticias = Noticia::all();
-        return view('noticias.index', compact('noticias', 'categorias', 'minhasNoticias'));
+        $noticiasRecentes = Noticia::latest()->take(3)->get();
+        return view('noticias.index', compact('noticias', 'categorias', 'minhasNoticias', 'noticiasRecentes'));
     }
 
     public function myNoticias()

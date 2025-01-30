@@ -34,8 +34,9 @@
                                 <button
                                     type="button"
                                     data-bs-toggle="tooltip"
-                                    data-tipo = "noticias"
-                                    data-id = "{{ $categorias->id }}"
+                                    data-modal="#confirmExcluirModal"
+                                    data-url="{{ route('categorias.delete', ['tipo' => 'noticias']) }}" 
+                                    data-id="{{ $categoria->id }}"
                                     class="btn btn-danger btn-remove"
                                     data-original-title="Remove">
                                     Excluir
@@ -52,8 +53,9 @@
                                 <button
                                     type="button"
                                     data-bs-toggle="tooltip"
-                                    data-tipo = "noticias"
-                                    data-id = "{{ $categorias->id }}"
+                                    data-modal="#confirmExcluirModal"
+                                    data-url="{{ route('categorias.delete', ['tipo' => 'noticias']) }}" 
+                                    data-id="{{ $categoria->id }}"
                                     class="btn btn-danger btn-remove"
                                     data-original-title="Remove">
                                     Excluir

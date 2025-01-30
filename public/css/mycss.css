@@ -442,6 +442,20 @@ input.search-input {
     margin: 10px;
 }
 
+.mt-5, .my-5 {
+    margin-top: 1rem !important;
+}
+
+.py-12 {
+    padding-top: 1rem !important; 
+}
+
+img#imagemPreview {
+    border-radius: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
 @media screen and (min-width: 320px) and (max-width: 778px) {
     body {
         overflow-x: auto;
@@ -498,6 +512,9 @@ input.search-input {
 
     .tab-buttons .active {
         border-bottom: 0px ;
+    }
+    .tab-buttons button:hover {
+        color: white; 
     }
 }
 

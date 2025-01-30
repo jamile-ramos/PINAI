@@ -14,23 +14,22 @@
     ]"
         :actions="[
         ['classBtn' => 'btn-dark', 'content-id' => 'categoriasNoticias', 'nomeButton' => 'Criar Categoria'],
-        ['classBtn' => 'btn-primary', 'content-id' => 'mysNoticias', 'nomeButton' => 'Criar Notícia']
+        ['classBtn' => 'btn-primary', 'content-id' => 'mysNoticias', 'nomeButton' => 'Criar Notícia', 'data-url' => '/noticias/create']
     ]" />
 
-    @if(session('sucess'))
+    @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert" id="sucess-alert">
-        <strong>{{ session('sucess') }}</strong>
+        <strong>{{ session('success') }}</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     @endif
-
     <!-- Conteúdo das abas -->
     <div class="tab-contents">
         <div class="content-link show" id="allNoticias">
             <div class="infos">
-                @include('noticias.home')
+                @include('noticias.init')
             </div>
         </div>
 

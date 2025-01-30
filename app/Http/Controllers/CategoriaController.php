@@ -32,12 +32,12 @@ class CategoriaController extends Controller
         $categoriaModel->save();
 
         $categorias = $this->getCategoriasByTipo($tipo);
-        return view('noticias.index', compact('categorias'))->with('sucess', 'Categoria criada com sucesso!');
+        return redirect()->route('noticias.index')->with('success', 'Categoria criada com sucesso!');
     }
 
     public function delete(Request $request, $tipo)
     {
-        $id = $request->categoriaId;
+        $id = $request->id;
 
         $model = $this->getModelByTipo($tipo);
 
@@ -47,9 +47,7 @@ class CategoriaController extends Controller
 
         $model::destroy($id);
 
-        $categorias = $this->getCategoriasByTipo($tipo);
-        $minhasNoticias = (new NoticiaController)->myNoticias();
-        return view('noticias.index', compact('categorias', 'minhasNoticias'))->with('success', 'Categoria excluída com sucesso!');
+        return redirect()->route('noticias.index')->with('success', 'Categoria excluida com sucesso!');
     }
 
     private function getCategoriasByTipo($tipo)

@@ -11,19 +11,18 @@
         ['content-id' => 'all-users', 'nomeAba' => 'Todos', 'classActive' => 'active'],   
     ]" />
 
+        @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert" id="sucess-alert">
+            <strong>{{ session('success') }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif
+
     <!-- Conteúdo das abas -->
     <div class="tab-contents-users">
         <div class="content-link show" id="all-users">
-
-            @if(session('sucess'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert" id="sucess-alert">
-                <strong>{{ session('sucess') }}</strong>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            @endif
-
             @if(session('sucess-status'))
             <div class="alert alert-success alert-dismissible fade show" role="alert" id="sucess-status-alert">
                 <strong>{{ session('sucess-status') }}</strong>

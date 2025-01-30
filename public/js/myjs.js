@@ -69,12 +69,17 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Abre o dropdown
-    document.querySelector(".select-option").addEventListener("click", function (e) {
-        e.stopPropagation(); // Evita que o clique feche o dropdown imediatamente
+    const selectOption = document.querySelector(".select-option");
+    const selectBtn = document.querySelector(".select-btn");
 
-        const dropdown = document.querySelector(".dropdown-select");
-        dropdown.classList.toggle("active");
-    });
+    if (selectBtn) {
+        selectOption.addEventListener("click", function (e) {
+            e.stopPropagation();
+            console.log(selectBtn)
+            const dropdown = document.querySelector(".dropdown-select");
+            dropdown.classList.toggle("active");
+        });
+    }
 
     // Fechar dropdown ao clicar fora
     document.addEventListener("click", function (e) {
@@ -276,49 +281,71 @@ document.addEventListener('DOMContentLoaded', function () {
     // Abrir modais de criação: Categoria
     document.querySelectorAll('.container-abas').forEach(container => {
         const addBtns = container.querySelectorAll('.add-btn');
-        addBtns.forEach((btn) => {
-            btn.addEventListener('click', () => {
-                const buttonText = btn.textContent.trim();
-                console.log('Botão clicado:', buttonText);
+        const optionAdds = container.querySelectorAll('.option-add');
 
-                if (buttonText === 'Criar Categoria') {
-                    const modal = document.getElementById('modalAddCategoria');
-                    console.log('Modal encontrado:', modal);
-                    $(modal).modal('show');
-                    $(modal).removeClass('fade').addClass('show');
-                    $(modal).css('display', 'block');
-                }
-            });
-        });
+        addBtns.forEach(btn => btn.addEventListener('click', function () { abrirCategoria(btn) }));
+        optionAdds.forEach(btn => btn.addEventListener('click', function () { abrirCategoria(btn) })); 
     });
 
-    // Abrir o modal e Atualizar o atributo data-route e o campo oculto do formulário 
+    function abrirCategoria(btn) {
+        const buttonText = btn.textContent.trim();
+        console.log('Botão clicado:', buttonText);
+        const url = btn.getAttribute('data-url');
+
+        if (buttonText === 'Criar Categoria') {
+            const modal = document.getElementById('modalAddCategoria');
+            console.log('Modal encontrado:', modal);
+            $(modal).modal('show');
+            $(modal).removeClass('fade').addClass('show');
+            $(modal).css('display', 'block');
+        } else if (buttonText === 'Criar Notícia') {
+            console.log('url', url)
+            window.location.href = url;
+        }
+    }
+
+    // Abrir o modal de exclusão 
     document.querySelectorAll('.container-abas').forEach(container => {
         const deleteButtons = container.querySelectorAll('.btn-remove');
 
         deleteButtons.forEach(btn => {
             btn.addEventListener('click', () => {
-                const tipo = btn.getAttribute('data-tipo');
-                const idCategoria = btn.getAttribute('data-id');  // Corrigido: pegando o data-id do botão
-                const modal = document.querySelector('#confirmExcluirModal');
+                const id = btn.getAttribute('data-id');
+                const modal = btn.getAttribute('data-modal');
                 const form = document.getElementById('confirmEcluirForm');
+                const url = btn.getAttribute('data-url');
 
-                // Corrigido: obtenha a rota e substitua ':tipo' corretamente
-                const route = form.getAttribute('data-route');
-                const novaRoute = route.replace(':tipo', tipo);
+                form.setAttribute('action', url);
+                document.getElementById('id').value = id;
 
-                // Define os valores dinâmicos
-                form.setAttribute('action', novaRoute);  // Atualizando a action com a nova rota
-                form.setAttribute('id', 'confirmEcluirForm-' + idCategoria);  // Adicionando um ID único ao formulário
-
-                // Atualiza o campo oculto com o valor de categoria
-                const categoriaInput = document.getElementById('categoria');
-                categoriaInput.value = idCategoria;
-
-                $(modal).modal('show'); // Exibe o modal
+                $(modal).modal('show');
             });
         });
     });
+
+    // Fazer a requisição para editar publicacao
+    document.querySelectorAll('.container-abas').forEach(container => {
+        const editButtons = container.querySelectorAll('.btn-edit');
+        editButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const url = btn.getAttribute('data-url');
+                window.location.href = url;
+            })
+        });
+    });
+
+    // Js do controle da imagem no edit
+    var removeImageBtn = document.getElementById('removeImageBtn');
+
+    if (removeImageBtn) {
+        const campoImagem = document.getElementById('campoImagem');
+        campoImagem.style.display = 'none';
+        removeImageBtn.addEventListener('click', function () {
+            const preview = document.getElementById('preview');
+            preview.style.display = 'none';
+            campoImagem.style.display = 'block';
+        });
+    }
 
 });
 

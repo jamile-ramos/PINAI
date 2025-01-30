@@ -25,6 +25,7 @@
             <div class="btns-select">
                 @foreach($actions as $action)
                 <button
+                    data-url= " {{ $action['data-url'] ?? ''}} "
                     class="option-add btn {{ $action['classBtn'] ?? ''}}"
                     content-id="{{ $action['content-id'] ?? ''}}">
                     {{ $action['nomeButton'] ?? ''}}
@@ -48,6 +49,7 @@
     <div class="add">
         @foreach($actions as $action)
         <button
+            data-url= " {{ $action['data-url'] ?? ''}} "
             class="add-btn btn {{ $action['classBtn'] ?? ''}}"
             content-id="{{ $action['content-id'] ?? ''}}">
             {{ $action['nomeButton'] ?? ''}}

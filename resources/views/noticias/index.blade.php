@@ -36,13 +36,13 @@
 
         <div class="content-link" id="mysNoticias">
             <div class="infos">
-                @include('noticias.minhasNoticias')
+                @include('noticias.minhasNoticias', ['minhasNoticias' => $minhasNoticias])
             </div>
         </div>
 
         <div class="content-link" id="categoriasNoticias">
             <div class="infos" id="categorias-content">
-                @include('layouts.categorias', ['categorias' => $categorias])
+                @include('layouts.tabelaCategorias', ['categorias' => $categorias])
             </div>
         </div>
 
@@ -50,5 +50,6 @@
 </div>
 
 @include('layouts.createCategoria', ['tipo' => "noticias"])
+@include('layouts.modalExclusao')
 
 @endsection

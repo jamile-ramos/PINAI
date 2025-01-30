@@ -48,8 +48,8 @@ class CategoriaController extends Controller
         $model::destroy($id);
 
         $categorias = $this->getCategoriasByTipo($tipo);
-        return view('components.tabela-categoria-index', compact('categorias', 'tipo'))
-            ->with('success', 'Categoria excluída com sucesso!');
+        $minhasNoticias = (new NoticiaController)->myNoticias();
+        return view('noticias.index', compact('categorias', 'minhasNoticias'))->with('success', 'Categoria excluída com sucesso!');
     }
 
     private function getCategoriasByTipo($tipo)

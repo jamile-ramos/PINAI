@@ -17,4 +17,8 @@ class Noticia extends Model
         'imagem', 
         'idCategoria'
     ];
+
+    public function user() {
+        return $this->belongsTo(User::class, 'idUsuario');
+    }
 }

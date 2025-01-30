@@ -34,8 +34,9 @@
                                 <button
                                     type="button"
                                     data-bs-toggle="tooltip"
-                                    title=""
-                                    class="btn btn-danger"
+                                    data-tipo = "noticias"
+                                    data-id = "{{ $categorias->id }}"
+                                    class="btn btn-danger btn-remove"
                                     data-original-title="Remove">
                                     Excluir
                                 </button>
@@ -51,8 +52,9 @@
                                 <button
                                     type="button"
                                     data-bs-toggle="tooltip"
-                                    title=""
-                                    class="btn btn-danger"
+                                    data-tipo = "noticias"
+                                    data-id = "{{ $categorias->id }}"
+                                    class="btn btn-danger btn-remove"
                                     data-original-title="Remove">
                                     Excluir
                                 </button>

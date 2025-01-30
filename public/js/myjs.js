@@ -275,19 +275,47 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Abrir modais de criação: Categoria
     document.querySelectorAll('.container-abas').forEach(container => {
-        const addBtns = container.querySelectorAll('.add-btn'); 
+        const addBtns = container.querySelectorAll('.add-btn');
         addBtns.forEach((btn) => {
             btn.addEventListener('click', () => {
                 const buttonText = btn.textContent.trim();
-                console.log('Botão clicado:', buttonText); 
+                console.log('Botão clicado:', buttonText);
 
                 if (buttonText === 'Criar Categoria') {
                     const modal = document.getElementById('modalAddCategoria');
-                    console.log('Modal encontrado:', modal); 
+                    console.log('Modal encontrado:', modal);
                     $(modal).modal('show');
-                    $(modal).removeClass('fade').addClass('show'); 
-                    $(modal).css('display', 'block'); 
+                    $(modal).removeClass('fade').addClass('show');
+                    $(modal).css('display', 'block');
                 }
+            });
+        });
+    });
+
+    // Abrir o modal e Atualizar o atributo data-route e o campo oculto do formulário 
+    document.querySelectorAll('.container-abas').forEach(container => {
+        const deleteButtons = container.querySelectorAll('.btn-remove');
+
+        deleteButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tipo = btn.getAttribute('data-tipo');
+                const idCategoria = btn.getAttribute('data-id');  // Corrigido: pegando o data-id do botão
+                const modal = document.querySelector('#confirmExcluirModal');
+                const form = document.getElementById('confirmEcluirForm');
+
+                // Corrigido: obtenha a rota e substitua ':tipo' corretamente
+                const route = form.getAttribute('data-route');
+                const novaRoute = route.replace(':tipo', tipo);
+
+                // Define os valores dinâmicos
+                form.setAttribute('action', novaRoute);  // Atualizando a action com a nova rota
+                form.setAttribute('id', 'confirmEcluirForm-' + idCategoria);  // Adicionando um ID único ao formulário
+
+                // Atualiza o campo oculto com o valor de categoria
+                const categoriaInput = document.getElementById('categoria');
+                categoriaInput.value = idCategoria;
+
+                $(modal).modal('show'); // Exibe o modal
             });
         });
     });

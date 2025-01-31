@@ -3,13 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Noticia extends Model
 {
-    public function categoria(){
-        return $this->belongsTo(CategoriaNoticia::class, 'idCategoria');
-    }
-
     protected $fillable = [
         'titulo', 
         'subtitulo', 
@@ -17,6 +14,11 @@ class Noticia extends Model
         'imagem', 
         'idCategoria'
     ];
+
+    public function categoria(): BelongsTo
+    {
+        return $this->belongsTo(CategoriaNoticia::class, 'idCategoria'); 
+    }
 
     public function user() {
         return $this->belongsTo(User::class, 'idUsuario');

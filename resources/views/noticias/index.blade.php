@@ -29,7 +29,7 @@
     <div class="tab-contents">
         <div class="content-link show" id="allNoticias">
             <div class="infos">
-                @include('noticias.init', ['noticiasRecentes' => $noticiasRecentes])
+                @include('noticias.init', ['noticiasRecentes' => $noticiasRecentes, 'categorias' => $categorias])
             </div>
         </div>
 

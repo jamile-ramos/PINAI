@@ -3,16 +3,16 @@
         <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 @foreach($noticiasRecentes as $index => $noticia)
-                    <li data-target="#carouselExampleCaptions" data-slide-to="{{ $index }}" class="{{ $loop->first ? 'active' : '' }}"></li>
+                <li data-target="#carouselExampleCaptions" data-slide-to="{{ $index }}" class="{{ $loop->first ? 'active' : '' }}"></li>
                 @endforeach
             </ol>
             <div class="carousel-inner">
                 @foreach($noticiasRecentes as $index => $noticia)
                 <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
                     <img src="{{ asset('img/imgNoticias/' . $noticia->imagem) }}" class="d-block w-100" alt="Imagem da notícia">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>{{ $noticia->titulo }}</h5>
-                        <p>{{ Str::limit($noticia->descricao, 100) }}</p>
+                    <div class="carousel-caption d-md-block">
+                        <a href="{{ route('noticias.show', $noticia->id) }}" class="link-noticia">{{ $noticia->titulo }}</a>
+                        <p class="subtitulo-slide">{{ Str::limit($noticia->subtitulo, 100) }}</p>
                     </div>
                 </div>
                 @endforeach
@@ -27,24 +27,32 @@
             </a>
         </div>
     </div>
+    @foreach($categorias as $categoria)
+    @php
+    $noticiaCategoria = $categoria->noticias()->latest()->first();
+    @endphp
 
+    @if($noticiaCategoria)
     <div class="home-news titulo-categoria">
-        <h2>Categoria</h2>
+        <h2 class="nomeCategoria"><a href="{{ route('noticias.noticiasCategorias', $categoria->id) }}">{{ $categoria->nomeCategoria }}</a></h2>
         <div class="card card-new mb-3" style="max-width: 98%;">
             <div class="row g-0">
                 <div class="col-md-4">
-                    <img src="img/blogpost.jpg" class="img-fluid rounded-start" alt="...">
+                    <img src="{{ asset('img/imgNoticias/' . $noticiaCategoria->imagem) }}" class="img-fluid rounded-start" alt="...">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
                         <h5 class="card-title title-new">
-                            <a href="#">Novos Avanços em Tecnologias Assistivas para Pessoas com Deficiência</a>
+                            <a href="{{ route('noticias.show', $noticiaCategoria->id) }}">{{ $noticiaCategoria->titulo }}</a>
                         </h5>
-                        <p class="card-text">Esta notícia pode destacar as inovações tecnológicas que estão melhorando a vida de pessoas com deficiência, como novos softwares de leitura de tela, dispositivos de navegação para deficientes visuais e avanços em aparelhos auditivos.</p>
-                        <p class="card-text"><small class="text-muted">Publicado dia 12/09/2021</small></p>
+                        <p class="card-text">{{ Str::limit($noticiaCategoria->subtitulo, 150) }}</p>
+                        <p class="card-text"><small class="text-muted">Publicado dia {{ $noticiaCategoria->created_at->format('d/m/Y') }}</small></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    @endif
+    @endforeach
+
 </div>

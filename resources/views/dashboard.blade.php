@@ -16,7 +16,7 @@
       <div class="card-body card-functions">
         <i class="fas fa-newspaper"></i>
         <h5 class="card-title">Notícias</h5>
-        <p class="card-text">Fique por dentro das últimas atualizações sobre acessibilidade e inclusão.</p>
+        <p class="card-text card-home">Fique por dentro das últimas atualizações sobre acessibilidade e inclusão.</p>
         <a href="#" class="btn btn-home">Ver mais</a>
       </div>
     </div>

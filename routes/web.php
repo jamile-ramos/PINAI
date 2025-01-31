@@ -36,7 +36,8 @@ Route::post('/noticias/store', [NoticiaController::class, 'store'])->name('notic
 Route::delete('/noticias/delete', [NoticiaController::class, 'delete'])->name('noticias.delete');
 Route::get('/noticias/edit/{id}', [NoticiaController::class, 'edit'])->name('noticias.edit');
 Route::put('/noticias/update/{id}', [NoticiaController::class, 'update'])->name('noticias.update');
-
+Route::get('/noticias/show/{id}', [NoticiaController::class, 'show'])->name('noticias.show');
+Route::get('/noticias/categorias/{idCategoria}', [NoticiaController::class, 'noticiasCategorias'])->name('noticias.noticiasCategorias');
 
 // Categorias de noticias, topicos, documentos e solucoes
 Route::get('/categorias/create/{tipo}', [CategoriaController::class, 'create'])->name('categorias.create');

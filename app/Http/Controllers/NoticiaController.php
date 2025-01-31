@@ -67,25 +67,35 @@ class NoticiaController extends Controller
         $noticia = Noticia::findOrFail($id);
         $categorias = CategoriaNoticia::all();
         return view('noticias.create', compact('categorias', 'noticia'));
-
     }
 
     public function update(Request $request, $id)
-{
-    $data = $request->all();
+    {
+        $data = $request->all();
 
-    // Upload da imagem
-    if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
-        $requestImage = $request->file('imagem');
-        $extension = $requestImage->extension();
-        $imageName = md5($requestImage->getClientOriginalName() . strtotime('now') . $extension);
-        $requestImage->move(public_path('img/imgNoticias'), $imageName);
-        $data['imagem'] = $imageName;
+        // Upload da imagem
+        if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
+            $requestImage = $request->file('imagem');
+            $extension = $requestImage->extension();
+            $imageName = md5($requestImage->getClientOriginalName() . strtotime('now') . $extension);
+            $requestImage->move(public_path('img/imgNoticias'), $imageName);
+            $data['imagem'] = $imageName;
+        }
+
+        // Atualizando os dados da notícia
+        Noticia::findOrFail($id)->update($data); 
+        return redirect()->route('noticias.index')->with('success', 'Notícia atualizada com sucesso!');
     }
 
-    // Atualizando os dados da notícia
-    Noticia::findOrFail($id)->update($data); // Usando o array $data que inclui a imagem
-    return redirect()->route('noticias.index')->with('success', 'Notícia atualizada com sucesso!');
-}
+    public function show($id){
+        $noticia = Noticia::findOrFail($id);
+        return view('noticias.show', compact('noticia'));
+    }
 
+    public function noticiasCategorias($idCategoria){
+        $categoria = CategoriaNoticia::findOrFail($idCategoria);
+        $noticias = $categoria->noticias;
+
+        return view('noticias.noticiasCategorias', compact('noticias', 'categoria'));
+    }
 }

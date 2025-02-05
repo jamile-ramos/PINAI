@@ -24,6 +24,11 @@
                     </tr>
                 </tfoot>
                 <tbody>
+                    @if($categorias->isEmpty())
+                    <tr>
+                        <td colspan="6" class="text-center">Nenhuma categoria encontrada.</td>
+                    </tr>
+                    @else
                     @foreach($categorias as $categoria)
                     @if($loop-> index % 2 == 0 )
                     <tr>
@@ -35,7 +40,7 @@
                                     type="button"
                                     data-bs-toggle="tooltip"
                                     data-modal="#confirmExcluirModal"
-                                    data-url="{{ route('categorias.delete', ['tipo' => 'noticias']) }}" 
+                                    data-url="{{ route('categorias.delete', ['tipo' => $tipo]) }}"
                                     data-id="{{ $categoria->id }}"
                                     class="btn btn-danger btn-remove"
                                     data-original-title="Remove">
@@ -54,7 +59,7 @@
                                     type="button"
                                     data-bs-toggle="tooltip"
                                     data-modal="#confirmExcluirModal"
-                                    data-url="{{ route('categorias.delete', ['tipo' => 'noticias']) }}" 
+                                    data-url="{{ route('categorias.delete', ['tipo' => $tipo]) }}"
                                     data-id="{{ $categoria->id }}"
                                     class="btn btn-danger btn-remove"
                                     data-original-title="Remove">
@@ -65,6 +70,7 @@
                     </tr>
                     @endif
                     @endforeach
+                    @endif
                 </tbody>
             </table>
         </div>

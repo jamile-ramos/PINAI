@@ -14,7 +14,7 @@ class CategoriaController extends Controller
     private $modelMap = [
         'noticias' => CategoriaNoticia::class,
         'documento' => CategoriaDocumento::class,
-        'topico' => CategoriaTopico::class,
+        'topicos' => CategoriaTopico::class,
         'solucao' => CategoriaSolucao::class,
     ];
 
@@ -31,8 +31,7 @@ class CategoriaController extends Controller
         $categoriaModel->idUsuario = Auth::User()->id;
         $categoriaModel->save();
 
-        $categorias = $this->getCategoriasByTipo($tipo);
-        return redirect()->route('noticias.index')->with('success', 'Categoria criada com sucesso!');
+        return redirect()->route("{$tipo}.index")->with('success', 'Categoria criada com sucesso!');
     }
 
     public function delete(Request $request, $tipo)
@@ -47,7 +46,7 @@ class CategoriaController extends Controller
 
         $model::destroy($id);
 
-        return redirect()->route('noticias.index')->with('success', 'Categoria excluida com sucesso!');
+        return redirect()->route("{$tipo}.index")->with('success', 'Categoria excluida com sucesso!');
     }
 
     private function getCategoriasByTipo($tipo)

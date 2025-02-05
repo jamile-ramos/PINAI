@@ -5,6 +5,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\NoticiaController;
+use App\Http\Controllers\TopicoController;
+use App\Models\Topico;
 
 Route::middleware('guest')->get('/', function () {
     return view('auth.login'); 
@@ -29,8 +31,6 @@ Route::put('/painelUsuarios/status/{id}', [UsuarioController::class, 'updateStat
 
 // Portal de Notícias
 Route::get('/noticias', [NoticiaController::class, 'index'])->name('noticias.index');
-
-
 Route::get('/noticias/create', [NoticiaController::class, 'create'])->name('noticias.create');
 Route::post('/noticias/store', [NoticiaController::class, 'store'])->name('noticias.store');
 Route::delete('/noticias/delete', [NoticiaController::class, 'delete'])->name('noticias.delete');
@@ -43,3 +43,7 @@ Route::get('/noticias/categorias/{idCategoria}', [NoticiaController::class, 'not
 Route::get('/categorias/create/{tipo}', [CategoriaController::class, 'create'])->name('categorias.create');
 Route::post('/categorias/store/{tipo}', [CategoriaController::class, 'store'])->name('categorias.store');
 Route::delete('/categorias/delete/{tipo}', [CategoriaController::class, 'delete'])->name('categorias.delete');
+
+// Fórum de Discurssão
+Route::get('/topicos', [TopicoController::class, 'index'])->name('topicos.index');
+Route::get('/topicos/create', [TopicoController::class, 'create'])->name('topicos.create');

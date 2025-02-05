@@ -28,7 +28,7 @@ class NoticiaController extends Controller
     public function create()
     {
         $categorias = CategoriaNoticia::all();
-        return view('noticias.create', compact('categorias'));
+        return view('noticias.form', compact('categorias'));
     }
 
     public function store(Request $request)
@@ -66,7 +66,7 @@ class NoticiaController extends Controller
     {
         $noticia = Noticia::findOrFail($id);
         $categorias = CategoriaNoticia::all();
-        return view('noticias.create', compact('categorias', 'noticia'));
+        return view('noticias.form', compact('categorias', 'noticia'));
     }
 
     public function update(Request $request, $id)

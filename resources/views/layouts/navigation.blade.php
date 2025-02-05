@@ -45,7 +45,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a data-bs-toggle="collapse" href="#sidebarLayouts">
+              <a href="/topicos">
                 <i class="fas fa-comments"></i>
                 <p>Fórum de discurssão</p>
               </a>

@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Funcao para iniciar aba
-    function iniciarAbar(barraId) {
+    function iniciarAba(barraId) {
         const container = document.getElementById(barraId);
         const tabs = container.querySelectorAll('.tab-btn');
         const tabsSelect = container.querySelectorAll('.option-btn');
@@ -241,7 +241,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const updateTabs = () => {
         document.querySelectorAll('.container-abas').forEach(container => {
             const barraId = container.id;
-            iniciarAbar(barraId);
+            iniciarAba(barraId);
         })
     }
 
@@ -299,6 +299,9 @@ document.addEventListener('DOMContentLoaded', function () {
             $(modal).removeClass('fade').addClass('show');
             $(modal).css('display', 'block');
         } else if (buttonText === 'Criar Notícia') {
+            console.log('url', url)
+            window.location.href = url;
+        }else if(buttonText === 'Criar Tópico'){
             console.log('url', url)
             window.location.href = url;
         }

@@ -12,7 +12,6 @@
                     <img src="{{ asset('img/imgNoticias/' . $noticia->imagem) }}" class="d-block w-100" alt="Imagem da notícia">
                     <div class="carousel-caption d-md-block">
                         <a href="{{ route('noticias.show', $noticia->id) }}" class="link-noticia">{{ $noticia->titulo }}</a>
-                        <p class="subtitulo-slide">{{ Str::limit($noticia->subtitulo, 100) }}</p>
                     </div>
                 </div>
                 @endforeach

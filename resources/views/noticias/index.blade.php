@@ -13,8 +13,8 @@
         ['content-id' => 'categoriasNoticias', 'nomeAba' => 'Categorias', 'data-tipo' => 'noticias']
     ]"
         :actions="[
-        ['classBtn' => 'btn-dark', 'content-id' => 'categoriasNoticias', 'nomeButton' => 'Criar Categoria'],
-        ['classBtn' => 'btn-primary', 'content-id' => 'mysNoticias', 'nomeButton' => 'Criar Notícia', 'data-url' => '/noticias/create']
+        ['classBtn' => 'btn-primary', 'content-id' => 'mysNoticias', 'nomeButton' => 'Criar Notícia', 'data-url' => '/noticias/create'],
+        ['classBtn' => 'btn-dark', 'content-id' => 'categorias', 'nomeButton' => 'Criar Categoria']
     ]" />
 
     @if(session('success'))
@@ -41,7 +41,7 @@
 
         <div class="content-link" id="categoriasNoticias">
             <div class="infos" id="categorias-content">
-                @include('layouts.tabelaCategorias', ['categorias' => $categorias])
+                @include('layouts.tabelaCategorias', ['categorias' => $categorias, 'tipo' => "noticias"])
             </div>
         </div>
 

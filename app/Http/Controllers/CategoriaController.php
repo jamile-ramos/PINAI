@@ -14,7 +14,6 @@ class CategoriaController extends Controller
     private $modelMap = [
         'noticias' => CategoriaNoticia::class,
         'documento' => CategoriaDocumento::class,
-        'topicos' => CategoriaTopico::class,
         'solucao' => CategoriaSolucao::class,
     ];
 

@@ -4,25 +4,23 @@
             <tr>
                 <th>Tópicos</th>
                 <th>Respostas</th>
-                <th>Última Atualizacao</th>
+                <th>Última Atualização</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td><a href="topic.html">Como aprender HTML e CSS?</a><br>Autor: Jamile Ramos</td>
-                <td><span class="icon">💬</span> 325</td>
-                <td><span class="icon">📅</span> 10/02/2025</td>
-            </tr>
-            <tr>
-                <td><a href="topic.html">Melhores práticas para desenvolvimento web</a><br>Autor: Jamile Ramos</td>
-                <td><span class="icon">💬</span> 325</td>
-                <td><span class="icon">📅</span> 10/02/2025</td>
-            </tr>
-            <tr>
-                <td><a href="topic.html">Dicas para iniciantes em programação</a><br>Autor: Jamile Ramos</td>
-                <td><span class="icon">💬</span> 325</td>
-                <td><span class="icon">📅</span> 10/02/2025</td>
-            </tr>
+            @if(!$topicos->isEmpty()) 
+                @foreach($topicos as $topico)
+                <tr>
+                    <td>
+                        <a href="topic.html">{{ $topico->titulo }}</a><br>
+                    </td>
+                    <td><span class="icon">💬</span> 325</td>
+                    <td><span class="icon">📅</span> {{ $topico->created_at->format('d/m/Y H:i') }}</td>
+                </tr>
+                @endforeach
+            @else
+                <tr><td colspan="3">Nenhum tópico encontrado!</td></tr>
+            @endif
         </tbody>
     </table>
     <nav aria-label="...">

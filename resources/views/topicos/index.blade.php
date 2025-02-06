@@ -9,10 +9,11 @@
     <x-barra-filtros
         :links="[
         ['content-id' => 'allTopicos', 'nomeAba' => 'Todos', 'classActive' => 'active', 'data-tipo' => 'topicos'],
-        ['content-id' => 'sugestoes', 'nomeAba' => 'Tópicos sugeridos', 'data-tipo' => 'topicos']
+        ['content-id' => 'myTopicos', 'nomeAba' => 'Meus tópicos', 'data-tipo' => 'topicos'],
+        ['content-id' => 'sugestoes', 'nomeAba' => 'Tópicos sugeridos', 'data-tipo' => 'topicos'],
     ]"
         :actions="[
-        ['classBtn' => 'btn-primary', 'content-id' => 'mysTopicos', 'nomeButton' => 'Criar Tópico', 'data-url' => '/topicos/create'],
+        ['classBtn' => 'btn-primary', 'nomeButton' => 'Criar Tópico', 'data-url' => '/topicos/create']
     ]" />
 
     @if(session('success'))
@@ -27,7 +28,7 @@
     <div class="tab-contents">
         <div class="content-link show" id="allTopicos">
             <div class="infos">
-            @include('topicos.init')
+            @include('topicos.init', ['topicos' => $topicos])
             </div>
         </div>
 
@@ -46,6 +47,7 @@
     </div>
 </div>
 
+@include('topicos.form')
 @include('layouts.createCategoria', ['tipo' => "topicos"])
 @include('layouts.modalExclusao')
 

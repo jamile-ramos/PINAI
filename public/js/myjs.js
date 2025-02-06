@@ -302,8 +302,11 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('url', url)
             window.location.href = url;
         }else if(buttonText === 'Criar Tópico'){
-            console.log('url', url)
-            window.location.href = url;
+            const modal = document.getElementById('modalAddTopico');
+            console.log('Modal encontrado:', modal);
+            $(modal).modal('show');
+            $(modal).removeClass('fade').addClass('show');
+            $(modal).css('display', 'block');
         }
     }
 

@@ -9,17 +9,17 @@ return new class extends Migration
 
     public function up(): void
     {
-        Schema::create('topicos', function (Blueprint $table) {
+        Schema::create('respostas', function (Blueprint $table) {
             $table->id();
-            $table->string('titulo', 255);
+            $table->text('conteudo');
             $table->foreignId('idUsuario')->constrained('users')->onDelete('cascade');
+            $table->foreignId('idPostagem')->constrained('postagens')->onDelete('cascade');
             $table->timestamps();
         });
     }
 
-
     public function down(): void
     {
-        Schema::dropIfExists('topicos');
+        Schema::dropIfExists('respostas');
     }
 };

@@ -47,3 +47,4 @@ Route::delete('/categorias/delete/{tipo}', [CategoriaController::class, 'delete'
 // Fórum de Discurssão
 Route::get('/topicos', [TopicoController::class, 'index'])->name('topicos.index');
 Route::get('/topicos/create', [TopicoController::class, 'create'])->name('topicos.create');
+Route::post('/topicos/store', [TopicoController::class, 'store'])->name('topicos.store');

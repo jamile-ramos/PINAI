@@ -1,73 +1,26 @@
-@extends('layouts.app')
-
-@section('title', 'Adicionar Notícia')
-
-@section('content')
-
-<div class="container my-5">
-    <div class="card shadow-lg p-4">
-        <div class="card-header">
-            <div class="d-flex align-items-center">
-                <h4 class="card-title"> Adicionar Notícia</h4>
+<!-- Modal Criar Tópico-->
+<div class="modal fade" id="modalAddTopico" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Adicionar Topico</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <form id="formAddTopico" method="POST" action="{{ route('topicos.store') }}">   
+                    @csrf
+                    <div class="form-group">
+                        <label for="titulo">Título</label>
+                        <input type="text" class="form-control" id="titulo" name="titulo">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+                </form> 
             </div>
         </div>
-        <form id="formNoticia" action="" method="post" enctype="multipart/form-data">
-            @csrf
-
-            <!-- Campo Título -->
-            <div class="form-group mb-4">
-                <label for="titulo" class="form-label">Título</label>
-                <input
-                    name="titulo"
-                    type="text"
-                    class="form-control"
-                    id="titulo"
-                    placeholder="Digite o título da notícia"
-                    required />
-            </div>
-
-            <!-- Campo Subtítulo -->
-            <div class="form-group mb-4">
-                <label for="subtitulo" class="form-label">Subtítulo</label>
-                <input
-                    name="subtitulo"
-                    type="text"
-                    class="form-control"
-                    id="subtitulo"
-                    placeholder="Digite o subtítulo"
-                    required />
-            </div>
-
-            <!-- Campo Conteúdo -->
-            <div class="form-group mb-4">
-                <label for="conteudo" class="form-label">Conteúdo da Notícia</label>
-                <textarea
-                    name="conteudo"
-                    class="form-control"
-                    id="conteudo"
-                    rows="20"
-                    placeholder="Escreva o conteúdo da notícia"
-                    required></textarea>
-            </div>
-
-            <!-- Campo Imagem -->
-            <div class="form-group mb-4" id="campoImagem">
-                <label for="imagem" class="form-label">Imagem</label>
-                <input
-                    name="imagem"
-                    type="file"
-                    class="form-control-file"
-                    id="imagem" />
-            </div>
-
-
-            <!-- Botões -->
-            <div class="d-flex justify-content-between mt-4">
-                <a href="{{ route('noticias.index') }}" class="btn btn-secondary">Cancelar</a>
-                <button type="submit" class="btn btn-primary">Salvar Tópico</button>
-            </div>
-        </form>
     </div>
 </div>
-
-@endsection

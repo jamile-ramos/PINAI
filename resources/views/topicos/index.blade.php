@@ -13,7 +13,8 @@
         ['content-id' => 'sugestoes', 'nomeAba' => 'Tópicos sugeridos', 'data-tipo' => 'topicos'],
     ]"
         :actions="[
-        ['classBtn' => 'btn-primary', 'nomeButton' => 'Criar Tópico', 'data-url' => '/topicos/create']
+        ['classBtn' => 'btn-primary', 'nomeButton' => 'Sugerir Tópico', 'data-url' => '/topicos/create'],
+        ['classBtn' => 'btn-dark', 'nomeButton' => 'Criar Tópico', 'data-url' => '/topicos/create']
     ]" />
 
     @if(session('success'))
@@ -32,15 +33,15 @@
             </div>
         </div>
 
-        <div class="content-link" id="mysTopicos">
+        <div class="content-link" id="myTopicos">
             <div class="infos">
-               
+            @include('topicos.meusTopicos', ['itens' => $meusTopicos, 'title' => 'Meus Tópicos'])
             </div>
         </div>
 
         <div class="content-link" id="sugestoes">
             <div class="infos" id="categorias-content">
-                Teste4
+            @include('topicos.meusTopicos', ['itens' => $topicosSugeridos, 'title' => 'Tópicos Sugeridos'])
             </div>
         </div>
 
@@ -50,5 +51,6 @@
 @include('topicos.form')
 @include('layouts.createCategoria', ['tipo' => "topicos"])
 @include('layouts.modalExclusao')
+@include('topicos.modalStatus')
 
 @endsection

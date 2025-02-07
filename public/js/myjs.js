@@ -207,11 +207,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const tabsSelect = container.querySelectorAll('.option-btn');
 
         tabs.forEach(tab => tab.addEventListener('click', function () {
-            tabClicked(tab, barraId); // Passando diretamente o tab
+            tabClicked(tab, barraId);
         }));
 
         tabsSelect.forEach(tab => tab.addEventListener('click', function () {
-            tabClicked(tab, barraId); // Passando diretamente o tab
+            tabClicked(tab, barraId);
         }));
     }
 
@@ -278,13 +278,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.addEventListener("resize", restoreActiveTabOnResize);
 
-    // Abrir modais de criação: Categoria
+    // Abrir modais de criação
     document.querySelectorAll('.container-abas').forEach(container => {
         const addBtns = container.querySelectorAll('.add-btn');
         const optionAdds = container.querySelectorAll('.option-add');
 
         addBtns.forEach(btn => btn.addEventListener('click', function () { abrirCategoria(btn) }));
-        optionAdds.forEach(btn => btn.addEventListener('click', function () { abrirCategoria(btn) })); 
+        optionAdds.forEach(btn => btn.addEventListener('click', function () { abrirCategoria(btn) }));
     });
 
     function abrirCategoria(btn) {
@@ -301,14 +301,95 @@ document.addEventListener('DOMContentLoaded', function () {
         } else if (buttonText === 'Criar Notícia') {
             console.log('url', url)
             window.location.href = url;
-        }else if(buttonText === 'Criar Tópico'){
+        } else if (buttonText === 'Criar Tópico') {
             const modal = document.getElementById('modalAddTopico');
             console.log('Modal encontrado:', modal);
             $(modal).modal('show');
             $(modal).removeClass('fade').addClass('show');
             $(modal).css('display', 'block');
+        } else if (buttonText == 'Sugerir Tópico') {
+            const modal = document.getElementById('modalAddTopico');
+            $('#modalTopicoTitle').text('Sugerir Tópico');
+            $('#formAddTopico').attr('action', '/sugestoes/store/');
+            $(modal).modal('show');
         }
     }
+
+    // Abrir edit de Topico
+    document.querySelectorAll('.container-abas').forEach(container => {
+        const editTopicos = container.querySelectorAll('.btn-editTopico');
+
+        editTopicos.forEach(editTopico => {
+            editTopico.addEventListener('click', function () {
+                const idTopico = editTopico.getAttribute("data-id");
+                console.log(idTopico);
+
+                $.ajax({
+                    url: '/topicos/edit/' + idTopico,
+                    method: 'GET',
+                    success: function (response) {
+                        $('#titulo').val(response.titulo);
+
+                        $('#formAddTopico').attr('action', '/topicos/update/' + idTopico);
+
+                        if (!$('#formAddTopico input[name="_method"]').length) {
+                            $('#formAddTopico').append('<input type="hidden" name="_method" value="PUT">');
+                        }
+
+                        $('#modalTopicoTitle').text('Editar Tópico');
+                        $('#btnSalvarTopico').text('Atualizar');
+
+                        $('#modalAddTopico').modal('show');
+                    },
+                    error: function (xhr) {
+                        alert('Erro ao buscar dados do tópico: ' + xhr.responseText);
+                    }
+                });
+            });
+        });
+    });
+
+    // Status dos topicos sugeridos
+    document.querySelectorAll('.container-abas').forEach(container => {
+        const btns = container.querySelectorAll('.btn');
+
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const btnStatusTop = btn.classList.contains('btn-statusTop');
+                console.log(btnStatusTop);
+                const status = btn.getAttribute('data-value');
+                const id = btn.getAttribute('data-id');
+                console.log(id)
+
+                if (btnStatusTop) {
+                    const form = document.getElementById('formConfirmacaoTopico');
+                    const route = form.getAttribute('data-route');
+                    form.action = route.replace(':id', id);
+
+                    const textoConfirmar = document.querySelector('.mensagemConfirmacaoTopico p');
+                    console.log(textoConfirmar);
+                    const confirmBtn = document.getElementById('botaoConfirmacaoTopico');
+                    console.log(confirmBtn);
+
+                    if (status == 1) {
+                        if (textoConfirmar) textoConfirmar.textContent = "Tem certeza de que deseja aprovar este tópico?";
+                        if (confirmBtn) {
+                            confirmBtn.textContent = "Ativar"; 
+                            confirmBtn.classList.replace('btn-danger', 'btn-success');
+                        }
+                    } else {
+                        if (textoConfirmar) textoConfirmar.textContent = "Tem certeza de que deseja reprovar este tópico?";
+                        if (confirmBtn) {
+                            confirmBtn.textContent = "Desativar"; 
+                            confirmBtn.classList.replace('btn-success', 'btn-danger');
+                        }
+                    }
+                    document.getElementById('status').value = status;
+                    $('#modalConfirmacaoTopico').modal('show');
+                }
+            });
+        });
+    });
 
     // Abrir o modal de exclusão 
     document.querySelectorAll('.container-abas').forEach(container => {

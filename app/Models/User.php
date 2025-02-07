@@ -50,5 +50,10 @@ class User extends Authenticatable
 
     public function noticias() {
         return $this->hasMany(Noticia::class, 'idUsuario');
-    }    
+    }   
+    
+    public function topicos()
+    {
+        return $this->belongsToMany(Topico::class)->withPivot('status')->withTimestamps();
+    } 
 }

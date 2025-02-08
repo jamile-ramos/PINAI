@@ -6,71 +6,47 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table
-                id="add-row"
-                class="display table table-striped table-hover">
+            <table id="add-row" class="display table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>Usuário resposavel pela publicação</th>
+                        <th>Usuário responsável pela publicação</th>
                         <th>Categoria</th>
                         <th style="width: 10%">Ação</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                        <th>Usuário resposavel pela publicação</th>
+                        <th>Usuário responsável pela publicação</th>
                         <th>Categoria</th>
-                        <th>Acão</th>
+                        <th>Ação</th>
                     </tr>
                 </tfoot>
                 <tbody>
-                    @if($categorias->isEmpty())
-                    <tr>
-                        <td colspan="6" class="text-center">Nenhuma categoria encontrada.</td>
-                    </tr>
-                    @else
-                    @foreach($categorias as $categoria)
-                    @if($loop-> index % 2 == 0 )
+                    @forelse($categorias as $categoria)
                     <tr>
                         <td>{{ $categoria->user->name }}</td>
                         <td>{{ $categoria->nomeCategoria }}</td>
                         <td>
                             <div class="form-button-action">
-                                <button
-                                    type="button"
+                                <button type="button"
                                     data-bs-toggle="tooltip"
                                     data-modal="#confirmExcluirModal"
                                     data-url="{{ route('categorias.delete', ['tipo' => $tipo]) }}"
                                     data-id="{{ $categoria->id }}"
                                     class="btn btn-danger btn-remove"
-                                    data-original-title="Remove">
-                                    Excluir
+                                    data-original-title="Remover" 
+                                    data-toggle="tooltip"
+                                    title="Excluir">
+                                    <i class="fas fa-trash-alt"></i>
                                 </button>
                             </div>
                         </td>
                     </tr>
-                    @else
+                    @empty
                     <tr>
-                        <td>{{ $categoria->user->name }}</td>
-                        <td>{{ $categoria->nomeCategoria }}</td>
-                        <td>
-                            <div class="form-button-action">
-                                <button
-                                    type="button"
-                                    data-bs-toggle="tooltip"
-                                    data-modal="#confirmExcluirModal"
-                                    data-url="{{ route('categorias.delete', ['tipo' => $tipo]) }}"
-                                    data-id="{{ $categoria->id }}"
-                                    class="btn btn-danger btn-remove"
-                                    data-original-title="Remove">
-                                    Excluir
-                                </button>
-                            </div>
-                        </td>
+                        <td colspan="3" class="text-center">Nenhuma categoria encontrada.</td>
                     </tr>
-                    @endif
-                    @endforeach
-                    @endif
+                    @endforelse
                 </tbody>
             </table>
         </div>

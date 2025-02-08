@@ -13,8 +13,9 @@
         ['content-id' => 'sugestoes', 'nomeAba' => 'Tópicos sugeridos', 'data-tipo' => 'topicos'],
     ]"
         :actions="[
-        ['classBtn' => 'btn-primary', 'nomeButton' => 'Sugerir Tópico', 'data-url' => '/topicos/create'],
-        ['classBtn' => 'btn-dark', 'nomeButton' => 'Criar Tópico', 'data-url' => '/topicos/create']
+        ['classBtn' => 'btn-primary', 'nomeButton' => 'Criar Postagem', 'data-url' => '/topicos/create'],
+        ['classBtn' => 'btn-dark', 'nomeButton' => 'Sugerir Tópico', 'data-url' => '/topicos/create'],
+        ['classBtn' => 'btn-primary', 'nomeButton' => 'Criar Tópico', 'data-url' => '/topicos/create']
     ]" />
 
     @if(session('success'))

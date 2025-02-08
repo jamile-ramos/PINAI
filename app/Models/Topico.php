@@ -11,4 +11,8 @@ class Topico extends Model
     public function user(){
         return $this->belongsTo(User::class, 'idUsuario');
     }
+
+    public function postagens(){
+        return $this->hasMany(Postagem::class, 'idTopico');
+    }
 }

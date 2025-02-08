@@ -183,7 +183,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const currentStatus = this.getAttribute('data-status');
 
             document.getElementById('status').value = (currentStatus == 0) ? 1 : 0;
-
             const buttonText = currentStatus == 0 ? 'Desabilitar' : 'Ativar';
             const buttonClass = currentStatus == 0 ? 'btn-danger' : 'btn-success';
 
@@ -192,13 +191,18 @@ document.addEventListener('DOMContentLoaded', function () {
             confirmButton.classList.remove('btn-danger', 'btn-success');
             confirmButton.classList.add(buttonClass);
 
+            const confirmationText = currentStatus == 0 ? 'Tem certeza de que deseja desativar este usuário?' : 'Tem certeza de que deseja ativar este usuário?';
+            document.querySelector('.texto-confirmar p').innerText = confirmationText;
+
             const form = document.getElementById('confirmForm');
             const route = form.getAttribute('data-route');
             form.action = route.replace(':id', userId);
 
+            // Mostra o modal
             $('#confirmModal').modal('show');
         });
     });
+
 
     // Funcao para iniciar aba
     function iniciarAba(barraId) {
@@ -357,34 +361,17 @@ document.addEventListener('DOMContentLoaded', function () {
             btn.addEventListener('click', () => {
                 const btnStatusTop = btn.classList.contains('btn-statusTop');
                 console.log(btnStatusTop);
-                const status = btn.getAttribute('data-value');
                 const id = btn.getAttribute('data-id');
-                console.log(id)
+                const selected = btn.getAttribute('data-selected');
+                const statusSelect = document.getElementById('statusSelect');
+                statusSelect.value = selected;
 
                 if (btnStatusTop) {
                     const form = document.getElementById('formConfirmacaoTopico');
                     const route = form.getAttribute('data-route');
                     form.action = route.replace(':id', id);
+                    console.log(form)
 
-                    const textoConfirmar = document.querySelector('.mensagemConfirmacaoTopico p');
-                    console.log(textoConfirmar);
-                    const confirmBtn = document.getElementById('botaoConfirmacaoTopico');
-                    console.log(confirmBtn);
-
-                    if (status == 1) {
-                        if (textoConfirmar) textoConfirmar.textContent = "Tem certeza de que deseja aprovar este tópico?";
-                        if (confirmBtn) {
-                            confirmBtn.textContent = "Ativar"; 
-                            confirmBtn.classList.replace('btn-danger', 'btn-success');
-                        }
-                    } else {
-                        if (textoConfirmar) textoConfirmar.textContent = "Tem certeza de que deseja reprovar este tópico?";
-                        if (confirmBtn) {
-                            confirmBtn.textContent = "Desativar"; 
-                            confirmBtn.classList.replace('btn-success', 'btn-danger');
-                        }
-                    }
-                    document.getElementById('status').value = status;
                     $('#modalConfirmacaoTopico').modal('show');
                 }
             });
@@ -433,6 +420,8 @@ document.addEventListener('DOMContentLoaded', function () {
             campoImagem.style.display = 'block';
         });
     }
+  
+
 
 });
 

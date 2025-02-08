@@ -24,7 +24,16 @@ class SugestaoTopicoController extends Controller
 
         $sugestao->update(['status' => $status]);
 
-        return redirect()->route('topicos.index')->with('success', 'Status atualizado com sucesso!');
+        return redirect()->route('topicos.index')->with('success', 'Status da sugestão atualizado com sucesso!');
+    }
+
+    public function delete(Request $request){
+        $id = $request->id;
+
+        SugestaoTopico::destroy($id);
+
+        return redirect()->route('topicos.index')->with('success', 'Sugestão excluída com sucesso!');
+
     }
     
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\NoticiaController;
+use App\Http\Controllers\PostagemController;
 use App\Http\Controllers\SugestaoTopicoController;
 use App\Http\Controllers\TopicoController;
 use App\Models\Topico;
@@ -54,6 +55,10 @@ Route::put('/topicos/update/{id}', [TopicoController::class, 'update'])->name('t
 Route::delete('/topicos/delete', [TopicoController::class, 'delete'])->name('topicos.delete');
 Route::get('/topicos/sugestao', [TopicoController::class, 'storeSugestao'])->name('topicos.storeSugestao');
 
+// Postagens dos tópicos
+Route::get('/postagens/{id}', [PostagemController::class, 'index'])->name('postagens.index');
+
 // Sugestão de tópicos
 Route::post('/sugestoes/store', [SugestaoTopicoController::class, 'store'])->name('sugestoes.store');
-Route::get('/sugestoes/status/{id}', [SugestaoTopicoController::class, 'status'])->name('sugestoes.updateStatus');
+Route::put('/sugestoes/status/{id}', [SugestaoTopicoController::class, 'updateStatus'])->name('sugestoes.updateStatus');
+Route::delete('/sugestoes/delete', [SugestaoTopicoController::class, 'delete'])->name('sugestoes.delete');

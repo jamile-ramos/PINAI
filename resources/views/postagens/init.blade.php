@@ -2,22 +2,24 @@
     <table>
         <thead>
             <tr>
-                <th>Tópicos</th>
+                <th>Postagens</th>
                 <th>Respostas</th>
+                <th>Autor</th>
                 <th>Última Atualização</th>
             </tr>
         </thead>
         <tbody>
-            @if(!$topicos->isEmpty())
-            @foreach($topicos as $topico)
+            @if(!$postagens->isEmpty())
+            @foreach($postagens as $postagem)
             <tr>
                 <td>
-                    <a href="{{ route('postagens.index', ['id' => $topico->id]) }}">
-                        {{ $topico->titulo }}
+                    <a href="{{ route('postagens.index', ['id' => $postagem->id]) }}">
+                        {{ $postagem->titulo }}
                     </a><br>
                 </td>
                 <td><span class="icon">💬</span> 325</td>
-                <td><span class="icon">📅</span> {{ $topico->created_at->format('d/m/Y H:i') }}</td>
+                <td>{{ $postagem->user->name }}</td>
+                <td><span class="icon">📅</span> {{ $postagem->created_at->format('d/m/Y H:i') }}</td>
             </tr>
             @endforeach
             @else

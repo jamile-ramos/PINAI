@@ -116,7 +116,8 @@ p {
 }
 
 .title-new a:hover {
-    color: #4FBCFE;
+    color: #1269db;
+    text-decoration:underline !important;
 }
 
 .card-action {
@@ -610,8 +611,13 @@ img#imagemPreview {
     background: #ccc !;
 }
 
-.texto-confirmarTopico{
-    margin: 20px 0 0 20px;
+label.form-label {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.btn:not(:disabled):not(.disabled) {
+    white-space: nowrap;
 }
 
 @media screen and (min-width: 320px) and (max-width: 778px) {
@@ -651,6 +657,10 @@ img#imagemPreview {
     .btn-home {
         left: 10%;
         right: 10%;
+    }
+    
+    .btn:not(:disabled):not(.disabled) {
+        white-space: unset;
     }
 }
 

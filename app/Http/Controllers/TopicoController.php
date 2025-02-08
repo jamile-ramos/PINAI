@@ -53,4 +53,5 @@ class TopicoController extends Controller
         Topico::destroy($id);
         return redirect()->route('topicos.index')->with('success', 'Topico excluído com sucesso!');
     }
+
 }

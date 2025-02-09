@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class TopicoController extends Controller
 {
     public function index(){
-        $topicos = Topico::all();
+        $topicos = Topico::withCount('postagens')->get();
         $topicosSugeridos = SugestaoTopico::all();
         $meusTopicos = $this->myTopicos();
         return view('topicos.index', compact('topicos', 'meusTopicos', 'topicosSugeridos'));

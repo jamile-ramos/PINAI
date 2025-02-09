@@ -578,6 +578,11 @@ img#imagemPreview {
 .forum th {
     background: #ADD8E6;
 }
+
+.postagem table{
+    background: #fff;
+}
+
 .forum tr:last-child td {
     border-bottom: none;
 }
@@ -618,6 +623,12 @@ label.form-label {
 
 .btn:not(:disabled):not(.disabled) {
     white-space: nowrap;
+}
+
+.text-obs {
+    font-size: 12px;
+    margin: 0px 10px 10px;
+    color: #969696;
 }
 
 @media screen and (min-width: 320px) and (max-width: 778px) {

@@ -311,11 +311,14 @@ document.addEventListener('DOMContentLoaded', function () {
             $(modal).modal('show');
             $(modal).removeClass('fade').addClass('show');
             $(modal).css('display', 'block');
-        } else if (buttonText == 'Sugerir Tópico') {
+        } else if (buttonText === 'Sugerir Tópico') {
             const modal = document.getElementById('modalAddTopico');
             $('#modalTopicoTitle').text('Sugerir Tópico');
             $('#formAddTopico').attr('action', '/sugestoes/store/');
             $(modal).modal('show');
+        } else if(buttonText === 'Criar Postagem'){
+            console.log('entrou')
+            window.location.href = url;
         }
     }
 
@@ -360,7 +363,6 @@ document.addEventListener('DOMContentLoaded', function () {
         btns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const btnStatusTop = btn.classList.contains('btn-statusTop');
-                console.log(btnStatusTop);
                 const id = btn.getAttribute('data-id');
                 const selected = btn.getAttribute('data-selected');
                 const statusSelect = document.getElementById('statusSelect');
@@ -420,8 +422,6 @@ document.addEventListener('DOMContentLoaded', function () {
             campoImagem.style.display = 'block';
         });
     }
-  
-
 
 });
 

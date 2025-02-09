@@ -3,7 +3,7 @@
         <thead>
             <tr>
                 <th>Tópicos</th>
-                <th>Respostas</th>
+                <th>Postagens</th>
                 <th>Última Atualização</th>
             </tr>
         </thead>
@@ -16,7 +16,7 @@
                         {{ $topico->titulo }}
                     </a><br>
                 </td>
-                <td><span class="icon">💬</span> 325</td>
+                <td><span class="icon">💬</span> {{ $topico->postagens_count }}</td> 
                 <td><span class="icon">📅</span> {{ $topico->created_at->format('d/m/Y H:i') }}</td>
             </tr>
             @endforeach

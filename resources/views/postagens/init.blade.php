@@ -1,8 +1,8 @@
-<section class="forum">
+<section class="forum postagem">
     <table>
         <thead>
             <tr>
-                <th>Postagens</th>
+                <th>Título</th>
                 <th>Respostas</th>
                 <th>Autor</th>
                 <th>Última Atualização</th>
@@ -17,14 +17,14 @@
                         {{ $postagem->titulo }}
                     </a><br>
                 </td>
-                <td><span class="icon">💬</span> 325</td>
+                <td><span class="icon">💬</span> {{ $postagem->respostas_count }}</td>
                 <td>{{ $postagem->user->name }}</td>
                 <td><span class="icon">📅</span> {{ $postagem->created_at->format('d/m/Y H:i') }}</td>
             </tr>
             @endforeach
             @else
             <tr>
-                <td colspan="3">Nenhum tópico encontrado!</td>
+                <td colspan="3">Nenhuma postagem encontrada!</td>
             </tr>
             @endif
         </tbody>

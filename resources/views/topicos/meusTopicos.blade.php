@@ -37,20 +37,29 @@
                         <td>{{ $item->getStatusNomeAttribute() }}</td>
                         <td>
                             <div class="form-button-action">
-                                <button 
-                                    type="button" 
-                                    class="btn btn-info btn-statusTop" 
+                                @if($item->status != 1)
+                                <button
+                                    type="button"
+                                    class="btn btn-info btn-statusTop"
                                     data-id="{{ $item->id }}"
                                     data-selected="{{ $item->status }}">
                                     Alterar status
                                 </button>
-                                <button 
-                                    type="button" 
-                                    class="btn btn-danger btn-remove" 
-                                    data-modal="#confirmExcluirModal" 
-                                    data-id="{{ $item->id }}" 
-                                    data-url="{{ route('sugestoes.delete') }}" 
-                                    data-bs-toggle="tooltip" 
+                                @else
+                                <button
+                                    type="button"
+                                    class="btn btn-info btn-statusTop"
+                                    style="visibility: hidden;">
+                                    Alterar status
+                                </button>
+                                @endif
+                                <button
+                                    type="button"
+                                    class="btn btn-danger btn-remove"
+                                    data-modal="#confirmExcluirModal"
+                                    data-id="{{ $item->id }}"
+                                    data-url="{{ route('sugestoes.delete') }}"
+                                    data-bs-toggle="tooltip"
                                     title="Excluir">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
@@ -59,19 +68,19 @@
                         @else
                         <td>
                             <div class="form-button-action">
-                                <button 
-                                    type="button" 
-                                    class="btn btn-info btn-editTopico" 
+                                <button
+                                    type="button"
+                                    class="btn btn-info btn-editTopico"
                                     data-id="{{ $item->id }}">
                                     Editar
                                 </button>
-                                <button 
-                                    type="button" 
-                                    class="btn btn-danger btn-remove" 
-                                    data-modal="#confirmExcluirModal" 
-                                    data-id="{{ $item->id }}" 
+                                <button
+                                    type="button"
+                                    class="btn btn-danger btn-remove"
+                                    data-modal="#confirmExcluirModal"
+                                    data-id="{{ $item->id }}"
                                     data-url="{{ route('topicos.delete') }}"
-                                    data-bs-toggle="tooltip" 
+                                    data-bs-toggle="tooltip"
                                     title="Excluir">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>

@@ -21,6 +21,7 @@
                             <option value="2">Reprovado</option>
                         </select>
                     </div>
+                    <p class="text-obs"><strong>Observação:</strong> Ao aprovar este tópico, ele será disponibilizado na lista de tópicos nos quais os usuários poderão criar postagens.</p>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" id="botaoConfirmacaoTopico" class="btn btn-primary">Salvar</button>

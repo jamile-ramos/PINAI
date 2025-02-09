@@ -57,6 +57,9 @@ Route::get('/topicos/sugestao', [TopicoController::class, 'storeSugestao'])->nam
 
 // Postagens dos tópicos
 Route::get('/postagens/{id}', [PostagemController::class, 'index'])->name('postagens.index');
+Route::get('/teste', function() {
+    return 'Rota de teste funcionando';
+});
 
 // Sugestão de tópicos
 Route::post('/sugestoes/store', [SugestaoTopicoController::class, 'store'])->name('sugestoes.store');

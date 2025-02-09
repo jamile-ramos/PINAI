@@ -56,4 +56,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Topico::class)->withPivot('status')->withTimestamps();
     } 
+
+    public function respostas(){
+        return $this->hasMany(Resposta::class, 'idUsuario');
+    }
 }

@@ -15,4 +15,8 @@ class Postagem extends Model
     public function user(){
         return $this->belongsTo(User::class, 'idUsuario');
     }
+
+    public function respostas(){
+        return $this->hasMany(Resposta::class, 'idPostagem');
+    }
 }

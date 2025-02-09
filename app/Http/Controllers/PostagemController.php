@@ -11,8 +11,12 @@ class PostagemController extends Controller
     public function index($id){
         $topico = Topico::findOrFail($id);
 
-        $postagens = $topico->postagens;
+        $postagens = $topico->postagens()->withCount('respostas')->get();
 
         return view('postagens.index', compact('postagens'));
+    }
+
+    public function create(){
+        return view('postagens.create');
     }
 }

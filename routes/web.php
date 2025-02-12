@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\PostagemController;
+use App\Http\Controllers\RespostaController;
 use App\Http\Controllers\SugestaoTopicoController;
 use App\Http\Controllers\TopicoController;
 use App\Models\Topico;
@@ -50,18 +51,25 @@ Route::delete('/categorias/delete/{tipo}', [CategoriaController::class, 'delete'
 Route::get('/topicos', [TopicoController::class, 'index'])->name('topicos.index');
 Route::get('/topicos/create', [TopicoController::class, 'create'])->name('topicos.create');
 Route::post('/topicos/store', [TopicoController::class, 'store'])->name('topicos.store');
-Route::get('/topicos/edit/{id}', [TopicoController::class, 'edit'])->name('topicos.edit');
-Route::put('/topicos/update/{id}', [TopicoController::class, 'update'])->name('topicos.update');
 Route::delete('/topicos/delete', [TopicoController::class, 'delete'])->name('topicos.delete');
 Route::get('/topicos/sugestao', [TopicoController::class, 'storeSugestao'])->name('topicos.storeSugestao');
+Route::get('/topicos/edit/{id}', [TopicoController::class, 'edit'])->name('topicos.edit');
+Route::put('/topicos/update/{id}', [TopicoController::class, 'update'])->name('topicos.update');
 
 // Postagens dos tópicos
+Route::get('/postagens/create', [PostagemController::class, 'create'])->name('postagens.create');
+Route::post('/postagens/store', [PostagemController::class, 'store'])->name('postagens.store');
 Route::get('/postagens/{id}', [PostagemController::class, 'index'])->name('postagens.index');
-Route::get('/teste', function() {
-    return 'Rota de teste funcionando';
-});
+Route::get('/postagens/edit/{id}', [PostagemController::class, 'edit'])->name('postagens.edit');
+Route::put('/postagens/update/{id}', [PostagemController::class, 'update'])->name('postagens.update');
+Route::delete('/postagens/delete', [PostagemController::class, 'delete'])->name('postagens.delete');
+Route::get('/postagens/show/{id}', [PostagemController::class, 'show'])->name('postagens.show');
+
+// Resposta dos posts
+Route::get('/respostas/create/{id}', [RespostaController::class, 'create'])->name('respostas.create');
+Route::post('/respostas/store/{id}', [RespostaController::class, 'store'])->name('respostas.store');
 
 // Sugestão de tópicos
 Route::post('/sugestoes/store', [SugestaoTopicoController::class, 'store'])->name('sugestoes.store');
-Route::put('/sugestoes/status/{id}', [SugestaoTopicoController::class, 'updateStatus'])->name('sugestoes.updateStatus');
 Route::delete('/sugestoes/delete', [SugestaoTopicoController::class, 'delete'])->name('sugestoes.delete');
+Route::put('/sugestoes/status/{id}', [SugestaoTopicoController::class, 'updateStatus'])->name('sugestoes.updateStatus');

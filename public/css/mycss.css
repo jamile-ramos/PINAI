@@ -563,57 +563,50 @@ img#imagemPreview {
     color: #555;
 }
 
-.forum table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #d2eff9;
-    border-radius: 5px;
-    overflow: hidden;
-}
-.forum th, .forum td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid #9eb8d1;
-}
-.forum th {
-    background: #ADD8E6;
-}
-
-.postagem table{
+.table {
     background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 0rem !important;
 }
 
-.forum tr:last-child td {
-    border-bottom: none;
+.card .card-body{
+    padding: 0 !important;
 }
-.forum a {
-    text-decoration: none;
-    color: #333;
+
+.forum-azul{
+    background: #011C37;
+    color: #fff;
+}
+
+.forum-table {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px #011C37;
+}
+.forum-table thead {
+    background-color: #011C37; 
+    color: #FFD700;
+}
+.forum-table tbody tr:nth-child(even) {
+    background-color: #ADD8E6;
+}
+.forum-table tbody tr:hover {
+    background-color: #FFD700;
+    color: #011C37;
+}
+.forum-table a {
+    color: #FFD700;
     font-weight: bold;
-}
-.forum a:hover {
-    text-decoration: underline !important;
-}
-.icon {
-    margin-right: 5px;
-}
-.pagination {
-    text-align: center;
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-}
-.pagination a {
-    padding: 8px 12px;
-    margin: 0 5px;
-    border: 1px solid #ccc;
     text-decoration: none;
-    color: #333;
-    border-radius: 3px;
+}
+.forum-table a:hover {
+    color: #011C37;
+    text-decoration: underline;
 }
 
-.pagination a:hover {
-    background: #ccc !;
+ul.pagination.justify-content-center {
+    margin-top: 30px;
 }
 
 label.form-label {
@@ -630,6 +623,96 @@ label.form-label {
     margin: 0px 10px 10px;
     color: #969696;
 }
+
+.forum-container {
+    max-width:100%;
+    margin: 0 auto;
+}
+
+.post-card {
+    background: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 20px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.post-author {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #666;
+}
+
+.post-author img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.post-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.post-content {
+    font-size: 15px;
+    color: #444;
+    line-height: 1.5;
+}
+
+.post-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #777;
+}
+
+.btn {
+    padding: 8px 12px;
+    border: none;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background 0.3s ease;
+}
+
+.user-post{
+    background-color: #333;
+    margin-right: 10px;
+}
+.user-post i{
+    color: #fff;
+}
+
+.post-info.mb-4 {
+    margin: 20px 15px;
+}
+
+.post-topico{
+    color: #555;
+}
+
+.btn-resposta{
+    margin-left: 10px;
+}
+
 
 @media screen and (min-width: 320px) and (max-width: 778px) {
     .container-all {

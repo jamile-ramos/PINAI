@@ -20,63 +20,46 @@
 
     <div class="tab-contents-users">
         <div class="content-link show" id="all-users">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Painel de Usuários</h4>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="add-row" class="display table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Nome</th>
-                                    <th>Email</th>
-                                    <th>Tipo de usuário</th>
-                                    <th>Status</th>
-                                    <th>Data de criação</th>
-                                    <th style="width: 26%">Ação</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>Nome</th>
-                                    <th>Email</th>
-                                    <th>Tipo de usuário</th>
-                                    <th>Status</th>
-                                    <th>Data de criação</th>
-                                    <th>Ação</th>
-                                </tr>
-                            </tfoot>
-                            <tbody>
-                                @foreach ($usuarios as $usuario)
-                                <tr>
-                                    <td>{{ $usuario->name }}</td>
-                                    <td>{{ $usuario->email }}</td>
-                                    <td>{{ $usuario->tipoUsuario == 0 ? 'Comum' : 'Admin' }}</td>
-                                    <td>{{ $usuario->status == 0 ? 'Ativo' : 'Inativo' }}</td>
-                                    <td>{{ $usuario->created_at->format('d/m/Y') }}</td>
-                                    <td>
-                                        <div class="form-button-action">
-                                            <button type="button" class="btn btn-info d-inline btn-alterar"
-                                                data-id="{{ $usuario->id }}"
-                                                data-name="{{ $usuario->name }}"
-                                                data-email="{{ $usuario->email }}"
-                                                data-type="{{ $usuario->tipoUsuario }}">
-                                                Alterar tipo
-                                            </button>
-                                            <button type="button" class="btn toggle-status btn-status {{ $usuario->status == 0 ? 'btn-danger' : 'btn-success' }}"
-                                                data-id="{{ $usuario->id }}"
-                                                data-status="{{ $usuario->status }}">
-                                                {{ $usuario->status == 0 ? 'Desabilitar' : 'Ativar' }}
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead class="forum-azul">
+                        <tr>
+                            <th class="text-center">Nome</th>
+                            <th class="text-center">Email</th>
+                            <th class="text-center">Tipo de usuário</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Data de criação</th>
+                            <th style="width: 10%">Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($usuarios as $usuario)
+                        <tr>
+                            <td class="text-center">{{ $usuario->name }}</td>
+                            <td class="text-center">{{ $usuario->email }}</td>
+                            <td class="text-center">{{ $usuario->tipoUsuario == 0 ? 'Comum' : 'Admin' }}</td>
+                            <td class="text-center">{{ $usuario->status == 0 ? 'Ativo' : 'Inativo' }}</td>
+                            <td class="text-center">{{ $usuario->created_at->format('d/m/Y') }}</td>
+                            <td>
+                                <div class="form-button-action">
+                                    <button type="button" class="btn btn-info d-inline btn-alterar"
+                                        data-id="{{ $usuario->id }}"
+                                        data-name="{{ $usuario->name }}"
+                                        data-email="{{ $usuario->email }}"
+                                        data-type="{{ $usuario->tipoUsuario }}">
+                                        Alterar tipo
+                                    </button>
+                                    <button type="button" class="btn toggle-status btn-status {{ $usuario->status == 0 ? 'btn-danger' : 'btn-success' }}"
+                                        data-id="{{ $usuario->id }}"
+                                        data-status="{{ $usuario->status }}">
+                                        {{ $usuario->status == 0 ? 'Desabilitar' : 'Ativar' }}
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

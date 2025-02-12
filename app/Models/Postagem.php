@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Postagem extends Model
 {
     protected $table = 'postagens';
+
+    protected $fillable = [
+        'titulo',
+        'conteudo',
+        'idTopico'
+    ];
     
     public function topico(){
         return $this->belongsTo(Topico::class, 'idTopico');

@@ -33,7 +33,7 @@
 
         <div class="content-link" id="myPostagens">
             <div class="infos">
-           
+           @include('postagens.minhasPostagens', ['itens' => $minhasPostagens])
             </div>
         </div>
 

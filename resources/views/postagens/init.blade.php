@@ -1,47 +1,41 @@
-<section class="forum postagem">
-    <table>
-        <thead>
-            <tr>
-                <th>Título</th>
-                <th>Respostas</th>
-                <th>Autor</th>
-                <th>Última Atualização</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if(!$postagens->isEmpty())
-            @foreach($postagens as $postagem)
-            <tr>
-                <td>
-                    <a href="{{ route('postagens.index', ['id' => $postagem->id]) }}">
-                        {{ $postagem->titulo }}
-                    </a><br>
-                </td>
-                <td><span class="icon">💬</span> {{ $postagem->respostas_count }}</td>
-                <td>{{ $postagem->user->name }}</td>
-                <td><span class="icon">📅</span> {{ $postagem->created_at->format('d/m/Y H:i') }}</td>
-            </tr>
-            @endforeach
-            @else
-            <tr>
-                <td colspan="3">Nenhuma postagem encontrada!</td>
-            </tr>
-            @endif
-        </tbody>
-    </table>
-    <nav aria-label="...">
-        <ul class="pagination">
+<div class="forum-container">
+    <!-- Postagem 1 -->
+    @foreach($postagens as $postagem)
+    <div class="post-card">
+        <div class="post-header">
+            <div class="post-author">
+                <div class="user-icon-circle user-post">
+                    <i class="fa fa-user"></i>
+                </div>
+                <span>Postado por <strong>{{ $postagem->user->name }}</strong></span>
+            </div>
+            <span>{{ $postagem->created_at->format('d/m/Y') }}</span>
+        </div>
+        <div class="post-title">{{ $postagem->titulo }}</div>
+        <div class="post-content">
+            {{ Str::limit($postagem->conteudo, 100, '...') }}
+        </div>
+        <div class="post-footer">
+            <a href="{{ route('postagens.show', $postagem->id )}}" class="btn btn-primary">Ver Respostas</a>
+            <span><i class="fa-regular fa-comment"></i> {{ $postagem->respostas_count }} respostas</span>
+        </div>
+    </div>
+    @endforeach
+    
+    <nav aria-label="Paginação">
+        <ul class="pagination justify-content-center">
             <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
+                <a class="page-link" href="#" tabindex="-1">Anterior</a>
             </li>
             <li class="page-item"><a class="page-link" href="#">1</a></li>
             <li class="page-item active">
-                <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                <a class="page-link" href="#">2 <span class="visually-hidden"></span></a>
             </li>
             <li class="page-item"><a class="page-link" href="#">3</a></li>
             <li class="page-item">
-                <a class="page-link" href="#">Next</a>
+                <a class="page-link" href="#">Próximo</a>
             </li>
         </ul>
     </nav>
-</section>
+
+</div>

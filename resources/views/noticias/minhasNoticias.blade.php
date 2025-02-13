@@ -2,9 +2,9 @@
     <table class="table table-hover table-striped">
         <thead class="forum-azul">
             <tr>
-                <th class="text-center">Título</th>
-                <th class="text-center">Categoria</th>
-                <th class="text-center">Data de criação</th>
+                <th>Título</th>
+                <th>Categoria</th>
+                <th>Data de criação</th>
                 <th style="width: 10%">Ação</th>
             </tr>
         </thead>

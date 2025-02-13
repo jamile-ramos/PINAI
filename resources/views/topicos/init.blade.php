@@ -3,9 +3,9 @@
         <table class="table table-hover table-striped">
             <thead class="forum-azul">
                 <tr>
-                    <th class="text-center">Tópicos</th>
-                    <th class="text-center">Postagens</th>
-                    <th class="text-center">Última Atualização</th>
+                    <th>Tópicos</th>
+                    <th>Postagens</th>
+                    <th>Última Atualização</th>
                 </tr>
             </thead>
             <tbody>
@@ -17,10 +17,10 @@
                             {{ $topico->titulo }}
                         </a>
                     </td>
-                    <td class="text-center">
+                    <td>
                         <span class="icon">💬</span> {{ $topico->postagens_count }}
                     </td>
-                    <td class="text-center">
+                    <td>
                         <span class="icon">📅</span> {{ $topico->created_at->format('d/m/Y H:i') }}
                     </td>
                 </tr>

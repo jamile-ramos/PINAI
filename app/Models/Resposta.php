@@ -10,7 +10,11 @@ class Resposta extends Model
         return $this->belongsTo(Postagem::class, 'idPostagem');
     }
 
-    public function usuario(){
+    public function user(){
         return $this->belongsTo(User::class, 'idUsuario');
+    }
+
+    public function comentarios(){
+        return $this->hasMany(Resposta::class, 'idResposta');
     }
 }

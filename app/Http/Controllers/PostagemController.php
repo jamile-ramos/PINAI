@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Postagem;
+use App\Models\Comentario;
 use Illuminate\Http\Request;
 use App\Models\Topico;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,6 @@ class PostagemController extends Controller
         $topico = Topico::findOrFail($id);
         $minhasPostagens = $this->myPostagens();
         $postagens = $topico->postagens()->withCount('respostas')->get();
-
         return view('postagens.index', compact('postagens', 'minhasPostagens'));
     }
 

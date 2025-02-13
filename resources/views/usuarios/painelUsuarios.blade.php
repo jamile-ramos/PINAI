@@ -24,22 +24,22 @@
                 <table class="table table-hover table-striped">
                     <thead class="forum-azul">
                         <tr>
-                            <th class="text-center">Nome</th>
-                            <th class="text-center">Email</th>
-                            <th class="text-center">Tipo de usuário</th>
-                            <th class="text-center">Status</th>
-                            <th class="text-center">Data de criação</th>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>Tipo de usuário</th>
+                            <th>Status</th>
+                            <th>Data de criação</th>
                             <th style="width: 10%">Ação</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($usuarios as $usuario)
                         <tr>
-                            <td class="text-center">{{ $usuario->name }}</td>
-                            <td class="text-center">{{ $usuario->email }}</td>
-                            <td class="text-center">{{ $usuario->tipoUsuario == 0 ? 'Comum' : 'Admin' }}</td>
-                            <td class="text-center">{{ $usuario->status == 0 ? 'Ativo' : 'Inativo' }}</td>
-                            <td class="text-center">{{ $usuario->created_at->format('d/m/Y') }}</td>
+                            <td>{{ $usuario->name }}</td>
+                            <td>{{ $usuario->email }}</td>
+                            <td>{{ $usuario->tipoUsuario == 0 ? 'Comum' : 'Admin' }}</td>
+                            <td>{{ $usuario->status == 0 ? 'Ativo' : 'Inativo' }}</td>
+                            <td>{{ $usuario->created_at->format('d/m/Y') }}</td>
                             <td>
                                 <div class="form-button-action">
                                     <button type="button" class="btn btn-info d-inline btn-alterar"

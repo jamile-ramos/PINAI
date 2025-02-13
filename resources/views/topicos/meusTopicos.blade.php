@@ -3,23 +3,23 @@
         <table class="table table-hover table-striped">
             <thead class="forum-azul">
                 <tr>
-                    <th class="text-center">Título</th>
-                    <th class="text-center">Data de Criação</th>
+                    <th>Título</th>
+                    <th>Data de Criação</th>
                     @if($title == 'Tópicos Sugeridos')
-                    <th class="text-center">Status</th>
+                    <th>Status</th>
                     @endif
-                    <th class="text-center" style="width: 10%">Ação</th>
+                    <th style="width: 10%">Ação</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($itens as $item)
                 <tr>
                     <td class="text-start fw-bold">{{ $item->titulo }}</td>
-                    <td class="text-center">{{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y') }}</td>
 
                     @if($title == 'Tópicos Sugeridos')
-                    <td class="text-center">{{ $item->getStatusNomeAttribute() }}</td>
-                    <td class="text-center">
+                    <td>{{ $item->getStatusNomeAttribute() }}</td>
+                    <td>
                         <div class="form-button-action">
                             @if($item->status != 1)
                             <button

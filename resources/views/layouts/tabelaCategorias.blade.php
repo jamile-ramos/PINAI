@@ -2,8 +2,8 @@
     <table class="table table-hover table-striped">
         <thead class="forum-azul">
             <tr>
-                <th class="text-center">Usuário responsável pela publicação</th>
-                <th class="text-center">Categoria</th>
+                <th>Usuário responsável pela publicação</th>
+                <th>Categoria</th>
                 <th style="width: 10%">Ação</th>
             </tr>
         </thead>

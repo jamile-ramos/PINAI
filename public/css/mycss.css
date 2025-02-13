@@ -527,11 +527,6 @@ img#imagemPreview {
     color: #555;
 }
 
-.autor {
-    font-size: 15px;
-    color: #555;
-}
-
 .noticia-imagem {
     width: 100%;
     height: 400px;
@@ -711,6 +706,208 @@ label.form-label {
 
 .btn-resposta{
     margin-left: 10px;
+}
+
+.card-body.card-functions {
+    padding: 1.25rem !important;
+}
+
+/* Container Principal do Fórum */
+.forum-wrapper {
+    margin: 0 auto;
+    padding: 30px 20px;
+    max-width: 1200px;
+    background-color: #f9f9f9;
+}
+
+/* Postagem Principal */
+.main-post-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 30px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.main-post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.main-post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.username {
+    font-weight: bold;
+    color: #333;
+}
+
+.post-date {
+    font-size: 0.9em;
+    color: #aaa;
+}
+
+.main-post-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.main-post-content {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Botão Responder */
+.response-button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn-response {
+    display: inline-block;
+    padding: 8px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-response:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+}
+
+.btn-response i {
+    margin-right: 8px;
+}
+
+.btn-coment{
+    margin-top: 15px;
+}
+
+/* Respostas */
+.responses-title {
+    font-size: 20px;
+    color: #222;
+    margin-bottom: 25px;
+    font-weight: bold;
+}
+
+.response-card {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 25px;
+}
+
+.response-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.response-info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.response-username {
+    font-weight: bold;
+    color: #333;
+}
+
+.response-date {
+    font-size: 0.9em;
+    color: #777;
+}
+
+.response-content {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.5;
+    margin-top: 12px;
+}
+
+/* Comentários nas respostas */
+.comment-section {
+    margin-top: 20px;
+}
+
+.comment-section h4{
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.comment-card {
+    margin-bottom: 15px;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+}
+
+.comment-username {
+    font-weight: bold;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.comment-date {
+    font-size: 0.9em;
+    color: #888;
+}
+
+.comment-content {
+    font-size: 15px;
+    color: #555;
+    margin-top: 10px;
+}
+
+/* Formulário de Comentário */
+.comment-form-container {
+    margin-top: 25px;
+    padding: 20px;
+    background-color: #fafafa;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.comment-form-container h5 {
+    font-size: 12px;
+    margin-bottom: 12px;
+    font-weight: bold;
+    color: #333;
+}
+
+.comment-form-container textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    resize: vertical;
+    font-size: 16px;
+}
+
+.campo-comentario textarea{
+    padding: 0 !important;
 }
 
 

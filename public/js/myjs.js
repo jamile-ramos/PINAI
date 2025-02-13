@@ -307,11 +307,13 @@ document.addEventListener('DOMContentLoaded', function () {
             window.location.href = url;
         } else if (buttonText === 'Criar Tópico') {
             const modal = document.getElementById('modalAddTopico');
-            console.log('Modal encontrado:', modal);
+            $('#modalTopicoTitle').text('Adicionar tópico');
+            $('#titulo').val('');
             $(modal).modal('show');
             $(modal).removeClass('fade').addClass('show');
             $(modal).css('display', 'block');
         } else if (buttonText === 'Sugerir Tópico') {
+            $('#titulo').val('');
             const modal = document.getElementById('modalAddTopico');
             $('#modalTopicoTitle').text('Sugerir Tópico');
             $('#formAddTopico').attr('action', '/sugestoes/store/');
@@ -354,6 +356,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             });
         });
+
     });
 
     // Status dos topicos sugeridos

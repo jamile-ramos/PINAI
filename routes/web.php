@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuarioController;
@@ -68,6 +69,9 @@ Route::get('/postagens/show/{id}', [PostagemController::class, 'show'])->name('p
 // Resposta dos posts
 Route::get('/respostas/create/{id}', [RespostaController::class, 'create'])->name('respostas.create');
 Route::post('/respostas/store/{id}', [RespostaController::class, 'store'])->name('respostas.store');
+
+//Comentarios das respostas
+Route::post('/comentarios/store', [ComentarioController::class, 'store'])->name('comentarios.store');
 
 // Sugestão de tópicos
 Route::post('/sugestoes/store', [SugestaoTopicoController::class, 'store'])->name('sugestoes.store');

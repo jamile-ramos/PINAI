@@ -10,25 +10,29 @@ use Illuminate\Support\Facades\Auth;
 
 class PostagemController extends Controller
 {
-    public function index($id){
+    public function index($id)
+    {
         $topico = Topico::findOrFail($id);
         $minhasPostagens = $this->myPostagens();
         $postagens = $topico->postagens()->withCount('respostas')->get();
         return view('postagens.index', compact('postagens', 'minhasPostagens'));
     }
 
-    public function myPostagens(){
+    public function myPostagens()
+    {
         $idUsuario = Auth::id();
         $minhasPostagens = Postagem::where('idUsuario', $idUsuario)->get();
         return $minhasPostagens;
     }
 
-    public function create(){
+    public function create()
+    {
         $topicos = Topico::all();
         return view('postagens.form', compact('topicos'));
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $postagem = new Postagem;
 
         $postagem->titulo = $request->titulo;
@@ -41,28 +45,32 @@ class PostagemController extends Controller
         return redirect()->route('postagens.index', $postagem->idTopico)->with('success', 'Postagem criada com sucesso!');
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $postagem = Postagem::findOrFail($id);
         $topicos = Topico::all();
         return view('postagens.form', compact('postagem', 'topicos'));
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $data = $request->all();
 
         Postagem::findOrFail($id)->update($data);
         return redirect()->route('postagens.index', $id)->with('success', 'Postagem atualizada com sucesso!');
     }
 
-    public function delete(Request $request){
+    public function delete(Request $request)
+    {
         $id = $request->id;
 
         Postagem::destroy($id);
         return redirect()->route('postagens.index', $id)->with('success', 'Postagem excluida com sucesso!');
     }
 
-    public function show($id){
-        $postagem = Postagem::findOrFail($id);
+    public function show($id)
+    {
+        $postagem = Postagem::with(['respostas.comentarios'])->findOrFail($id);
         return view('postagens.show', compact('postagem'));
     }
 }

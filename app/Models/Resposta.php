@@ -14,7 +14,9 @@ class Resposta extends Model
         return $this->belongsTo(User::class, 'idUsuario');
     }
 
-    public function comentarios(){
-        return $this->hasMany(Resposta::class, 'idResposta');
+    public function comentarios()
+    {
+        return $this->hasMany(Comentario::class, 'idResposta');
     }
+    
 }

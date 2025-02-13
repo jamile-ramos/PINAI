@@ -41,6 +41,20 @@
                         <span class="response-username">{{ $resposta->user->name }}</span>
                         <span class="response-date">{{ $resposta->created_at->format('d/m/Y H:i') }}</span>
                     </div>
+                    <!-- 3 pontinhos -->
+                    <div class="post-options">
+                        <button class="options-button">
+                            <i class="fa fa-ellipsis-v"></i>
+                        </button>
+                        <div class="options-menu">
+                            <a href="">Editar</a>
+                            <form action="" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="delete-button">Excluir</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
                 <div class="response-content">
                     {{ $resposta->conteudo }}
@@ -48,29 +62,34 @@
 
                 <!-- Comentários nas respostas -->
                 <div class="comment-section">
-                    <h4>Comentários</h4>
+                    <h4>Comentários ({{ $resposta->comentarios->count() }})</h4>
+
+                    @foreach($resposta->comentarios as $comentario)
                     <div class="comment-card">
                         <div class="comment-header">
                             <div class="user-icon-circle">
                                 <i class="fa fa-user"></i>
                             </div>
                             <div class="comment-info">
-                                <span class="comment-username">Nome</span>
-                                <span class="comment-date">12/02/25</span>
+                                <span class="comment-username">{{ $comentario->user->name }}</span>
+                                <span class="comment-date">{{ $comentario->created_at->format('d/m/Y H:i') }}</span>
                             </div>
                         </div>
                         <div class="comment-content">
-                            Teste
+                            {{ $comentario->conteudo }}
                         </div>
                     </div>
+                    @endforeach
                 </div>
+
 
                 <!-- Formulário para adicionar um comentário -->
                 <div class="comment-form-container">
                     <h5 class="response-being-commented">Comentando na resposta: <strong>{{ \Str::limit($resposta->conteudo, 100) }}</strong></h5>
-                    <form action="" method="POST">
+                    <form action="{{ route('comentarios.store') }}" method="POST">
                         @csrf
                         <div>
+                            <input type="hidden" name="idResposta" value="{{ $resposta->id }}">
                             <textarea name="conteudo" rows="3" class="form-control" placeholder="Escreva um comentário..." aria-label="Escreva um comentário"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary btn-response btn-coment">Comentar</button>

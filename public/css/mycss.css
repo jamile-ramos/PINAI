@@ -785,7 +785,8 @@ label.form-label {
 }
 
 .btn-response:hover {
-    background-color: #0056b3;
+    background-color: #4b9bf0;
+    color: white;
     transform: translateY(-3px);
 }
 
@@ -817,6 +818,7 @@ label.form-label {
     display: flex;
     align-items: center;
     margin-bottom: 12px;
+    position: relative;
 }
 
 .response-info {
@@ -910,6 +912,60 @@ label.form-label {
     padding: 0 !important;
 }
 
+.post-options {
+    position: absolute;
+    display: inline-block;
+    top: 0;
+    right: 10px;
+}
+
+.options-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    padding: 5px;
+}
+
+.options-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    min-width: 120px;
+    z-index: 1000;
+}
+
+.options-menu a,
+.options-menu button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    color: black;
+}
+
+.options-menu a:hover,
+.options-menu button:hover {
+    background: #f5f5f5;
+}
+
+.delete-button {
+    color: red;
+}
+
+.visible {
+    display: block;
+}
 
 @media screen and (min-width: 320px) and (max-width: 778px) {
     .container-all {
@@ -953,6 +1009,24 @@ label.form-label {
     .btn:not(:disabled):not(.disabled) {
         white-space: unset;
     }
+
+    .main-post-title {
+        font-size: 20px;
+    }
+
+    .main-post-content {
+        font-size: 14px;
+    }
+    .responses-title {
+        font-size: 15px;
+    }
+    .response-content {
+        font-size: 14px;
+    }
+
+    .comment-section h4 {
+        font-size: 14px;
+    }
 }
 
 @media screen and (max-width: 1195px) {
@@ -968,10 +1042,6 @@ label.form-label {
 
     .hidden {
         display: none;
-    }
-
-    .visible {
-        display: block;
     }
 
     .select-btn {

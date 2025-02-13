@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comentario extends Model
 {
-    public function respostas(){
-        return $this->belongsTo(Resposta::class, 'idComentario');
+    public function resposta()
+    {
+        return $this->belongsTo(Resposta::class, 'idResposta');
+    }    
+
+    public function user(){
+        return $this->belongsTo(User::class, 'idUsuario');
     }
 }

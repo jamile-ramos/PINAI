@@ -60,4 +60,8 @@ class User extends Authenticatable
     public function respostas(){
         return $this->hasMany(Resposta::class, 'idUsuario');
     }
+
+    public function comentarios(){
+        return $this->hasMany(Comentario::class, 'idUsuario');
+    }
 }

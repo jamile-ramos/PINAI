@@ -81,14 +81,14 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Fechar dropdown ao clicar fora
     document.addEventListener("click", function (e) {
         const dropdown = document.querySelector(".dropdown-select");
 
-        if (!dropdown.contains(e.target)) {
+        if (dropdown && !dropdown.contains(e.target)) {
             dropdown.classList.remove("active");
         }
     });
+
 
     // Fecha o dropdown quando qualquer opção for clicada
     const optionBtns = document.querySelectorAll(".dropdown-select .option-btn");
@@ -318,7 +318,7 @@ document.addEventListener('DOMContentLoaded', function () {
             $('#modalTopicoTitle').text('Sugerir Tópico');
             $('#formAddTopico').attr('action', '/sugestoes/store/');
             $(modal).modal('show');
-        } else if(buttonText === 'Criar Postagem'){
+        } else if (buttonText === 'Criar Postagem') {
             console.log('entrou')
             window.location.href = url;
         }
@@ -425,6 +425,41 @@ document.addEventListener('DOMContentLoaded', function () {
             campoImagem.style.display = 'block';
         });
     }
+
+    // Menu edit dentro de postagem (3 pontinhos)
+    const pontinhos = document.querySelectorAll('.post-options');
+
+    pontinhos.forEach(pontinho => {
+        pontinho.addEventListener('click', (event) => {
+            event.stopPropagation();
+
+            const pontinhosMenu = pontinho.querySelector('.options-menu');
+            console.log('Pontinho', pontinhosMenu);
+
+            if (pontinhosMenu) {
+                const menus = document.querySelectorAll('.options-menu');
+                console.log(menus);
+                menus.forEach(menu => {
+                    if (menu !== pontinhosMenu) {
+                        menu.classList.remove('visible');
+                    }
+                });
+
+                pontinhosMenu.classList.toggle('visible');
+            }
+        });
+    });
+
+    // Fecha o menu se clicar fora
+    document.addEventListener('click', (event) => {
+        document.querySelectorAll('.options-menu').forEach(menu => {
+            if (!menu.contains(event.target)) {
+                menu.classList.remove('visible');
+            }
+        });
+    });
+
+
 
 });
 

@@ -10,11 +10,20 @@ use Illuminate\Support\Facades\Auth;
 
 class TopicoController extends Controller
 {
+    // Injeção de Dependência
+    protected $postagemController;
+
+    public function __construct(PostagemController $postagemController)
+    {
+        $this->postagemController = $postagemController;
+    }
+
     public function index(){
         $topicos = Topico::withCount('postagens')->get();
         $topicosSugeridos = SugestaoTopico::all();
         $meusTopicos = $this->myTopicos();
-        return view('topicos.index', compact('topicos', 'meusTopicos', 'topicosSugeridos'));
+        $minhasPostagens = $this->postagemController->myPostagens();
+        return view('topicos.index', compact('topicos', 'meusTopicos', 'topicosSugeridos', 'minhasPostagens'));
     }
 
     public function create(){

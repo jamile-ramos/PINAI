@@ -3,7 +3,7 @@
         <table class="table table-hover table-striped">
             <thead class="forum-azul">
                 <tr>
-                    <th>Título</th>
+                    <th>Título do tópico</th>
                     <th>Data de Criação</th>
                     @if($title == 'Tópicos Sugeridos')
                     <th>Status</th>

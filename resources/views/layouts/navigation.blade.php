@@ -33,21 +33,24 @@
                 <p>Dashboard</p>
               </a>
             </li>
+            @if(Auth::user()->tipoUsuario == 1)
             <li class="nav-item">
               <a href="/painelUsuarios">
                 <i class="fas fa-users"></i>
                 <p>Painel de usuários</p>
               </a>
+            </li>
+            @endif
             <li class="nav-item">
-              <a href="/noticias">
+              <a href="/noticias" data-btnNav = "noticias">
                 <i class="fas fa-newspaper"></i>
                 <p>Portal de Notícias</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/topicos">
+              <a href="/topicos" data-btnNav = "topicos">
                 <i class="fas fa-comments"></i>
-                <p>Fórum de discurssão</p>
+                <p>Fórum de discussão</p>
               </a>
             </li>
             <li class="nav-item">

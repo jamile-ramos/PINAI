@@ -12,7 +12,8 @@ class Noticia extends Model
         'subtitulo', 
         'conteudo',
         'imagem', 
-        'idCategoria'
+        'idCategoria', 
+        'status',
     ];
 
     public function categoria(): BelongsTo

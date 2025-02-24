@@ -65,7 +65,7 @@ class PostagemController extends Controller
         $id = $request->id;
 
         Postagem::destroy($id);
-        return redirect()->route('postagens.index', $id)->with('success', 'Postagem excluida com sucesso!');
+        return back()->with('success', 'Postagem excluída com sucesso!');
     }
 
     public function show($id)

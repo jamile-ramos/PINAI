@@ -10,14 +10,15 @@ use App\Http\Controllers\PostagemController;
 use App\Http\Controllers\RespostaController;
 use App\Http\Controllers\SugestaoTopicoController;
 use App\Http\Controllers\TopicoController;
-use App\Models\Topico;
+use App\Models\Noticia;
 
 Route::middleware('guest')->get('/', function () {
     return view('auth.login'); 
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $noticias = Noticia::latest()->take(3)->get();
+    return view('dashboard', compact('noticias'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

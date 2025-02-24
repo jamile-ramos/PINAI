@@ -9,7 +9,6 @@
     <x-barra-filtros
         :links="[
         ['content-id' => 'allPostagens', 'nomeAba' => 'Todos', 'classActive' => 'active', 'data-tipo' => 'postagens'],
-        ['content-id' => 'myPostagens', 'nomeAba' => 'Minhas Postagens', 'data-tipo' => 'postagens']
     ]"
         :actions="[
         ['classBtn' => 'btn-primary', 'nomeButton' => 'Criar Postagem', 'data-url' => '/postagens/create'],
@@ -29,14 +28,7 @@
             <div class="infos">
             @include('postagens.init', ['postagens' => $postagens])
             </div>
-        </div>
-
-        <div class="content-link" id="myPostagens">
-            <div class="infos">
-           @include('postagens.minhasPostagens', ['itens' => $minhasPostagens])
-            </div>
-        </div>
-
+        </div>  
     </div>
 </div>
 

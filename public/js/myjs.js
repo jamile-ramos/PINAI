@@ -1,32 +1,67 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Mantém um item de sidebar ativo mesmo após recarregar ou navegar para outra página
     $(document).ready(function () {
-        var activeItem = localStorage.getItem("active_nav_item");
-
+        const updateActiveNavItem = (activeItem) => {
+            $(".nav-item").removeClass("submenu active");
+            $(".nav-item i").removeClass("icon-active");
+    
+            const activeLink = $(".nav-item a[href='" + activeItem + "']");
+            activeLink.parent().addClass("submenu active");
+            activeLink.find("i").addClass("icon-active");
+        };
+    
+        let activeItem = localStorage.getItem("active_nav_item");
+    
         if (window.location.href.indexOf("dashboard") > -1) {
             activeItem = "/dashboard";
         }
-
+    
         if (activeItem) {
-            $(".nav-item").removeClass("submenu active");
-            $(".nav-item i").removeClass("icon-active");
-
-            var activeLink = $(".nav-item a[href='" + activeItem + "']");
-            activeLink.parent().addClass("submenu active");
-            activeLink.find("i").addClass("icon-active");
+            updateActiveNavItem(activeItem);
         }
-
+    
+        // Quando um link da navegação for clicado
         $(".nav-item a").on("click", function () {
-            $(".nav-item").removeClass("submenu active");
-            $(".nav-item i").removeClass("icon-active");
-
-            $(this).parent().addClass("submenu active");
-            $(this).find("i").addClass("icon-active");
-
-            localStorage.setItem("active_nav_item", $(this).attr('href'));
+            const href = $(this).attr('href');
+            console.log('Link clicado',href)
+            localStorage.setItem("active_nav_item", href);
+            updateActiveNavItem(href);
+        });
+    
+        // Ao clicar no botão "Ver mais" do card na página dashboard
+        $(".btn-home").on("click", function () {
+            const btnVermais = $(this).attr('data-btn');
+    
+            $(".nav-item").each(function () {
+                const dataBtnNav = $(this).find("a").attr("data-btnNav");
+    
+                if (btnVermais === dataBtnNav) {
+                    $(this).addClass("submenu active");
+                    localStorage.setItem("active_nav_item", $(this).find("a").attr('href'));
+                } else {
+                    $(this).removeClass("submenu active");
+                }
+            });
+        });
+    
+        // Ao clicar nos títulos das notícias na página dashboard
+        $("a[data-btn]").on("click", function () {
+            const dataBtnValue = $(this).attr("data-btn");
+            console.log("Valor de data-btn:", dataBtnValue);
+    
+            $(".nav-item").each(function () {
+                const dataBtnNav = $(this).find("a").attr("data-btnNav");
+    
+                if (dataBtnValue === dataBtnNav) {
+                    $(this).addClass("submenu active");
+                    localStorage.setItem("active_nav_item", $(this).find("a").attr('href'));
+                } else {
+                    $(this).removeClass("submenu active");
+                }
+            });
         });
     });
-
+    
     // Clicar no icone e aparece a barra de pesquisa
     $(document).ready(function () {
         $(".search-icon").on("click", function () {

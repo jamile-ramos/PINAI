@@ -13,15 +13,15 @@ class NoticiaController extends Controller
     {
         $categorias = CategoriaNoticia::all();
         $minhasNoticias = $this->myNoticias();
-        $noticias = Noticia::all();
-        $noticiasRecentes = Noticia::latest()->take(3)->get();
+        $noticias = Noticia::where('status', 1)->get();
+        $noticiasRecentes = Noticia::where('status', 1)->latest()->take(3)->get();
         return view('noticias.index', compact('noticias', 'categorias', 'minhasNoticias', 'noticiasRecentes'));
     }
 
     public function myNoticias()
     {
         $idUsuario = Auth::user()->id;
-        $minhasNoticias = Noticia::where('idUsuario', $idUsuario)->get();
+        $minhasNoticias = Noticia::where('idUsuario', $idUsuario)->where('status', 1)->get();
         return $minhasNoticias;
     }
 
@@ -56,11 +56,13 @@ class NoticiaController extends Controller
 
     public function delete(Request $request)
     {
-        $id = $request->id;
-
-        Noticia::destroy($id);
+   
+        $noticia = Noticia::findOrFail($request->id);
+        $noticia->update(['status' => '1']);
+    
         return redirect()->route('noticias.index')->with('success', 'Notícia excluída com sucesso!');
     }
+    
 
     public function edit($id)
     {
@@ -94,7 +96,7 @@ class NoticiaController extends Controller
 
     public function noticiasCategorias($idCategoria){
         $categoria = CategoriaNoticia::findOrFail($idCategoria);
-        $noticias = $categoria->noticias;
+        $noticias = $categoria->noticias()->where('status', 1)->get();
 
         return view('noticias.noticiasCategorias', compact('noticias', 'categoria'));
     }

@@ -1,5 +1,8 @@
 <div class="forum-container">
     <!-- Postagem 1 -->
+    @if($postagens->isEmpty())
+    <p>Não há postagens nesse tópico.</p>
+    @else
     @foreach($postagens as $postagem)
     <div class="post-card">
         <div class="post-header">
@@ -21,7 +24,9 @@
         </div>
     </div>
     @endforeach
-    
+    @endif
+
+
     <nav aria-label="Paginação">
         <ul class="pagination justify-content-center">
             <li class="page-item disabled">

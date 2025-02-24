@@ -716,7 +716,7 @@ label.form-label {
 .forum-wrapper {
     margin: 0 auto;
     padding: 30px 20px;
-    max-width: 1200px;
+    width: 1200px;
     background-color: #f9f9f9;
 }
 

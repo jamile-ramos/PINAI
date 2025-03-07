@@ -71,6 +71,6 @@
 @include('topicos.form')
 @include('layouts.createCategoria', ['tipo' => "topicos"])
 @include('layouts.modalExclusao')
-@include('topicos.modalStatus')
+@include('topicos.modalStatusSituacao')
 
 @endsection

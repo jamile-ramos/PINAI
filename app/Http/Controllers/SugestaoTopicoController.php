@@ -17,38 +17,45 @@ class SugestaoTopicoController extends Controller
         return redirect()->route('topicos.index')->with('success', 'Tópico sugerido com sucesso!');
     }
 
-    public function updateStatus(Request $request, $id){
-        $status = $request->input('status');
-
+    public function updateStatusSituacao(Request $request, $id){
+        $status_situacao = $request->input('status');
+        
         $sugestao = SugestaoTopico::findOrFail($id);
         
-        if($status == 1){
-            $topico = new Topico;
+        $topico = new Topico;
+        if($status_situacao == 'aprovado'){
             $topico->titulo = $sugestao->titulo;
             $topico->idUsuario = $sugestao->idUsuario;
 
             $topico->save();
+        }else{
+            $topico = Topico::where('titulo', $sugestao->titulo)->where('idUsuario', $sugestao->idUsuario)->first();
+            if($topico){
+                $topico->status = 'inativo';
+                $topico->save();
+            }
         }
+        dd($status_situacao);
 
-        $sugestao->update(['status' => $status]);
+        $sugestao->update(['status_situacao' => $status_situacao]);
 
         return redirect()->route('topicos.index')->with('success', 'Status da sugestão atualizado com sucesso!');
     }
 
-    public function delete(Request $request){
+    public function destroy(Request $request){
         $id = $request->id;
 
         $sugestao = SugestaoTopico::findOrFail($id);
 
-        if($sugestao->status == 1){
+        if($sugestao->status_situacao == 'aprovado'){
             $topico = Topico::where('titulo', $sugestao->titulo)->where('idUsuario', $sugestao->idUsuario)->first();
-
+        
             if($topico){
-                $topico->delete();
+                $topico->update(['status' => 'inativo']);
             }
         }
 
-        $sugestao->delete();
+        $sugestao->update(['status' => 'inativo']);
 
         return redirect()->route('topicos.index')->with('success', 'Sugestão excluída com sucesso!');
 

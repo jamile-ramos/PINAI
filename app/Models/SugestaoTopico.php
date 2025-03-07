@@ -8,16 +8,19 @@ class SugestaoTopico extends Model
 {
     protected $table = 'sugestoes_topicos';
 
-    protected $fillable = ['status'];
+    protected $fillable = ['status', 'status_situacao'];
 
-    public function getStatusNomeAttribute(): string
-    {
-        $statusMap = [
-            0 => 'Pendente',
-            1 => 'Aprovado',
-            2 => 'Reprovado',
-        ];
+public function getStatusSituacaoAttribute(): string
+{
+    $statusMap = [
+        'pendente' => 'Pendente',
+        'aprovado' => 'Aprovado',
+        'reprovado' => 'Reprovado',
+    ];
 
-        return $statusMap[$this->status] ?? 'Desconhecido'; 
-    }
+    $valor = $this->attributes['status_situacao'] ?? '';
+
+    return $statusMap[$valor] ?? 'Desconhecido';
+}
+
 }

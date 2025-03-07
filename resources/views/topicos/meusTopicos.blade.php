@@ -18,15 +18,15 @@
                     <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y') }}</td>
 
                     @if($title == 'Tópicos Sugeridos')
-                    <td>{{ $item->getStatusNomeAttribute() }}</td>
+                    <td>{{ $item->status_situacao }}</td>
                     <td>
                         <div class="form-button-action">
-                            @if($item->status != 1)
+                            @if($item->status_situacao != 'aprovado')
                             <button
                                 type="button"
                                 class="btn btn-info btn-statusTop"
                                 data-id="{{ $item->id }}"
-                                data-selected="{{ $item->status }}">
+                                data-selected="{{ $item->getRawOriginal('status_situacao') }}">
                                 Alterar status
                             </button>
                             @else
@@ -42,7 +42,7 @@
                                 class="btn btn-danger btn-remove"
                                 data-modal="#confirmExcluirModal"
                                 data-id="{{ $item->id }}"
-                                data-url="{{ route('sugestoes.delete') }}"
+                                data-url="{{ route('sugestoes.destroy') }}"
                                 data-bs-toggle="tooltip"
                                 title="Excluir">
                                 <i class="fas fa-trash-alt"></i>

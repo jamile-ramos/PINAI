@@ -20,7 +20,7 @@ class TopicoController extends Controller
 
     public function index(){
         $topicos = Topico::withCount('postagens')->where('status', 'ativo')->get();
-        $topicosSugeridos = SugestaoTopico::all();
+        $topicosSugeridos = SugestaoTopico::where('status', 'ativo')->get();
         $meusTopicos = $this->myTopicos();
         $minhasPostagens = $this->postagemController->myPostagens();
         return view('topicos.index', compact('topicos', 'meusTopicos', 'topicosSugeridos', 'minhasPostagens'));

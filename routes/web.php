@@ -76,5 +76,5 @@ Route::post('/comentarios/store', [ComentarioController::class, 'store'])->name(
 
 // Sugestão de tópicos
 Route::post('/sugestoes/store', [SugestaoTopicoController::class, 'store'])->name('sugestoes.store');
-Route::delete('/sugestoes/delete', [SugestaoTopicoController::class, 'delete'])->name('sugestoes.delete');
-Route::put('/sugestoes/status/{id}', [SugestaoTopicoController::class, 'updateStatus'])->name('sugestoes.updateStatus');
+Route::delete('/sugestoes/destroy', [SugestaoTopicoController::class, 'destroy'])->name('sugestoes.destroy');
+Route::put('/sugestoes/statusSituacao/{id}', [SugestaoTopicoController::class, 'updateStatusSituacao'])->name('sugestoes.updateStatusSituacao');

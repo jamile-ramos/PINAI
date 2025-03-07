@@ -10,15 +10,15 @@
             </div>
             <div class="modal-body modalCorpoConfirmacao">
                 <!-- Formulário para desativar o usuário -->
-                <form id="formConfirmacaoTopico" data-route="{{ route('sugestoes.updateStatus', ':id') }}" method="POST">
+                <form id="formConfirmacaoTopico" data-route="{{ route('sugestoes.updateStatusSituacao', ':id') }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="mb-3">
                     <label for="statusSelect" class="form-label">Status:</label>
                         <select class="form-control" name="status" id="statusSelect">
-                            <option value="0">Pendente</option>
-                            <option value="1">Aprovado</option>
-                            <option value="2">Reprovado</option>
+                            <option value="pendente">Pendente</option>
+                            <option value="aprovado">Aprovado</option>
+                            <option value="reprovado">Reprovado</option>
                         </select>
                     </div>
                     <p class="text-obs"><strong>Observação:</strong> Ao aprovar este tópico, ele será disponibilizado na lista de tópicos nos quais os usuários poderão criar postagens.</p>

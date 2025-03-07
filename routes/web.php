@@ -38,7 +38,7 @@ Route::put('/painelUsuarios/status/{id}', [UsuarioController::class, 'updateStat
 Route::get('/noticias', [NoticiaController::class, 'index'])->name('noticias.index');
 Route::get('/noticias/create', [NoticiaController::class, 'create'])->name('noticias.create');
 Route::post('/noticias/store', [NoticiaController::class, 'store'])->name('noticias.store');
-Route::delete('/noticias/delete', [NoticiaController::class, 'delete'])->name('noticias.delete');
+Route::delete('/noticias/destroy', [NoticiaController::class, 'destroy'])->name('noticias.destroy');
 Route::get('/noticias/edit/{id}', [NoticiaController::class, 'edit'])->name('noticias.edit');
 Route::put('/noticias/update/{id}', [NoticiaController::class, 'update'])->name('noticias.update');
 Route::get('/noticias/show/{id}', [NoticiaController::class, 'show'])->name('noticias.show');
@@ -47,13 +47,13 @@ Route::get('/noticias/categorias/{idCategoria}', [NoticiaController::class, 'not
 // Categorias de noticias, topicos, documentos e solucoes
 Route::get('/categorias/create/{tipo}', [CategoriaController::class, 'create'])->name('categorias.create');
 Route::post('/categorias/store/{tipo}', [CategoriaController::class, 'store'])->name('categorias.store');
-Route::delete('/categorias/delete/{tipo}', [CategoriaController::class, 'delete'])->name('categorias.delete');
+Route::delete('/categorias/destroy/{tipo}', [CategoriaController::class, 'destroy'])->name('categorias.destroy');
 
 // Fórum de Discurssão
 Route::get('/topicos', [TopicoController::class, 'index'])->name('topicos.index');
 Route::get('/topicos/create', [TopicoController::class, 'create'])->name('topicos.create');
 Route::post('/topicos/store', [TopicoController::class, 'store'])->name('topicos.store');
-Route::delete('/topicos/delete', [TopicoController::class, 'delete'])->name('topicos.delete');
+Route::delete('/topicos/destroy', [TopicoController::class, 'destroy'])->name('topicos.destroy');
 Route::get('/topicos/sugestao', [TopicoController::class, 'storeSugestao'])->name('topicos.storeSugestao');
 Route::get('/topicos/edit/{id}', [TopicoController::class, 'edit'])->name('topicos.edit');
 Route::put('/topicos/update/{id}', [TopicoController::class, 'update'])->name('topicos.update');
@@ -64,7 +64,7 @@ Route::post('/postagens/store', [PostagemController::class, 'store'])->name('pos
 Route::get('/postagens/{id}', [PostagemController::class, 'index'])->name('postagens.index');
 Route::get('/postagens/edit/{id}', [PostagemController::class, 'edit'])->name('postagens.edit');
 Route::put('/postagens/update/{id}', [PostagemController::class, 'update'])->name('postagens.update');
-Route::delete('/postagens/delete', [PostagemController::class, 'delete'])->name('postagens.delete');
+Route::delete('/postagens/destroy', [PostagemController::class, 'destroy'])->name('postagens.destroy');
 Route::get('/postagens/show/{id}', [PostagemController::class, 'show'])->name('postagens.show');
 
 // Resposta dos posts

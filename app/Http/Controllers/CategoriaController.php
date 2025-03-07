@@ -5,7 +5,6 @@ use Illuminate\Http\Request;
 use App\Models\CategoriaDocumento;
 use App\Models\CategoriaNoticia;
 use App\Models\CategoriaSolucao;
-use App\Models\CategoriaTopico;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -33,17 +32,16 @@ class CategoriaController extends Controller
         return redirect()->route("{$tipo}.index")->with('success', 'Categoria criada com sucesso!');
     }
 
-    public function delete(Request $request, $tipo)
+    public function destroy(Request $request, $tipo)
     {
-        $id = $request->id;
-
         $model = $this->getModelByTipo($tipo);
 
         if ($model === null) {
             return response()->json(['error' => 'Tipo de categoria inválido'], 400);
         }
 
-        $model::destroy($id);
+        $noticia = $model::findOrFail($request->id);
+        $noticia->update(['status' => 'inativo']);
 
         return redirect()->route("{$tipo}.index")->with('success', 'Categoria excluida com sucesso!');
     }

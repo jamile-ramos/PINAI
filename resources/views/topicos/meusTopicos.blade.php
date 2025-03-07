@@ -63,7 +63,7 @@
                                 class="btn btn-danger btn-remove"
                                 data-modal="#confirmExcluirModal"
                                 data-id="{{ $item->id }}"
-                                data-url="{{ route('topicos.delete') }}"
+                                data-url="{{ route('topicos.destroy') }}"
                                 data-bs-toggle="tooltip"
                                 title="Excluir">
                                 <i class="fas fa-trash-alt"></i>

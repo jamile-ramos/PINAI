@@ -13,7 +13,7 @@
             @foreach($minhasNoticias as $noticia)
             <tr>
                 <td>
-                    <a href="{{ route('postagens.index', ['id' => $noticia->id]) }}" class="fw-bold">
+                    <a href="{{ route('noticias.show', ['id' => $noticia->id]) }}" class="fw-bold">
                         {{ $noticia->titulo }}
                     </a>
                 </td>
@@ -35,7 +35,7 @@
                             class="btn btn-danger btn-remove"
                             data-original-title="Excluir"
                             data-modal="#confirmExcluirModal"
-                            data-url="{{ route('noticias.delete') }}"
+                            data-url="{{ route('noticias.destroy') }}"
                             data-id="{{ $noticia->id }}"
                             title="Excluir">
                             <i class="fas fa-trash-alt"></i>

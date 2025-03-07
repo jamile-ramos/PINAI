@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function () {
         button.addEventListener('click', function () {
             const userId = this.getAttribute('data-id');
             const status = this.getAttribute('data-status');
-            document.getElementById('status').value = (status == 0) ? 1 : 0;
+            document.getElementById('status').value = (status == 'ativo') ? 'inativo' : 'ativo';
 
             const form = document.getElementById('confirmForm');
             const route = form.getAttribute('data-route');
@@ -217,16 +217,16 @@ document.addEventListener('DOMContentLoaded', function () {
             const userId = this.getAttribute('data-id');
             const currentStatus = this.getAttribute('data-status');
 
-            document.getElementById('status').value = (currentStatus == 0) ? 1 : 0;
-            const buttonText = currentStatus == 0 ? 'Desabilitar' : 'Ativar';
-            const buttonClass = currentStatus == 0 ? 'btn-danger' : 'btn-success';
+            document.getElementById('status').value = (currentStatus == 'ativo') ? 'ativo' : 'inativo';
+            const buttonText = currentStatus == 'ativo' ? 'Desabilitar' : 'Ativar';
+            const buttonClass = currentStatus == 'ativo' ? 'btn-danger' : 'btn-success';
 
             const confirmButton = document.getElementById('confirmActionBtn');
             confirmButton.innerText = buttonText;
             confirmButton.classList.remove('btn-danger', 'btn-success');
             confirmButton.classList.add(buttonClass);
 
-            const confirmationText = currentStatus == 0 ? 'Tem certeza de que deseja desativar este usuário?' : 'Tem certeza de que deseja ativar este usuário?';
+            const confirmationText = currentStatus == 'ativo' ? 'Tem certeza de que deseja desativar este usuário?' : 'Tem certeza de que deseja ativar este usuário?';
             document.querySelector('.texto-confirmar p').innerText = confirmationText;
 
             const form = document.getElementById('confirmForm');

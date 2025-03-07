@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Topico extends Model
 {
-    protected $fillable = ['titulo'];
+    protected $fillable = ['titulo', 'status'];
 
     public function user(){
         return $this->belongsTo(User::class, 'idUsuario');

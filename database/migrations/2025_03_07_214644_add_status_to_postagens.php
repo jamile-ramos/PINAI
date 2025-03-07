@@ -8,16 +8,15 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->enum('tipoUsuario', ['comum', 'admin'])->default('comum');
-
+        Schema::table('postagens', function (Blueprint $table) {
+            $table->enum('status', ['ativo', 'inativo'])->default('ativo');
         });
     }
 
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('tipoUsuario');
+        Schema::table('postagens', function (Blueprint $table) {
+            $table->dropColumn('status');
         });
     }
 };

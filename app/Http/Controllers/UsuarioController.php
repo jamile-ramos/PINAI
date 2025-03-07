@@ -38,7 +38,11 @@ class UsuarioController extends Controller
     public function updateStatus(Request $request, $id)
     {
         //dd($request->all());
-        $status = $request->input('status');
+        if($request->status == 'ativo'){
+            $status = 'inativo';
+        }else{
+            $status = 'ativo';
+        }
 
         $user = User::findOrFail($id);
 

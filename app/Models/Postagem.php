@@ -11,7 +11,8 @@ class Postagem extends Model
     protected $fillable = [
         'titulo',
         'conteudo',
-        'idTopico'
+        'idTopico',
+        'status'
     ];
     
     public function topico(){

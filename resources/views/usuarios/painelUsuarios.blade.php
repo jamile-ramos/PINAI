@@ -37,8 +37,8 @@
                         <tr>
                             <td>{{ $usuario->name }}</td>
                             <td>{{ $usuario->email }}</td>
-                            <td>{{ $usuario->tipoUsuario == 0 ? 'Comum' : 'Admin' }}</td>
-                            <td>{{ $usuario->status == 0 ? 'Ativo' : 'Inativo' }}</td>
+                            <td>{{ $usuario->tipoUsuario == 'comum' ? 'Comum' : 'Admin' }}</td>
+                            <td>{{ $usuario->status == 'ativo' ? 'Ativo' : 'Inativo' }}</td>
                             <td>{{ $usuario->created_at->format('d/m/Y') }}</td>
                             <td>
                                 <div class="form-button-action">
@@ -49,10 +49,10 @@
                                         data-type="{{ $usuario->tipoUsuario }}">
                                         Alterar tipo
                                     </button>
-                                    <button type="button" class="btn toggle-status btn-status {{ $usuario->status == 0 ? 'btn-danger' : 'btn-success' }}"
+                                    <button type="button" class="btn toggle-status btn-status {{ $usuario->status == 'ativo' ? 'btn-danger' : 'btn-success' }}"
                                         data-id="{{ $usuario->id }}"
                                         data-status="{{ $usuario->status }}">
-                                        {{ $usuario->status == 0 ? 'Desabilitar' : 'Ativar' }}
+                                        {{ $usuario->status == 'ativo' ? 'Desabilitar' : 'Ativar' }}
                                     </button>
                                 </div>
                             </td>
@@ -91,8 +91,8 @@
                     <div class="form-group">
                         <label for="userType">Tipo de Usuário</label>
                         <select class="form-control" id="userType" name="tipoUsuario">
-                            <option value="0">Comum</option>
-                            <option value="1">Admin</option>
+                            <option value="comum">Comum</option>
+                            <option value="admin">Admin</option>
                         </select>
                     </div>
                     <div class="modal-footer">

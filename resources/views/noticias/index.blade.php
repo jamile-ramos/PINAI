@@ -17,7 +17,7 @@
     ['classBtn' => 'btn-primary', 'content-id' => 'mysNoticias', 'nomeButton' => 'Criar Notícia', 'data-url' => '/noticias/create']
     ];
 
-    if (Auth::check() && Auth::user()->tipoUsuario == 1) {
+    if (Auth::check() && Auth::user()->tipoUsuario == 'admin') {
         $links[] = ['content-id' => 'categoriasNoticias', 'nomeAba' => 'Categorias', 'data-tipo' => 'noticias'];
         $actions[] = ['classBtn' => 'btn-dark', 'content-id' => 'categorias', 'nomeButton' => 'Criar Categoria'];
     }

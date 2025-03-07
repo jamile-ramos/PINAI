@@ -13,7 +13,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('idUsuario')->constrained('users')->onDelete('cascade');
             $table->foreignId('idTopico')->constrained('topicos')->onDelete('cascade');
-            $table->enum('status', [0, 1, 2])->default(1)->comment('0 = aprovado, 1 = pendente, 2 = rejeitado');
+            $table->enum('status', ['aprovado', 'pendente', 'rejeitado'])->default('pendente');
             $table->timestamps();
             $table->unique(['idUsuario', 'idTopico']);
         });

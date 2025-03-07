@@ -33,7 +33,7 @@
                 <p>Dashboard</p>
               </a>
             </li>
-            @if(Auth::user()->tipoUsuario == 1)
+            @if(Auth::user()->tipoUsuario == 'admin')
             <li class="nav-item">
               <a href="/painelUsuarios">
                 <i class="fas fa-users"></i>

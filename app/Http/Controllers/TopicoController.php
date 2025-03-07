@@ -19,7 +19,7 @@ class TopicoController extends Controller
     }
 
     public function index(){
-        $topicos = Topico::withCount('postagens')->get();
+        $topicos = Topico::withCount('postagens')->where('status', 'ativo')->get();
         $topicosSugeridos = SugestaoTopico::all();
         $meusTopicos = $this->myTopicos();
         $minhasPostagens = $this->postagemController->myPostagens();
@@ -42,7 +42,7 @@ class TopicoController extends Controller
 
     public function myTopicos(){
         $idUsuario = Auth::user()->id;
-        $meusTopicos = Topico::where('idUsuario', $idUsuario)->get();
+        $meusTopicos = Topico::where('idUsuario', $idUsuario)->where('status', 'ativo')->get();
         return $meusTopicos;
     }
 
@@ -57,9 +57,9 @@ class TopicoController extends Controller
         return redirect()->route('topicos.index')->with('success', 'Topico atualizado com sucesso!');
     }
 
-    public function delete(Request $request){
-        $id = $request->id;
-        Topico::destroy($id);
+    public function destroy(Request $request){
+        $topico = Topico::findOrFail($request->id);
+        $topico->update(['status' => 'inativo']);
         return redirect()->route('topicos.index')->with('success', 'Topico excluído com sucesso!');
     }
 

@@ -17,7 +17,7 @@
                         <button type="button"
                             data-bs-toggle="tooltip"
                             data-modal="#confirmExcluirModal"
-                            data-url="{{ route('categorias.delete', ['tipo' => $tipo]) }}"
+                            data-url="{{ route('categorias.destroy', ['tipo' => $tipo]) }}"
                             data-id="{{ $categoria->id }}"
                             class="btn btn-danger btn-remove"
                             data-original-title="Remover"

@@ -12,6 +12,10 @@ class CategoriaNoticia extends Model
 
     protected $table = 'categorias_noticias';
 
+    protected $fillable = [
+        'status'
+    ];
+
     public function user() {
         return $this->belongsTo(User::class, 'idUsuario');
     }

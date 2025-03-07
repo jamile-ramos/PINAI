@@ -14,14 +14,14 @@ class PostagemController extends Controller
     {
         $topico = Topico::findOrFail($id);
         $minhasPostagens = $this->myPostagens();
-        $postagens = $topico->postagens()->withCount('respostas')->get();
+        $postagens = $topico->postagens()->withCount('respostas')->where('status', 'ativo')->get();
         return view('postagens.index', compact('postagens', 'minhasPostagens'));
     }
 
     public function myPostagens()
     {
         $idUsuario = Auth::id();
-        $minhasPostagens = Postagem::where('idUsuario', $idUsuario)->get();
+        $minhasPostagens = Postagem::where('idUsuario', $idUsuario)->where('status', 'ativo')->get();
         return $minhasPostagens;
     }
 
@@ -60,11 +60,10 @@ class PostagemController extends Controller
         return redirect()->route('postagens.index', $id)->with('success', 'Postagem atualizada com sucesso!');
     }
 
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
-        $id = $request->id;
-
-        Postagem::destroy($id);
+        $postagem = Postagem::findOrFail($request->id);
+        //$postagem->update(['status', 'inativo']);
         return back()->with('success', 'Postagem excluída com sucesso!');
     }
 

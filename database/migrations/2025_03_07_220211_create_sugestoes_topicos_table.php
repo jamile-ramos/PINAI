@@ -12,7 +12,8 @@ return new class extends Migration
         Schema::create('sugestoes_topicos', function (Blueprint $table) {
             $table->id();
             $table->string('titulo', 255);
-            $table->enum('status', [0,1,2])->default(0)->comment('0=pedente, 1=aprovado, 2=rejeitado');
+            $table->enum('status_situacao', ['pendente','aprovado','rejeitado'])->default('pendente');
+            $table->enum('status', ['ativo', 'inativo'])->default('ativo');
             $table->foreignId('idUsuario')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });

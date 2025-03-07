@@ -63,7 +63,7 @@ class PostagemController extends Controller
     public function destroy(Request $request)
     {
         $postagem = Postagem::findOrFail($request->id);
-        //$postagem->update(['status', 'inativo']);
+        $postagem->update(['status' => 'inativo']);
         return back()->with('success', 'Postagem excluída com sucesso!');
     }
 

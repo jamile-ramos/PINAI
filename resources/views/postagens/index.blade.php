@@ -12,8 +12,8 @@
         ['content-id' => 'myPostagens', 'nomeAba' => 'Minhas Postagens', 'data-tipo' => 'postagens']
     ]"
         :actions="[
-        ['classBtn' => 'btn-primary', 'nomeButton' => 'Criar Postagem', 'data-url' => '/postagens/create'],
-    ]" />
+         ['classBtn' => 'btn-primary', 'nomeButton' => 'Criar Postagem', 'data-url' => url('/postagens/create/' . $topico->id)],
+    ]"/>
 
     @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert" id="sucess-alert">

@@ -11,7 +11,7 @@
                 <h4 class="card-title"> {{ isset($postagem) ? 'Editar Postagem' : 'Adicionar Postagem' }}</h4>
             </div>
         </div>
-        <form id="formpostagem" action="{{ isset($postagem) ? route('postagens.update', $postagem->id) : route('postagens.store') }}" method="post">
+        <form id="formpostagem" action="{{ isset($postagem) ? route('postagens.update', $postagem->id) : route('postagens.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             @if(isset($postagem))
             @method('PUT')
@@ -42,6 +42,26 @@
                     required>{{ old('conteudo', isset($postagem) ? $postagem->conteudo : '') }}</textarea>
             </div>
 
+            <!-- Campo Imagem -->
+            <div class="form-group mb-4" id="campoImagem">
+                <label for="imagem" class="form-label">Imagem</label>
+                <input
+                    name="imagem"
+                    type="file"
+                    class="form-control-file"
+                    id="imagem" />
+            </div>
+
+            
+            <!-- Prévia da Imagem (se já existir uma imagem) -->
+            @if(isset($postagem) && $postagem->imagem)
+            <div class="mb-3" id="preview">
+                <label for="imagemPreview" class="form-label">Prévia da Imagem</label>
+                <img src="{{ asset('img/imgPostagens/'.$postagem->imagem) }}" alt="Prévia da Imagem" class="img-fluid" id="imagemPreview" style="max-width: 300px;">
+                <button type="button" class="btn btn-danger mt-2" id="removeImageBtn">Remover Imagem</button>
+            </div>
+            @endif
+
             <!-- Campo Categoria -->
             <div class="form-group mb-4">
                 <label for="topico" class="form-label">Topico</label>
@@ -49,7 +69,7 @@
                     <option value="" disabled selected>Selecione um topico...</option>
                     @foreach($topicos as $topico)
                     <option value="{{ $topico->id }}"
-                        {{ isset($postagem) && $postagem->idTopico == $topico->id ? 'selected' : '' }}>
+                        {{ (isset($postagem) && $postagem->idTopico == $topico->id) || (isset($idTopico) && $idTopico == $topico->id) ? 'selected' : '' }}>
                         {{ $topico->titulo }}
                     </option>
                     @endforeach

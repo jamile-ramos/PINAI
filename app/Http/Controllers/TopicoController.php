@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SugestaoTopico;
 use Illuminate\Http\Request;
 use App\Models\Topico;
+use App\Models\Postagem;
 use App\Models\TopicoUser;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +20,12 @@ class TopicoController extends Controller
     }
 
     public function index(){
-        $topicos = Topico::withCount('postagens')->where('status', 'ativo')->get();
+        $topicos = Topico::with(['postagens' => function($query) {
+            $query->orderBy('updated_at', 'desc')->take(1);
+        }])->where('status', 'ativo')
+        ->orderBy(Postagem::select('updated_at')->whereColumn('idTopico', 'topicos.id')
+        ->latest()->limit(1), 'desc')->get();
+
         $topicosSugeridos = SugestaoTopico::where('status', 'ativo')->get();
         $meusTopicos = $this->myTopicos();
         $minhasPostagens = $this->postagemController->myPostagens();

@@ -20,9 +20,11 @@
                     <td>
                         <span class="icon">💬</span> {{ $topico->postagens_count }}
                     </td>
+                    @if($topico->postagens->isNotEmpty())
                     <td>
-                        <span class="icon">📅</span> {{ $topico->created_at->format('d/m/Y H:i') }}
+                        <span class="icon">📅</span> {{$topico->postagens->first()->updated_at->format('d/m/Y H:i')}}
                     </td>
+                    @endif
                 </tr>
                 @endforeach
                 @else

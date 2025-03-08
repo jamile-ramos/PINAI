@@ -13,7 +13,7 @@ use App\Http\Controllers\TopicoController;
 use App\Models\Noticia;
 
 Route::middleware('guest')->get('/', function () {
-    return view('auth.login'); 
+    return view('auth.login');
 });
 
 Route::get('/dashboard', function () {
@@ -59,7 +59,7 @@ Route::get('/topicos/edit/{id}', [TopicoController::class, 'edit'])->name('topic
 Route::put('/topicos/update/{id}', [TopicoController::class, 'update'])->name('topicos.update');
 
 // Postagens dos tópicos
-Route::get('/postagens/create', [PostagemController::class, 'create'])->name('postagens.create');
+Route::get('/postagens/create/{idTopico}', [PostagemController::class, 'create'])->name('postagens.create');
 Route::post('/postagens/store', [PostagemController::class, 'store'])->name('postagens.store');
 Route::get('/postagens/{id}', [PostagemController::class, 'index'])->name('postagens.index');
 Route::get('/postagens/edit/{id}', [PostagemController::class, 'edit'])->name('postagens.edit');

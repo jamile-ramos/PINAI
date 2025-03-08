@@ -12,7 +12,8 @@ class Postagem extends Model
         'titulo',
         'conteudo',
         'idTopico',
-        'status'
+        'status',
+        'imagem'
     ];
     
     public function topico(){

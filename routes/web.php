@@ -17,7 +17,7 @@ Route::middleware('guest')->get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    $noticias = Noticia::latest()->take(3)->get();
+    $noticias = Noticia::latest()->where('status', 'ativo')->take(3)->get();
     return view('dashboard', compact('noticias'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 

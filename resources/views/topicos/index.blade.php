@@ -11,21 +11,14 @@
         ['content-id' => 'allTopicos', 'nomeAba' => 'Todos', 'classActive' => 'active', 'data-tipo' => 'topicos']
     ];
 
-    $actions = [
-        ['classBtn' => 'btn-primary', 'nomeButton' => 'Criar Postagem', 'data-url' => '/postagens/create']
-    ];
-
     if (Auth::check() && Auth::user()->tipoUsuario == 'admin') {
         $links[] = ['content-id' => 'myTopicos', 'nomeAba' => 'Meus tópicos', 'data-tipo' => 'topicos'];
         $links[] = ['content-id' => 'sugestoes', 'nomeAba' => 'Tópicos sugeridos', 'data-tipo' => 'topicos'];
-        $links[] = ['content-id' => 'myPostagens', 'nomeAba' => 'Minhas Postagens', 'data-tipo' => 'postagens'];
         $actions[] = ['classBtn' => 'btn-dark', 'nomeButton' => 'Criar Tópico', 'data-url' => '/topicos/create'];
     } else {
         $actions[] = ['classBtn' => 'btn-dark', 'nomeButton' => 'Sugerir Tópico', 'data-url' => '/topicos/create'];
-        $links[] = ['content-id' => 'myPostagens', 'nomeAba' => 'Minhas Postagens', 'data-tipo' => 'postagens'];
     }
 @endphp
-
 
     <x-barra-filtros
         :links="$links"
@@ -50,12 +43,6 @@
         <div class="content-link" id="myTopicos">
             <div class="infos">
                 @include('topicos.meusTopicos', ['itens' => $meusTopicos, 'title' => 'Meus Tópicos'])
-            </div>
-        </div>
-
-        <div class="content-link" id="myPostagens">
-            <div class="infos">
-                @include('postagens.minhasPostagens', ['itens' => $minhasPostagens])
             </div>
         </div>
 

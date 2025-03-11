@@ -10,6 +10,7 @@ use App\Http\Controllers\PostagemController;
 use App\Http\Controllers\RespostaController;
 use App\Http\Controllers\SugestaoTopicoController;
 use App\Http\Controllers\TopicoController;
+use App\Models\Comentario;
 use App\Models\Noticia;
 
 Route::middleware('guest')->get('/', function () {
@@ -73,6 +74,7 @@ Route::post('/respostas/store/{id}', [RespostaController::class, 'store'])->name
 
 //Comentarios das respostas
 Route::post('/comentarios/store', [ComentarioController::class, 'store'])->name('comentarios.store');
+Route::get('/comentarios/usuarios/{idResposta}', [ComentarioController::class, 'usuariosDaResposta'])->name('comentarios.usuarios');
 
 // Sugestão de tópicos
 Route::post('/sugestoes/store', [SugestaoTopicoController::class, 'store'])->name('sugestoes.store');

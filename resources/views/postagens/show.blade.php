@@ -26,7 +26,7 @@
                 <img src="{{ asset('img/imgPostagens/' . $postagem->imagem) }}" alt="{{ $postagem->titulo }}" />
             </div>
             @endif
-    
+
             <div class="response-button-container">
                 <a href="{{ route('respostas.create', $postagem->id) }}" class="btn-response">
                     <i class="fa fa-reply"></i> Responder postagem
@@ -67,7 +67,14 @@
                     {{ $resposta->conteudo }}
                 </div>
 
-                <!-- Comentários nas respostas -->
+                <!-- Botão Criar Resposta -->
+                <div class="comment-button-container">
+                    <button class="btn btn-link comment-toggle" data-id="{{ $resposta->id }}" data-user="$resposta->user->name">
+                        <i class="fa fa-reply"></i> Comentar
+                    </button>
+                </div>
+
+                <!--Comentários nas respostas-->
                 <div class="comment-section">
                     <h4>Comentários ({{ $resposta->comentarios->count() }})</h4>
 
@@ -89,17 +96,31 @@
                     @endforeach
                 </div>
 
-
                 <!-- Formulário para adicionar um comentário -->
-                <div class="comment-form-container">
-                    <h5 class="response-being-commented">Comentando na resposta: <strong>{{ \Str::limit($resposta->conteudo, 100) }}</strong></h5>
-                    <form action="{{ route('comentarios.store') }}" method="POST">
+                <div class="comment-form-container" id="comment-form-{{ $resposta->id }}" style="display: none;">
+                    <form action="{{ route('comentarios.store') }}" method="POST" class="comment-form">
                         @csrf
-                        <div>
-                            <input type="hidden" name="idResposta" value="{{ $resposta->id }}">
-                            <textarea name="conteudo" rows="3" class="form-control" placeholder="Escreva um comentário..." aria-label="Escreva um comentário"></textarea>
+                        <input type="hidden" name="idResposta" value="{{ $resposta->id }}">
+                        <input type="hidden" name="usuarioMencionado">
+                        <textarea name="conteudo" rows="3" id="comentario-{{ $resposta->id }}" class="form-control mention-input" placeholder="Escreva um comentário..." aria-label="Escreva um comentário"></textarea>
+                        <input type="hidden" name="usuarioMencionado">
+                        <!--Butão de mencionar usuario-->
+                        <div class="btn-group-comment">
+                        <button class="btn btn-link mention-user" data-id="{{ $resposta->id }}" data-user="{{ $comentario->user->name }}">
+                            <i class="fa fa-at"></i> Mencionar
+                        </button>
+                        <!-- Menu de sugestões de usuários -->
+                        <div class="mention-menu" id="mention-menu-{{ $resposta->id }}" style="display: none;">
+                            <ul id="user-list-{{ $resposta->id }}">
+                                <!-- Usuários serão inseridos aqui via Ajax -->
+                            </ul>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-response btn-coment">Comentar</button>
+
+                        <div class="btns-comment">
+                            <button type="submit" class="btn btn-primary btn-coment">Comentar</button>
+                            <button type="button" class="btn btn-secondary btn-cancelar-comment btn-coment" data-id="{{$resposta->id}}">Cancelar</button>
+                        </div>
+                        </div>
                     </form>
                 </div>
             </div>

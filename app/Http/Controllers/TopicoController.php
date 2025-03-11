@@ -19,12 +19,14 @@ class TopicoController extends Controller
         $this->postagemController = $postagemController;
     }
 
-    public function index(){
-        $topicos = Topico::with(['postagens' => function($query) {
-            $query->orderBy('updated_at', 'desc')->take(1);
-        }])->where('status', 'ativo')
-        ->orderBy(Postagem::select('updated_at')->whereColumn('idTopico', 'topicos.id')
-        ->latest()->limit(1), 'desc')->get();
+    public function index()
+    {
+        $topicos = Topico::withCount('postagens')
+            ->with(['postagens' => function ($query) {
+                $query->orderBy('updated_at', 'desc')->take(1);
+            }])->where('status', 'ativo')
+            ->orderBy(Postagem::select('updated_at')->whereColumn('idTopico', 'topicos.id')
+                ->latest()->limit(1), 'desc')->get();
 
         $topicosSugeridos = SugestaoTopico::where('status', 'ativo')->get();
         $meusTopicos = $this->myTopicos();
@@ -32,11 +34,13 @@ class TopicoController extends Controller
         return view('topicos.index', compact('topicos', 'meusTopicos', 'topicosSugeridos', 'minhasPostagens'));
     }
 
-    public function create(){
+    public function create()
+    {
         return view('topicos.form');
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $topico = new Topico;
         $topico->titulo = $request->titulo;
         $topico->idUsuario = Auth::user()->id;
@@ -46,27 +50,30 @@ class TopicoController extends Controller
         return redirect()->route('topicos.index')->with('success', 'Tópico criado com sucesso!');
     }
 
-    public function myTopicos(){
+    public function myTopicos()
+    {
         $idUsuario = Auth::user()->id;
         $meusTopicos = Topico::where('idUsuario', $idUsuario)->where('status', 'ativo')->get();
         return $meusTopicos;
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $topico = Topico::findOrFail($id);
         return response()->json($topico);
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $topico = Topico::findOrFail($id);
         $topico->update($request->only(['titulo']));
         return redirect()->route('topicos.index')->with('success', 'Topico atualizado com sucesso!');
     }
 
-    public function destroy(Request $request){
+    public function destroy(Request $request)
+    {
         $topico = Topico::findOrFail($request->id);
         $topico->update(['status' => 'inativo']);
         return redirect()->route('topicos.index')->with('success', 'Topico excluído com sucesso!');
     }
-
 }

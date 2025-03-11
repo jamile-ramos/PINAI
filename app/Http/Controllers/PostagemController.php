@@ -6,6 +6,7 @@ use App\Models\Postagem;
 use App\Models\Comentario;
 use Illuminate\Http\Request;
 use App\Models\Topico;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class PostagemController extends Controller
@@ -85,7 +86,8 @@ class PostagemController extends Controller
 
     public function show($id)
     {
+        $usuarios = User::all();
         $postagem = Postagem::with(['respostas.comentarios'])->findOrFail($id);
-        return view('postagens.show', compact('postagem'));
+        return view('postagens.show', compact('postagem', 'usuarios'));
     }
 }

@@ -22,6 +22,8 @@ Route::get('/dashboard', function () {
     return view('dashboard', compact('noticias'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/myProfile', [ProfileController::class, 'index'])->name('profile.index');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

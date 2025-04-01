@@ -101,12 +101,11 @@
                     <form action="{{ route('comentarios.store') }}" method="POST" class="comment-form">
                         @csrf
                         <input type="hidden" name="idResposta" value="{{ $resposta->id }}">
-                        <input type="hidden" name="usuarioMencionado">
+                        <input type="hidden" name="usuarioMencionado" id="usuarioMencionado">
                         <textarea name="conteudo" rows="3" id="comentario-{{ $resposta->id }}" class="form-control mention-input" placeholder="Escreva um comentário..." aria-label="Escreva um comentário"></textarea>
-                        <input type="hidden" name="usuarioMencionado">
                         <!--Butão de mencionar usuario-->
                         <div class="btn-group-comment">
-                        <button class="btn btn-link mention-user" data-id="{{ $resposta->id }}" data-user="{{ $comentario->user->name }}">
+                        <button class="btn btn-link mention-user" id="mention-user-{{ $resposta->id }}" data-id="{{ $resposta->id}}" data-user="{{ $comentario->user->name }}">
                             <i class="fa fa-at"></i> Mencionar
                         </button>
                         <!-- Menu de sugestões de usuários -->

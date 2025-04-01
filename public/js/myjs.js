@@ -22,9 +22,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Quando um link da navegação for clicado
         $(".nav-item a").on("click", function () {
-            const href = $(this).attr('href');
-            localStorage.setItem("active_nav_item", href);
-            updateActiveNavItem(href);
+            if ($(this).closest('.navbar').length === 0) {  // Se o item não estiver no navbar
+                const href = $(this).attr("href");
+                localStorage.setItem("active_nav_item", href);
+                updateActiveNavItem(href);
+            }
+        });
+
+        // Impedir que o clique no dropdown afete os itens da sidebar
+        $(".dropdown-toggle.profile-pic").on("click", function (e) {
+            e.stopPropagation(); 
+        })
+        
+        // Garante que o sidebar não perca o active ao abrir o dropdown
+        $(".topbar-user .dropdown-menu").on("click", function (e) {
+            e.stopPropagation();
         });
 
         // Ao clicar no botão "Ver mais" do card na página dashboard
@@ -42,6 +54,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
         });
+
+        // Ao clicar em Meu perfil
+        $("#link-profile").on("click", function () {
+            const btnsHomes = $(".btn-home")
+
+            $(".nav-item").each(function () {
+                const dataBtnNav = $(this).find("a").attr("data-btnNav");
+
+                if (dataBtnNav === 'profile') {
+                    $(this).addClass("submenu active");
+                    localStorage.setItem("active_nav_item", $(this).find("a").attr('href'));
+                } else {
+                    $(this).removeClass("submenu active");
+                }
+            });
+        })
 
         // Ao clicar nos títulos das notícias na página dashboard
         $("a[data-btn]").on("click", function () {
@@ -495,93 +523,140 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Toggle de visibilidade do menu de menções
-    document.addEventListener('click', function (event) {
-        let btn = event.target.closest('.mention-user');
+    let usuarios = [];
+    let nomeUsuarioMencionado = '';
 
-        let openMenus = document.querySelectorAll('.mention-menu');
+    document.querySelectorAll('.mention-user').forEach(btn =>
+        btn.addEventListener('click', function () {
+            let respostaId = btn.getAttribute('data-id');
+            let menu = document.getElementById(`mention-menu-${respostaId}`);
+            let userList = document.getElementById(`user-list-${respostaId}`);
 
-        if (!btn) {
-            openMenus.forEach(menu => {
+            let openMenus = document.querySelectorAll('.mention-menu');
+
+            if (!btn) {
+                openMenus.forEach(menu => {
+                    menu.style.display = 'none';
+                });
+                return;
+            }
+
+            event.preventDefault();
+
+            if (!menu || !userList) {
+                return;
+            }
+
+            if (menu.style.display === 'block') {
                 menu.style.display = 'none';
-            });
-            return;
-        }
+                return;
+            }
 
-        event.preventDefault();
+            // Faz a requisição AJAX para obter os usuários e abrir o menu
+            fetch(`/comentarios/usuarios/${respostaId}`)
+                .then(response => response.json())
+                .then(data => {
+                    usuarios = data.usuariosUnicos;
+                    if (data.usuariosUnicos && Array.isArray(data.usuariosUnicos)) {
+                        userList.innerHTML = ''; // Limpa a lista de usuários
 
-        let respostaId = btn.getAttribute('data-id');
-        let menu = document.getElementById(`mention-menu-${respostaId}`);
-        let userList = document.getElementById(`user-list-${respostaId}`);
+                        data.usuariosUnicos.forEach(usuario => {
+                            let li = document.createElement('li');
+                            li.classList.add('mention-user-item');
+                            li.setAttribute('data-user', usuario.name);
+                            li.setAttribute('data-idUsuarioMencionado', usuario.id);
+                            li.setAttribute('data-id', respostaId);
+                            li.textContent = usuario.name;
+                            userList.appendChild(li);
+                        });
 
-        if (!menu || !userList) {
-            return;
-        }
+                        // Exibe o menu de menção
+                        menu.style.display = 'block';
+                    } else {
+                        console.error("Erro: dados de usuários inválidos.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Erro ao carregar usuários:", error);
+                });
 
-        if (menu.style.display === 'block') {
-            menu.style.display = 'none';
-            return;
-        }
-
-        // Faz a requisição AJAX para obter os usuários e abrir o menu
-        fetch(`/comentarios/usuarios/${respostaId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.usuariosUnicos && Array.isArray(data.usuariosUnicos)) {
-                    userList.innerHTML = ''; // Limpa a lista de usuários
-
-                    data.usuariosUnicos.forEach(usuario => {
-                        let li = document.createElement('li');
-                        li.classList.add('mention-user-item');
-                        li.setAttribute('data-user', usuario.name);
-                        li.setAttribute('data-id', respostaId);
-                        li.textContent = usuario.name;
-                        userList.appendChild(li);
-                    });
-
-                    // Exibe o menu de menção
-                    menu.style.display = 'block';
-                } else {
-                    console.error("Erro: dados de usuários inválidos.");
-                }
-            })
-            .catch(error => {
-                console.error("Erro ao carregar usuários:", error);
-            });
-    });
+        })
+    )
 
     // Pega o usuario para mencionar no textarea
     document.addEventListener('click', function (event) {
         let userItem = event.target.closest('.mention-user-item');
         if (!userItem) return;
 
-        let userName = userItem.getAttribute('data-user');
         let respostaId = userItem.getAttribute('data-id');
+        let btnMencionar = document.getElementById(`mention-user-${respostaId}`);
+        let menu = document.getElementById(`mention-menu-${respostaId}`);
+        let userName = userItem.getAttribute('data-user');
+        let userId = userItem.getAttribute('data-idUsuarioMencionado')
         let textarea = document.getElementById(`comentario-${respostaId}`);
-        
+        let inputUsuarioMencionado = document.getElementById('usuarioMencionado');
+        inputUsuarioMencionado.value = userId
 
-        // Insere a menção no textarea
+        if (userName != null) {
+            btnMencionar.disabled = true;
+            menu.style.display = 'none'
+        }
+
         let cursorPos = textarea.selectionStart;
         let textBefore = textarea.value.substring(0, cursorPos);
         let textAfter = textarea.value.substring(cursorPos);
 
-        textarea.value = textBefore + ` @${userName} ` + textAfter;
+        textarea.value = textBefore + ` @${userName}` + textAfter;
         textarea.focus();
+        nomeUsuarioMencionado = userName;
 
         // Fecha o menu após a menção ser adicionada
-        let menu = document.getElementById(`mention-menu-${respostaId}`);
         if (menu) menu.style.display = 'none';
-    })
+    });
+
+    // Adiciona um ouvinte de evento para monitorar alterações no texto do comentário
+    document.addEventListener('input', function (event) {
+        if (event.target && event.target.matches('.mention-input')) {
+            let respostaId = event.target.getAttribute('id').split('-')[1];
+            let textarea = event.target;
+            let btnMencionar = document.getElementById(`mention-user-${respostaId}`);
+
+            let texto = textarea.value.trim();
+
+            // Verifica se já existe uma menção
+            let nomeParaProcurar = nomeUsuarioMencionado
+            let regex = new RegExp("\\b" + nomeParaProcurar + "\\b", "g");
+            let resultado = texto.match(regex);
+
+            let nomeUsuarioEncontrado = false;
+
+            // Verifica se a menção é válida e pertence a um usuário existente
+            if (resultado) {
+                for (let usuario of usuarios) {
+                    if (resultado[0] === usuario.name) {
+                        nomeUsuarioEncontrado = true;
+                    }
+                }
+            }
+
+            if (resultado != null && nomeUsuarioEncontrado) {
+                btnMencionar.disabled = true;
+            } else {
+                btnMencionar.disabled = false;
+            }
+        }
+    });
 
     // Fechar formulario de comentario quando clicar em cancelar
     document.querySelectorAll('.btn-cancelar-comment').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             let respostaId = btn.getAttribute('data-id');
             let formComentar = document.getElementById(`comment-form-${respostaId}`);
 
             formComentar.style.display = 'none'
             let textarea = document.getElementById(`comentario-${respostaId}`);
             textarea.value = ""
-        }) 
+        })
     })
 
 

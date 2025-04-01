@@ -116,7 +116,7 @@ p {
 
 .title-new a:hover {
     color: #1269db;
-    text-decoration:underline !important;
+    text-decoration: underline !important;
 }
 
 .card-action {
@@ -561,11 +561,11 @@ img#imagemPreview {
     margin-bottom: 0rem !important;
 }
 
-.card .card-body{
+.card .card-body {
     padding: 0 !important;
 }
 
-.forum-azul{
+.forum-azul {
     background: #011C37;
     color: #fff;
 }
@@ -575,22 +575,27 @@ img#imagemPreview {
     overflow: hidden;
     box-shadow: 0 4px 8px #011C37;
 }
+
 .forum-table thead {
-    background-color: #011C37; 
+    background-color: #011C37;
     color: #FFD700;
 }
+
 .forum-table tbody tr:nth-child(even) {
     background-color: #ADD8E6;
 }
+
 .forum-table tbody tr:hover {
     background-color: #FFD700;
     color: #011C37;
 }
+
 .forum-table a {
     color: #FFD700;
     font-weight: bold;
     text-decoration: none;
 }
+
 .forum-table a:hover {
     color: #011C37;
     text-decoration: underline;
@@ -601,8 +606,7 @@ ul.pagination.justify-content-center {
 }
 
 label.form-label {
-    margin-left: 10px;
-    margin-bottom: 10px;
+    color: #8d9498 !important;
 }
 
 .btn:not(:disabled):not(.disabled) {
@@ -616,7 +620,7 @@ label.form-label {
 }
 
 .forum-container {
-    max-width:100%;
+    max-width: 100%;
     margin: 0 auto;
 }
 
@@ -684,11 +688,12 @@ label.form-label {
     transition: background 0.3s ease;
 }
 
-.user-post{
+.user-post {
     background-color: #333;
     margin-right: 10px;
 }
-.user-post i{
+
+.user-post i {
     color: #fff;
 }
 
@@ -696,11 +701,11 @@ label.form-label {
     margin: 20px 15px;
 }
 
-.post-topico{
+.post-topico {
     color: #555;
 }
 
-.btn-resposta{
+.btn-resposta {
     margin-left: 10px;
 }
 
@@ -790,7 +795,7 @@ label.form-label {
     margin-right: 8px;
 }
 
-.btn-coment{
+.btn-coment {
     margin-top: 15px;
 }
 
@@ -842,7 +847,7 @@ label.form-label {
 
 /* Comentários nas respostas */
 
-.comment-section h4{
+.comment-section h4 {
     font-size: 16px;
     margin-bottom: 10px;
 }
@@ -901,7 +906,7 @@ label.form-label {
     font-size: 16px;
 }
 
-.campo-comentario textarea{
+.campo-comentario textarea {
     padding: 0 !important;
 }
 
@@ -960,7 +965,7 @@ label.form-label {
     display: block;
 }
 
-.comment-button-container{
+.comment-button-container {
     margin-top: 15px;
     text-align: end;
 }
@@ -977,6 +982,7 @@ label.form-label {
     overflow-y: auto;
     padding: 8px 0;
     z-index: 1000;
+    margin-left: 100px;
 }
 
 .mention-menu ul {
@@ -998,7 +1004,7 @@ label.form-label {
     color: #000;
 }
 
-.btn-group-comment{
+.btn-group-comment {
     display: flex;
 }
 
@@ -1008,6 +1014,181 @@ label.form-label {
     width: 90%;
     justify-content: end;
 }
+
+.nav-toggle {
+    color: white !important;
+}
+
+.toggled {
+    color: white !important;
+    color: white !important;
+}
+
+/* My profile */
+
+.media-body {
+    margin-left: 10px;
+}
+
+.media-body h3 {
+    font-size: 1.2rem;
+    font-weight: bolder;
+    color: #333;
+    justify-content: start;
+}
+
+.media-body p {
+    color: #999;
+    font-size: 0.9rem;
+}
+
+/* Seção de seguidores e seguidos */
+.card-profile {
+    background-color: #f0f8ff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.card-profile h3 {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.cardMy {
+    padding: 0px 10px 0px 10px !important;
+    text-wrap: nowrap;
+}
+
+.cardMyChild {
+    padding: 10px 0px 10px 0px;
+}
+
+
+.text-muted-small {
+    color: rgb(136, 152, 170) !important;
+    font-size: 12px;
+}
+
+/* Botões */
+.btn {
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-weight: 600;
+}
+
+.btn-danger {
+    background-color: #ff4d4d;
+    border-color: #ff4d4d;
+    color: #fff;
+}
+
+.btn-transparent {
+    background-color: transparent;
+    color: #666;
+    border: none;
+}
+
+.btn-transparent:hover {
+    color: #333;
+}
+
+/* Seção "Sobre mim" */
+.card-profile__info {
+    list-style: none;
+    padding: 0;
+    margin: 0px 0px 20px;
+}
+
+.card-profile__info li {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.card-profile__info li strong {
+    color: #333;
+    margin-right: 10px;
+}
+
+.cardProfile {
+    padding: 20px;
+}
+
+.user-icon-circle-profile {
+    background-color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    color: #011c37;
+    font-size: 15px;
+}
+
+.fa-profile {
+    color: white;
+    font-size: 30px;
+}
+
+/* Mídia de respostas */
+.media-reply {
+    padding: 20px;
+    margin-bottom: 15px;
+    border-top: 1px solid #eaeaea;
+}
+
+.media-reply p {
+    color: #555;
+}
+
+.media-reply .media-body {
+    padding-left: 15px;
+}
+
+.media-reply__link button {
+    color: #888;
+    font-size: 1.2rem;
+}
+
+.media-reply__link button:hover {
+    color: #555;
+}
+
+/* Imagens de miniatura */
+.media-reply ul {
+    margin-top: 15px;
+}
+
+.media-reply ul li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.media-reply ul li img {
+    border-radius: 8px;
+}
+
+/* Respostas de mídia em tela pequena */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 15px;
+    }
+
+    .card-profile__info li {
+        font-size: 0.9rem;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+    }
+
+    .media-reply {
+        padding: 15px;
+    }
+}
+
 
 
 @media screen and (min-width: 320px) and (max-width: 778px) {
@@ -1048,7 +1229,7 @@ label.form-label {
         left: 10%;
         right: 10%;
     }
-    
+
     .btn:not(:disabled):not(.disabled) {
         white-space: unset;
     }
@@ -1060,9 +1241,11 @@ label.form-label {
     .main-post-content {
         font-size: 14px;
     }
+
     .responses-title {
         font-size: 15px;
     }
+
     .response-content {
         font-size: 14px;
     }

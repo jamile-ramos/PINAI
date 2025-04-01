@@ -8,7 +8,7 @@
     <title>@yield('title')</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="img/Favicon-azul.svg">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('img/favicon-azul.svg') }}">
 
     <!-- CSS do Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />

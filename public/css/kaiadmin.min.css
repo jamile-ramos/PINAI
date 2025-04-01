@@ -459,7 +459,6 @@ body {
 }
 
 .main-header {
-   background: #fff;
    min-height: 60px;
    width: calc(100% - 250px);
    position: fixed;
@@ -912,7 +911,7 @@ body {
 .sidebar .nav>.nav-item,
 .sidebar[data-background-color=white] .nav>.nav-item {
    display: list-item;
-   padding:10px;
+   padding:5px;
 }
 
 .sidebar .nav>.nav-item.active>a,
@@ -9181,7 +9180,8 @@ label.error {
       position: absolute;
       width: 100%;
       transform: translate3d(0, -200px, 0) !important;
-      transition: all .5s
+      transition: all .5s;
+      top: 0;
    }
 
    .topbar_open .navbar-header {

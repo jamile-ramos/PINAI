@@ -629,7 +629,7 @@ label.form-label {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     margin-bottom: 20px;
-    padding: 20px;
+    padding: 25px;
     transition: transform 0.2s ease-in-out;
 }
 
@@ -718,7 +718,6 @@ label.form-label {
     margin: 0 auto;
     padding: 30px 20px;
     width: 1200px;
-    background-color: #f9f9f9;
 }
 
 /* Postagem Principal */
@@ -726,14 +725,8 @@ label.form-label {
     background-color: #ffffff;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    padding: 25px;
     margin-bottom: 30px;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.main-post-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .main-post-header {
@@ -754,7 +747,7 @@ label.form-label {
 }
 
 .main-post-title {
-    font-size: 28px;
+    font-size: 20px;
     font-weight: bold;
     color: #333;
     margin-bottom: 15px;
@@ -765,6 +758,7 @@ label.form-label {
     color: #555;
     line-height: 1.6;
     margin-bottom: 20px;
+    text-align: justify;
 }
 
 /* Botão Responder */
@@ -809,7 +803,7 @@ label.form-label {
 
 .response-card {
     background-color: #ffffff;
-    padding: 20px;
+    padding: 25px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     margin-bottom: 25px;
@@ -843,6 +837,7 @@ label.form-label {
     color: #555;
     line-height: 1.5;
     margin-top: 12px;
+    text-align: justify;
 }
 
 /* Comentários nas respostas */
@@ -879,6 +874,7 @@ label.form-label {
     font-size: 15px;
     color: #555;
     margin-top: 10px;
+    text-align: justify
 }
 
 /* Formulário de Comentário */
@@ -1025,6 +1021,9 @@ label.form-label {
 }
 
 /* My profile */
+.content-profile{
+    width: 100%;
+}
 
 .media-body {
     margin-left: 10px;
@@ -1134,17 +1133,20 @@ label.form-label {
 
 /* Mídia de respostas */
 .media-reply {
-    padding: 20px;
-    margin-bottom: 15px;
+    padding: 25px 25px 0px 25px;
     border-top: 1px solid #eaeaea;
 }
 
-.media-reply p {
-    color: #555;
+.media-text{
+    padding: 0px 25px 0px 25px;
 }
 
-.media-reply .media-body {
-    padding-left: 15px;
+.media-text p {
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: #555;
+    font-weight: 400;
+    text-align: justify;
 }
 
 .media-reply__link button {
@@ -1154,6 +1156,10 @@ label.form-label {
 
 .media-reply__link button:hover {
     color: #555;
+}
+
+.user-post2{
+    margin-right: 0px !important;
 }
 
 /* Imagens de miniatura */
@@ -1168,6 +1174,15 @@ label.form-label {
 
 .media-reply ul li img {
     border-radius: 8px;
+}
+
+.post-footer.btn-padding {
+    padding: 0px 25px 25px 25px;
+}
+
+#abaProfile{
+    width: 100% !important;
+    display: block !important;
 }
 
 /* Respostas de mídia em tela pequena */

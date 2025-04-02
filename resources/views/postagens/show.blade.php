@@ -20,7 +20,7 @@
             <div class="main-post-content">
                 {{ $postagem->conteudo }}
             </div>
-            <!-- Imagem da notícia -->
+            <!-- Imagem da postagem -->
             @if($postagem->imagem)
             <div class="noticia-imagem">
                 <img src="{{ asset('img/imgPostagens/' . $postagem->imagem) }}" alt="{{ $postagem->titulo }}" />
@@ -128,10 +128,12 @@
     </div>
 
     <!-- Botão Criar Resposta -->
+     @if($postagem->respostas->count() != 0)
     <div class="response-button-container">
         <a href="{{ route('respostas.create', $postagem->id) }}" class="btn-response">
             <i class="fa fa-reply"></i> Responder postagem
         </a>
     </div>
+    @endif
 </div>
 @endsection

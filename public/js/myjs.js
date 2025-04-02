@@ -304,6 +304,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const updateTabs = () => {
         document.querySelectorAll('.container-abas').forEach(container => {
             const barraId = container.id;
+            console.log(barraId)
             iniciarAba(barraId);
         })
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Postagem;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,10 +12,18 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    protected $postagemController;
+
+    public function __construct(PostagemController $postagemController)
+    {
+        $this->postagemController = $postagemController;
+    }
     public function index(Request $request): View
     {
+        $minhasPostagens = $this->postagemController->myPostagens();
         return view('profile.myProfile', [
             'user' => $request->user(),
+            'myPostagens' => $minhasPostagens
         ]);
     }
 

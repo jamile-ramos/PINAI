@@ -9,7 +9,7 @@
     @php
 
     $links = [
-    ['content-id' => 'allNoticias', 'nomeAba' => 'Todos', 'classActive' => 'active', 'data-tipo' => 'noticias'],
+    ['content-id' => 'allNoticias', 'nomeAba' => 'Visão Geral', 'classActive' => 'active', 'data-tipo' => 'noticias'],
     ['content-id' => 'mysNoticias', 'nomeAba' => 'Minhas Noticias', 'data-tipo' => 'noticias'],
     ];
 
@@ -18,6 +18,7 @@
     ];
 
     if (Auth::check() && Auth::user()->tipoUsuario == 'admin') {
+        $links[] = ['content-id' => 'categoriasNoticias', 'nomeAba' => 'Todas as noticias', 'data-tipo' => 'noticias'];
         $links[] = ['content-id' => 'categoriasNoticias', 'nomeAba' => 'Categorias', 'data-tipo' => 'noticias'];
         $actions[] = ['classBtn' => 'btn-dark', 'content-id' => 'categorias', 'nomeButton' => 'Criar Categoria'];
     }

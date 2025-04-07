@@ -346,10 +346,6 @@ select {
     border-bottom: 2px solid #0d6efd;
 }
 
-.tab-buttons button:focus {
-    outline: none;
-}
-
 .tab-buttons button:hover {
     color: #1572e8;
 }
@@ -1021,7 +1017,7 @@ label.form-label {
 }
 
 /* My profile */
-.content-profile{
+.content-profile {
     width: 100%;
 }
 
@@ -1137,7 +1133,7 @@ label.form-label {
     border-top: 1px solid #eaeaea;
 }
 
-.media-text{
+.media-text {
     padding: 0px 25px 0px 25px;
 }
 
@@ -1158,7 +1154,7 @@ label.form-label {
     color: #555;
 }
 
-.user-post2{
+.user-post2 {
     margin-right: 0px !important;
 }
 
@@ -1180,10 +1176,27 @@ label.form-label {
     padding: 0px 25px 25px 25px;
 }
 
-#abaProfile{
+#abaProfile {
     width: 100% !important;
     display: block !important;
 }
+
+button:focus-visible,
+.select-option:focus-visible {
+    outline: 3px solid var(--foco-cor);
+    outline-offset: 4px;
+}
+/*
+button:focus,
+.select-option:focus {
+    outline: 2px solid #005fcc !important;
+    outline-offset: 2px !important;
+}
+
+.nav-item a:focus {
+    outline: 2px solid #005fcc !important;
+    outline-offset: 2px !important;
+}*/
 
 /* Respostas de mídia em tela pequena */
 @media (max-width: 768px) {
@@ -1203,8 +1216,6 @@ label.form-label {
         padding: 15px;
     }
 }
-
-
 
 @media screen and (min-width: 320px) and (max-width: 778px) {
     .container-all {
@@ -1305,6 +1316,10 @@ label.form-label {
     .tab-buttons button:hover {
         color: white;
     }
+
+    .add {
+        top: 20%;
+    }
 }
 
 @media screen and (max-width: 1040px) {
@@ -1326,5 +1341,17 @@ label.form-label {
 
     .close-search {
         margin-right: 2px;
+    }
+
+    .select-option {
+        width: 150px;
+    }
+
+    i.dropdown-icon.fas.fa-chevron-down {
+        right: 60px;
+    }
+
+    .search-container i {
+        margin-left: 0px;
     }
 }

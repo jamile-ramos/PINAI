@@ -31,9 +31,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Impedir que o clique no dropdown afete os itens da sidebar
         $(".dropdown-toggle.profile-pic").on("click", function (e) {
-            e.stopPropagation(); 
+            e.stopPropagation();
         })
-        
+
         // Garante que o sidebar não perca o active ao abrir o dropdown
         $(".topbar-user .dropdown-menu").on("click", function (e) {
             e.stopPropagation();
@@ -96,14 +96,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 "border": "1px solid transparent",
                 "background-color": "transparent"
             });
-
             $(".navbar").addClass("search-mode");
-
+            if ($(window).width() > 1195) {
+                $('.tab-btn').hide();
+                $('.add-btn').hide();
+            } else {
+                $('.tab-btn').hide();
+                $('.add-btn').hide();
+                $('.select-btn').hide();
+            }
             $(".search-icon").hide();
-            $('.tab-btn').hide();
-            $('.add-btn').hide();
             $(".close-search").show();
-
             $(".search-form").show();
             $(".search-input").show().focus();
         });
@@ -112,11 +115,18 @@ document.addEventListener('DOMContentLoaded', function () {
             $(".navbar").removeClass("search-mode");
 
             $(".close-search").hide();
-            $('.tab-btn').show();
-            $('.add-btn').show();
+
+            if ($(window).width() > 1195) {
+                $('.tab-btn').show();
+                $('.add-btn').show();
+            } else if ($(window).width() > 1040 && $(window).width() < 1995) {
+                $('.add-btn').show();
+                $('.select-btn').show();
+            } else {
+                $('.select-btn').show();
+            }
+
             $(".search-icon").show();
-
-
             $(".search-form").hide();
             $(".search-input").hide();
 
@@ -129,6 +139,24 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Abre o dropdown
+    document.querySelectorAll('.container-abas').forEach(container => {
+        const barraId = container.id;
+    
+        if (barraId === 'abaProfile') {
+            const selectOption = container.querySelector(".select-option");
+            const optionButtons = container.querySelectorAll(".option-btn");
+        
+            if (selectOption.innerText.trim() === 'Todos') {
+                selectOption.innerText = 'Minhas publicações';
+            }
+
+            const lineButton = container.querySelectorAll(".line-button")
+            const btnsSelect = container.querySelectorAll(".btns-select")
+            lineButton.forEach(el => el.remove());
+            btnsSelect.forEach(el => el.remove());
+        }
+    });
+    
     const selectOption = document.querySelector(".select-option");
     const selectBtn = document.querySelector(".select-btn");
 
@@ -304,7 +332,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const updateTabs = () => {
         document.querySelectorAll('.container-abas').forEach(container => {
             const barraId = container.id;
-            console.log(barraId)
             iniciarAba(barraId);
         })
     }
@@ -659,7 +686,6 @@ document.addEventListener('DOMContentLoaded', function () {
             textarea.value = ""
         })
     })
-
 
 });
 

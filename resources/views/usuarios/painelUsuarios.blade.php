@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="container-abas" id="abaUsuarios">
-    <x-barra-filtros :links="[['content-id' => 'all-users', 'nomeAba' => 'Todos', 'classActive' => 'active']]" />
+    <x-barra-filtros :links="[['content-id' => 'all-users', 'nomeAba' => 'Visão Geral', 'classActive' => 'active']]" />
 
     @foreach (['success', 'sucess-status'] as $status)
     @if(session($status))
@@ -18,7 +18,7 @@
     @endif
     @endforeach
 
-    <div class="tab-contents-users">
+    <div class="tab-contents-users" role="tabpanel" id="panel-1" aria-labelledby="tab-1" tabindex="0">
         <div class="content-link show" id="all-users">
             <div class="table-responsive">
                 <table class="table table-hover table-striped">
@@ -37,7 +37,14 @@
                         <tr>
                             <td>{{ $usuario->name }}</td>
                             <td>{{ $usuario->email }}</td>
-                            <td>{{ $usuario->tipoUsuario == 'comum' ? 'Comum' : 'Admin' }}</td>
+                            <td>@if ($usuario->tipoUsuario == 'comum')
+                                Comum
+                                @elseif ($usuario->tipoUsuario == 'admin')
+                                Admin
+                                @elseif ($usuario->tipoUsuario == 'moderador')
+                                Moderador
+                                @endif
+                            </td>
                             <td>{{ $usuario->status == 'ativo' ? 'Ativo' : 'Inativo' }}</td>
                             <td>{{ $usuario->created_at->format('d/m/Y') }}</td>
                             <td>
@@ -93,6 +100,7 @@
                         <select class="form-control" id="userType" name="tipoUsuario">
                             <option value="comum">Comum</option>
                             <option value="admin">Admin</option>
+                            <option value="moderador">Moderador</option>
                         </select>
                     </div>
                     <div class="modal-footer">

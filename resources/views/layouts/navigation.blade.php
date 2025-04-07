@@ -83,7 +83,7 @@
             </span>
             <h4 class="text-section">Outras páginas</h4>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" >
             <a href="/myProfile" data-btnNav="profile">
               <i class="far fa-user"></i>
               <p>Perfil</p>

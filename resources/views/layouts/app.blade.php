@@ -29,7 +29,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
+<body class="tema-escuro">
 
     @include('layouts.navigation')
 

@@ -10,7 +10,7 @@
 
     <!-- Select para telas menores -->
     <div class="select-btn">
-        <div class="select-option">Todos</div>
+        <div class="select-option">Visão geral</div>
         <i class="dropdown-icon fas fa-chevron-down"></i>
         <div class="dropdown-select close-drop">
             @foreach($links as $link)
@@ -25,7 +25,7 @@
             <div class="btns-select">
                 @foreach($actions as $action)
                 <button
-                    data-url= " {{ $action['data-url'] ?? ''}} "
+                    data-url=" {{ $action['data-url'] ?? ''}} "
                     class="option-add btn {{ $action['classBtn'] ?? ''}}"
                     content-id="{{ $action['content-id'] ?? ''}}">
                     {{ $action['nomeButton'] ?? ''}}
@@ -36,20 +36,26 @@
     </div>
 
     <!-- Link da aba para telas maiores -->
-    @foreach($links as $link)
-    <button
-        class="tab-btn {{ $link['classActive'] ?? ''}}"
-        content-id="{{ $link['content-id'] ?? ''}}"
-        data-tipo="{{ $link['data-tipo'] ?? '' }}">
-        {{ $link['nomeAba'] ?? ''}}
-    </button>
-    @endforeach
+    <div role="tablist" aria-label="Navegação de abas">
+        @foreach($links as $index => $link)
+        <button
+            id="tab-{{ $index }}"
+            role="tab"
+            aria-selected="{{ isset($link['classActive']) && $link['classActive'] === 'active' ? 'true' : 'false' }}"
+            aria-controls="panel-1"
+            class="tab-btn {{ $link['classActive'] ?? ''}}"
+            content-id="{{ $link['content-id'] ?? ''}}"
+            data-tipo="{{ $link['data-tipo'] ?? '' }}">
+            {{ $link['nomeAba'] ?? ''}}
+        </button>
+        @endforeach
+    </div>
 
     <!-- Botões para telas maiores -->
     <div class="add">
         @foreach($actions as $action)
         <button
-            data-url= " {{ $action['data-url'] ?? ''}} "
+            data-url=" {{ $action['data-url'] ?? ''}} "
             class="add-btn btn {{ $action['classBtn'] ?? ''}}"
             content-id="{{ $action['content-id'] ?? ''}}">
             {{ $action['nomeButton'] ?? ''}}

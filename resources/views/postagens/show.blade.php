@@ -3,6 +3,7 @@
 @section('title', $postagem->titulo)
 
 @section('content')
+
 <div class="forum-wrapper">
     <!-- Postagem Principal -->
     <div class="postagem-completa">
@@ -35,6 +36,25 @@
         </div>
 
         <!-- Respostas -->
+        @foreach(['success-create', 'success-delete'] as $status)
+        @if(session($status))
+        @if($status === 'success-create')
+        <div class="alert alert-success alert-dismissible fade show" role="alert" id="{{ $status }}-alert">
+            <strong>{{ session($status) }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @elseif($status === 'success-delete')
+        <div class="alert alert-warning alert-dismissible fade show" role="alert" id="{{ $status }}-alert">
+            <strong>{{ session($status) }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif
+        @endif
+        @endforeach
         <div class="respostas-container">
             <h3 class="responses-title">Respostas ({{ $postagem->respostas->count() }})</h3>
 
@@ -50,16 +70,21 @@
                     </div>
                     <!-- 3 pontinhos -->
                     <div class="post-options">
-                        <button class="options-button">
+                        <button class="options-button" aria-label="Botão de opções: Editar e Excluir Resposta">
                             <i class="fa fa-ellipsis-v"></i>
                         </button>
                         <div class="options-menu">
                             <a href="">Editar</a>
-                            <form action="" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="delete-button">Excluir</button>
-                            </form>
+                            <button
+                                class="resposta-destroy"
+                                type="button"
+                                data-modal="#confirmExcluirModal"
+                                data-id="{{ $resposta->id }}"
+                                data-url="{{ route('respostas.destroy') }}"
+                                data-bs-toggle="tooltip"
+                                aria-label="Excluir resposta">
+                                Excluir
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -105,20 +130,20 @@
                         <textarea name="conteudo" rows="3" id="comentario-{{ $resposta->id }}" class="form-control mention-input" placeholder="Escreva um comentário..." aria-label="Escreva um comentário"></textarea>
                         <!--Butão de mencionar usuario-->
                         <div class="btn-group-comment">
-                        <button class="btn btn-link mention-user" id="mention-user-{{ $resposta->id }}" data-id="{{ $resposta->id}}" data-user="{{ $comentario->user->name }}">
-                            <i class="fa fa-at"></i> Mencionar
-                        </button>
-                        <!-- Menu de sugestões de usuários -->
-                        <div class="mention-menu" id="mention-menu-{{ $resposta->id }}" style="display: none;">
-                            <ul id="user-list-{{ $resposta->id }}">
-                                <!-- Usuários serão inseridos aqui via Ajax -->
-                            </ul>
-                        </div>
+                            <button class="btn btn-link mention-user" id="mention-user-{{ $resposta->id }}" data-id="{{ $resposta->id}}" data-user="{{ $comentario->user->name }}" aria-label="Mencionar usuário no comentário">
+                                <i class="fa fa-at"></i> Mencionar
+                            </button>
+                            <!-- Menu de sugestões de usuários -->
+                            <div class="mention-menu" id="mention-menu-{{ $resposta->id }}" style="display: none;">
+                                <ul id="user-list-{{ $resposta->id }}">
+                                    <!-- Usuários serão inseridos aqui via Ajax -->
+                                </ul>
+                            </div>
 
-                        <div class="btns-comment">
-                            <button type="submit" class="btn btn-primary btn-coment">Comentar</button>
-                            <button type="button" class="btn btn-secondary btn-cancelar-comment btn-coment" data-id="{{$resposta->id}}">Cancelar</button>
-                        </div>
+                            <div class="btns-comment">
+                                <button type="submit" class="btn btn-primary btn-coment" aria-label="Salvar comentário">Comentar</button>
+                                <button type="button" class="btn btn-secondary btn-cancelar-comment btn-coment" data-id="{{$resposta->id}}" arial-label="Cancelar comentário">Cancelar</button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -128,7 +153,7 @@
     </div>
 
     <!-- Botão Criar Resposta -->
-     @if($postagem->respostas->count() != 0)
+    @if($postagem->respostas->count() != 0)
     <div class="response-button-container">
         <a href="{{ route('respostas.create', $postagem->id) }}" class="btn-response">
             <i class="fa fa-reply"></i> Responder postagem
@@ -136,4 +161,6 @@
     </div>
     @endif
 </div>
+
+@include('layouts.modalExclusao')
 @endsection

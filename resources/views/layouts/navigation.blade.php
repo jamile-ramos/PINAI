@@ -26,6 +26,7 @@
         <ul class="nav nav-secondary">
           <li class="nav-item">
             <a
+              tabindex="0"
               href="/dashboard"
               class="collapsed"
               aria-expanded="false">
@@ -35,7 +36,7 @@
           </li>
           @if(Auth::user()->tipoUsuario == 'admin')
           <li class="nav-item">
-            <a href="/painelUsuarios">
+            <a href="/painelUsuarios" tabindex="0">
               <i class="fas fa-users"></i>
               <p>Painel de usuários</p>
             </a>

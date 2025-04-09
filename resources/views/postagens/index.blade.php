@@ -8,7 +8,7 @@
 
     <x-barra-filtros
         :links="[
-        ['content-id' => 'allPostagens', 'nomeAba' => 'Todos', 'classActive' => 'active', 'data-tipo' => 'postagens'],
+        ['content-id' => 'visaoPostagens', 'nomeAba' => 'Visão Geral', 'classActive' => 'active', 'data-tipo' => 'postagens'],
         ['content-id' => 'myPostagens', 'nomeAba' => 'Minhas Postagens', 'data-tipo' => 'postagens']
     ]"
         :actions="[
@@ -25,11 +25,11 @@
     @endif
     <!-- Conteúdo das abas -->
     <div class="tab-contents">
-        <div class="content-link show" id="allPostagens">
+        <div class="content-link show" id="visaoPostagens">
             <div class="infos">
             @include('postagens.init', ['postagens' => $postagens])
             </div>
-        </div>  
+        </div>
         
         <div class="content-link" id="myPostagens">
             <div class="infos">

@@ -8,10 +8,11 @@
 
 @php
     $links = [
-        ['content-id' => 'allTopicos', 'nomeAba' => 'Todos', 'classActive' => 'active', 'data-tipo' => 'topicos']
+        ['content-id' => 'visaoTopicos', 'nomeAba' => 'Visão Geral', 'classActive' => 'active', 'data-tipo' => 'topicos']
     ];
 
     if (Auth::check() && Auth::user()->tipoUsuario == 'admin') {
+        $links[] = ['content-id' => 'allTopicos', 'nomeAba' => 'Gerenciar tópicos', 'data-tipo' => 'topicos'];
         $links[] = ['content-id' => 'myTopicos', 'nomeAba' => 'Meus tópicos', 'data-tipo' => 'topicos'];
         $links[] = ['content-id' => 'sugestoes', 'nomeAba' => 'Tópicos sugeridos', 'data-tipo' => 'topicos'];
         $actions[] = ['classBtn' => 'btn-dark', 'nomeButton' => 'Criar Tópico', 'data-url' => '/topicos/create'];
@@ -34,21 +35,28 @@
     @endif
     <!-- Conteúdo das abas -->
     <div class="tab-contents">
-        <div class="content-link show" id="allTopicos">
+        <div class="content-link show" id="visaoTopicos">
             <div class="infos">
                 @include('topicos.init', ['topicos' => $topicos])
             </div>
         </div>
 
+        <div class="content-link" id="allTopicos">
+            <div class="infos">
+                @include('topicos.tableTopicos', ['itens' => $topicos, 'title' => 'Gerenciar Tópicos'])
+            </div>
+        </div>
+
+
         <div class="content-link" id="myTopicos">
             <div class="infos">
-                @include('topicos.meusTopicos', ['itens' => $meusTopicos, 'title' => 'Meus Tópicos'])
+                @include('topicos.tableTopicos', ['itens' => $meusTopicos, 'title' => 'Meus Tópicos'])
             </div>
         </div>
 
         <div class="content-link" id="sugestoes">
             <div class="infos" id="categorias-content">
-                @include('topicos.meusTopicos', ['itens' => $topicosSugeridos, 'title' => 'Tópicos Sugeridos'])
+                @include('topicos.tableTopicos', ['itens' => $topicosSugeridos, 'title' => 'Tópicos Sugeridos'])
             </div>
         </div>
 

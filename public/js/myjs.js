@@ -141,11 +141,11 @@ document.addEventListener('DOMContentLoaded', function () {
     // Abre o dropdown
     document.querySelectorAll('.container-abas').forEach(container => {
         const barraId = container.id;
-    
+
         if (barraId === 'abaProfile') {
             const selectOption = container.querySelector(".select-option");
             const optionButtons = container.querySelectorAll(".option-btn");
-        
+
             if (selectOption.innerText.trim() === 'Todos') {
                 selectOption.innerText = 'Minhas publicações';
             }
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
             btnsSelect.forEach(el => el.remove());
         }
     });
-    
+
     const selectOption = document.querySelector(".select-option");
     const selectBtn = document.querySelector(".select-btn");
 
@@ -471,7 +471,8 @@ document.addEventListener('DOMContentLoaded', function () {
             btn.addEventListener('click', () => {
                 const id = btn.getAttribute('data-id');
                 const modal = btn.getAttribute('data-modal');
-                const form = document.getElementById('confirmEcluirForm');
+                const form = document.getElementById('confirmExcluirForm');
+                console.log("Form", form)
                 const url = btn.getAttribute('data-url');
 
                 form.setAttribute('action', url);
@@ -481,6 +482,32 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     });
+
+    // Abrir o modal de exclusão Resposta
+    document.querySelectorAll('.post-options').forEach(container => {
+        const btnPontinhos = container.querySelector(".options-button");
+
+        if (btnPontinhos) {
+            btnPontinhos.addEventListener('click', () => {
+                const btnsOpcoes = container.querySelector(".options-menu")
+                const excluir = btnsOpcoes.querySelector(".resposta-destroy")
+                excluir.addEventListener('click', () => {
+                    const id = excluir.getAttribute('data-id');
+                    const modal = excluir.getAttribute('data-modal');
+
+                    const form = document.getElementById('confirmExcluirForm');
+                    console.log(form)
+                    const url = excluir.getAttribute('data-url');
+                    console.log(url)
+                    form.setAttribute('action', url);
+                    document.getElementById('id').value = id;
+                    console.log(form)
+                    $(modal).modal('show');
+                })
+            });
+        }
+    });
+
 
     // Fazer a requisição para editar publicacao
     document.querySelectorAll('.container-abas').forEach(container => {
@@ -540,12 +567,17 @@ document.addEventListener('DOMContentLoaded', function () {
     // Exibe o formulario de comentar ao clicar no botao comentar dentro da postagem
     document.querySelectorAll('.comment-toggle').forEach(button => {
         button.addEventListener('click', function () {
+            console.log('Botao de comentario clicado!')
             let respostaId = this.getAttribute('data-id');
             let form = document.getElementById(`comment-form-${respostaId}`);
             document.querySelectorAll('.comment-form-container').forEach(form => form.style.display = 'none');
 
             if (form) {
                 form.style.display = 'block';
+                form.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
             }
         });
     });
@@ -585,10 +617,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(response => response.json())
                 .then(data => {
                     usuarios = data.usuariosUnicos;
-                    if (data.usuariosUnicos && Array.isArray(data.usuariosUnicos)) {
-                        userList.innerHTML = ''; // Limpa a lista de usuários
-
-                        data.usuariosUnicos.forEach(usuario => {
+                    usuarioAutenticado = data.userAuth;
+                    usuarios = usuarios.filter(usuario => usuario.id != usuarioAutenticado.id)
+                    if (usuarios && Array.isArray(usuarios)) {
+                        userList.innerHTML = '';
+                        usuarios.forEach(usuario => {
                             let li = document.createElement('li');
                             li.classList.add('mention-user-item');
                             li.setAttribute('data-user', usuario.name);
@@ -596,6 +629,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             li.setAttribute('data-id', respostaId);
                             li.textContent = usuario.name;
                             userList.appendChild(li);
+
                         });
 
                         // Exibe o menu de menção

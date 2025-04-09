@@ -33,6 +33,7 @@ class ComentarioController extends Controller
         return back()->with('success', 'Comentário adicionado com sucesso!');
     }
 
+    /* Usuarios das mencoes*/
     public function usuariosDaResposta($idResposta)
     {
         $comentarios = Comentario::where('idResposta', $idResposta)->get();
@@ -41,10 +42,15 @@ class ComentarioController extends Controller
             return $comentario->user;
         });
 
+        $resposta = Resposta::findOrFail($idResposta);
+        $usuarios->push($resposta->user);
+
         // Obter usuários únicos
         $usuariosUnicos = $usuarios->unique('id');
 
+        $userAuth = Auth::user();
+
         // Retorna os usuários únicos convertidos em um array para o JavaScript
-        return response()->json(['usuariosUnicos' => $usuariosUnicos->toArray()]);
+        return response()->json(['usuariosUnicos' => $usuariosUnicos->toArray(), 'userAuth' => $userAuth]);
     }
 }

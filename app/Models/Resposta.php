@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Resposta extends Model
 {
+    protected $fillable = [
+        'status'
+    ];
+
+
     public function postagem(){
         return $this->belongsTo(Postagem::class, 'idPostagem');
     }

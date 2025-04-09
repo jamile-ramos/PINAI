@@ -3,7 +3,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="confirmModalLabel">Confirmar Ação</h5>
+                <h5 class="modal-title fw-bold" id="confirmModalLabel">Confirmar Ação</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -13,7 +13,7 @@
                     <p>Tem certeza de que deseja excluir este registro?</p>
                 </div>
                 <!-- Formulário para desativar o usuário -->
-                <form id="confirmEcluirForm" method="POST">
+                <form id="confirmExcluirForm" method="POST">
                     @csrf
                     @method('DELETE')
                     <input type="hidden" name="id" id="id" value="0">

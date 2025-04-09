@@ -110,7 +110,6 @@ a.link-noticia {
 
 .carousel-caption a,
 p {
-    font-weight: bold;
     font-size: 15px;
 }
 
@@ -449,7 +448,7 @@ input.search-input {
 
 /* Estilo para botões de criar */
 .option-add.btn-primary {
-    background-color: #007bff;
+    background-color: #0D6EFD;
     color: white;
     font-weight: bold;
     border-radius: 5px;
@@ -566,6 +565,20 @@ img#imagemPreview {
     color: #fff;
 }
 
+.btn-visualizar{
+    background: #F9A800;
+    color: #fff;
+}
+
+.btn-visualizar:focus {
+    color: white; 
+    outline: none; 
+}
+
+.btn-visualizar:hover{
+    color: #fff;
+}
+
 .forum-table {
     border-radius: 10px;
     overflow: hidden;
@@ -609,6 +622,14 @@ label.form-label {
     white-space: nowrap;
 }
 
+.btn-danger{
+    background: #DC3545 !important  ;
+}
+
+.btn-info{
+    background: #007bff !important;
+}
+
 .text-obs {
     font-size: 12px;
     margin: 0px 10px 10px;
@@ -619,6 +640,7 @@ label.form-label {
     max-width: 100%;
     margin: 0 auto;
 }
+
 
 .post-card {
     background: #ffffff;
@@ -1181,22 +1203,12 @@ label.form-label {
     display: block !important;
 }
 
-button:focus-visible,
-.select-option:focus-visible {
-    outline: 3px solid var(--foco-cor);
-    outline-offset: 4px;
-}
-/*
-button:focus,
-.select-option:focus {
+/* Focus quando clicar no tab */
+button:focus-visible, .btn-home:focus-visible,
+.select-option:focus-visible,.nav-item a:focus-visible, .card-title a:focus-visible, td a:focus-visible, .btn:focus-visible {
     outline: 2px solid #005fcc !important;
     outline-offset: 2px !important;
 }
-
-.nav-item a:focus {
-    outline: 2px solid #005fcc !important;
-    outline-offset: 2px !important;
-}*/
 
 /* Respostas de mídia em tela pequena */
 @media (max-width: 768px) {
@@ -1281,7 +1293,7 @@ button:focus,
     }
 }
 
-@media screen and (max-width: 1195px) {
+@media screen and (max-width: 1380px) {
     .btn-dark {
         background: #343a40 !important;
     }

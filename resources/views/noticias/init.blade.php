@@ -10,7 +10,7 @@
                 @foreach($noticiasRecentes as $index => $noticia)
                 <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
                     <img src="{{ asset('img/imgNoticias/' . $noticia->imagem) }}" class="d-block w-100" alt="Imagem da notícia">
-                    <div class="carousel-caption d-md-block">
+                    <div class="carousel-caption d-md-block fw-bold">
                         <a href="{{ route('noticias.show', $noticia->id) }}" class="link-noticia">{{ $noticia->titulo }}</a>
                     </div>
                 </div>

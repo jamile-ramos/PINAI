@@ -73,6 +73,7 @@ Route::get('/postagens/show/{id}', [PostagemController::class, 'show'])->name('p
 // Resposta dos posts
 Route::get('/respostas/create/{id}', [RespostaController::class, 'create'])->name('respostas.create');
 Route::post('/respostas/store/{id}', [RespostaController::class, 'store'])->name('respostas.store');
+Route::delete('/respostas/destroy', [RespostaController::class, 'destroy'])->name('respostas.destroy');
 
 //Comentarios das respostas
 Route::post('/comentarios/store', [ComentarioController::class, 'store'])->name('comentarios.store');

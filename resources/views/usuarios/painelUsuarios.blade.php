@@ -53,12 +53,14 @@
                                         data-id="{{ $usuario->id }}"
                                         data-name="{{ $usuario->name }}"
                                         data-email="{{ $usuario->email }}"
-                                        data-type="{{ $usuario->tipoUsuario }}">
+                                        data-type="{{ $usuario->tipoUsuario }}"
+                                        aria-label="Alterar tipo de usuário">
                                         Alterar tipo
                                     </button>
                                     <button type="button" class="btn toggle-status btn-status {{ $usuario->status == 'ativo' ? 'btn-danger' : 'btn-success' }}"
                                         data-id="{{ $usuario->id }}"
-                                        data-status="{{ $usuario->status }}">
+                                        data-status="{{ $usuario->status }}"
+                                        aria-label="{{ $usuario->status == 'ativo' ? 'Desabilitar' : 'Ativar' }} usuário">
                                         {{ $usuario->status == 'ativo' ? 'Desabilitar' : 'Ativar' }}
                                     </button>
                                 </div>
@@ -77,7 +79,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Alterar Tipo de Usuário</h5>
+                <h5 class="modal-title fw-bold" id="exampleModalLabel">Alterar Tipo de Usuário</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -118,7 +120,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="confirmModalLabel">Confirmar Ação</h5>
+                <h5 class="modal-title fw-bold" id="confirmModalLabel">Confirmar Ação</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

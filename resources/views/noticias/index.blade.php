@@ -9,18 +9,22 @@
     @php
 
     $links = [
-    ['content-id' => 'allNoticias', 'nomeAba' => 'Visão Geral', 'classActive' => 'active', 'data-tipo' => 'noticias'],
-    ['content-id' => 'mysNoticias', 'nomeAba' => 'Minhas Noticias', 'data-tipo' => 'noticias'],
+    ['content-id' => 'visaoNoticias', 'nomeAba' => 'Visão Geral', 'classActive' => 'active', 'data-tipo' => 'noticias'],
     ];
+
+    if (Auth::check() && Auth::user()->tipoUsuario == 'admin') {
+    $links[] = ['content-id' => 'allNoticias', 'nomeAba' => 'Gerenciar Notícias', 'data-tipo' => 'noticias'];
+    }
+
+    $links[] = ['content-id' => 'mysNoticias', 'nomeAba' => 'Minhas Noticias', 'data-tipo' => 'noticias'];
 
     $actions = [
     ['classBtn' => 'btn-primary', 'content-id' => 'mysNoticias', 'nomeButton' => 'Criar Notícia', 'data-url' => '/noticias/create']
     ];
 
     if (Auth::check() && Auth::user()->tipoUsuario == 'admin') {
-        $links[] = ['content-id' => 'categoriasNoticias', 'nomeAba' => 'Todas as noticias', 'data-tipo' => 'noticias'];
-        $links[] = ['content-id' => 'categoriasNoticias', 'nomeAba' => 'Categorias', 'data-tipo' => 'noticias'];
-        $actions[] = ['classBtn' => 'btn-dark', 'content-id' => 'categorias', 'nomeButton' => 'Criar Categoria'];
+    $links[] = ['content-id' => 'categoriasNoticias', 'nomeAba' => 'Categorias', 'data-tipo' => 'noticias'];
+    $actions[] = ['classBtn' => 'btn-dark', 'content-id' => 'categorias', 'nomeButton' => 'Criar Categoria'];
     }
 
     @endphp
@@ -39,15 +43,22 @@
     @endif
     <!-- Conteúdo das abas -->
     <div class="tab-contents">
-        <div class="content-link show" id="allNoticias">
+        <div class="content-link show" id="visaoNoticias">
             <div class="infos">
                 @include('noticias.init', ['noticiasRecentes' => $noticiasRecentes, 'categorias' => $categorias])
             </div>
         </div>
 
+        <div class="content-link" id="allNoticias">
+            <div class="infos">
+                @include('noticias.tableNoticias', ['noticias' => $noticias, 'tipoAba' => 'allNoticias'])
+            </div>
+        </div>
+
+
         <div class="content-link" id="mysNoticias">
             <div class="infos">
-                @include('noticias.minhasNoticias', ['minhasNoticias' => $minhasNoticias])
+                @include('noticias.tableNoticias', ['noticias' => $minhasNoticias, 'tipoAba' => 'mysNoticias'])
             </div>
         </div>
 

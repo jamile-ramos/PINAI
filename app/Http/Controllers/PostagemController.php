@@ -11,18 +11,21 @@ use Illuminate\Support\Facades\Auth;
 
 class PostagemController extends Controller
 {
-    public function index($id)
+    public function index($idTopico)
     {
-        $topico = Topico::findOrFail($id);
-        $minhasPostagens = $this->myPostagens();
+        $topico = Topico::findOrFail($idTopico);
+        $minhasPostagens = $this->myPostagens($idTopico);
         $postagens = $topico->postagens()->withCount('respostas')->where('status', 'ativo')->get();
         return view('postagens.index', compact('postagens', 'minhasPostagens', 'topico'));
     }
 
-    public function myPostagens()
+    public function myPostagens($idTopico = null)
     {
         $idUsuario = Auth::id();
-        $minhasPostagens = Postagem::where('idUsuario', $idUsuario)->where('status', 'ativo')->get();
+        $minhasPostagens = Postagem::where('idUsuario', $idUsuario)
+        ->where('status', 'ativo')
+        ->where('idTopico', $idTopico)
+        ->get();
         return $minhasPostagens;
     }
 

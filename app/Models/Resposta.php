@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Resposta extends Model
 {
     protected $fillable = [
-        'status'
+        'status',
+        'conteudo'
     ];
 
 

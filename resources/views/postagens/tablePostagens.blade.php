@@ -3,7 +3,9 @@
         <thead class="forum-azul">
             <tr>
                 <th>Título da postagem</th>
-                <th>Tópico</th>
+                @if($tipoAba == 'allPostagens')
+                <th>Autor</th>
+                @endif
                 <th>Data de Criação</th>
                 <th style="width: 10%">Ações</th>
             </tr>
@@ -11,8 +13,10 @@
         <tbody>
             @forelse($itens as $item)
             <tr>
-                <td>{{ $item->titulo }}</td>
-                <td>{{ $item->topico->titulo }}</td>
+                <td class="text-start fw-bold">{{ $item->titulo }}</td>
+                @if($tipoAba == 'allPostagens')
+                <td>{{ $item->user->name }}</td>
+                @endif
                 <td>{{ $item->created_at->format('d/m/Y') }}</td>
                 <td>
                     <div class="form-button-action">

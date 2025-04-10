@@ -62,17 +62,19 @@ Route::get('/topicos/edit/{id}', [TopicoController::class, 'edit'])->name('topic
 Route::put('/topicos/update/{id}', [TopicoController::class, 'update'])->name('topicos.update');
 
 // Postagens dos tópicos
+Route::get('/postagens/{idTopico}', [PostagemController::class, 'index'])->name('postagens.index');
 Route::get('/postagens/create/{idTopico}', [PostagemController::class, 'create'])->name('postagens.create');
 Route::post('/postagens/store', [PostagemController::class, 'store'])->name('postagens.store');
-Route::get('/postagens/{id}', [PostagemController::class, 'index'])->name('postagens.index');
 Route::get('/postagens/edit/{id}', [PostagemController::class, 'edit'])->name('postagens.edit');
 Route::put('/postagens/update/{id}', [PostagemController::class, 'update'])->name('postagens.update');
 Route::delete('/postagens/destroy', [PostagemController::class, 'destroy'])->name('postagens.destroy');
 Route::get('/postagens/show/{id}', [PostagemController::class, 'show'])->name('postagens.show');
 
 // Resposta dos posts
-Route::get('/respostas/create/{id}', [RespostaController::class, 'create'])->name('respostas.create');
-Route::post('/respostas/store/{id}', [RespostaController::class, 'store'])->name('respostas.store');
+Route::get('/respostas/create/{idPostagem}', [RespostaController::class, 'create'])->name('respostas.create');
+Route::post('/respostas/store/{idPostagem}', [RespostaController::class, 'store'])->name('respostas.store');
+Route::get('/respostas/edit/{idResposta}', [RespostaController::class, 'edit'])->name('respostas.edit');
+Route::put('/respostas/update/{idResposta}', [RespostaController::class, 'update'])->name('respostas.update');
 Route::delete('/respostas/destroy', [RespostaController::class, 'destroy'])->name('respostas.destroy');
 
 //Comentarios das respostas

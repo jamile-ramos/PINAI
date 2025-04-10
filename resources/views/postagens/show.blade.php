@@ -36,9 +36,9 @@
         </div>
 
         <!-- Respostas -->
-        @foreach(['success-create', 'success-delete'] as $status)
+        @foreach(['success', 'success-delete'] as $status)
         @if(session($status))
-        @if($status === 'success-create')
+        @if($status === 'success')
         <div class="alert alert-success alert-dismissible fade show" role="alert" id="{{ $status }}-alert">
             <strong>{{ session($status) }}</strong>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -55,6 +55,10 @@
         @endif
         @endif
         @endforeach
+
+        @error('conteudo')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
         <div class="respostas-container">
             <h3 class="responses-title">Respostas ({{ $postagem->respostas->count() }})</h3>
 
@@ -74,7 +78,7 @@
                             <i class="fa fa-ellipsis-v"></i>
                         </button>
                         <div class="options-menu">
-                            <a href="">Editar</a>
+                            <a href="{{ route('respostas.edit', $resposta->id) }}">Editar</a>
                             <button
                                 class="resposta-destroy"
                                 type="button"

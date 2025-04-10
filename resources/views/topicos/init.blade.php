@@ -13,7 +13,7 @@
                 @foreach($topicos as $topico)
                 <tr>
                     <td>
-                        <a href="{{ route('postagens.index', ['id' => $topico->id]) }}" class="fw-bold">
+                        <a href="{{ route('postagens.index', ['idTopico' => $topico->id]) }}" class="fw-bold">
                             {{ $topico->titulo }}
                         </a>
                     </td>

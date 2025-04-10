@@ -719,10 +719,6 @@ label.form-label {
     margin: 20px 15px;
 }
 
-.post-topico {
-    color: #555;
-}
-
 .btn-resposta {
     margin-left: 10px;
 }
@@ -832,6 +828,13 @@ label.form-label {
     align-items: center;
     margin-bottom: 12px;
     position: relative;
+}
+.p-4.border-bottom.bg-white {
+    border-radius: 10px 10px 0px 0px;
+}
+
+.p-4.bg-light {
+    border-radius: 0px 0px 10px 10px;
 }
 
 .response-info {
@@ -1202,6 +1205,13 @@ label.form-label {
     width: 100% !important;
     display: block !important;
 }
+
+.form-control:focus {
+    border-color:  #0d6efd !important; /* Azul bem clarinho */
+    box-shadow: 0 0 0 0.15rem rgba(0, 95, 204, 0.1) !important; /* Sombra super suave */
+    outline: none !important;
+    transition: all 0.2s ease;
+  }  
 
 /* Focus quando clicar no tab */
 button:focus-visible, .btn-home:focus-visible,

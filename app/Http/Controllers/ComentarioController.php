@@ -13,6 +13,11 @@ class ComentarioController extends Controller
 {
     public function store(Request $request)
     {
+        $request->validate([
+            'conteudo' => 'required|string',
+            'idResposta' => 'required|exists:respostas,id',
+        ]);
+        
         // Criação do comentário
         $comentario = new Comentario;
         $comentario->conteudo = $request->conteudo;
@@ -29,7 +34,6 @@ class ComentarioController extends Controller
                 'idUsuarioMencionou' => Auth::id(),
             ]);
         }
-
         return back()->with('success', 'Comentário adicionado com sucesso!');
     }
 

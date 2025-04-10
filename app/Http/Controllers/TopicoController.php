@@ -27,11 +27,9 @@ class TopicoController extends Controller
             }])->where('status', 'ativo')
             ->orderBy(Postagem::select('updated_at')->whereColumn('idTopico', 'topicos.id')
                 ->latest()->limit(1), 'desc')->get();
-
         $topicosSugeridos = SugestaoTopico::where('status', 'ativo')->get();
         $meusTopicos = $this->myTopicos();
-        $minhasPostagens = $this->postagemController->myPostagens();
-        return view('topicos.index', compact('topicos', 'meusTopicos', 'topicosSugeridos', 'minhasPostagens'));
+        return view('topicos.index', compact('topicos', 'meusTopicos', 'topicosSugeridos'));
     }
 
     public function create()

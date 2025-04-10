@@ -6,14 +6,32 @@
 
 <div class="container-abas" id="abaPostagens">
 
+    @php
+    $links = [
+    ['content-id' => 'visaoPostagens', 'nomeAba' => 'Visão Geral', 'classActive' => 'active', 'data-tipo' => 'postagens'],
+    ];
+
+    if(Auth::check() && Auth::user()->tipoUsuario != 'comum'){
+    $links[] = [
+    'content-id' => 'allPostagens',
+    'nomeAba' => 'Gerenciar Postagens',
+    'data-tipo' => 'postagens'
+    ];
+    }
+
+    $links[] = [
+    'content-id' => 'myPostagens',
+    'nomeAba' => 'Minhas Postagens',
+    'data-tipo' => 'postagens'
+    ];
+    @endphp
+
+
     <x-barra-filtros
-        :links="[
-        ['content-id' => 'visaoPostagens', 'nomeAba' => 'Visão Geral', 'classActive' => 'active', 'data-tipo' => 'postagens'],
-        ['content-id' => 'myPostagens', 'nomeAba' => 'Minhas Postagens', 'data-tipo' => 'postagens']
-    ]"
+        :links="$links"
         :actions="[
          ['classBtn' => 'btn-primary', 'nomeButton' => 'Criar Postagem', 'data-url' => url('/postagens/create/' . $topico->id)],
-    ]"/>
+    ]" />
 
     @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert" id="sucess-alert">
@@ -27,13 +45,19 @@
     <div class="tab-contents">
         <div class="content-link show" id="visaoPostagens">
             <div class="infos">
-            @include('postagens.init', ['postagens' => $postagens])
+                @include('postagens.init', ['postagens' => $postagens])
             </div>
         </div>
-        
+
+        <div class="content-link" id="allPostagens">
+            <div class="infos">
+                @include('postagens.tablePostagens', ['itens' => $postagens, 'tipoAba' => 'allPostagens'])
+            </div>
+        </div>
+
         <div class="content-link" id="myPostagens">
             <div class="infos">
-                @include('postagens.minhasPostagens', ['itens' => $minhasPostagens])
+                @include('postagens.tablePostagens', ['itens' => $minhasPostagens, 'tipoAba' => 'myPostagens'])
             </div>
         </div>
     </div>

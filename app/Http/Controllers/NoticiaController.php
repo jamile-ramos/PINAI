@@ -33,6 +33,14 @@ class NoticiaController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'titulo' => 'required|string|max:255',
+            'subtitulo' => 'required|string|max:255',
+            'conteudo' => 'required|string',
+            'idCategoria' => 'required|exists:categorias_noticias,id',
+            'imagem' => 'required|file|mimes:jpg,jpeg,png,webp|max:2048'
+        ]);
+
         $noticia = new Noticia;
 
         $noticia->titulo = $request->titulo;

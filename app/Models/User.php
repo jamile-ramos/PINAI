@@ -69,4 +69,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Comentario::class, 'comentarios_mencoes', 'idUsuarioMencionado', 'idComentario');
     }
+
+    public function documentos(){
+        return $this->hasMany(Documento::class);
+    }
+
+    public function categoria_documento(){
+        return $this->hasMany(CategoriaDocumento::class);
+    }
 }

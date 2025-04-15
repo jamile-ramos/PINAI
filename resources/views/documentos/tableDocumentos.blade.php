@@ -2,39 +2,30 @@
     <table class="table table-hover table-striped">
         <thead class="forum-azul">
             <tr>
-                <th>Título</th>
+                <th>Nome do arquivo</th>
+                <th>Descrição</th>
                 <th>Categoria</th>
-                @if($tipoAba == 'allNoticias')
-                <th>Autor</th>
-                @endif
-                <th>Data de criação</th>
                 <th style="width: 10%">Ações</th>
             </tr>
         </thead>
         <tbody>
-            @if(!$noticias->isEmpty())
-            @foreach($noticias as $noticia)
+            @forelse($documentos as $documento)
             <tr>
-                <td class="fw-bold">{{ $noticia->titulo }}</td>
+                <td class="fw-bold">{{ $documento->nomeArquivo }}</td>
                 <td class="text-start">
-                    {{ $noticia->categoria->nomeCategoria }}
+                    {{ $documento->descricao }}
                 </td>
-                @if($tipoAba == 'allNoticias')
                 <td class="text-start">
-                    {{ $noticia->user->name }}
-                </td>
-                @endif
-                <td class="text-start">
-                    {{ $noticia->created_at->format('d/m/Y') }}
+                    {{ $documento->categoria_documento->nome }}
                 </td>
                 <td>
                     <div class="form-button-action">
-                        <a class="btn btn-visualizar" href="{{ route('noticias.show', ['id' => $noticia->id]) }}" aria-label="Ver a notícia">
-                            Ver notícia
+                        <a class="btn btn-visualizar" href="{{ asset('storage/' . $documento->caminhoArquivo) }}" aria-label="Visualizar documento">
+                            Visualizar
                         </a>
                         <button type="button" data-bs-toggle="tooltip"
                             class="btn btn-info btn-edit"
-                            data-url="{{ route('noticias.edit', $noticia->id) }}"
+                            data-url="{{ route('documentos.edit', $documento->id) }}"
                             data-original-title="Editar"
                             aria-label="Editar notícia">
                             Editar
@@ -43,8 +34,8 @@
                             class="btn btn-danger btn-remove"
                             data-original-title="Excluir"
                             data-modal="#confirmExcluirModal"
-                            data-url="{{ route('noticias.destroy') }}"
-                            data-id="{{ $noticia->id }}"
+                            data-url="{{ route('documentos.destroy')}}"
+                            data-id="{{ $documento->id }}"
                             title="Excluir"
                             aria-label="Excluir notícia">
                             <i class="fas fa-trash-alt"></i>
@@ -52,12 +43,11 @@
                     </div>
                 </td>
             </tr>
-            @endforeach
-            @else
+            @empty
             <tr>
-                <td colspan="4" class="text-center">Você não criou nenhuma notícia!</td>
+                <td colspan="4" class="text-center">Você não adicionou nenhum documento!</td>
             </tr>
-            @endif
+            @endforelse
         </tbody>
     </table>
 </div>

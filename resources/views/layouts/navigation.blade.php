@@ -14,6 +14,7 @@
           <button class="btn btn-toggle sidenav-toggler">
             <i class="gg-menu"></i>
           </button>
+          <p class="px-2 text-menu">Menu</p>
         </div>
         <button class="topbar-toggler more">
           <i class="gg-more-vertical-alt"></i>
@@ -55,7 +56,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a data-bs-toggle="collapse" href="#forms">
+            <a href="/documentos">
               <i class="fas fa-pen-square"></i>
               <p>Biblioteca Digital</p>
             </a>
@@ -104,7 +105,7 @@
           <a href="index.html" class="logo">
             <img src="/img/pinai-branca.svg" alt="navbar brand" class="navbar-brand" height="40" />
           </a>
-          <div class="nav-toggle">
+          <div class="nav-toggle" tabindex="0">
             <button class="btn btn-toggle toggle-sidebar">
               <i class="gg-menu"></i>
             </button>

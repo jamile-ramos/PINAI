@@ -16,6 +16,11 @@ class RespostaController extends Controller
     }
 
     public function store(Request $request, $idPostagem){
+
+        $request->validate([
+            'conteudo' => 'required|string'
+        ]);
+
         $resposta = new Resposta;
 
         $resposta->conteudo = $request->conteudo;

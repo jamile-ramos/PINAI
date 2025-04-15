@@ -1,6 +1,14 @@
 <div class="forum-container">
     <!-- Postagem 1 -->
     @if($postagens->isEmpty())
+    <div class="card shadow-sm mb-4 border-start border-4 border-primary p-4">
+        <div class="card-body">
+            <h4 class="card-title text-primary">
+                <i class="fa-solid fa-comments me-2"></i> {{ $topico->titulo }}
+            </h4>
+            <p class="card-text text-muted">Veja abaixo as postagens relacionadas a este tópico</p>
+        </div>
+    </div>
     <p>Não há postagens nesse tópico.</p>
     @else
     <div class="card shadow-sm mb-4 border-start border-4 border-primary p-4">
@@ -34,7 +42,6 @@
     </div>
     @endforeach
     @endif
-
 
     <nav aria-label="Paginação">
         <ul class="pagination justify-content-center">

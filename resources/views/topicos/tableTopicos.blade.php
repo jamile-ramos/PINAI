@@ -8,7 +8,7 @@
                     @if($title == 'Tópicos Sugeridos')
                     <th>Status</th>
                     @endif
-                    <th style="width: 10%">Ação</th>
+                    <th style="width: 10%">Ações</th>
                 </tr>
             </thead>
             <tbody>

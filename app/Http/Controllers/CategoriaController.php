@@ -12,12 +12,16 @@ class CategoriaController extends Controller
 {
     private $modelMap = [
         'noticias' => CategoriaNoticia::class,
-        'documento' => CategoriaDocumento::class,
+        'documentos' => CategoriaDocumento::class,
         'solucao' => CategoriaSolucao::class,
     ];
 
     public function store(Request $request, $tipo)
     {
+        $request->validate([
+            'nomeCategoria' => 'required|string|max:255'
+        ]);
+
         $model = $this->getModelByTipo($tipo);
 
         if ($model === null) {
@@ -40,8 +44,8 @@ class CategoriaController extends Controller
             return response()->json(['error' => 'Tipo de categoria inválido'], 400);
         }
 
-        $noticia = $model::findOrFail($request->id);
-        $noticia->update(['status' => 'inativo']);
+        $categoria = $model::findOrFail($request->id);
+        $categoria->update(['status' => 'inativo']);
 
         return redirect()->route("{$tipo}.index")->with('success', 'Categoria excluida com sucesso!');
     }

@@ -28,7 +28,7 @@
     </div>
     @foreach($categorias as $categoria)
     @php
-    $noticiaCategoria = $categoria->noticias()->where('status', 1)->latest()->first();
+    $noticiaCategoria = $categoria->noticias()->where('status', 'ativo')->latest()->first();
     @endphp
 
     @if($noticiaCategoria)

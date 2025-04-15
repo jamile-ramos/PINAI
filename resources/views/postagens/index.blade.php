@@ -9,21 +9,13 @@
     @php
     $links = [
     ['content-id' => 'visaoPostagens', 'nomeAba' => 'Visão Geral', 'classActive' => 'active', 'data-tipo' => 'postagens'],
+    ['content-id' => 'myPostagens','nomeAba' => 'Minhas Postagens','data-tipo' => 'postagens']
     ];
 
     if(Auth::check() && Auth::user()->tipoUsuario != 'comum'){
-    $links[] = [
-    'content-id' => 'allPostagens',
-    'nomeAba' => 'Gerenciar Postagens',
-    'data-tipo' => 'postagens'
-    ];
+    $links[] = ['content-id' => 'allPostagens', 'nomeAba' => 'Gerenciar Postagens', 'data-tipo' => 'postagens'];
     }
 
-    $links[] = [
-    'content-id' => 'myPostagens',
-    'nomeAba' => 'Minhas Postagens',
-    'data-tipo' => 'postagens'
-    ];
     @endphp
 
 

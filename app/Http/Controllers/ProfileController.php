@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Postagem;
+use App\Models\Documento;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,18 +13,24 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    protected $postagemController;
-
-    public function __construct(PostagemController $postagemController)
-    {
-        $this->postagemController = $postagemController;
-    }
     public function index(Request $request): View
     {
-        $minhasPostagens = $this->postagemController->myPostagens();
+        $minhasPostagens = Postagem::join('topicos', 'postagens.idTopico', '=', 'topicos.id')
+            ->where('postagens.status', 'ativo')
+            ->where('postagens.idUsuario', Auth::user()->id)
+            ->orderBy('topicos.titulo', 'asc')
+            ->select('postagens.*')
+            ->get();
+        $meusDocumentos = Documento::join('categorias_documentos', 'documentos.idCategoria', '=', 'categorias_documentos.id')
+        ->where('documentos.status', 'ativo')
+        ->where('documentos.idUsuario', Auth::user()->id)
+        ->orderBy('documentos.nomeArquivo', 'asc')
+        ->select('documentos.*')
+        ->get();
         return view('profile.myProfile', [
             'user' => $request->user(),
-            'myPostagens' => $minhasPostagens
+            'myPostagens' => $minhasPostagens,
+            'myDocumentos' => $meusDocumentos
         ]);
     }
 

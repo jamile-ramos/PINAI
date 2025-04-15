@@ -138,53 +138,152 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Abre o dropdown
+    // Barra dropdown com acessibilidade
+    const selectBtn = document.querySelector(".select-btn");
     document.querySelectorAll('.container-abas').forEach(container => {
         const barraId = container.id;
 
         if (barraId === 'abaProfile') {
             const selectOption = container.querySelector(".select-option");
-            const optionButtons = container.querySelectorAll(".option-btn");
+            if (selectBtn) {
+                selectBtn.addEventListener("focus", () => {
+                    const selected = selectBtn.querySelector(".select-option");
+                    if (selected) selected.focus();
+                });
+            }
+
+            const optionButtons = document.querySelectorAll(".option-btn, .btns-select .option-add");
 
             if (selectOption.innerText.trim() === 'Todos') {
                 selectOption.innerText = 'Minhas publicações';
             }
 
-            const lineButton = container.querySelectorAll(".line-button")
-            const btnsSelect = container.querySelectorAll(".btns-select")
-            lineButton.forEach(el => el.remove());
-            btnsSelect.forEach(el => el.remove());
+            container.querySelectorAll(".line-button, .btns-select").forEach(el => el.remove());
         }
     });
 
+    const dropdown = document.querySelector(".dropdown-select");
+
+    if (dropdown) {
+        dropdown.setAttribute('role', 'listbox');
+        dropdown.setAttribute('id', 'dropdown-options');
+    }
+
     const selectOption = document.querySelector(".select-option");
-    const selectBtn = document.querySelector(".select-btn");
+    let optionBtns = [];
+
+    if (dropdown) {
+        optionBtns = dropdown.querySelectorAll(".option-btn");
+    }
+
+    // Agora inclui os botões do btns-select
+    let actionBtns = document.querySelectorAll(".btns-select .option-add");
+    let allBtns = [...optionBtns, ...actionBtns];
+    let activeIndex = 0;
+
+    // Atribui IDs e ARIA aos botões, incluindo os btns-select
+    allBtns.forEach((btn, index) => {
+        if (!btn.id) btn.id = `dropdown-option-${index}`;
+        btn.setAttribute('role', 'option');
+        btn.setAttribute('aria-selected', 'false');
+    });
 
     if (selectBtn) {
-        selectOption.addEventListener("click", function (e) {
+        selectBtn.addEventListener("click", function (e) {
             e.stopPropagation();
-            const dropdown = document.querySelector(".dropdown-select");
             dropdown.classList.toggle("active");
+            const expanded = dropdown.classList.contains("active");
+            selectBtn.setAttribute("aria-expanded", expanded);
+            if (expanded) updateFocus();
+        });
+
+        // Acessibilidade via teclado
+        selectBtn.addEventListener("keydown", function (e) {
+            const key = e.key;
+
+            if (key === "Enter" || key === " ") {
+                e.preventDefault();
+                dropdown.classList.toggle("active");
+                const expanded = dropdown.classList.contains("active");
+                selectBtn.setAttribute("aria-expanded", expanded);
+                if (expanded) updateFocus();
+            } else if (key === "ArrowDown") {
+                e.preventDefault();
+                activeIndex = (activeIndex + 1) % allBtns.length;
+                updateFocus();
+            } else if (key === "ArrowUp") {
+                e.preventDefault();
+                activeIndex = (activeIndex - 1 + allBtns.length) % allBtns.length;
+                updateFocus();
+            } else if (key === "Escape") {
+                dropdown.classList.remove("active");
+                selectBtn.setAttribute("aria-expanded", "false");
+            } else if (key === "Tab") {
+                // Quando o Tab for pressionado, fecha o dropdown e vai para o próximo elemento
+                dropdown.classList.remove("active");
+                selectBtn.setAttribute("aria-expanded", "false");
+            }
+        });
+
+        allBtns.forEach((btn, index) => {
+            btn.addEventListener("keydown", function (e) {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    btn.click();  // Aciona a ação do botão
+                }
+            });
         });
     }
 
     document.addEventListener("click", function (e) {
         const dropdown = document.querySelector(".dropdown-select");
+        const selectBtn = document.querySelector(".select-btn");
 
-        if (dropdown && !dropdown.contains(e.target)) {
+        if (dropdown && selectBtn && !dropdown.contains(e.target) && !selectBtn.contains(e.target)) {
             dropdown.classList.remove("active");
+            selectBtn.setAttribute("aria-expanded", "false");
         }
     });
 
-
-    // Fecha o dropdown quando qualquer opção for clicada
-    const optionBtns = document.querySelectorAll(".dropdown-select .option-btn");
-    optionBtns.forEach(function (btn) {
+    // Fecha dropdown ao clicar em uma opção
+    allBtns.forEach((btn, index) => {
         btn.addEventListener("click", function () {
-            const dropdown = document.querySelector(".dropdown-select");
-            dropdown.classList.remove("active");
+            setTimeout(() => {
+                dropdown.classList.remove("active");
+            }, 50);
+            selectBtn.setAttribute("aria-expanded", "false");
+            activeIndex = index;
+            updateFocus();
         });
     });
+
+    // Atualiza visual e ARIA ao focar item
+    function updateFocus() {
+        allBtns.forEach((btn, index) => {
+            if (index === activeIndex) {
+                btn.setAttribute("aria-selected", "true");
+                btn.classList.add("highlighted");
+                btn.focus();
+                selectBtn.setAttribute("aria-activedescendant", btn.id || `focus-${index}`);
+            } else {
+                btn.setAttribute("aria-selected", "false");
+                btn.classList.remove("highlighted");
+            }
+        });
+    }
+
+    // Fazer a palavra menu aparecer quando a tela ficar menor e o sidebar sumir
+    function verificarTamanhoTela() {
+        const textMenu = document.querySelector('.text-menu');
+        if (window.innerWidth < 998) {
+            textMenu.style.display = 'block';
+        } else {
+            textMenu.style.display = 'none';
+        }
+    }
+
+    verificarTamanhoTela();
+    window.addEventListener('resize', verificarTamanhoTela);
 
     //Alterar tipo no painel de usuários
     $(document).ready(function () {
@@ -381,7 +480,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function abrirCategoria(btn) {
         const buttonText = btn.textContent.trim();
         const url = btn.getAttribute('data-url');
-
         if (buttonText === 'Criar Categoria') {
             const modal = document.getElementById('modalAddCategoria');
             $(modal).modal('show');
@@ -403,6 +501,8 @@ document.addEventListener('DOMContentLoaded', function () {
             $('#formAddTopico').attr('action', '/sugestoes/store/');
             $(modal).modal('show');
         } else if (buttonText === 'Criar Postagem') {
+            window.location.href = url;
+        } else if (buttonText == 'Adicionar documento') {
             window.location.href = url;
         }
     }
@@ -472,7 +572,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 const id = btn.getAttribute('data-id');
                 const modal = btn.getAttribute('data-modal');
                 const form = document.getElementById('confirmExcluirForm');
-                console.log("Form", form)
                 const url = btn.getAttribute('data-url');
 
                 form.setAttribute('action', url);
@@ -496,12 +595,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     const modal = excluir.getAttribute('data-modal');
 
                     const form = document.getElementById('confirmExcluirForm');
-                    console.log(form)
                     const url = excluir.getAttribute('data-url');
-                    console.log(url)
                     form.setAttribute('action', url);
                     document.getElementById('id').value = id;
-                    console.log(form)
                     $(modal).modal('show');
                 })
             });
@@ -567,7 +663,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Exibe o formulario de comentar ao clicar no botao comentar dentro da postagem
     document.querySelectorAll('.comment-toggle').forEach(button => {
         button.addEventListener('click', function () {
-            console.log('Botao de comentario clicado!')
             let respostaId = this.getAttribute('data-id');
             let form = document.getElementById(`comment-form-${respostaId}`);
             document.querySelectorAll('.comment-form-container').forEach(form => form.style.display = 'none');
@@ -718,8 +813,21 @@ document.addEventListener('DOMContentLoaded', function () {
             formComentar.style.display = 'none'
             let textarea = document.getElementById(`comentario-${respostaId}`);
             textarea.value = ""
-        })
-    })
+        });
+    });
+
+    // Logica do botao de arquivo em editar documento
+    const arquivo = document.querySelector('#arquivo');
+    const previa = document.querySelector('#previaDocumento');
+
+    if (arquivo && previa) {  // Check if elements are found
+        arquivo.addEventListener('change', function () {
+            if (arquivo.files.length != 0) {
+                previa.classList.remove('d-block');
+                previa.classList.add('d-none');
+            }
+        });
+    };
 
 });
 

@@ -9,17 +9,32 @@
     </form>
 
     <!-- Select para telas menores -->
-    <div class="select-btn">
-        <div class="select-option">Visão geral</div>
+    <div class="select-btn"
+        role="combobox"
+        aria-haspopup="listbox"
+        aria-haspopup="listbox"
+        aria-expanded="false"
+        aria-controls="dropdown-options"
+        aria-activedescendant=""
+        tabindex="0">
+        <div class="select-option" id="selected-option">Visão geral</div>
         <i class="dropdown-icon fas fa-chevron-down"></i>
-        <div class="dropdown-select close-drop">
+
+        <div class="dropdown-select close-drop"
+            id="dropdown-options"
+            role="listbox"
+            tabindex="-1">
             @foreach($links as $link)
-            <button
+            <div
+                role="option"
+                id="option-{{ $loop->index }}"
+                aria-selected="{{ $loop->first ? 'true' : 'false' }}"
                 class="option-btn"
                 content-id="{{ $link['content-id'] ?? '' }}"
-                data-tipo="{{ $link['data-tipo'] ?? '' }}">
+                data-tipo="{{ $link['data-tipo'] ?? '' }}"
+                tabindex="-1">
                 {{ $link['nomeAba'] ?? ''}}
-            </button>
+            </div>
             @endforeach
             <div class="line-button"></div>
             <div class="btns-select">

@@ -10,19 +10,18 @@
 
     $links = [
     ['content-id' => 'visaoNoticias', 'nomeAba' => 'Visão Geral', 'classActive' => 'active', 'data-tipo' => 'noticias'],
+    ['content-id' => 'mysNoticias', 'nomeAba' => 'Minhas Noticias', 'data-tipo' => 'noticias']
     ];
 
-    if (Auth::check() && Auth::user()->tipoUsuario == 'admin') {
+    if (Auth::check() && Auth::user()->tipoUsuario != 'comum') {
     $links[] = ['content-id' => 'allNoticias', 'nomeAba' => 'Gerenciar Notícias', 'data-tipo' => 'noticias'];
     }
-
-    $links[] = ['content-id' => 'mysNoticias', 'nomeAba' => 'Minhas Noticias', 'data-tipo' => 'noticias'];
 
     $actions = [
     ['classBtn' => 'btn-primary', 'content-id' => 'mysNoticias', 'nomeButton' => 'Criar Notícia', 'data-url' => '/noticias/create']
     ];
 
-    if (Auth::check() && Auth::user()->tipoUsuario == 'admin') {
+    if (Auth::check() && Auth::user()->tipoUsuario != 'comum') {
     $links[] = ['content-id' => 'categoriasNoticias', 'nomeAba' => 'Categorias', 'data-tipo' => 'noticias'];
     $actions[] = ['classBtn' => 'btn-dark', 'content-id' => 'categorias', 'nomeButton' => 'Criar Categoria'];
     }

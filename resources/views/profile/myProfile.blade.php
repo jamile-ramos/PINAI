@@ -30,7 +30,7 @@
                     <div class="col cardMy">
                         <div class="card card-profile cardMyChild text-center">
                             <span class="mb-1 text-warning"><i class="fas fa-file-alt"></i></span>
-                            <h3 class="mb-0">263</h3>
+                            <h3 class="mb-0">{{ $myDocumentos->count() }}</h3>
                             <p class="text-muted-small">Documentos</p>
                         </div>
                     </div>
@@ -57,9 +57,14 @@
         <div class="tab-contents">
             <div class="content-link show" id="myPostagens">
                 <div class="infos">
-                    @foreach($myPostagens as $postagem)
+                    @forelse($myPostagens as $postagem)
                     <div class="card">
                         <div class="card-body">
+                            <!-- Tag de Tópico no canto superior direito -->
+                            <div class="topic-tag position-absolute top-0 end-0 m-2 px-2 py-1 bg-primary text-white rounded">
+                                {{ $postagem->topico->titulo }}
+                            </div>
+
                             <div class="media media-reply">
                                 <div class="post-author">
                                     <div class="user-icon-circle user-post user-post2">
@@ -82,31 +87,38 @@
                             </div>
                         </div>
                     </div>
-                    @endforeach
+                    @empty
+                    <h5 class="px-4">Nenhuma postagem encontrada!</h5>
+                    @endforelse
                 </div>
             </div>
 
             <div class="content-link" id="myDocs">
                 <div class="infos">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="media media-reply">
-                                <div class="post-author">
-                                    <div class="user-icon-circle user-post user-post2">
-                                        <i class="fa fa-user"></i>
+                    <div class="row g-4">
+                        @forelse($myDocumentos as $documento)
+                        <div class="col-md-4 col-sm-6 mb-5">
+                            <div class="card h-100 shadow-sm p-4">
+                                <div class="mb-3 d-flex justify-content-center">
+                                    <i class="fa fa-file-pdf fa-3x text-primary"></i>
+                                </div>
+                                <div class="card-body d-flex flex-column text-center">
+                                    <h5 class="card-title py-3">{{ $documento->nomeArquivo }}</h5>
+                                    <p class="card-text text-muted">{{ $documento->descricao }}</p>
+                                    <div class="mt-auto d-flex justify-content-between">
+                                        <a href="{{ asset('storage/' . $documento->caminhoArquivo) }}" target="_blank" class="btn btn-link text-wrap">
+                                            <i class="fa fa-eye"></i> Visualizar
+                                        </a>
+                                        <a href="{{ asset('storage/' . $documento->caminhoArquivo) }}" download class="btn btn-primary text-wrap">
+                                            <i class="fa fa-download"></i> Download
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="media-body">
-                                    <div class="d-sm-flex justify-content-between mb-2 response-username">
-                                        <h5 class="d-flex flex-column mb-2">Testando <small class="text-muted">Testando</small></h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="media-text">
-                                <div class="main-post-title">Teste</div>
-                                <p>Teste</p>
                             </div>
                         </div>
+                        @empty
+                        <h5 class="px-6">Nenhum documento encontrado!</h5>
+                        @endforelse
                     </div>
                 </div>
             </div>

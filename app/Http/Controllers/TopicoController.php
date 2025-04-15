@@ -39,6 +39,10 @@ class TopicoController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'titulo' => 'required|string|max:255'
+        ]);
+
         $topico = new Topico;
         $topico->titulo = $request->titulo;
         $topico->idUsuario = Auth::user()->id;

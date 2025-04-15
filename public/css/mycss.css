@@ -565,17 +565,17 @@ img#imagemPreview {
     color: #fff;
 }
 
-.btn-visualizar{
+.btn-visualizar {
     background: #F9A800;
     color: #fff;
 }
 
 .btn-visualizar:focus {
-    color: white; 
-    outline: none; 
+    color: white;
+    outline: none;
 }
 
-.btn-visualizar:hover{
+.btn-visualizar:hover {
     color: #fff;
 }
 
@@ -622,11 +622,11 @@ label.form-label {
     white-space: nowrap;
 }
 
-.btn-danger{
-    background: #DC3545 !important  ;
+.btn-danger {
+    background: #DC3545 !important;
 }
 
-.btn-info{
+.btn-info {
     background: #007bff !important;
 }
 
@@ -829,6 +829,7 @@ label.form-label {
     margin-bottom: 12px;
     position: relative;
 }
+
 .p-4.border-bottom.bg-white {
     border-radius: 10px 10px 0px 0px;
 }
@@ -1207,17 +1208,38 @@ label.form-label {
 }
 
 .form-control:focus {
-    border-color:  #0d6efd !important; /* Azul bem clarinho */
-    box-shadow: 0 0 0 0.15rem rgba(0, 95, 204, 0.1) !important; /* Sombra super suave */
+    border-color: #0d6efd !important;
+    box-shadow: 0 0 0 0.15rem rgba(0, 95, 204, 0.1) !important;
     outline: none !important;
     transition: all 0.2s ease;
-  }  
+}
 
 /* Focus quando clicar no tab */
-button:focus-visible, .btn-home:focus-visible,
-.select-option:focus-visible,.nav-item a:focus-visible, .card-title a:focus-visible, td a:focus-visible, .btn:focus-visible {
+.nav-toggle:focus-visible
+.btn-home:focus-visible,
+.select-option:focus-visible,
+.nav-item a:focus-visible,
+.card-title a:focus-visible,
+td a:focus-visible,
+.option-btn:focus-visible,
+.option-add:focus-visible,
+button:focus-visible,
+.btn:focus-visible,
+.select-btn:focus-visible,
+.option-btn:focus-visible{
     outline: 2px solid #005fcc !important;
     outline-offset: 2px !important;
+}
+
+.highlighted {
+    background-color: #005fcc; 
+    color: white;
+    outline: 2px solid #005fcc;
+  }
+  
+
+h2 {
+    font-size: 2rem !important;
 }
 
 /* Respostas de mídia em tela pequena */
@@ -1303,7 +1325,7 @@ button:focus-visible, .btn-home:focus-visible,
     }
 }
 
-@media screen and (max-width: 1380px) {
+@media screen and (max-width: 1490px) {
     .btn-dark {
         background: #343a40 !important;
     }
@@ -1341,6 +1363,10 @@ button:focus-visible, .btn-home:focus-visible,
 
     .add {
         top: 20%;
+    }
+
+    .btn {
+        padding: 10px;
     }
 }
 

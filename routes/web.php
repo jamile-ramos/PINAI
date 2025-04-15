@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ComentarioController;
+use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuarioController;
@@ -77,7 +78,7 @@ Route::get('/respostas/edit/{idResposta}', [RespostaController::class, 'edit'])-
 Route::put('/respostas/update/{idResposta}', [RespostaController::class, 'update'])->name('respostas.update');
 Route::delete('/respostas/destroy', [RespostaController::class, 'destroy'])->name('respostas.destroy');
 
-//Comentarios das respostas
+// Comentarios das respostas
 Route::post('/comentarios/store', [ComentarioController::class, 'store'])->name('comentarios.store');
 Route::get('/comentarios/usuarios/{idResposta}', [ComentarioController::class, 'usuariosDaResposta'])->name('comentarios.usuarios');
 
@@ -85,3 +86,12 @@ Route::get('/comentarios/usuarios/{idResposta}', [ComentarioController::class, '
 Route::post('/sugestoes/store', [SugestaoTopicoController::class, 'store'])->name('sugestoes.store');
 Route::delete('/sugestoes/destroy', [SugestaoTopicoController::class, 'destroy'])->name('sugestoes.destroy');
 Route::put('/sugestoes/statusSituacao/{id}', [SugestaoTopicoController::class, 'updateStatusSituacao'])->name('sugestoes.updateStatusSituacao');
+
+// Documentos (Biblioteca Digital)
+Route::get('/documentos', [DocumentoController::class, 'index'])->name('documentos.index');
+Route::get('/documentos/create', [DocumentoController::class, 'create'])->name('documentos.create');
+Route::post('/documentos/store', [DocumentoController::class, 'store'])->name('documentos.store');
+Route::get('/documentos/edit/{id}', [DocumentoController::class, 'edit'])->name('documentos.edit');
+Route::put('/documentos/update/{id}', [DocumentoController::class, 'update'])->name('documentos.update');
+Route::get('/documentos/categorias/{idCategoria}', [DocumentoController::class, 'documentosCategorias'])->name('documentos.documentosCategorias');
+Route::delete('documentos/destroy', [DocumentoController::class, 'destroy'])->name('documentos.destroy');

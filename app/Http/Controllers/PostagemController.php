@@ -37,6 +37,12 @@ class PostagemController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'titulo' => 'required|string|max:255',
+            'conteudo' => 'required|string',
+            'idTopico' => 'required|exists:topicos,id'
+        ]);
+
         $postagem = new Postagem;
 
         $postagem->titulo = $request->titulo;

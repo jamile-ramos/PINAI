@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+
     public function up(): void
     {
         Schema::create('solucoes', function (Blueprint $table) {
@@ -15,7 +16,7 @@ return new class extends Migration
             $table->text('passosImplementacao');
             $table->text('arquivo')->nullable();
             $table->enum('status', ['ativo', 'inativo'])->default('ativo');
-            $table->foreignId('idPublicoAlvo')->constrained('publicos_alvos')->onDelete('cascade');
+            $table->foreignId('idPublicoAlvo')->constrained('publicos_alvo')->onDelete('cascade');
             $table->foreignId('idCategoria')->constrained('categorias_solucoes')->onDelete('cascade');
             $table->foreignId('idUsuario')->constrained('users')->onDelete('cascade');
             $table->timestamps();

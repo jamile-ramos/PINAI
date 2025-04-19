@@ -9,11 +9,18 @@
             <div class="carousel-inner">
                 @foreach($noticiasRecentes as $index => $noticia)
                 <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                    <img src="{{ asset('img/imgNoticias/' . $noticia->imagem) }}" class="d-block w-100" alt="Imagem da notícia">
-                    <div class="carousel-caption d-md-block fw-bold">
-                        <a href="{{ route('noticias.show', $noticia->id) }}" class="link-noticia">{{ $noticia->titulo }}</a>
+                    <div class="carousel-image-container position-relative">
+                        <img src="{{ asset('img/imgNoticias/' . $noticia->imagem) }}" class="d-block w-100" alt="Imagem da notícia">
+                        <!-- Sombreado aplicado com gradiente -->
+                        <div class="carousel-overlay position-absolute top-0 start-0 w-100 h-100"></div>
+                    </div>
+                    <div class="carousel-caption d-md-block position-absolute bottom-0 start-0 end-0 p-3">
+                        <a href="{{ route('noticias.show', $noticia->id) }}" class="link-noticia text-white text-decoration-none fw-bold">
+                            {{ $noticia->titulo }}
+                        </a>
                     </div>
                 </div>
+
                 @endforeach
             </div>
             <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
@@ -28,30 +35,41 @@
     </div>
     @foreach($categorias as $categoria)
     @php
-    $noticiaCategoria = $categoria->noticias()->where('status', 'ativo')->latest()->first();
+    $noticiasCategorias = $categoria->noticias()->where('status', 'ativo')->take(3)->get();
     @endphp
 
-    @if($noticiaCategoria)
-    <div class="home-news titulo-categoria">
-        <h2 class="nomeCategoria"><a href="{{ route('noticias.noticiasCategorias', $categoria->id) }}">{{ $categoria->nomeCategoria }}</a></h2>
-        <div class="card card-new mb-3" style="max-width: 98%;">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="{{ asset('img/imgNoticias/' . $noticiaCategoria->imagem) }}" class="img-fluid rounded-start" alt="...">
-                </div>
-                <div class="col-md-8">
+    @if($noticiasCategorias->isNotEmpty())
+    <div class="home-news titulo-categoria mb-4">
+        <h2 class="nomeCategoria">
+            <a href="{{ route('noticias.noticiasCategorias', $categoria->id) }}" class="d-inline-flex align-items-center gap-2">
+                {{ $categoria->nomeCategoria }}
+                <svg viewBox="0 0 32 32" focusable="false" aria-hidden="true" width="22" height="15" fill="currentColor">
+                    <path d="M21.6 14.3L5.5 31h6.4l14.6-15L11.9 1H5.5l16.1 16.7v-3.4z"></path>
+                </svg>
+            </a>
+        </h2>
+
+        <div class="row">
+            @foreach($noticiasCategorias as $noticiaCategoria)
+            <div class="col-md-4 mb-3">
+                <div class="card h-100 bg-transparent border-0 shadow-none">
+                    <img src="{{ asset('img/imgNoticias/' . $noticiaCategoria->imagem) }}" class="card-img-top img-capa" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title title-new">
+                        <h5 class="card-title pt-3 title-new">
                             <a href="{{ route('noticias.show', $noticiaCategoria->id) }}">{{ $noticiaCategoria->titulo }}</a>
                         </h5>
                         <p class="card-text">{{ Str::limit($noticiaCategoria->subtitulo, 150) }}</p>
-                        <p class="card-text"><small class="text-muted">Publicado dia {{ $noticiaCategoria->created_at->format('d/m/Y') }}</small></p>
+                        <p class="card-text">
+                            <small class="text-muted">Publicado dia {{ $noticiaCategoria->created_at->format('d/m/Y') }}</small>
+                        </p>
                     </div>
                 </div>
             </div>
+            @endforeach
         </div>
     </div>
     @endif
     @endforeach
+
 
 </div>

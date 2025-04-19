@@ -13,7 +13,7 @@ class CategoriaController extends Controller
     private $modelMap = [
         'noticias' => CategoriaNoticia::class,
         'documentos' => CategoriaDocumento::class,
-        'solucao' => CategoriaSolucao::class,
+        'solucoes' => CategoriaSolucao::class,
     ];
 
     public function store(Request $request, $tipo)

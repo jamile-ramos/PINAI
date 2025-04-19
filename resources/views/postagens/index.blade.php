@@ -17,7 +17,13 @@
     }
 
     @endphp
-
+    
+    <header class="text-center py-3 mb-4">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Fórum de Discussão  </h1>
+            <p class="fs-4 text-secondary mt-3 ">Converse, colabore e construa soluções inclusivas junto à comunidade.</p>
+        </div>
+    </header>
 
     <x-barra-filtros
         :links="$links"

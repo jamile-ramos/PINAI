@@ -491,11 +491,6 @@ img#imagemPreview {
     margin-bottom: 15px;
 }
 
-.d-md-block {
-    background: rgba(128, 128, 128, 0.7) !important;
-    border-radius: 15px;
-}
-
 /* Codigo da pagina show */
 .noticia-container {
     background-color: #fff;
@@ -1241,6 +1236,37 @@ button:focus-visible,
 h2 {
     font-size: 2rem !important;
 }
+
+.img-capa {
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.carousel-image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-overlay {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0)); /* Gradiente escuro */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    z-index: 1;
+}
+
+.carousel-caption {
+    z-index: 2; /* Garante que o texto apareça sobre a sobreposição */
+}
+
+.largura{
+    width: 98%;
+}
+
 
 /* Respostas de mídia em tela pequena */
 @media (max-width: 768px) {

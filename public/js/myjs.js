@@ -502,7 +502,9 @@ document.addEventListener('DOMContentLoaded', function () {
             $(modal).modal('show');
         } else if (buttonText === 'Criar Postagem') {
             window.location.href = url;
-        } else if (buttonText == 'Adicionar documento') {
+        } else if (buttonText === 'Adicionar documento') {
+            window.location.href = url;
+        }else if(buttonText === 'Adicionar Solução'){
             window.location.href = url;
         }
     }

@@ -3,7 +3,7 @@
         <thead class="forum-azul">
             <tr>
                 <th>Usuário responsável pela publicação</th>
-                <th>Categoria</th>
+                <th style="width: 50%">Categoria</th>
                 <th style="width: 10%">Ação</th>
             </tr>
         </thead>

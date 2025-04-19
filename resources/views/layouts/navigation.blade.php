@@ -62,7 +62,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a data-bs-toggle="collapse" href="#tables">
+            <a href="/solucoes">
               <i class="fas fa-table"></i>
               <p>Banco de Soluções</p>
             </a>

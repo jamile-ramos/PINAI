@@ -28,6 +28,13 @@
 
     @endphp
 
+    <header class="text-center py-3 mb-4">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Biblioteca Digital</h1>
+            <p class="fs-4 text-secondary mt-3 ">Acesse, compartilhe e construa juntos um acervo de conhecimento para todos os NAIs.</p>
+        </div>
+    </header>
+
     <x-barra-filtros
         :links="$links"
         :actions="$actions" />
@@ -44,23 +51,23 @@
     <div class="tab-contents">
         <div class="content-link show" id="visaoDocumentos">
             <div class="infos">
-               @include('documentos.init', ['categorias' => $categorias])
+                @include('documentos.init', ['categorias' => $categorias])
             </div>
         </div>
         <div class="content-link" id="myDocumentos">
             <div class="infos">
-            @include('documentos.tableDocumentos', ['documentos' => $myDocumentos])
+                @include('documentos.tableDocumentos', ['documentos' => $myDocumentos])
             </div>
         </div>
         <div class="content-link" id="allDocumentos">
             <div class="infos">
-            @include('documentos.tableDocumentos', ['documentos' => $documentos])
+                @include('documentos.tableDocumentos', ['documentos' => $documentos])
             </div>
         </div>
 
         <div class="content-link" id="categoriasDocumentos">
             <div class="infos" id="categorias-content">
-            @include('layouts.tabelaCategorias', ['categorias' => $categorias, 'tipo' => "documentos"])
+                @include('layouts.tabelaCategorias', ['categorias' => $categorias, 'tipo' => "documentos"])
             </div>
         </div>
 

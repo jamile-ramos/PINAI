@@ -77,4 +77,8 @@ class User extends Authenticatable
     public function categoria_documento(){
         return $this->hasMany(CategoriaDocumento::class);
     }
+
+    public function solucoes(){
+        return $this->hasMany(Solucao::class, 'idUsuario');
+    }
 }

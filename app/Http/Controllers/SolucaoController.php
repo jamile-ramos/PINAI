@@ -26,8 +26,8 @@ class SolucaoController extends Controller
             'titulo' => 'required|string|max:255',
             'descricao' => 'required|string',
             'passosImplementacao' => 'required|string',
-            'publicosAlvo' => 'required|array',
-            'publicos_alvo.*' => 'integer|exists:publicos_alvo, id',
+            'publicos_alvo' => 'required|array',
+            'publicos_alvo.*' => 'integer|exists:publicos_alvo,id',
             'idCategoria' => 'required|integer'
         ]);
 
@@ -46,7 +46,7 @@ class SolucaoController extends Controller
             'idUsuario' => Auth::user()->id
         ]);
 
-        $solucao->publicosAlvo()->sync($request->publicosAlvo);
+        $solucao->publicosAlvo()->attach($request->publicos_alvo);
 
         return redirect()->route('solucoes.index')->with('success', 'Solução criada com sucesso!');
 

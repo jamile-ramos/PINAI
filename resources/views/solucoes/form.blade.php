@@ -4,7 +4,7 @@
 
 @section('content')
 
-@foreach (['titulo', 'descricao', 'passosImplementacao', 'arquivo', 'arquivo'] as $campo)
+@foreach (['titulo', 'descricao', 'passosImplementacao', 'publicos_alvo', 'idCategoria', 'idUsuario'] as $campo)
 @error($campo)
 <div class="alert alert-danger">{{ $message }}</div>
 @enderror

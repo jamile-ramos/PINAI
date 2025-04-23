@@ -6,6 +6,8 @@
 
 <div class="container-abas" id="abaTopicos">
 
+    {{ Breadcrumbs::render('topicos') }}
+
     @php
     $links = [
     ['content-id' => 'visaoTopicos', 'nomeAba' => 'Visão Geral', 'classActive' => 'active', 'data-tipo' => 'topicos']
@@ -23,8 +25,8 @@
 
     <header class="text-center py-3 mb-4">
         <div class="container">
-            <h1 class="display-4 fw-bold">Fórum de Discussão  </h1>
-            <p class="fs-4 text-secondary mt-3 ">Converse, colabore e construa soluções inclusivas junto à comunidade.</p>
+            <h1 class="display-4 fw-bold">Fórum de Discussão </h1>
+            <p class="text-secondary mt-3 ">Converse, colabore e construa soluções inclusivas junto à comunidade.</p>
         </div>
     </header>
 

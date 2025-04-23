@@ -103,5 +103,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/solucoes', [SolucaoController::class, 'index'])->name('solucoes.index');
     Route::get('/solucoes/create', [SolucaoController::class, 'create'])->name('solucoes.create');
     Route::post('/solucoes/store', [SolucaoController::class, 'store'])->name('solucoes.store');
-    Route::put('/solucoes/update', [SolucaoController::class, 'update'])->name('solucoes.update');
+    Route::put('/solucoes/update/{id}', [SolucaoController::class, 'update'])->name('solucoes.update');
+    Route::get('/solucoes/show/{id}', [SolucaoController::class, 'show'])->name('solucoes.show');
+    Route::get('/solucoes/edit/{id}', [SolucaoController::class, 'edit'])->name('solucoes.edit');
+    Route::delete('/solucoes/destroy', [SolucaoController::class, 'destroy'])->name('solucoes.destroy');
+    Route::get('/solucoes/categorias/{idCategoria}', [SolucaoController::class, 'solucoesCategorias'])->name('solucoes.solucoesCategorias');
 });

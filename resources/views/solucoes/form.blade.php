@@ -86,8 +86,6 @@
                 </div>
             </div>
 
-
-
             <!-- Campo Categoria -->
             <div class="form-group mb-4">
                 <label for="categoria" class="form-label">Categoria</label>
@@ -105,11 +103,11 @@
             <!-- Upload de novo arquivo -->
             <div class="mb-3">
                 <label for="arquivo" class="form-label px-3 fw-semibold">
-                    {{ isset($solucao) ? 'Substituir o arquivo (PDF)' : 'Selecione um arquivo para upload (PDF) se necessário' }}
+                    {{ isset($solucao) ? 'Substituir o arquivo (Imagem ou PDF)' : 'Selecione um arquivo para upload se necessário' }}
                 </label>
-                <input class="form-control" type="file" id="arquivo" name="arquivo" accept=".pdf,.doc,.docx,.ppt,.pptx">
+                <input class="form-control" type="file" id="arquivo" name="arquivo" accept=".pdf,.jpg,.jpeg,.png">
+                <small class="form-text text-muted px-3">Você pode fazer o upload de arquivos PDF ou imagens (JPG, JPEG, PNG).</small>
             </div>
-
 
             <!-- Botões -->
             <div class="d-flex justify-content-between mt-4">

@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         let activeItem = localStorage.getItem("active_nav_item");
 
-        if (window.location.href.indexOf("dashboard") > -1) {
-            activeItem = "/dashboard";
+        if (window.location.href.indexOf("inicio") > -1) {
+            activeItem = "/inicio";
         }
 
         if (activeItem) {
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
             e.stopPropagation();
         });
 
-        // Ao clicar no botão "Ver mais" do card na página dashboard
+        // Ao clicar no botão "Ver mais" do card na página inicio
         $(".btn-home").on("click", function () {
             const btnVermais = $(this).attr('data-btn');
 
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         })
 
-        // Ao clicar nos títulos das notícias na página dashboard
+        // Ao clicar nos títulos das notícias na página inicio
         $("a[data-btn]").on("click", function () {
             const dataBtnValue = $(this).attr("data-btn");
 
@@ -142,21 +142,23 @@ document.addEventListener('DOMContentLoaded', function () {
     const selectBtn = document.querySelector(".select-btn");
     document.querySelectorAll('.container-abas').forEach(container => {
         const barraId = container.id;
+        const selectOption = container.querySelector(".select-option");
+        if (selectOption.innerText.trim() === 'Visão Geral') {
+            console.log(selectOption.innerText.trim())
+            selectOption.innerText = 'Minhas publicações';
+        }
 
         if (barraId === 'abaProfile') {
-            const selectOption = container.querySelector(".select-option");
             if (selectBtn) {
                 selectBtn.addEventListener("focus", () => {
                     const selected = selectBtn.querySelector(".select-option");
                     if (selected) selected.focus();
+
+
                 });
             }
 
             const optionButtons = document.querySelectorAll(".option-btn, .btns-select .option-add");
-
-            if (selectOption.innerText.trim() === 'Todos') {
-                selectOption.innerText = 'Minhas publicações';
-            }
 
             container.querySelectorAll(".line-button, .btns-select").forEach(el => el.remove());
         }
@@ -504,7 +506,7 @@ document.addEventListener('DOMContentLoaded', function () {
             window.location.href = url;
         } else if (buttonText === 'Adicionar documento') {
             window.location.href = url;
-        }else if(buttonText === 'Adicionar Solução'){
+        } else if (buttonText === 'Adicionar Solução') {
             window.location.href = url;
         }
     }

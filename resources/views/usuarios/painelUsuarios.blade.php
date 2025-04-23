@@ -5,10 +5,11 @@
 @section('content')
 
 <div class="container-abas" id="abaUsuarios">
+{{ Breadcrumbs::render('painelUsuarios') }}
     <header class="text-center py-3 mb-4">
         <div class="container">
             <h1 class="display-4 fw-bold">Painel de Usuários</h1>
-            <p class="fs-4 text-secondary mt-3 ">Gerencie e acompanhe os membros dos NAIs com facilidade e transparência.</p>
+            <p class="text-secondary mt-3 ">Gerencie e acompanhe os membros dos NAIs com facilidade e transparência.</p>
         </div>
     </header>
 

@@ -6,6 +6,8 @@
 
 <div class="container-abas" id="abaDocumentos">
 
+    {{ Breadcrumbs::render('documentos')}}
+
     @php
 
     $links = [
@@ -31,7 +33,7 @@
     <header class="text-center py-3 mb-4">
         <div class="container">
             <h1 class="display-4 fw-bold">Biblioteca Digital</h1>
-            <p class="fs-4 text-secondary mt-3 ">Acesse, compartilhe e construa juntos um acervo de conhecimento para todos os NAIs.</p>
+            <p class="text-secondary mt-3 ">Acesse, compartilhe e construa juntos um acervo de conhecimento para todos os NAIs.</p>
         </div>
     </header>
 

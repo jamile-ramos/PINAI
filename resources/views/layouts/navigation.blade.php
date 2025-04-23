@@ -32,7 +32,7 @@
               class="collapsed"
               aria-expanded="false">
               <i class="fas fa-home"></i>
-              <p>Dashboard</p>
+              <p>Página Inicial</p>
             </a>
           </li>
           @if(Auth::user()->tipoUsuario == 'admin')
@@ -119,6 +119,7 @@
         </div>
         <!-- End Logo Header -->
       </div>
+      
       <!-- Navbar Header -->
       <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
         <div class="container-fluid">
@@ -191,5 +192,4 @@
         </div>
       </nav>
       <!-- End Navbar -->
-            
     </div>

@@ -11,7 +11,8 @@
     <link rel="icon" type="image/svg+xml" href="{{ asset('img/favicon-azul.svg') }}">
 
     <!-- CSS do Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
 
     <!-- CSS de bibliotecas externas -->
     <link rel="stylesheet" href="/css/plugins.min.css" />
@@ -55,7 +56,7 @@
                 </ul>
             </nav>
             <div class="copyright">
-                &copy 2024, PINAI | Todos os direitos reservados.
+                &copy 2025, PINAI | Todos os direitos reservados.
             </div>
             <div>
                 Criado por Jamile Ramos
@@ -63,18 +64,25 @@
         </div>
     </footer>
 
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
     <!-- Carregar o jQuery (primeiro para dependências de outros scripts) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Carregar o Bootstrap (JS com dependências incluídas) -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Carregar os scripts locais principais (garanta que estes são necessários) -->
-    <!-- Se você já está usando o Bootstrap.bundle.min.js, pode não precisar do bootstrap.min.js local -->
-    <script src="/js/core/popper.min.js"></script> <!-- Se necessário -->
-    <script src="/js/core/bootstrap.min.js"></script> <!-- Se necessário -->
+    <!-- Carregar o script do VLibras (deve ser carregado antes de outros scripts personalizados) -->
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
 
-    <!-- Carregar o JS personalizado -->
+    <!-- Carregar os scripts locais principais -->
     <script src="{{ asset('js/myjs.js') }}"></script>
 
     <!-- Carregar plugins adicionais -->

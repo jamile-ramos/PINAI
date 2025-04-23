@@ -3,19 +3,25 @@
 @section('title', 'Meu perfil')
 
 @section('content')
-<div class="row content-profile">
-    <div class="col-lg-4 col-xl-3">
-        <div class="card cardProfile">
+<div class="col">
+{{ Breadcrumbs::render('myProfile') }}
+<header class="text-center py-3 mb-4">
+    <div class="container">
+        <h1 class="display-4 fw-bold">Meu perfil</h1>
+    </div>
+</header>
+<div class="row content-profile" id="container-profile">
+    <div class="col-lg-4 col-xl-3 card-profile-all">
+        <div class="card">
             <div class="card-body">
-                <div class="media align-items-center mb-4">
+                <div class="d-flex align-items-center mb-4">
                     <div class="avatar-profile">
                         <div class="user-icon-circle-profile">
                             <i class="fa fa-user fa-profile"></i>
                         </div>
                     </div>
-                    <div class="media-body">
+                    <div class="ms-3">
                         <h3 class="mb-0">{{ Auth::user()->name }}</h3>
-
                     </div>
                 </div>
 
@@ -37,7 +43,7 @@
                 </div>
 
                 <ul class="card-profile__info">
-                    <li><strong class="text-dark mr-4">Email</strong> <span>{{ Auth::user()->email }}</span></li>
+                    <li><strong class="text-dark me-4">Email</strong> <span>{{ Auth::user()->email }}</span></li>
                 </ul>
                 <div class="col-12 text-center">
                     <a class="btn btn-warning px-5" href="/profile">Editar</a>
@@ -59,22 +65,18 @@
                 <div class="infos">
                     @forelse($myPostagens as $postagem)
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body p-4">
                             <!-- Tag de Tópico no canto superior direito -->
-                            <div class="topic-tag position-absolute top-0 end-0 m-2 px-2 py-1 bg-primary text-white rounded">
+                            <div class="topic-tag position-absolute top-0 end-0 m-3 px-2 py-1 bg-primary text-white rounded">
                                 {{ $postagem->topico->titulo }}
                             </div>
 
-                            <div class="media media-reply">
-                                <div class="post-author">
-                                    <div class="user-icon-circle user-post user-post2">
-                                        <i class="fa fa-user"></i>
-                                    </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="user-icon-circle user-post user-post2">
+                                    <i class="fa fa-user"></i>
                                 </div>
-                                <div class="media-body">
-                                    <div class="d-sm-flex justify-content-between mb-2 response-username">
-                                        <h5 class="d-flex flex-column mb-2">{{ $postagem->user->name }} <small class="text-muted">{{ $postagem->created_at->format('d/m/Y H:i')}}</small></h5>
-                                    </div>
+                                <div class="ms-3">
+                                    <h5 class="d-flex flex-column mb-2">{{ $postagem->user->name }} <small class="text-muted">{{ $postagem->created_at->format('d/m/Y H:i') }}</small></h5>
                                 </div>
                             </div>
                             <div class="media-text">
@@ -125,6 +127,7 @@
         </div>
     </div>
     <!-- #/ container -->
+</div>
 </div>
 
 @endsection

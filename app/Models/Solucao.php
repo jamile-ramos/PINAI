@@ -15,10 +15,11 @@ class Solucao extends Model
         'passosImplementacao',
         'arquivo',
         'idPublicoAlvo',
-        'idCategoria'
+        'idCategoria',
+        'idUsuario'
     ];
 
-    public function categoria_solucao(){
+    public function categoria(){
         return $this->belongsTo(CategoriaSolucao::class, 'idCategoria');
     }
 

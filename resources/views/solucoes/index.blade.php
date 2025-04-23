@@ -6,6 +6,8 @@
 
 <div class="container-abas" id="abaSolucoes">
 
+    {{Breadcrumbs::render('solucoes')}}
+
     @php
 
     $links = [
@@ -30,7 +32,7 @@
     <header class="text-center py-3 mb-4">
         <div class="container">
             <h1 class="display-4 fw-bold">Banco de soluções</h1>
-            <p class="fs-4 text-secondary mt-3 ">Compartilhe e descubra boas práticas e soluções acessíveis para seu NAI.</p>
+            <p class="text-secondary mt-3 ">Compartilhe e descubra boas práticas e soluções acessíveis para seu NAI.</p>
         </div>
     </header>
 
@@ -50,18 +52,19 @@
     <div class="tab-contents">
         <div class="content-link show" id="visaoSolucoes">
             <div class="infos">
-                @include('solucoes.init')
-            </div>
-        </div>
-
-        <div class="content-link" id="allSolucoes">
-            <div class="infos">
+                @include('solucoes.init', ['solucoes' => $solucoes])
             </div>
         </div>
 
         <div class="content-link" id="mySolucoes">
             <div class="infos">
+                @include('solucoes.tableSolucoes', ['solucoes' => $mySolucoes, 'tipoAba' => 'mySolucoes'])
+            </div>
+        </div>
 
+        <div class="content-link" id="allSolucoes">
+            <div class="infos">
+            @include('solucoes.tableSolucoes', ['solucoes' => $solucoes, 'tipoAba' => 'allSolucoes'])
             </div>
         </div>
 

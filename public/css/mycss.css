@@ -209,10 +209,6 @@ form.search-form {
     margin-top: 10px;
 }
 
-.modal-footer {
-    border-top: 0 !important;
-}
-
 .body-confirmar {
     padding: 0 !important;
 }
@@ -220,7 +216,7 @@ form.search-form {
 .texto-confirmar {
     width: 100%;
     height: auto;
-    border-bottom: var(--bs-modal-header-border-width) solid var(--bs-modal-header-border-color);
+    margin-top: 10px;
 }
 
 .texto-confirmar p {
@@ -551,10 +547,6 @@ img#imagemPreview {
     margin-bottom: 0rem !important;
 }
 
-.card .card-body {
-    padding: 0 !important;
-}
-
 .forum-azul {
     background: #011C37;
     color: #fff;
@@ -623,6 +615,7 @@ label.form-label {
 
 .btn-info {
     background: #007bff !important;
+    color: white !important;
 }
 
 .text-obs {
@@ -1127,10 +1120,6 @@ label.form-label {
     margin-right: 10px;
 }
 
-.cardProfile {
-    padding: 20px;
-}
-
 .user-icon-circle-profile {
     background-color: #333;
     display: flex;
@@ -1152,10 +1141,6 @@ label.form-label {
 .media-reply {
     padding: 25px 25px 0px 25px;
     border-top: 1px solid #eaeaea;
-}
-
-.media-text {
-    padding: 0px 25px 0px 25px;
 }
 
 .media-text p {
@@ -1193,13 +1178,13 @@ label.form-label {
     border-radius: 8px;
 }
 
-.post-footer.btn-padding {
-    padding: 0px 25px 25px 25px;
+#abaProfile {
+    width: 75% !important;
+    display: block !important;
 }
 
-#abaProfile {
-    width: 100% !important;
-    display: block !important;
+#container-profile{
+    max-width: 1200px;
 }
 
 .form-control:focus {
@@ -1267,6 +1252,23 @@ h2 {
     width: 98%;
 }
 
+h1{
+    font-size: 2.5rem !important;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%228%22 height=%228%22%3E%3Cpath d=%22M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z%22 fill=%22%236c757d%22/%3E%3C/svg%3E');
+    padding: 0 5px;
+}
+
+#carouselExampleCaptions {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.carousel-item img {
+    border-radius: 10px; 
+}
 
 /* Respostas de mídia em tela pequena */
 @media (max-width: 768px) {
@@ -1284,6 +1286,16 @@ h2 {
 
     .media-reply {
         padding: 15px;
+    }
+}
+
+@media (max-width: 1200px) {
+    #abaProfile {
+        width: 100%!important;
+    }
+
+    .card-profile-all{
+        width: 100%;
     }
 }
 

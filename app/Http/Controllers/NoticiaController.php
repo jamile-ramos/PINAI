@@ -103,7 +103,7 @@ class NoticiaController extends Controller
 
     public function noticiasCategorias($idCategoria){
         $categoria = CategoriaNoticia::findOrFail($idCategoria);
-        $noticias = $categoria->noticias()->where('status', 1)->get();
+        $noticias = $categoria->noticias()->where('status', 'ativo')->get();
 
         return view('noticias.noticiasCategorias', compact('noticias', 'categoria'));
     }

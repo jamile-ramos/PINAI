@@ -1,11 +1,11 @@
 <div id="conteudo-categorias">
     <div class="bd-example">
-        <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
+        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
                 @foreach($noticiasRecentes as $index => $noticia)
-                <li data-target="#carouselExampleCaptions" data-slide-to="{{ $index }}" class="{{ $loop->first ? 'active' : '' }}"></li>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{ $index }}" class="{{ $loop->first ? 'active' : '' }}" aria-current="{{ $loop->first ? 'true' : 'false' }}" aria-label="Slide {{ $index + 1 }}"></button>
                 @endforeach
-            </ol>
+            </div>
             <div class="carousel-inner">
                 @foreach($noticiasRecentes as $index => $noticia)
                 <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
@@ -14,25 +14,25 @@
                         <!-- Sombreado aplicado com gradiente -->
                         <div class="carousel-overlay position-absolute top-0 start-0 w-100 h-100"></div>
                     </div>
-                    <div class="carousel-caption d-md-block position-absolute bottom-0 start-0 end-0 p-3">
+                    <div class="carousel-caption d-none d-md-block">
                         <a href="{{ route('noticias.show', $noticia->id) }}" class="link-noticia text-white text-decoration-none fw-bold">
                             {{ $noticia->titulo }}
                         </a>
                     </div>
                 </div>
-
                 @endforeach
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
     </div>
+
     @foreach($categorias as $categoria)
     @php
     $noticiasCategorias = $categoria->noticias()->where('status', 'ativo')->take(3)->get();
@@ -54,7 +54,7 @@
             <div class="col-md-4 mb-3">
                 <div class="card h-100 bg-transparent border-0 shadow-none">
                     <img src="{{ asset('img/imgNoticias/' . $noticiaCategoria->imagem) }}" class="card-img-top img-capa" alt="...">
-                    <div class="card-body">
+                    <div>
                         <h5 class="card-title pt-3 title-new">
                             <a href="{{ route('noticias.show', $noticiaCategoria->id) }}">{{ $noticiaCategoria->titulo }}</a>
                         </h5>

@@ -4,7 +4,21 @@
 
 @section('content')
 
+@php
+$tipoForm = isset($postagem) ? 'Editar Postagem' : 'Adicionar Postagem';
+if(isset($idTopico)){
+    $idTopico = $idTopico;
+}else{
+    $idTopico = $postagem->idTopico;
+}
+@endphp
+
 <div class="container my-5">
+
+    <div class="px-2">
+    {{ Breadcrumbs::render('formPostagem', $idTopico, $tipoForm)}}
+    </div>
+
     <div class="card shadow-lg p-4">
         <div class="card-header">
             <div class="d-flex align-items-center">
@@ -52,7 +66,7 @@
                     id="imagem" />
             </div>
 
-            
+
             <!-- Prévia da Imagem (se já existir uma imagem) -->
             @if(isset($postagem) && $postagem->imagem)
             <div class="mb-3" id="preview">
@@ -62,7 +76,7 @@
             </div>
             @endif
 
-            <!-- Campo Categoria -->
+            <!-- Campo Tópico -->
             <div class="form-group mb-4">
                 <label for="topico" class="form-label">Topico</label>
                 <select name="idTopico" class="form-select form-control" id="topico" data-tipo="postagens" required>

@@ -26,7 +26,7 @@
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
         <div>
             <a href="/" class="logo-login">
-                <img src="img/logo-azul.svg" alt="Logo PINAI azul">
+                <img src="img/logo-azul.svg" alt="Logo PINAI na cor azul" aria-hidden="true">
             </a>
         </div>
 

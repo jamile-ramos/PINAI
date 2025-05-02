@@ -1,6 +1,10 @@
 <?php
 
 return [
+    'attributes' => [
+        'password' => 'senha',
+        'current_password' => 'senha atual',
+    ],
     'accepted' => 'O :attribute deve ser aceito.',
     'active_url' => 'O :attribute não é uma URL válida.',
     'after' => 'O :attribute deve ser uma data posterior a :date.',
@@ -53,4 +57,5 @@ return [
         'string' => 'O campo :attribute não pode ter mais que :max caracteres.',
     ],
     'unique' => 'O valor do campo :attribute já está em uso.',
+    'current_password' => 'A senha atual fornecida está incorreta.',
 ];

@@ -3,29 +3,44 @@
 @section('title', $categoria->nomeCategoria)
 
 @section('content')
+<div class="col">
+    <div>
+        {{ Breadcrumbs::render('noticiasCategorias', $categoria)}}
+    </div>
+    <div class="home-news titulo-categoria">
+        <h1 class="fw-semibold">{{ $categoria->nomeCategoria }}</a></h1>
 
-
-<div class="home-news titulo-categoria">
-        <h2>{{ $categoria->nomeCategoria }}</a></h2>
-
-        @foreach($noticias as $noticia)
-        <div class="card card-new mb-3" style="max-width: 98%;">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="{{ asset('img/imgNoticias/' . $noticia->imagem) }}" class="img-fluid rounded-start" alt="$noticia->titulo">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title title-new">
-                            <a href="{{ route('noticias.show', $noticia->id) }}">{{ $noticia->titulo }}</a>
-                        </h5>
-                        <p class="card-text">{{ Str::limit($noticia->subtitulo, 150) }}</p>
-                        <p class="card-text"><small class="text-muted">Publicado dia {{ $noticia->created_at->format('d/m/Y') }}</small></p>
-                    </div>
-                </div>
+        <div class="row row-cols-1 g-4">
+      @foreach($noticias as $noticia)
+      <div class="col card-not-home">
+        <div class="card h-100 border-0 bg-transparent shadow-none">
+          <div class="row g-0 h-100">
+            <div class="col-md-4">
+              <div class="h-100 w-100 overflow-hidden">
+                <img src="{{ asset('img/imgNoticias/' . $noticia->imagem) }}"
+                  class="img-fluid rounded w-100 h-100"
+                  style="min-height: 200px; max-height: 200px; object-fit: cover;"
+                  alt="{{ $noticia->titulo }}">
+              </div>
             </div>
+            <div class="col-md-8">
+              <div class="card-body d-flex flex-column h-100 bg-transparent p-0">
+                <h5 class="card-title title-new mb-2">
+                  <a href="{{ route('noticias.show', $noticia->id) }}" class="text-decoration-none text-dark" data-btn="noticias">
+                    {{ $noticia->titulo }}
+                  </a>
+                </h5>
+
+                <p class="card-text mb-5">{{ Str::limit($noticia->subtitulo, 150) }}</p>
+                <p class="card-text"><small class="text-muted">Publicado dia {{ $noticia->created_at->format('d/m/Y') }}</small></p>
+              </div>
+            </div>
+          </div>
         </div>
-        @endforeach
+      </div>
+      @endforeach
+    </div>
     </div>
 
+</div>
 @endsection

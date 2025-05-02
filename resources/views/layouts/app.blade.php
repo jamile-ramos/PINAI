@@ -34,11 +34,11 @@
 
     @include('layouts.navigation')
 
-    <div class="col-md-12 container-all">
+    <main class="container-all" role="main">
         @yield('content')
-    </div>
+    </main>
 
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
         <div class="container-fluid d-flex justify-content-between">
             <nav class="pull-left">
                 <ul class="nav">

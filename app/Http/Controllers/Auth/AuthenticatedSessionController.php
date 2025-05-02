@@ -28,7 +28,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        if (Auth::user()->status == 1) {
+        if (Auth::user()->status == 'inativo') {
             Auth::logout();
             return redirect()->route('login')->withErrors(['email' => 'Sua conta está inativa.']); 
         }

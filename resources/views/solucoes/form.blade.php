@@ -10,7 +10,15 @@
 @enderror
 @endforeach
 
-<div class="container my-5">
+@php
+$tipoForm = isset($solucao) ? 'Editar Solução' : 'Adicionar Solução';
+@endphp
+<div class="container">
+
+    <div class="mx-3">
+        {{ Breadcrumbs::render('formSolucao', $tipoForm) }}
+    </div>
+
     <div class="card shadow-lg p-4">
         <div class="card-header">
             <div class="d-flex align-items-center">

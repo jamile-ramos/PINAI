@@ -11,7 +11,7 @@
     </div>
     <p>Não há postagens nesse tópico.</p>
     @else
-    <div class="card shadow-sm mb-4 border-start border-4 border-primary p-4">
+    <div class="card shadow-sm mb-4 border-start border-4 border-primary">
         <div class="card-body">
             <h4 class="card-title text-primary">
                 <i class="fa-solid fa-comments me-2"></i> {{ $topico->titulo }}

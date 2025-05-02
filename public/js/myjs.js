@@ -1,90 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Mantém um item de sidebar ativo mesmo após recarregar ou navegar para outra página
     $(document).ready(function () {
-        const updateActiveNavItem = (activeItem) => {
-            $(".nav-item").removeClass("submenu active");
-            $(".nav-item i").removeClass("icon-active");
-
-            const activeLink = $(".nav-item a[href='" + activeItem + "']");
-            activeLink.parent().addClass("submenu active");
-            activeLink.find("i").addClass("icon-active");
-        };
-
-        let activeItem = localStorage.getItem("active_nav_item");
-
-        if (window.location.href.indexOf("inicio") > -1) {
-            activeItem = "/inicio";
-        }
-
-        if (activeItem) {
-            updateActiveNavItem(activeItem);
-        }
-
-        // Quando um link da navegação for clicado
         $(".nav-item a").on("click", function () {
-            if ($(this).closest('.navbar').length === 0) {  // Se o item não estiver no navbar
-                const href = $(this).attr("href");
-                localStorage.setItem("active_nav_item", href);
-                updateActiveNavItem(href);
-            }
-        });
-
-        // Impedir que o clique no dropdown afete os itens da sidebar
-        $(".dropdown-toggle.profile-pic").on("click", function (e) {
-            e.stopPropagation();
-        })
-
-        // Garante que o sidebar não perca o active ao abrir o dropdown
-        $(".topbar-user .dropdown-menu").on("click", function (e) {
-            e.stopPropagation();
-        });
-
-        // Ao clicar no botão "Ver mais" do card na página inicio
-        $(".btn-home").on("click", function () {
-            const btnVermais = $(this).attr('data-btn');
-
-            $(".nav-item").each(function () {
-                const dataBtnNav = $(this).find("a").attr("data-btnNav");
-
-                if (btnVermais === dataBtnNav) {
-                    $(this).addClass("submenu active");
-                    localStorage.setItem("active_nav_item", $(this).find("a").attr('href'));
-                } else {
-                    $(this).removeClass("submenu active");
-                }
-            });
-        });
-
-        // Ao clicar em Meu perfil
-        $("#link-profile").on("click", function () {
-            const btnsHomes = $(".btn-home")
-
-            $(".nav-item").each(function () {
-                const dataBtnNav = $(this).find("a").attr("data-btnNav");
-
-                if (dataBtnNav === 'profile') {
-                    $(this).addClass("submenu active");
-                    localStorage.setItem("active_nav_item", $(this).find("a").attr('href'));
-                } else {
-                    $(this).removeClass("submenu active");
-                }
-            });
-        })
-
-        // Ao clicar nos títulos das notícias na página inicio
-        $("a[data-btn]").on("click", function () {
-            const dataBtnValue = $(this).attr("data-btn");
-
-            $(".nav-item").each(function () {
-                const dataBtnNav = $(this).find("a").attr("data-btnNav");
-
-                if (dataBtnValue === dataBtnNav) {
-                    $(this).addClass("submenu active");
-                    localStorage.setItem("active_nav_item", $(this).find("a").attr('href'));
-                } else {
-                    $(this).removeClass("submenu active");
-                }
-            });
+            const href = $(this).attr("href");
+            localStorage.setItem('active_nav_item', href);
         });
     });
 
@@ -143,8 +62,8 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.container-abas').forEach(container => {
         const barraId = container.id;
         const selectOption = container.querySelector(".select-option");
-        if (selectOption.innerText.trim() === 'Visão Geral') {
-            console.log(selectOption.innerText.trim())
+        console.log(barraId)
+        if (selectOption.innerText.trim() === 'Visão Geral' && barraId == 'abaProfile') {
             selectOption.innerText = 'Minhas publicações';
         }
 
@@ -246,6 +165,17 @@ document.addEventListener('DOMContentLoaded', function () {
             selectBtn.setAttribute("aria-expanded", "false");
         }
     });
+
+    /* Atualizar aria-activedescendant dinamicamente via JavaScript*/
+    const options = document.querySelectorAll('[role="option"]');
+    const comboBox = document.getElementById('custom-combobox');
+
+    options.forEach(option => {
+        option.addEventListener('mouseover', () => {
+            comboBox.setAttribute('aria-activedescendant', option.id);
+        });
+    });
+
 
     // Fecha dropdown ao clicar em uma opção
     allBtns.forEach((btn, index) => {
@@ -833,6 +763,13 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     };
 
+    /* Modal excluir conta */
+    /*var myModal = new bootstrap.Modal(document.getElementById('confirmUserDeletionModal'), {
+        backdrop: true, // Isso impede o fechamento do modal quando clicado fora.
+        keyboard: false  // Isso impede o fechamento do modal com a tecla ESC.
+    });*/
+    
+    
 });
 
 // Evento para ocultar alertas com jQuery

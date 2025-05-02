@@ -5,6 +5,7 @@
 @section('content')
 
 <div class="forum-wrapper">
+    {{Breadcrumbs::render('verPostagem', $postagem)}}
     <!-- Postagem Principal -->
     <div class="postagem-completa">
         <div class="main-post-card">

@@ -127,38 +127,6 @@ a:hover {
    color: #1269db
 }
 
-.h1,
-h1 {
-   font-size: 2.15rem
-}
-
-.h2,
-h2 {
-   font-size: 1.85rem
-}
-
-.h3,
-h3 {
-   font-size: 1.64rem
-}
-
-.h4,
-h4 {
-   font-size: 1.48rem
-}
-
-.h5,
-h5 {
-   font-size: 1.3rem;
-   font-weight: 400
-}
-
-.h6,
-h6 {
-   font-size: 1.07rem;
-   font-weight: 400
-}
-
 p {
    font-size: 1.07rem;
    line-height: 1.82;

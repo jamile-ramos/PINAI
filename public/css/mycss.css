@@ -1,3 +1,11 @@
+
+.navigation-container {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
 .content-home {
     display: flex;
     align-items: center;
@@ -37,8 +45,8 @@ h3 {
 }
 
 .btn-home {
-    background-color: #FFD700;
-    border: #FFC107;
+    background-color: #8800CC;
+    color: white;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
     bottom: 5px;
     position: absolute;
@@ -48,8 +56,17 @@ h3 {
 }
 
 .btn-home:hover {
-    background: #FFC107;
+    background: #9807e1 !important;
+    color: white;
 }
+
+.btn-home:focus,
+.btn-home:active {
+    color: white;
+    background: #7a00b8; 
+    outline: none   
+}
+
 
 .card-functions i {
     font-size: 50px;
@@ -239,7 +256,6 @@ form.search-form {
 .titulo-categoria h2 {
     text-align: start;
     width: 100%;
-    padding-left: 10px;
 }
 
 [type=text],
@@ -288,7 +304,7 @@ select {
     height: 30px;
     background-color: #ffffff;
     border-radius: 50%;
-    color: #011c37;
+    color: #011C37;
     font-size: 15px;
 }
 
@@ -551,19 +567,20 @@ img#imagemPreview {
     background: #011C37;
     color: #fff;
 }
-
 .btn-visualizar {
-    background: #F9A800;
+    background: #8800CC;
     color: #fff;
 }
 
 .btn-visualizar:focus {
+    background-color: #8800CC;
     color: white;
     outline: none;
 }
 
-.btn-visualizar:hover {
-    color: #fff;
+.btn-visualizar:hover, .btn-visualizar:after, .btn-visualizar:active  {
+    color: #fff !important;
+    background: #8800CC;
 }
 
 .forum-table {
@@ -574,7 +591,7 @@ img#imagemPreview {
 
 .forum-table thead {
     background-color: #011C37;
-    color: #FFD700;
+    color: #8800CC;
 }
 
 .forum-table tbody tr:nth-child(even) {
@@ -582,14 +599,18 @@ img#imagemPreview {
 }
 
 .forum-table tbody tr:hover {
-    background-color: #FFD700;
+    background-color: #8800CC;
     color: #011C37;
 }
 
 .forum-table a {
-    color: #FFD700;
+    color: #8800CC;
     font-weight: bold;
     text-decoration: none;
+}
+
+.text-roxo{
+    color: #8800CC;
 }
 
 .forum-table a:hover {
@@ -1128,7 +1149,7 @@ label.form-label {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    color: #011c37;
+    color: #011C37;
     font-size: 15px;
 }
 
@@ -1187,12 +1208,79 @@ label.form-label {
     max-width: 1200px;
 }
 
+/* Focus no campo de formulario */
 .form-control:focus {
     border-color: #0d6efd !important;
-    box-shadow: 0 0 0 0.15rem rgba(0, 95, 204, 0.1) !important;
     outline: none !important;
-    transition: all 0.2s ease;
+    border-width: 2px !important; 
 }
+
+/* Focus no campo de adicionar midia */
+.custom-file-container {
+    position: relative;
+    display: inline-block;
+    width: 100%; 
+}
+
+/* Escondendo o input real */
+#imagem {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 100%; /* Garantir que o campo de input ocupe todo o espaço disponível */
+    height: 100%;
+}
+
+/* Estilo para o label, que será o botão visível */
+.custom-file-label {
+    display: inline-block;
+    padding: 0.375rem 0.75rem; 
+    background-color: #e9ecef; 
+    color: #495057; 
+    border-radius: 0.375rem; 
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+    border: 1px solid #ced4da;
+}
+
+/* Estilo quando o campo for focado */
+#imagem:focus + .custom-file-label {
+    border-color: #005fcc; 
+    border-width: 2px;
+}
+
+/* Efeito hover no label */
+.custom-file-label:hover {
+    background-color: #d6d8db; 
+}
+
+/* Quando o input do tipo file estiver em foco, o label também receberá foco */
+.custom-file-label:focus {
+    border-color: #005fcc; 
+}
+
+a.custom-focus:focus {
+    outline: 2px solid #005fcc; 
+    outline-offset: 4px;        
+    border-radius: 2px;         
+}
+
+.toggle-sidebar:focus-visible, .sidenav-toggler:focus-visible{
+    padding: 10px !important;
+}
+
+.btn-home:focus-visible, .btn-home:active {
+    background-color: #8800CC !important;
+    color: white !important;
+}
+
+/* Focus botão de pesquisa */
+.botao-pesquisar .search-icon:focus-visible {
+    outline: 2px solid #005fcc;
+    outline-offset: 2px;
+    border-radius: 5px;
+  }  
 
 /* Focus quando clicar no tab */
 .nav-toggle:focus-visible
@@ -1201,14 +1289,17 @@ label.form-label {
 .nav-item a:focus-visible,
 .card-title a:focus-visible,
 td a:focus-visible,
+.logo:focus-visible,
 .option-btn:focus-visible,
 .option-add:focus-visible,
 button:focus-visible,
 .btn:focus-visible,
 .select-btn:focus-visible,
-.option-btn:focus-visible{
+.option-btn:focus-visible,
+.breadcrumb-item a:focus-visible{
     outline: 2px solid #005fcc !important;
     outline-offset: 2px !important;
+    border-radius: 5px !important;
 }
 
 .highlighted {
@@ -1216,11 +1307,6 @@ button:focus-visible,
     color: white;
     outline: 2px solid #005fcc;
   }
-  
-
-h2 {
-    font-size: 2rem !important;
-}
 
 .img-capa {
     height: 200px;
@@ -1270,6 +1356,29 @@ h1{
     border-radius: 10px; 
 }
 
+.none{
+    display: none;
+}
+
+.edit-profile{
+    width: 100%;
+    max-width: 1200px;
+}
+
+.btn-blue{
+    background: #011C37;
+    color: white;
+}
+
+.btn-blue:hover, .btn-blue::after{
+    background: #053769;
+    color: white;
+}
+.btn-blue::after{
+    background: #011C37;
+    color: white;
+}
+
 /* Respostas de mídia em tela pequena */
 @media (max-width: 768px) {
     .card-body {
@@ -1286,6 +1395,13 @@ h1{
 
     .media-reply {
         padding: 15px;
+    }
+
+    .card-not-home{
+        background: white;
+        width: 100%;
+        padding: 20px;
+        border-radius: 10px;
     }
 }
 

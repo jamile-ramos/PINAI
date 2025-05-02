@@ -31,7 +31,7 @@
     @endphp
     <header class="text-center py-3 mb-4">
         <div class="container">
-            <h1 class="display-4 fw-bold">Painel de Notícias</h1>
+            <h1 class="display-4 fw-bold">Portal de Notícias</h1>
             <p class="text-secondary mt-3 ">Atualizações, eventos e novidades sobre acessibilidade nos NAIs de todo o Brasil.</p>
         </div>
     </header>

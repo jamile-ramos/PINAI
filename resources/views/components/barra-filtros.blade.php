@@ -4,12 +4,14 @@
     <form action="/" method="GET" class="search-form" style="display: none;">
         <div class="search-container">
             <i class="fas fa-search mr-2"></i>
+            <label for="search-query" class="sr-only">Pesquisar</label>
             <input type="text" class="search-input" name="query" placeholder="Pesquisar..." value="{{ request('query') }}" />
         </div>
     </form>
 
     <!-- Select para telas menores -->
     <div class="select-btn"
+        id="custom-combobox"
         role="combobox"
         aria-haspopup="listbox"
         aria-haspopup="listbox"
@@ -17,7 +19,7 @@
         aria-controls="dropdown-options"
         aria-activedescendant=""
         tabindex="0">
-        <div class="select-option" id="selected-option">Visão geral</div>
+        <div class="select-option" id="selected-option" role="textbox" aria-selected="true">Visão Geral</div>
         <i class="dropdown-icon fas fa-chevron-down"></i>
 
         <div class="dropdown-select close-drop"
@@ -42,7 +44,8 @@
                 <button
                     data-url=" {{ $action['data-url'] ?? ''}} "
                     class="option-add btn {{ $action['classBtn'] ?? ''}}"
-                    content-id="{{ $action['content-id'] ?? ''}}">
+                    content-id="{{ $action['content-id'] ?? ''}}"
+                    aria-label="{{ $action['nomeButton'] ?? 'ação'}}">
                     {{ $action['nomeButton'] ?? ''}}
                 </button>
                 @endforeach
@@ -60,7 +63,8 @@
             aria-controls="panel-1"
             class="tab-btn {{ $link['classActive'] ?? ''}}"
             content-id="{{ $link['content-id'] ?? ''}}"
-            data-tipo="{{ $link['data-tipo'] ?? '' }}">
+            data-tipo="{{ $link['data-tipo'] ?? '' }}"
+            aria-label="{{ $link['nomeAba'] ?? ''}}">
             {{ $link['nomeAba'] ?? ''}}
         </button>
         @endforeach
@@ -72,14 +76,20 @@
         <button
             data-url=" {{ $action['data-url'] ?? ''}} "
             class="add-btn btn {{ $action['classBtn'] ?? ''}}"
-            content-id="{{ $action['content-id'] ?? ''}}">
+            content-id="{{ $action['content-id'] ?? ''}}"
+            aria-label="{{ $action['nomeButton'] ?? ''}}">
             {{ $action['nomeButton'] ?? ''}}
         </button>
         @endforeach
 
         <div class="botao-pesquisar">
-            <a href="javascript:void(0);" class="search-icon"><i class="fas fa-search mr-2"></i></a>
-            <a href="javascript:void(0);" class="close-search" style="display: none;"><i class="fas fa-times mr-2"></i></a>
+            <button class="search-icon" aria-label="Pesquisar">
+                <i class="fas fa-search mr-2"></i>
+            </button>
+            <button class="close-search" style="display: none;" aria-label="Fechar busca">
+                <i class="fas fa-times mr-2"></i>
+            </button>
         </div>
+
     </div>
 </div>

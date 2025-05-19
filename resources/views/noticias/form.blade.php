@@ -11,6 +11,17 @@
         @endphp
         {{ Breadcrumbs::render('formNoticia', $tipoForm)}}
     </div>
+
+    @if ($errors->any())
+    @foreach ($errors->all() as $message)
+    <div class="alert alert-danger alert-dismissible fade show mt-2 mx-3 rounded" role="alert">
+        {{ $message }}
+        <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Fechar">
+        </button>
+    </div>
+    @endforeach
+    @endif
+
     <div class="container my-5">
         <div class="card shadow-lg p-4">
             <div class="card-header">
@@ -63,19 +74,17 @@
                 </div>
 
                 <!-- Campo Imagem -->
-                <div class="form-group mb-4" id="campoImagem">
-                    <label for="imagem" class="form-label">Imagem</label>
-                    <div class="custom-file-container">
-                        <input
-                            name="imagem"
-                            type="file"
-                            class="form-control-file"
-                            id="imagem"
-                            tabindex="0" />
-                        <label for="imagem" class="custom-file-label">Escolher Arquivo</label>
-                    </div>
+                <div class="px-3" id="campoImagem">
+                    <label for="imagem" class="form-label">
+                        Imagem
+                    </label>
+                    <input
+                        name="imagem"
+                        type="file"
+                        class="form-control"
+                        id="imagem"
+                        tabindex="0" />
                 </div>
-
 
                 <!-- Prévia da Imagem (se já existir uma imagem) -->
                 @if(isset($noticia) && $noticia->imagem)

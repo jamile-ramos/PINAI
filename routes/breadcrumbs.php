@@ -21,6 +21,12 @@ Breadcrumbs::for('painelUsuarios', function (BreadcrumbTrail $trail) {
     $trail->push('Painel de Usuários', route('painel.usuarios'));
 });
 
+// Página Inicial > Painel de Usuários > Adicionar Nai /Editar Nai
+Breadcrumbs::for('formNai', function (BreadcrumbTrail $trail, $tipoForm) {
+    $trail->parent('painelUsuarios');
+    $trail->push($tipoForm, route('nais.create'));
+});
+
 // Página Inicial > Meu perfil
 Breadcrumbs::for('myProfile', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
@@ -93,6 +99,12 @@ Breadcrumbs::for('documentos', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('formDocumento', function (BreadcrumbTrail $trail, $tipoForm) {
     $trail->parent('documentos');
     $trail->push($tipoForm, route('documentos.create'));
+});
+
+// Página Inicial > Biblioteca Digital > Categoria
+Breadcrumbs::for('categoriaDocumento', function (BreadcrumbTrail $trail, $categoria) {
+    $trail->parent('documentos');
+    $trail->push($categoria->nomeCategoria, route('documentos.documentosCategorias', ['idCategoria' => $categoria->nomeCategoria]));
 });
 
 // Página Inicial > Banco de soluções

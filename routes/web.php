@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\DocumentoController;
+use App\Http\Controllers\NaiController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuarioController;
@@ -40,6 +41,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/painelUsuarios', [UsuarioController::class, 'index'])->name('painel.usuarios');
     Route::put('/painelUsuarios/alterar/{id}', [UsuarioController::class, 'update'])->name('painel.update');
     Route::put('/painelUsuarios/status/{id}', [UsuarioController::class, 'updateStatus'])->name('painel.updateStatus');
+    // Nais 
+    Route::get('painelUsuarios/nais/create', [NaiController::class, 'create'])->name('nais.create');
 
     // Portal de Notícias
     Route::get('/noticias', [NoticiaController::class, 'index'])->name('noticias.index');

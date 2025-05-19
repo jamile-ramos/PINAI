@@ -69,7 +69,7 @@
             <div class="col-md-8">
               <div class="card-body d-flex flex-column h-100 bg-transparent p-0">
                 <h5 class="card-title title-new mb-2">
-                  <a href="{{ route('noticias.show', $noticia->id) }}" class="text-decoration-none text-dark" data-btn="noticias" aria-label="Abrir a notícia completa: {{ $noticia->titulo }}">
+                  <a href="{{ route('noticias.show', $noticia->id) }}" class="text-decoration-none" data-btn="noticias" aria-label="Abrir a notícia completa: {{ $noticia->titulo }}">
                     {{ $noticia->titulo }}
                   </a>
                 </h5>

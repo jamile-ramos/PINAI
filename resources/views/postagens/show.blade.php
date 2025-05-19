@@ -107,7 +107,6 @@
                 <!--Comentários nas respostas-->
                 <div class="comment-section">
                     <h4>Comentários ({{ $resposta->comentarios->count() }})</h4>
-
                     @foreach($resposta->comentarios as $comentario)
                     <div class="comment-card">
                         <div class="comment-header">
@@ -135,19 +134,25 @@
                         <textarea name="conteudo" rows="3" id="comentario-{{ $resposta->id }}" class="form-control mention-input" placeholder="Escreva um comentário..." aria-label="Escreva um comentário"></textarea>
                         <!--Butão de mencionar usuario-->
                         <div class="btn-group-comment">
-                            <button class="btn btn-link mention-user" id="mention-user-{{ $resposta->id }}" data-id="{{ $resposta->id}}" data-user="{{ $comentario->user->name }}" aria-label="Mencionar usuário no comentário">
+                            <button class="btn btn-link mention-user" id="mention-user-{{ $resposta->id }}" data-id="{{ $resposta->id}}" data-user="{{ $resposta->idUsuario }}" aria-label="Mencionar usuário no comentário">
                                 <i class="fa fa-at"></i> Mencionar
                             </button>
+                            <div id="no-users-{{ $resposta->id }}" class=" alert  alert-danger justify-content-center align-items-center my-3 " style="visibility: hidden; position: absolute;" role="alert">
+                                Não há usuários para mencionar no momento.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
                             <!-- Menu de sugestões de usuários -->
-                            <div class="mention-menu" id="mention-menu-{{ $resposta->id }}" style="display: none;">
+                            <div class="mention-menu" id="mention-menu-{{ $resposta->id }}" style="visibility: hidden;">
                                 <ul id="user-list-{{ $resposta->id }}">
                                     <!-- Usuários serão inseridos aqui via Ajax -->
                                 </ul>
                             </div>
 
                             <div class="btns-comment">
-                                <button type="submit" class="btn btn-primary btn-coment" aria-label="Salvar comentário">Comentar</button>
                                 <button type="button" class="btn btn-secondary btn-cancelar-comment btn-coment" data-id="{{$resposta->id}}" arial-label="Cancelar comentário">Cancelar</button>
+                                <button type="submit" class="btn btn-primary btn-coment" aria-label="Salvar comentário">Comentar</button>
                             </div>
                         </div>
                     </form>

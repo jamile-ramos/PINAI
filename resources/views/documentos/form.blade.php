@@ -4,12 +4,6 @@
 
 @section('content')
 
-@foreach (['nomeArquivo', 'descricao', 'categoria', 'arquivo'] as $campo)
-@error($campo)
-<div class="alert alert-danger">{{ $message }}</div>
-@enderror
-@endforeach
-
 @php
 $tipoForm = isset($documento) ? 'Editar Documento' : 'Adicionar Documento';
 @endphp
@@ -18,6 +12,17 @@ $tipoForm = isset($documento) ? 'Editar Documento' : 'Adicionar Documento';
     <div class="mx-3">
         {{ Breadcrumbs::render('formDocumento', $tipoForm) }}
     </div>
+    
+    @if ($errors->any())
+    @foreach ($errors->all() as $message)
+    <div class="alert alert-danger alert-dismissible fade show mt-2 mx-2 rounded" role="alert">
+        {{ $message }}
+        <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Fechar">
+        </button>
+    </div>
+    @endforeach
+    @endif
+
     <div class="card shadow-lg p-4">
         <div class="card-header">
             <div class="d-flex align-items-center">

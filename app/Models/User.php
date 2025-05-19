@@ -81,4 +81,10 @@ class User extends Authenticatable
     public function solucoes(){
         return $this->hasMany(Solucao::class, 'idUsuario');
     }
+
+    public function nai(){
+        return $this->belongsTo(Nai::class, 'idNai');
+    }
+
+
 }

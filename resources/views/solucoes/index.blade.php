@@ -41,11 +41,9 @@
         :actions="$actions" />
 
     @if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert" id="sucess-alert">
+    <div class="alert alert-success alert-dismissible fade show rounded" role="alert" id="sucess-alert">
         <strong>{{ session('success') }}</strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Fechar">
     </div>
     @endif
     <!-- Conteúdo das abas -->

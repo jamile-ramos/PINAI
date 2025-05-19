@@ -13,7 +13,12 @@
         </div>
     </header>
 
-    <x-barra-filtros :links="[['content-id' => 'all-users', 'nomeAba' => 'Visão Geral', 'classActive' => 'active']]" />
+    <x-barra-filtros 
+    :links="[
+        ['content-id' => 'all-users', 'nomeAba' => 'Visão Geral', 'classActive' => 'active'],
+        ['content-id' => 'all-nais', 'nomeAba' => 'Núcleos de Acessibilidade e Inclusão']
+        ]" 
+    :actions="[['classBtn' => 'btn-primary', 'content-id' => 'nais', 'nomeButton' => 'Adicionar NAI', 'data-url' => 'painelUsuarios/nais/create']]"/>
 
     @foreach (['success', 'sucess-status'] as $status)
     @if(session($status))
@@ -78,6 +83,11 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+    </div>
+    <div class="tab-contents-users" role="tabpanel" id="panel-1" aria-labelledby="tab-1" tabindex="0">
+        <div class="content-link" id="all-nais">
+            NAI
         </div>
     </div>
 </div>

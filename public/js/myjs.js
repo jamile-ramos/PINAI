@@ -438,6 +438,8 @@ document.addEventListener('DOMContentLoaded', function () {
             window.location.href = url;
         } else if (buttonText === 'Adicionar Solução') {
             window.location.href = url;
+        }else if(buttonText === "Adicionar NAI"){
+            window.location.href = url;
         }
     }
 
@@ -552,9 +554,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Js do controle da imagem no edit
     const removeImageBtn = document.getElementById('removeImageBtn');
-
+    const campoImagem = document.getElementById('campoImagem');
     if (removeImageBtn) {
-        const campoImagem = document.getElementById('campoImagem');
         campoImagem.style.display = 'none';
         removeImageBtn.addEventListener('click', function () {
             const preview = document.getElementById('preview');
@@ -620,12 +621,13 @@ document.addEventListener('DOMContentLoaded', function () {
             let respostaId = btn.getAttribute('data-id');
             let menu = document.getElementById(`mention-menu-${respostaId}`);
             let userList = document.getElementById(`user-list-${respostaId}`);
+            let noUsersMessage = document.getElementById(`no-users-${respostaId}`);
 
             let openMenus = document.querySelectorAll('.mention-menu');
 
             if (!btn) {
                 openMenus.forEach(menu => {
-                    menu.style.display = 'none';
+                    menu.style.visibility = 'hidden';
                 });
                 return;
             }
@@ -636,8 +638,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            if (menu.style.display === 'block') {
-                menu.style.display = 'none';
+            if (menu.style.visibility === 'visible') {
+                menu.style.visibility = 'hidden';
                 return;
             }
 
@@ -662,7 +664,18 @@ document.addEventListener('DOMContentLoaded', function () {
                         });
 
                         // Exibe o menu de menção
-                        menu.style.display = 'block';
+                        console.log(noUsersMessage);
+                        if (usuarios && usuarios.length > 0) {
+                            menu.style.visibility = 'visible';
+                        } else {
+                            noUsersMessage.style.visibility = 'visible';
+                            btn.style.visibility = 'hidden';
+
+                            setTimeout(function () {
+                                noUsersMessage.style.visibility = 'hidden';
+                            }, 5000); 
+                        }
+
                     } else {
                         console.error("Erro: dados de usuários inválidos.");
                     }
@@ -670,7 +683,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 .catch(error => {
                     console.error("Erro ao carregar usuários:", error);
                 });
-
         })
     )
 
@@ -768,8 +780,8 @@ document.addEventListener('DOMContentLoaded', function () {
         backdrop: true, // Isso impede o fechamento do modal quando clicado fora.
         keyboard: false  // Isso impede o fechamento do modal com a tecla ESC.
     });*/
-    
-    
+
+
 });
 
 // Evento para ocultar alertas com jQuery

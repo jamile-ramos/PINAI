@@ -438,7 +438,7 @@ document.addEventListener('DOMContentLoaded', function () {
             window.location.href = url;
         } else if (buttonText === 'Adicionar Solução') {
             window.location.href = url;
-        }else if(buttonText === "Adicionar NAI"){
+        } else if (buttonText === "Adicionar NAI") {
             window.location.href = url;
         }
     }
@@ -673,7 +673,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                             setTimeout(function () {
                                 noUsersMessage.style.visibility = 'hidden';
-                            }, 5000); 
+                            }, 5000);
                         }
 
                     } else {
@@ -780,6 +780,44 @@ document.addEventListener('DOMContentLoaded', function () {
         backdrop: true, // Isso impede o fechamento do modal quando clicado fora.
         keyboard: false  // Isso impede o fechamento do modal com a tecla ESC.
     });*/
+
+
+    /* Estados e cidades dos Nai no Painel de usuários */
+    const estadoSelect = document.getElementById('estado')
+    const cidadeSelect = document.getElementById('cidade')
+
+    fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+        .then(response => response.json())
+        .then(estados => {
+            estados.sort((a, b) => a.nome.localeCompare(b.nome)); //ordena por nome
+            estados.forEach(estado => {
+                const option = document.createElement('option');
+                option.value = estado.sigla;
+                option.text = estado.sigla + " - " + estado.nome;
+                option.setAttribute('data-id', estado.id);
+                estadoSelect.add(option);
+            });
+        });
+
+    estadoSelect.addEventListener('change', () => {
+        const selectedOption = estadoSelect.options[estadoSelect.selectedIndex];
+        const estadoId = selectedOption.getAttribute('data-id');        
+        cidadeSelect.innerHTML = '<option>Carregando...</option>';
+
+        if (estadoId) {
+            fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoId}/municipios`)
+                .then(response => response.json())
+                .then(cidades => {
+                    cidadeSelect.innerHTML = '<option value="">Selecione a cidade</option>';
+                    cidades.forEach(cidade =>{
+                        const option = document.createElement('option');
+                        option.value = cidade.nome;
+                        option.text = cidade.nome
+                        cidadeSelect.add(option)
+                    });
+                });
+        }
+    });
 
 
 });

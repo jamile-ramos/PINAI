@@ -6,6 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Nai extends Model
 {
+
+    protected $fillable = [
+        'nome',
+        'instituicao',
+        'siglaInstituicao',
+        'estado',
+        'cidade',
+        'email',
+        'telefone',
+        'site',
+        'status'
+    ];
+
     public function users(){
         return $this->hasMany(User::class, 'idNai');
     }

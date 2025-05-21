@@ -3,41 +3,47 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Nai;
 
 class NaiController extends Controller
 {
     
     public function create(){
-        $estados = [
-            'AC' => 'Acre',
-            'AL' => 'Alagoas',
-            'AP' => 'Amapá',
-            'AM' => 'Amazonas',
-            'BA' => 'Bahia',
-            'CE' => 'Ceará',
-            'DF' => 'Distrito Federal',
-            'ES' => 'Espírito Santo',
-            'GO' => 'Goiás',
-            'MA' => 'Maranhão',
-            'MT' => 'Mato Grosso',
-            'MS' => 'Mato Grosso do Sul',
-            'MG' => 'Minas Gerais',
-            'PA' => 'Pará',
-            'PB' => 'Paraíba',
-            'PR' => 'Paraná',
-            'PE' => 'Pernambuco',
-            'PI' => 'Piauí',
-            'RJ' => 'Rio de Janeiro',
-            'RN' => 'Rio Grande do Norte',
-            'RS' => 'Rio Grande do Sul',
-            'RO' => 'Rondônia',
-            'RR' => 'Roraima',
-            'SC' => 'Santa Catarina',
-            'SP' => 'São Paulo',
-            'SE' => 'Sergipe',
-            'TO' => 'Tocantins',
-        ];
+        return view('usuarios.formNai');
+    }
+
+    public function edit($id){
+        $nai = Nai::findOrFail($id);
+        return view('usuarios.formNai', $nai);
+    }
+
+    public function store(Request $request){
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'instituicao' => 'required|string|max:255',
+            'siglaInstituicao' => 'required|string|max:255',
+            'estado' => 'required|string|max:2',
+            'cidade' => 'required|string|255',
+            'email' => 'required|string|255',
+            'telefone' => 'required|string|255',
+            'site' => 'string|255'
+        ]);
+
+        $nai = Nai::create([
+            'nome' => $request->nome,
+            'instituicao' => $request->instituicao,
+            'siglaInstituicao' => $request->siglaInstituicao,
+            'estado' => $request->estado,
+            'cidade' => $request->cidade,
+            'email' => $request->email,
+            'telefone' => $request->telefone,
+            'site' => $request->site
+        ]);
+
+        return view('painel.usuarios')->with('success', 'NAI cadastrado com sucesso!');
+    }
+
+    public function update(Request $request){
         
-        return view('usuarios.formNai', compact('estados'));
     }
 }

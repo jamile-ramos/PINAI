@@ -41,8 +41,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/painelUsuarios', [UsuarioController::class, 'index'])->name('painel.usuarios');
     Route::put('/painelUsuarios/alterar/{id}', [UsuarioController::class, 'update'])->name('painel.update');
     Route::put('/painelUsuarios/status/{id}', [UsuarioController::class, 'updateStatus'])->name('painel.updateStatus');
-    // Nais 
+    // Nais
     Route::get('painelUsuarios/nais/create', [NaiController::class, 'create'])->name('nais.create');
+    Route::post('painelUsuarios/nais/store', [NaiController::class, 'store'])->name('nais.store');
+    Route::get('painelUsuarios/nais/update', [NaiController::class, 'update'])->name('nais.update');
+    Route::get('painelUsuarios/nais/edit/{id}', [NaiController::class, 'edit'])->name('nais.edit');
 
     // Portal de Notícias
     Route::get('/noticias', [NoticiaController::class, 'index'])->name('noticias.index');

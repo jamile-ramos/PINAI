@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('nais', function (Blueprint $table) {
-            $table->string('siglaInstituicao', 10)->nullable()->change();
+            $table->string('siglaInstituicao', 50)->nullable()->change();
         });
     }
 

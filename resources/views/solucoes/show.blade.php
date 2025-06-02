@@ -3,9 +3,9 @@
 @section('title', 'Detalhes da Solução')
 
 @section('content')
-<div class="container py-5">
+<div class="container py-3">
+    {{ Breadcrumbs::render('verSolucao', $solucao) }}
     <div class="card shadow-lg border-0 rounded-4 p-5 bg-white">
-
         <!-- Título e descrição -->
         <div class="mb-5 text-center">
             <h1 class="fw-bold text-primary display-5">{{ $solucao->titulo }}</h1>

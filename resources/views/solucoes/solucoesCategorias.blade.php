@@ -6,6 +6,8 @@
 
 <div class="container py-2">
 
+{{ Breadcrumbs::render('categoriaSolucao', $categoria)}}
+
     <div class="row mb-4">
         <div class="col">
             <h2 class="nomeCategoria fw-bold">{{ $categoria->nomeCategoria }}</h2>

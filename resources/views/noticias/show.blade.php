@@ -3,7 +3,7 @@
 @section('title', $noticia->titulo)
 
 @section('content')
-<div class="container py-5">
+<div class="container py-2">
     <!-- Breadcrumb -->
     <div class="mb-4">
         {{ Breadcrumbs::render('verNoticia', $noticia) }}

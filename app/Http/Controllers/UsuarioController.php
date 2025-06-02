@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Nai;
 
 class UsuarioController extends Controller
 {
@@ -21,18 +22,23 @@ class UsuarioController extends Controller
         } else{
             $usuarios = User::all();
         }
-        return view('usuarios.painelUsuarios', compact('usuarios','query'));
+
+        $nais = Nai::where('status', 'ativo')->get();
+        return view('usuarios.painelUsuarios', compact('usuarios','query', 'nais'));
     }
 
     public function update(Request $request, $id)
     {
-        $tipoUsuario = $request->tipoUsuario;
+        $user = User::findOrFail($id);
 
-        $post = User::findOrFail($id);
+        $user->update([
+            'name' => $request->userName,
+            'email' => $request->userEmail,
+            'tipoUsuario' => $request->tipoUsuario,
+            'idNai' => $request->userNai
+        ]);
 
-        $post->update(['tipoUsuario' => $tipoUsuario]);
-
-        return redirect('/painelUsuarios')->with('success', 'Tipo de usuário alterado com sucesso!');
+        return redirect('/painelUsuarios')->with('success', 'Dados do usuário atualizado com sucesso!');
     }
 
     public function updateStatus(Request $request, $id)

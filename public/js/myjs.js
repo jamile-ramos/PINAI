@@ -62,7 +62,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.container-abas').forEach(container => {
         const barraId = container.id;
         const selectOption = container.querySelector(".select-option");
-        console.log(barraId)
         if (selectOption.innerText.trim() === 'Visão Geral' && barraId == 'abaProfile') {
             selectOption.innerText = 'Minhas publicações';
         }
@@ -217,25 +216,30 @@ document.addEventListener('DOMContentLoaded', function () {
     verificarTamanhoTela();
     window.addEventListener('resize', verificarTamanhoTela);
 
-    //Alterar tipo no painel de usuários
+    //Editar dados do usuário
     $(document).ready(function () {
         $('.btn-info').on('click', function () {
             const userId = $(this).data('id');
             const userName = $(this).data('name');
             const userEmail = $(this).data('email');
             const userType = $(this).data('type');
+            const userNai = $(this).data('nai');
 
             $('#userId').val(userId);
             $('#userName').val(userName);
             $('#userEmail').val(userEmail);
             $('#userType').val(userType);
+            $('#userNai').val(userNai);
 
             $('#editUserModal').modal('show');
         });
 
         $('#saveUserChanges').on('click', function () {
             const userId = $('#userId').val();
+            const userName = $('#userName').val();
+            const userEmail = $('#userEmail').val();
             const userType = $('#userType').val();
+            const userNai = $('userNai').val();
 
             $.ajax({
                 url: '/usuarios/' + userId + '/update',
@@ -243,7 +247,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 data: {
                     _token: $('meta[name="csrf-token"]').attr('content'),
                     userId: userId,
-                    userType: userType
+                    userName: userName,
+                    userType: userType,
+                    userEmail: userEmail,
+                    userNai: userNai                    
                 },
                 success: function (response) {
                     $('#editUserModal').modal('hide');
@@ -264,11 +271,17 @@ document.addEventListener('DOMContentLoaded', function () {
             const userName = this.getAttribute('data-name');
             const userEmail = this.getAttribute('data-email');
             const userType = this.getAttribute('data-type');
+            const userNai = this.getAttribute('data-nai');
 
             document.getElementById('userId').value = userId;
             document.getElementById('userName').value = userName;
             document.getElementById('userEmail').value = userEmail;
             document.getElementById('userType').value = userType;
+            if(userNai != 'selecione'){
+                document.getElementById('userType').value = userNai;
+            }else{
+                document.getElementById('userType').value = 'selecione';
+            }
 
             const form = document.getElementById('editUserForm');
             const route = form.getAttribute('data-route');
@@ -486,7 +499,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 const id = btn.getAttribute('data-id');
                 const selected = btn.getAttribute('data-selected');
                 const statusSelect = document.getElementById('statusSelect');
-                statusSelect.value = selected;
+                if(statusSelect){
+                    statusSelect.value = selected;
+                }
 
                 if (btnStatusTop) {
                     const form = document.getElementById('formConfirmacaoTopico');
@@ -502,14 +517,14 @@ document.addEventListener('DOMContentLoaded', function () {
     // Abrir o modal de exclusão 
     document.querySelectorAll('.container-abas').forEach(container => {
         const deleteButtons = container.querySelectorAll('.btn-remove');
-
         deleteButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 const id = btn.getAttribute('data-id');
                 const modal = btn.getAttribute('data-modal');
                 const form = document.getElementById('confirmExcluirForm');
+                console.log('Formulario:', form)
                 const url = btn.getAttribute('data-url');
-
+                console.log(url)
                 form.setAttribute('action', url);
                 document.getElementById('id').value = id;
 
@@ -664,7 +679,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         });
 
                         // Exibe o menu de menção
-                        console.log(noUsersMessage);
                         if (usuarios && usuarios.length > 0) {
                             menu.style.visibility = 'visible';
                         } else {
@@ -783,42 +797,83 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     /* Estados e cidades dos Nai no Painel de usuários */
-    const estadoSelect = document.getElementById('estado')
-    const cidadeSelect = document.getElementById('cidade')
+    const estadoSelect = document.getElementById('estado');
+    const cidadeSelect = document.getElementById('cidade');
 
-    fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
-        .then(response => response.json())
-        .then(estados => {
-            estados.sort((a, b) => a.nome.localeCompare(b.nome)); //ordena por nome
-            estados.forEach(estado => {
-                const option = document.createElement('option');
-                option.value = estado.sigla;
-                option.text = estado.sigla + " - " + estado.nome;
-                option.setAttribute('data-id', estado.id);
-                estadoSelect.add(option);
+    if (estadoSelect && cidadeSelect) {
+        const estadoBd = estadoSelect.getAttribute('data-estado');
+        const cidadeBd = cidadeSelect.getAttribute('data-cidade');
+        fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+            .then(response => response.json())
+            .then(estados => {
+                estados.sort((a, b) => a.nome.localeCompare(b.nome)); //ordena por nome
+                estados.forEach(estado => {
+                    const option = document.createElement('option');
+                    option.value = estado.sigla;
+                    option.text = estado.sigla + " - " + estado.nome;
+                    if (estadoBd) {
+                        if (estadoBd === estado.sigla) {
+                            option.selected = true;
+                            carregarCidades(estado.id);
+                        }
+                    }
+                    option.setAttribute('data-id', estado.id);
+                    estadoSelect.add(option);
+                });
+
             });
+
+        estadoSelect.addEventListener('change', () => {
+            const selectedOption = estadoSelect.options[estadoSelect.selectedIndex];
+            const estadoId = selectedOption.getAttribute('data-id');
+            cidadeSelect.innerHTML = '<option value="" disabled selected>Carregando...</option>';
+
+            carregarCidades(estadoId)
         });
 
-    estadoSelect.addEventListener('change', () => {
-        const selectedOption = estadoSelect.options[estadoSelect.selectedIndex];
-        const estadoId = selectedOption.getAttribute('data-id');        
-        cidadeSelect.innerHTML = '<option>Carregando...</option>';
+        function carregarCidades(estadoId) {
+            if (estadoId) {
+                fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoId}/municipios`)
+                    .then(response => response.json())
+                    .then(cidades => {
+                        cidadeSelect.innerHTML = '<option value="" disabled selected>Selecione a cidade</option>';
+                        cidades.forEach(cidade => {
+                            const option = document.createElement('option');
+                            option.value = cidade.nome;
+                            if (cidadeBd) {
+                                if (cidadeBd === cidade.nome) {
+                                    option.selected = true;
+                                }
+                            }
+                            option.text = cidade.nome
+                            cidadeSelect.add(option)
+                        });
+                    });
+            }
+        }
+    }
 
-        if (estadoId) {
-            fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoId}/municipios`)
+    /* Visualizar nome do estado na tabela de NAI em painel de usuários */
+    const tableNais = document.getElementById('table-nais');
+
+    if (tableNais) {
+        const estadoTds = tableNais.querySelectorAll('td[id^="estado-"]');
+
+        estadoTds.forEach(td => {
+            const uf = td.textContent.trim();
+
+            fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
                 .then(response => response.json())
-                .then(cidades => {
-                    cidadeSelect.innerHTML = '<option value="">Selecione a cidade</option>';
-                    cidades.forEach(cidade =>{
-                        const option = document.createElement('option');
-                        option.value = cidade.nome;
-                        option.text = cidade.nome
-                        cidadeSelect.add(option)
+                .then(estados => {
+                    estados.sort((a, b) => a.nome.localeCompare(b.nome));
+                    estados.forEach(estado => {
+                        if (uf === estado.sigla) {
+                            td.innerHTML = estado.nome;
+                        }
                     });
                 });
-        }
-    });
-
+        });
+    }
 
 });
 

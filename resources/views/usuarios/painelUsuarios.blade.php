@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="container-abas" id="abaUsuarios">
-{{ Breadcrumbs::render('painelUsuarios') }}
+    {{ Breadcrumbs::render('painelUsuarios') }}
     <header class="text-center py-3 mb-4">
         <div class="container">
             <h1 class="display-4 fw-bold">Painel de Usuários</h1>
@@ -13,20 +13,18 @@
         </div>
     </header>
 
-    <x-barra-filtros 
-    :links="[
+    <x-barra-filtros
+        :links="[
         ['content-id' => 'all-users', 'nomeAba' => 'Visão Geral', 'classActive' => 'active'],
         ['content-id' => 'all-nais', 'nomeAba' => 'Núcleos de Acessibilidade e Inclusão']
-        ]" 
-    :actions="[['classBtn' => 'btn-primary', 'content-id' => 'nais', 'nomeButton' => 'Adicionar NAI', 'data-url' => 'painelUsuarios/nais/create']]"/>
+        ]"
+        :actions="[['classBtn' => 'btn-primary', 'content-id' => 'nais', 'nomeButton' => 'Adicionar NAI', 'data-url' => 'painelUsuarios/nais/create']]" />
 
     @foreach (['success', 'sucess-status'] as $status)
     @if(session($status))
-    <div class="alert alert-success alert-dismissible fade show" role="alert" id="{{ $status }}-alert">
+    <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
         <strong>{{ session($status) }}</strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
-            <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
     @endforeach
@@ -39,6 +37,7 @@
                         <tr>
                             <th>Nome</th>
                             <th>Email</th>
+                            <th>NAI</th>
                             <th>Tipo de usuário</th>
                             <th>Status</th>
                             <th>Data de criação</th>
@@ -50,6 +49,7 @@
                         <tr>
                             <td>{{ $usuario->name }}</td>
                             <td>{{ $usuario->email }}</td>
+                            <td>{{ $usuario->nai?->siglaNai ?? 'Não selecionado' }}</td>
                             <td>@if ($usuario->tipoUsuario == 'comum')
                                 Comum
                                 @elseif ($usuario->tipoUsuario == 'admin')
@@ -67,8 +67,9 @@
                                         data-name="{{ $usuario->name }}"
                                         data-email="{{ $usuario->email }}"
                                         data-type="{{ $usuario->tipoUsuario }}"
-                                        aria-label="Alterar tipo de usuário">
-                                        Alterar tipo
+                                        data-nai="{{ $usuario->nai?->id ?? 'selecione'  }}"
+                                        aria-label="Editar Usuário">
+                                        Editar
                                     </button>
                                     <button type="button" class="btn toggle-status btn-status {{ $usuario->status == 'ativo' ? 'btn-danger' : 'btn-success' }}"
                                         data-id="{{ $usuario->id }}"
@@ -87,7 +88,7 @@
     </div>
     <div class="tab-contents-users" role="tabpanel" id="panel-1" aria-labelledby="tab-1" tabindex="0">
         <div class="content-link" id="all-nais">
-            NAI
+            @include('usuarios.tableNais', ['nais' => $nais])
         </div>
     </div>
 </div>
@@ -97,7 +98,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title fw-bold" id="exampleModalLabel">Alterar Tipo de Usuário</h5>
+                <h5 class="modal-title fw-bold" id="exampleModalLabel">Editar</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Fechar">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -109,11 +110,20 @@
                     <input type="hidden" id="userId" name="userId">
                     <div class="form-group">
                         <label for="userName">Nome</label>
-                        <input type="text" class="form-control" id="userName" readonly>
+                        <input type="text" class="form-control" id="userName" name="userName">
                     </div>
                     <div class="form-group">
                         <label for="userEmail">Email</label>
-                        <input type="email" class="form-control" id="userEmail" readonly>
+                        <input type="email" class="form-control" id="userEmail" name="userEmail">
+                    </div>
+                    <div class="form-group">
+                        <label for="userNai">Núcleo de Acessibilidade e Inclusão (NAI)</label>
+                        <select class="form-control" id="userNai" name="userNai">
+                            <option value="selecione" selected disabled>Selecione um NAI...</option>
+                            @foreach($nais as $nai)
+                            <option value="{{ $nai->id }}">{{ $nai->siglaNai }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="userType">Tipo de Usuário</label>
@@ -161,5 +171,7 @@
         </div>
     </div>
 </div>
+
+@include('layouts.modalExclusao')
 
 @endsection

@@ -66,6 +66,9 @@ h3 {
     outline: none
 }
 
+.btn-edit{
+    background: #007BFF;
+}
 
 .card-functions i {
     font-size: 50px;
@@ -1261,7 +1264,7 @@ label.form-label {
     border-color: #005fcc;
 }
 
-a.custom-focus:focus {
+a.custom-focus:focus-visible {
     outline: 2px solid #005fcc;
     outline-offset: 4px;
     border-radius: 2px;
@@ -1309,7 +1312,6 @@ button:focus-visible,
 .form-control[type=file]:not(:disabled):not([readonly]) {
     border-radius: 5px;
 }
-
 
 .highlighted {
     background-color: #005fcc;
@@ -1395,6 +1397,10 @@ h1 {
 .noticia-img-wrapper {
     height: 400px; 
     max-height: 60vh; 
+}
+
+.link-hover:hover {
+    text-decoration: underline;
 }
 
 @media (max-width: 576px) {

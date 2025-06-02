@@ -44,8 +44,10 @@ Route::middleware('auth')->group(function () {
     // Nais
     Route::get('painelUsuarios/nais/create', [NaiController::class, 'create'])->name('nais.create');
     Route::post('painelUsuarios/nais/store', [NaiController::class, 'store'])->name('nais.store');
-    Route::get('painelUsuarios/nais/update', [NaiController::class, 'update'])->name('nais.update');
+    Route::put('painelUsuarios/nais/update/{id}', [NaiController::class, 'update'])->name('nais.update');
     Route::get('painelUsuarios/nais/edit/{id}', [NaiController::class, 'edit'])->name('nais.edit');
+    Route::get('painelUsuarios/nais/show/{id}', [NaiController::class, 'show'])->name('nais.show');
+    Route::delete('painelUsuarios/nais/destroy', [NaiController::class, 'destroy'])->name('nais.destroy');
 
     // Portal de Notícias
     Route::get('/noticias', [NoticiaController::class, 'index'])->name('noticias.index');

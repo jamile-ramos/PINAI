@@ -67,7 +67,6 @@ $idTopico = $postagem->idTopico;
             </div>
 
             <!-- Campo Imagem -->
-            <!-- Campo Imagem -->
             <div class="px-3" id="campoImagem">
                 <label for="imagem" class="form-label">
                     Imagem

@@ -27,6 +27,12 @@ Breadcrumbs::for('formNai', function (BreadcrumbTrail $trail, $tipoForm) {
     $trail->push($tipoForm, route('nais.create'));
 });
 
+// Página Inicial > Painel de Usuários > Nai
+Breadcrumbs::for('showNai', function (BreadcrumbTrail $trail, $nai) {
+    $trail->parent('painelUsuarios');
+    $trail->push($nai->nome, route('nais.show', ['id' => $nai->id]));
+});
+
 // Página Inicial > Meu perfil
 Breadcrumbs::for('myProfile', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
@@ -117,4 +123,19 @@ Breadcrumbs::for('solucoes', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('formSolucao', function (BreadcrumbTrail $trail, $tipoForm) {
     $trail->parent('solucoes');
     $trail->push($tipoForm, route('solucoes.index'));
+});
+
+// Página Inicial > Banco de soluções > Ver solução
+Breadcrumbs::for('verSolucao', function (BreadcrumbTrail $trail, $solucao) {
+    $trail->parent('solucoes');
+    if($solucao->idCategoria){
+        $trail->push($solucao->categoria->nomeCategoria, route('solucoes.solucoesCategorias', ['idCategoria' => $solucao->idCategoria]));
+    }
+    $trail->push($solucao->titulo, route('solucoes.show', $solucao->id));
+});
+
+// Página Inicial > Banco de soluções > Categoria
+Breadcrumbs::for('categoriaSolucao', function (BreadcrumbTrail $trail, $categoria) {
+    $trail->parent('solucoes');
+    $trail->push($categoria->nomeCategoria, route('solucoes.index'));
 });

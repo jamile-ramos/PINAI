@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', isset($noticia) ? 'Editar Núcleo de Acessibilidade e Inclusão' : 'Adicionar Núcleo de Acessibilidade e Inclusão')
+@section('title', isset($nai) ? 'Editar Núcleo de Acessibilidade e Inclusão' : 'Adicionar Núcleo de Acessibilidade e Inclusão')
 
 @section('content')
 
 <div class="col">
     <div class="mx-4">
         @php
-        $tipoForm =isset($noticia) ? 'Editar Núcleo de Acessibilidade e Inclusão' : 'Adicionar Núcleo de Acessibilidade e Inclusão'
+        $tipoForm =isset($nai) ? 'Editar Núcleo de Acessibilidade e Inclusão' : 'Adicionar Núcleo de Acessibilidade e Inclusão'
         @endphp
         {{ Breadcrumbs::render('formNai', $tipoForm)}}
     </div>
@@ -26,12 +26,12 @@
         <div class="card shadow-lg p-4">
             <div class="card-header">
                 <div class="d-flex align-items-center">
-                    <h4 class="card-title"> {{ isset($noticia) ? 'Editar Núcleo de Acessibilidade e Inclusão' : 'Adicionar Núcleo de Acessibilidade e Inclusão' }}</h4>
+                    <h4 class="card-title"> {{ isset($nai) ? 'Editar Núcleo de Acessibilidade e Inclusão' : 'Adicionar Núcleo de Acessibilidade e Inclusão' }}</h4>
                 </div>
             </div>
-            <form id="formNoticia" action="{{ isset($nai) ? route('nais.update', $nai->id) : route('nais.store') }}" method="post" enctype="multipart/form-data">
+            <form id="formnai" action="{{ isset($nai) ? route('nais.update', $nai->id) : route('nais.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
-                @if(isset($noticia))
+                @if(isset($nai))
                 @method('PUT')
                 @endif
 
@@ -46,7 +46,7 @@
                             id="nome"
                             placeholder="Núcleo de Atendimento às Pessoas com necessidades Específicas"
                             required
-                            value="{{ old('nome', isset($noticia) ? $noticia->titulo : '') }}" />
+                            value="{{ old('nome', isset($nai) ? $nai->nome : '') }}" />
                     </div>
 
                     <!-- Campo Sigla do NAI -->
@@ -59,7 +59,7 @@
                             id="siglaNai"
                             placeholder="Ex: NAPNE"
                             required
-                            value="{{ old('siglaNai', isset($noticia) ? $noticia->siglaNai : '') }}" />
+                            value="{{ old('siglaNai', isset($nai) ? $nai->siglaNai : '') }}" />
                     </div>
                 </div>
 
@@ -74,7 +74,7 @@
                         id="instituicao"
                         placeholder="Ex: Instituto Federal de Educação, Ciência e Tecnologia Baiano - Campus Guanambi"
                         required
-                        value="{{ old('instituicao', isset($noticia) ? $noticia->instituicao : '') }}" />
+                        value="{{ old('instituicao', isset($nai) ? $nai->instituicao : '') }}" />
                 </div>
 
                 <!-- Campo sigla da Instituicao -->
@@ -87,23 +87,23 @@
                         id="siglaInstituicao"
                         placeholder="Ex: If Baiano Guanambi"
                         required
-                        value="{{ old('siglaInstituicao', isset($noticia) ? $noticia->siglaInstituicao : '') }}" />
+                        value="{{ old('siglaInstituicao', isset($nai) ? $nai->siglaInstituicao : '') }}" />
                 </div>
                 </div>
 
                 <div class="row mx-0">
                     <!-- Campo Estados brasileiros -->
                     <div class="form-group col-md-6 mb-4">
-                        <label for="estados" class="form-label">Estado</label>
-                        <select name="idEstado" class="form-select form-control" id="estado" data-tipo="estado" required>
+                        <label for="estado" class="form-label">Estado</label>
+                        <select name="estado" class="form-select form-control" id="estado" data-tipo="estado" data-estado="{{ isset($nai) ? $nai->estado : '' }}" required>
                             <option value="" disabled selected>Selecione um estado...</option>
                         </select>
                     </div>
 
                     <!-- Campo Cidades -->
                     <div class="form-group col-md-6 mb-4">
-                        <label for="cidades" class="form-label">Cidade</label>
-                        <select name="idCidade" class="form-select form-control" id="cidade" data-tipo="cidade" required>
+                        <label for="cidade" class="form-label">Cidade</label>
+                        <select name="cidade" class="form-select form-control" id="cidade" data-tipo="cidade" data-cidade="{{ isset($nai) ? $nai->cidade : '' }}" required>
                             <option value="" disabled selected>Selecione a cidade...</option>
                         </select>
                     </div>
@@ -120,7 +120,7 @@
                             id="email"
                             placeholder="Digite o e-mail"
                             required
-                            value="{{ old('email', isset($noticia) ? $noticia->email : '') }}" />
+                            value="{{ old('email', isset($nai) ? $nai->email : '') }}" />
                     </div>
 
                     <!-- Campo telefone -->
@@ -133,7 +133,7 @@
                             id="telefone"
                             placeholder="Digite o telefone"
                             required
-                            value="{{ old('telefone', isset($noticia) ? $noticia->telefone : '') }}" />
+                            value="{{ old('telefone', isset($nai) ? $nai->telefone : '') }}" />
                     </div>
 
                     <!-- Campo telefone -->
@@ -145,14 +145,14 @@
                             class="form-control"
                             id="site"
                             placeholder="Digite o site do NAI"
-                            value="{{ old('site', isset($noticia) ? $noticia->site : '') }}" />
+                            value="{{ old('site', isset($nai) ? $nai->site : '') }}" />
                     </div>
                 </div>
 
                 <!-- Botões -->
                 <div class="d-flex justify-content-between mt-4">
-                    <a href="{{ route('noticias.index') }}" class="btn btn-secondary">Cancelar</a>
-                    <button type="submit" class="btn btn-primary">{{ isset($noticia) ? 'Atualizar Notícia' : 'Salvar Notícia' }}</button>
+                    <a href="{{ route('painel.usuarios') }}" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">{{ isset($nai) ? 'Atualizar NAI' : 'Salvar NAI' }}</button>
                 </div>
             </form>
         </div>

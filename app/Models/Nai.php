@@ -16,7 +16,8 @@ class Nai extends Model
         'email',
         'telefone',
         'site',
-        'status'
+        'status',
+        'siglaNai'
     ];
 
     public function users(){

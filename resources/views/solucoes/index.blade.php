@@ -43,7 +43,7 @@
     @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show rounded" role="alert" id="sucess-alert">
         <strong>{{ session('success') }}</strong>
-        <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Fechar">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
     </div>
     @endif
     <!-- Conteúdo das abas -->

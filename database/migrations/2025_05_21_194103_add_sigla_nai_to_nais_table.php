@@ -10,7 +10,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('nais', function (Blueprint $table) {
-            $table->string('siglaNai', 10);
+            $table->string('siglaNai', 50);
         });
     }
 

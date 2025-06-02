@@ -34,28 +34,32 @@
 
     @include('layouts.navigation')
 
-    <main class="container-all" role="main">
+    <main class="container-all" role="main" id="main-content" tabindex="-1">
         @yield('content')
     </main>
 
-    <footer class="footer" role="contentinfo">
-        <div class="container-fluid d-flex justify-content-between">
+    <footer class="footer" role="contentinfo" id="rodape">
+        <div class="container-fluid d-flex justify-content-between flex-column">
             <nav class="pull-left">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/noticias">
-                            Notícias
-                        </a>
+                        <a class="nav-link" href="/noticias">Portal de Notícias</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"> Fórum </a>
+                        <a class="nav-link" href="/topicos">Fórum de Discussão</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"> Banco de Soluções </a>
+                        <a class="nav-link" href="/documentos">Biblioteca Digital</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/solucoes">Banco de Soluções</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"> Sobre </a>
                     </li>
                 </ul>
             </nav>
-            <div class="copyright">
+            <div class="copyright my-3">
                 &copy 2025, PINAI | Todos os direitos reservados.
             </div>
             <div>

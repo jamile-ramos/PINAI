@@ -32,7 +32,7 @@
             </label>
 
             @if (Route::has('password.request'))
-            <a class="custom-focus text-sm text-indigo-600 hover:underline dark:text-indigo-400" href="{{ route('password.request') }}">
+            <a class="link-hover custom-focus text-sm text-indigo-600 dark:text-indigo-400" href="{{ route('password.request') }}">
                 {{ __('Esqueceu sua senha?') }}
             </a>
             @endif
@@ -46,7 +46,7 @@
         </div>
 
         <!-- Register Link -->
-        <div class="text-center mt-4">
+        <div class="text-center mt-4 link-hover">
             <a href="{{ route('register') }}" class="custom-focus text-sm text-gray-600 dark:text-gray-400 hover:underline">
                 {{ __('Não tem uma conta? Cadastre-se') }}
             </a>

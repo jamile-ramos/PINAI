@@ -83,7 +83,7 @@ class PostagemController extends Controller
         }
         $postagem = Postagem::findOrFail($id);
         $postagem->update($data);
-        return redirect()->route('postagens.index', ['id' => $postagem->idTopico])->with('success', 'Postagem atualizada com sucesso!');
+        return redirect()->route('postagens.index', ['idTopico' => $postagem->idTopico])->with('success', 'Postagem atualizada com sucesso!');
     }
 
     public function destroy(Request $request)

@@ -5915,7 +5915,7 @@ label.error {
 .jqstooltip {
    box-sizing: content-box
 }
-
+/*
 .alert {
    border: 0;
    position: relative;
@@ -6027,7 +6027,7 @@ label.error {
 .alert-danger [data-notify=icon]:before {
    background: #f25961
 }
-
+*/
 .btn {
    padding: .65rem 1.4rem;
    font-size: 1rem;

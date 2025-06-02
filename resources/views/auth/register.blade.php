@@ -18,6 +18,17 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        <!-- Nai -->
+        <div class="mt-4">
+            <x-input-label for="nai" :value="__('Núcleo de Acessibilidade e Inclusão')" />
+            <select id="nai" name="nai" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" required>
+                <option value="">Selecione uma opção</option>
+                @foreach($nais as $nai)
+                <option value="{{ $nai->id }}">{{ $nai->siglaNai}} - {{ $nai->siglaInstituicao }}</option>
+                @endforeach
+            </select>
+        </div>
+
         <!-- Senha -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Senha')" />
@@ -46,7 +57,7 @@
         </div>
 
         <!-- Link para Login -->
-        <div class="mt-4 text-center">
+        <div class="mt-4 text-center link-hover">
             <a href="{{ route('login') }}" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">
                 {{ __('Já tem uma conta? Faça login.') }}
             </a>

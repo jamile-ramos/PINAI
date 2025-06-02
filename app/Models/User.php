@@ -23,6 +23,7 @@ class User extends Authenticatable
         'password',
         'tipoUsuario',
         'status',
+        'idNai'
     ];
 
     /**
@@ -83,7 +84,7 @@ class User extends Authenticatable
     }
 
     public function nai(){
-        return $this->belongsTo(Nai::class, 'idNai');
+        return $this->belongsTo(Nai::class, 'idNai', 'id');
     }
 
 

@@ -1,6 +1,6 @@
 <div class="wrapper" role="banner">
   <!-- Sidebar -->
-  <div class="sidebar" data-background-color="dark">
+  <div class="sidebar" id="menu" data-background-color="dark">
     <div class="sidebar-logo">
       <!-- Logo Header -->
       <div class="logo-header" data-background-color="dark">
@@ -16,7 +16,6 @@
           </button>
           <p class="px-2 text-menu">Menu</p>
         </div>
-
         <button class="topbar-toggler more">
           <i class="gg-more-vertical-alt"></i>
         </button>
@@ -127,6 +126,21 @@
         <div class="container-fluid">
           <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
           </nav>
+          <ul class="navbar-nav topbar-nav align-items-start small">
+            <li class="nav-item topbar-icon dropdown hidden-caret me-2 d-flex align-items-center">
+              <a href="#main-content" class="skip-link text-white-50 fs-7 link-underline-opacity-0 link-underline-opacity-100-hover px-1">Ir para o conteúdo</a>
+              <span class="badge text-bg-primary rounded-pill py-0 px-1" style="font-size: 0.65rem;">1</span>
+            </li>
+            <li class="nav-item topbar-icon dropdown hidden-caret me-2 d-flex align-items-center">
+              <a href="#menu" class="skip-link text-white-50 fs-7 link-underline-opacity-0 link-underline-opacity-100-hover px-1">Ir para o menu</a>
+              <span class="badge text-bg-primary rounded-pill py-0 px-1" style="font-size: 0.65rem;">2</span>
+            </li>
+            <li class="nav-item topbar-icon dropdown hidden-caret me-2 d-flex align-items-center">
+              <a href="#rodape" class="skip-link text-white-50 fs-7 link-underline-opacity-0 link-underline-opacity-100-hover px-1">Ir para o rodapé</a>
+              <span class="badge text-bg-primary rounded-pill py-0 px-1" style="font-size: 0.65rem;">3</span>
+            </li>
+          </ul>
+
 
           <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
             <li class="nav-item topbar-icon dropdown hidden-caret">

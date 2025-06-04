@@ -58,4 +58,9 @@
             @endif
         </tbody>
     </table>
+
+    <!-- Paginação -->
+    <div class="d-flex justify-content-center mt-3">
+        {{ $nais->appends(request()->except('nais_page'))->links('vendor.pagination.bootstrap-5') }}
+    </div>
 </div>

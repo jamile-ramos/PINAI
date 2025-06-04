@@ -10,20 +10,24 @@ use App\Models\Nai;
 class UsuarioController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
+        $query = $request->input('query');
 
-        $query = request('query');
+        $paginaUsuarios = $request->input('users_page', 1);
+        $paginaNais = $request->input('nais_page', 1);
 
         if($query){
-            $usuarios = User::where([ 
-                ['name', 'like', '%'.$query.'%']
-            ])->get();
+            $usuarios = User::with('nai')
+            ->where('name', 'like', '%' . $query . '%')
+            ->paginate(10, ['*'], 'users_page', $paginaUsuarios)
+            ->appends(['query' => $query]);
         } else{
-            $usuarios = User::all();
+            $usuarios = User::with('nai')->paginate(10, ['*'], 'users_page', $paginaUsuarios);
         }
 
-        $nais = Nai::where('status', 'ativo')->get();
+        $nais = Nai::where('status', 'ativo')->paginate(10, ['*'], 'nais_page', $paginaNais);
+
         return view('usuarios.painelUsuarios', compact('usuarios','query', 'nais'));
     }
 

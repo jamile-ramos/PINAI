@@ -1,4 +1,4 @@
-<div class="forum mt-4">
+<div class="forum mt-3">
     <div class="table-responsive table-bordas">
         <table class="table table-hover table-striped">
             <thead class="forum-azul">

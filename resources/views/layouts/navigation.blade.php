@@ -194,7 +194,7 @@
                       @csrf
 
                       <x-dropdown-link :href="route('logout')"
-                        class="custom-dropdown-link"
+                        class="custom-dropdown-link" id="logout-link"
                         onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                         {{ __('Sair') }}

@@ -1,4 +1,10 @@
 <div class="table-responsive">
+    <h2 class="fw-bold text-primary mb-3 d-flex justify-content-center align-items-center">
+        @if($tipoAba == 'allSolucoes')
+        <i class="fas fa-lightbulb me-2"></i>
+        Todas as Soluções
+        @endif
+    </h2>
     <table class="table table-hover table-striped">
         <thead class="forum-azul">
             <tr>

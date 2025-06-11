@@ -64,7 +64,7 @@ class NaiController extends Controller
             'site' => $request->site
         ]);
 
-        return redirect()->route('painel.usuarios')->with('success', 'Informações atualizadas com sucesso!');
+        return redirect()->route('painel.usuarios')->with('success', 'Informações do NAI atualizadas com sucesso!');
 
     }
 

@@ -12,7 +12,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($usuarios as $usuario)
+            @forelse($usuarios as $usuario)
             <tr>
                 <td>{{ $usuario->name }}</td>
                 <td>{{ $usuario->email }}</td>
@@ -47,7 +47,11 @@
                     </div>
                 </td>
             </tr>
-            @endforeach
+            @empty
+            <tr>
+                <td colspan="7" class="text-center">Nenhum usuário encontrado.</td>
+            </tr>
+            @endforelse
         </tbody>
     </table>
 

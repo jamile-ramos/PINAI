@@ -11,8 +11,7 @@
             </tr>
         </thead>
         <tbody id="table-nais">
-            @if(!empty($nais))
-            @foreach($nais as $nai)
+            @forelse($nais as $nai)
             <tr>
                 <td class="fw-bold">{{ $nai->nome }} - {{ $nai->siglaNai }}</td>
                 <td>{{ $nai->siglaInstituicao }}</td>
@@ -50,12 +49,11 @@
                     </div>
                 </td>
             </tr>
-            @endforeach
-            @else
+            @empty
             <tr>
-                <td colspan="4" class="text-center">Nenhum NAI cadastrado!</td>
+                <td colspan="7" class="text-center">Nenhum NAI encontrado.</td>
             </tr>
-            @endif
+            @endforelse
         </tbody>
     </table>
 

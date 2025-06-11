@@ -364,6 +364,14 @@ document.addEventListener('DOMContentLoaded', function () {
         const content = document.getElementById(contentId);
         content.classList.add('show');
 
+        // Formulario query
+        const form = document.querySelector('.search-form');
+        form.addEventListener('submit', function () {
+            if (contentId) {
+                document.getElementById('abaAtiva').value = contentId;
+            }
+        });
+
         const selectOption = containerElement.querySelector('.select-option');
         if (selectOption) {
             selectOption.textContent = tab.innerText;
@@ -392,6 +400,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 const tabs = container.querySelectorAll('.tab-btn');
                 tabs.forEach(tab => {
                     const contentId = tab.getAttribute('content-id');
+                    const form = document.querySelector('.search-form');
+
+                    form.addEventListener('submit', function () {
+                        if (contentId) {
+                            document.getElementById('abaAtiva').value = contentId;
+                        }
+                    });
+
                     if (contentId === activeTabId) {
                         tab.classList.add('active');
 
@@ -423,13 +439,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const abaId = container.id;
         const idAbaPadrao = tabs[0].getAttribute('content-id');
-        console.log(idAbaPadrao)
         const abaAtiva = localStorage.getItem(`active_tab_${abaId}`) || idAbaPadrao;
 
         if (abaAtiva) {
             tabs.forEach(tabElement => {
                 if (tabElement.getAttribute('content-id') === abaAtiva) {
                     tabElement.classList.add('active');
+                    const form = document.querySelector('.search-form');
+
+                    form.addEventListener('submit', function () {
+                        document.getElementById('abaAtiva').value = abaAtiva;
+                    });
                 }
             });
 
@@ -448,474 +468,471 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /* Remover o localStorage quando um link do sidebar for clicado */
     const sidebarLinks = document.querySelectorAll('.nav-secondary');
-    console.log(sidebarLinks)
     sidebarLinks.forEach(link => {
         link.addEventListener('click', () => {
             localStorage.clear();
         });
     });
 
-// Abrir modais de criação
-document.querySelectorAll('.container-abas').forEach(container => {
-    const addBtns = container.querySelectorAll('.add-btn');
-    const optionAdds = container.querySelectorAll('.option-add');
+    // Abrir modais de criação
+    document.querySelectorAll('.container-abas').forEach(container => {
+        const addBtns = container.querySelectorAll('.add-btn');
+        const optionAdds = container.querySelectorAll('.option-add');
 
-    addBtns.forEach(btn => btn.addEventListener('click', function () { abrirCategoria(btn) }));
-    optionAdds.forEach(btn => btn.addEventListener('click', function () { abrirCategoria(btn) }));
-});
+        addBtns.forEach(btn => btn.addEventListener('click', function () { abrirCategoria(btn) }));
+        optionAdds.forEach(btn => btn.addEventListener('click', function () { abrirCategoria(btn) }));
+    });
 
-function abrirCategoria(btn) {
-    const buttonText = btn.textContent.trim();
-    const url = btn.getAttribute('data-url');
-    if (buttonText === 'Criar Categoria') {
-        const modal = document.getElementById('modalAddCategoria');
-        $(modal).modal('show');
-        $(modal).removeClass('fade').addClass('show');
-        $(modal).css('display', 'block');
-    } else if (buttonText === 'Criar Notícia') {
-        window.location.href = url;
-    } else if (buttonText === 'Criar Tópico') {
-        const modal = document.getElementById('modalAddTopico');
-        $('#modalTopicoTitle').text('Adicionar tópico');
-        $('#titulo').val('');
-        $(modal).modal('show');
-        $(modal).removeClass('fade').addClass('show');
-        $(modal).css('display', 'block');
-    } else if (buttonText === 'Sugerir Tópico') {
-        $('#titulo').val('');
-        const modal = document.getElementById('modalAddTopico');
-        $('#modalTopicoTitle').text('Sugerir Tópico');
-        $('#formAddTopico').attr('action', '/sugestoes/store/');
-        $(modal).modal('show');
-    } else if (buttonText === 'Criar Postagem') {
-        window.location.href = url;
-    } else if (buttonText === 'Adicionar documento') {
-        window.location.href = url;
-    } else if (buttonText === 'Adicionar Solução') {
-        window.location.href = url;
-    } else if (buttonText === "Adicionar NAI") {
-        window.location.href = url;
+    function abrirCategoria(btn) {
+        const buttonText = btn.textContent.trim();
+        const url = btn.getAttribute('data-url');
+        if (buttonText === 'Criar Categoria') {
+            const modal = document.getElementById('modalAddCategoria');
+            $(modal).modal('show');
+            $(modal).removeClass('fade').addClass('show');
+            $(modal).css('display', 'block');
+        } else if (buttonText === 'Criar Notícia') {
+            window.location.href = url;
+        } else if (buttonText === 'Criar Tópico') {
+            const modal = document.getElementById('modalAddTopico');
+            $('#modalTopicoTitle').text('Adicionar tópico');
+            $('#titulo').val('');
+            $(modal).modal('show');
+            $(modal).removeClass('fade').addClass('show');
+            $(modal).css('display', 'block');
+        } else if (buttonText === 'Sugerir Tópico') {
+            $('#titulo').val('');
+            const modal = document.getElementById('modalAddTopico');
+            $('#modalTopicoTitle').text('Sugerir Tópico');
+            $('#formAddTopico').attr('action', '/sugestoes/store/');
+            $(modal).modal('show');
+        } else if (buttonText === 'Criar Postagem') {
+            window.location.href = url;
+        } else if (buttonText === 'Adicionar documento') {
+            window.location.href = url;
+        } else if (buttonText === 'Adicionar Solução') {
+            window.location.href = url;
+        } else if (buttonText === "Adicionar NAI") {
+            window.location.href = url;
+        }
     }
-}
 
-// Abrir edit de Topico
-document.querySelectorAll('.container-abas').forEach(container => {
-    const editTopicos = container.querySelectorAll('.btn-editTopico');
+    // Abrir edit de Topico
+    document.querySelectorAll('.container-abas').forEach(container => {
+        const editTopicos = container.querySelectorAll('.btn-editTopico');
 
-    editTopicos.forEach(editTopico => {
-        editTopico.addEventListener('click', function () {
-            const idTopico = editTopico.getAttribute("data-id");
+        editTopicos.forEach(editTopico => {
+            editTopico.addEventListener('click', function () {
+                const idTopico = editTopico.getAttribute("data-id");
 
-            $.ajax({
-                url: '/topicos/edit/' + idTopico,
-                method: 'GET',
-                success: function (response) {
-                    $('#titulo').val(response.titulo);
+                $.ajax({
+                    url: '/topicos/edit/' + idTopico,
+                    method: 'GET',
+                    success: function (response) {
+                        $('#titulo').val(response.titulo);
 
-                    $('#formAddTopico').attr('action', '/topicos/update/' + idTopico);
+                        $('#formAddTopico').attr('action', '/topicos/update/' + idTopico);
 
-                    if (!$('#formAddTopico input[name="_method"]').length) {
-                        $('#formAddTopico').append('<input type="hidden" name="_method" value="PUT">');
+                        if (!$('#formAddTopico input[name="_method"]').length) {
+                            $('#formAddTopico').append('<input type="hidden" name="_method" value="PUT">');
+                        }
+
+                        $('#modalTopicoTitle').text('Editar Tópico');
+                        $('#btnSalvarTopico').text('Atualizar');
+
+                        $('#modalAddTopico').modal('show');
+                    },
+                    error: function (xhr) {
+                        alert('Erro ao buscar dados do tópico: ' + xhr.responseText);
                     }
+                });
+            });
+        });
+    });
 
-                    $('#modalTopicoTitle').text('Editar Tópico');
-                    $('#btnSalvarTopico').text('Atualizar');
+    // Status dos topicos sugeridos
+    document.querySelectorAll('.container-abas').forEach(container => {
+        const btns = container.querySelectorAll('.btn');
 
-                    $('#modalAddTopico').modal('show');
-                },
-                error: function (xhr) {
-                    alert('Erro ao buscar dados do tópico: ' + xhr.responseText);
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const btnStatusTop = btn.classList.contains('btn-statusTop');
+                const id = btn.getAttribute('data-id');
+                const selected = btn.getAttribute('data-selected');
+                const statusSelect = document.getElementById('statusSelect');
+                if (statusSelect) {
+                    statusSelect.value = selected;
+                }
+
+                if (btnStatusTop) {
+                    const form = document.getElementById('formConfirmacaoTopico');
+                    const route = form.getAttribute('data-route');
+                    form.action = route.replace(':id', id);
+
+                    $('#modalConfirmacaoTopico').modal('show');
                 }
             });
         });
     });
-});
 
-// Status dos topicos sugeridos
-document.querySelectorAll('.container-abas').forEach(container => {
-    const btns = container.querySelectorAll('.btn');
-
-    btns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const btnStatusTop = btn.classList.contains('btn-statusTop');
-            const id = btn.getAttribute('data-id');
-            const selected = btn.getAttribute('data-selected');
-            const statusSelect = document.getElementById('statusSelect');
-            if (statusSelect) {
-                statusSelect.value = selected;
-            }
-
-            if (btnStatusTop) {
-                const form = document.getElementById('formConfirmacaoTopico');
-                const route = form.getAttribute('data-route');
-                form.action = route.replace(':id', id);
-
-                $('#modalConfirmacaoTopico').modal('show');
-            }
-        });
-    });
-});
-
-// Abrir o modal de exclusão 
-document.querySelectorAll('.container-abas').forEach(container => {
-    const deleteButtons = container.querySelectorAll('.btn-remove');
-    deleteButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const id = btn.getAttribute('data-id');
-            const modal = btn.getAttribute('data-modal');
-            const form = document.getElementById('confirmExcluirForm');
-            console.log('Formulario:', form)
-            const url = btn.getAttribute('data-url');
-            console.log(url)
-            form.setAttribute('action', url);
-            document.getElementById('id').value = id;
-
-            $(modal).modal('show');
-        });
-    });
-});
-
-// Abrir o modal de exclusão Resposta
-document.querySelectorAll('.post-options').forEach(container => {
-    const btnPontinhos = container.querySelector(".options-button");
-
-    if (btnPontinhos) {
-        btnPontinhos.addEventListener('click', () => {
-            const btnsOpcoes = container.querySelector(".options-menu")
-            const excluir = btnsOpcoes.querySelector(".resposta-destroy")
-            excluir.addEventListener('click', () => {
-                const id = excluir.getAttribute('data-id');
-                const modal = excluir.getAttribute('data-modal');
-
+    // Abrir o modal de exclusão 
+    document.querySelectorAll('.container-abas').forEach(container => {
+        const deleteButtons = container.querySelectorAll('.btn-remove');
+        deleteButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.getAttribute('data-id');
+                const modal = btn.getAttribute('data-modal');
                 const form = document.getElementById('confirmExcluirForm');
-                const url = excluir.getAttribute('data-url');
+                const url = btn.getAttribute('data-url');
                 form.setAttribute('action', url);
                 document.getElementById('id').value = id;
+
                 $(modal).modal('show');
+            });
+        });
+    });
+
+    // Abrir o modal de exclusão Resposta
+    document.querySelectorAll('.post-options').forEach(container => {
+        const btnPontinhos = container.querySelector(".options-button");
+
+        if (btnPontinhos) {
+            btnPontinhos.addEventListener('click', () => {
+                const btnsOpcoes = container.querySelector(".options-menu")
+                const excluir = btnsOpcoes.querySelector(".resposta-destroy")
+                excluir.addEventListener('click', () => {
+                    const id = excluir.getAttribute('data-id');
+                    const modal = excluir.getAttribute('data-modal');
+
+                    const form = document.getElementById('confirmExcluirForm');
+                    const url = excluir.getAttribute('data-url');
+                    form.setAttribute('action', url);
+                    document.getElementById('id').value = id;
+                    $(modal).modal('show');
+                })
+            });
+        }
+    });
+
+
+    // Fazer a requisição para editar publicacao
+    document.querySelectorAll('.container-abas').forEach(container => {
+        const editButtons = container.querySelectorAll('.btn-edit');
+        editButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const url = btn.getAttribute('data-url');
+                window.location.href = url;
             })
         });
+    });
+
+    // Js do controle da imagem no edit
+    const removeImageBtn = document.getElementById('removeImageBtn');
+    const campoImagem = document.getElementById('campoImagem');
+    if (removeImageBtn) {
+        campoImagem.style.display = 'none';
+        removeImageBtn.addEventListener('click', function () {
+            const preview = document.getElementById('preview');
+            preview.style.display = 'none';
+            campoImagem.style.display = 'block';
+        });
     }
-});
 
+    // Menu edit dentro de postagem (3 pontinhos)
+    const pontinhos = document.querySelectorAll('.post-options');
 
-// Fazer a requisição para editar publicacao
-document.querySelectorAll('.container-abas').forEach(container => {
-    const editButtons = container.querySelectorAll('.btn-edit');
-    editButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const url = btn.getAttribute('data-url');
-            window.location.href = url;
-        })
-    });
-});
+    pontinhos.forEach(pontinho => {
+        pontinho.addEventListener('click', (event) => {
+            event.stopPropagation();
 
-// Js do controle da imagem no edit
-const removeImageBtn = document.getElementById('removeImageBtn');
-const campoImagem = document.getElementById('campoImagem');
-if (removeImageBtn) {
-    campoImagem.style.display = 'none';
-    removeImageBtn.addEventListener('click', function () {
-        const preview = document.getElementById('preview');
-        preview.style.display = 'none';
-        campoImagem.style.display = 'block';
-    });
-}
+            const pontinhosMenu = pontinho.querySelector('.options-menu');
 
-// Menu edit dentro de postagem (3 pontinhos)
-const pontinhos = document.querySelectorAll('.post-options');
-
-pontinhos.forEach(pontinho => {
-    pontinho.addEventListener('click', (event) => {
-        event.stopPropagation();
-
-        const pontinhosMenu = pontinho.querySelector('.options-menu');
-
-        if (pontinhosMenu) {
-            const menus = document.querySelectorAll('.options-menu');
-            menus.forEach(menu => {
-                if (menu !== pontinhosMenu) {
-                    menu.classList.remove('visible');
-                }
-            });
-
-            pontinhosMenu.classList.toggle('visible');
-        }
-    });
-});
-
-// Fecha o menu se clicar fora
-document.addEventListener('click', (event) => {
-    document.querySelectorAll('.options-menu').forEach(menu => {
-        if (!menu.contains(event.target)) {
-            menu.classList.remove('visible');
-        }
-    });
-});
-
-// Exibe o formulario de comentar ao clicar no botao comentar dentro da postagem
-document.querySelectorAll('.comment-toggle').forEach(button => {
-    button.addEventListener('click', function () {
-        let respostaId = this.getAttribute('data-id');
-        let form = document.getElementById(`comment-form-${respostaId}`);
-        document.querySelectorAll('.comment-form-container').forEach(form => form.style.display = 'none');
-
-        if (form) {
-            form.style.display = 'block';
-            form.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-            });
-        }
-    });
-});
-
-// Toggle de visibilidade do menu de menções
-let usuarios = [];
-let nomeUsuarioMencionado = '';
-
-document.querySelectorAll('.mention-user').forEach(btn =>
-    btn.addEventListener('click', function () {
-        let respostaId = btn.getAttribute('data-id');
-        let menu = document.getElementById(`mention-menu-${respostaId}`);
-        let userList = document.getElementById(`user-list-${respostaId}`);
-        let noUsersMessage = document.getElementById(`no-users-${respostaId}`);
-
-        let openMenus = document.querySelectorAll('.mention-menu');
-
-        if (!btn) {
-            openMenus.forEach(menu => {
-                menu.style.visibility = 'hidden';
-            });
-            return;
-        }
-
-        event.preventDefault();
-
-        if (!menu || !userList) {
-            return;
-        }
-
-        if (menu.style.visibility === 'visible') {
-            menu.style.visibility = 'hidden';
-            return;
-        }
-
-        // Faz a requisição AJAX para obter os usuários e abrir o menu
-        fetch(`/comentarios/usuarios/${respostaId}`)
-            .then(response => response.json())
-            .then(data => {
-                usuarios = data.usuariosUnicos;
-                usuarioAutenticado = data.userAuth;
-                usuarios = usuarios.filter(usuario => usuario.id != usuarioAutenticado.id)
-                if (usuarios && Array.isArray(usuarios)) {
-                    userList.innerHTML = '';
-                    usuarios.forEach(usuario => {
-                        let li = document.createElement('li');
-                        li.classList.add('mention-user-item');
-                        li.setAttribute('data-user', usuario.name);
-                        li.setAttribute('data-idUsuarioMencionado', usuario.id);
-                        li.setAttribute('data-id', respostaId);
-                        li.textContent = usuario.name;
-                        userList.appendChild(li);
-
-                    });
-
-                    // Exibe o menu de menção
-                    if (usuarios && usuarios.length > 0) {
-                        menu.style.visibility = 'visible';
-                    } else {
-                        noUsersMessage.style.visibility = 'visible';
-                        btn.style.visibility = 'hidden';
-
-                        setTimeout(function () {
-                            noUsersMessage.style.visibility = 'hidden';
-                        }, 5000);
+            if (pontinhosMenu) {
+                const menus = document.querySelectorAll('.options-menu');
+                menus.forEach(menu => {
+                    if (menu !== pontinhosMenu) {
+                        menu.classList.remove('visible');
                     }
+                });
 
-                } else {
-                    console.error("Erro: dados de usuários inválidos.");
-                }
-            })
-            .catch(error => {
-                console.error("Erro ao carregar usuários:", error);
-            });
-    })
-)
+                pontinhosMenu.classList.toggle('visible');
+            }
+        });
+    });
 
-// Pega o usuario para mencionar no textarea
-document.addEventListener('click', function (event) {
-    let userItem = event.target.closest('.mention-user-item');
-    if (!userItem) return;
+    // Fecha o menu se clicar fora
+    document.addEventListener('click', (event) => {
+        document.querySelectorAll('.options-menu').forEach(menu => {
+            if (!menu.contains(event.target)) {
+                menu.classList.remove('visible');
+            }
+        });
+    });
 
-    let respostaId = userItem.getAttribute('data-id');
-    let btnMencionar = document.getElementById(`mention-user-${respostaId}`);
-    let menu = document.getElementById(`mention-menu-${respostaId}`);
-    let userName = userItem.getAttribute('data-user');
-    let userId = userItem.getAttribute('data-idUsuarioMencionado')
-    let textarea = document.getElementById(`comentario-${respostaId}`);
-    let inputUsuarioMencionado = document.getElementById('usuarioMencionado');
-    inputUsuarioMencionado.value = userId
+    // Exibe o formulario de comentar ao clicar no botao comentar dentro da postagem
+    document.querySelectorAll('.comment-toggle').forEach(button => {
+        button.addEventListener('click', function () {
+            let respostaId = this.getAttribute('data-id');
+            let form = document.getElementById(`comment-form-${respostaId}`);
+            document.querySelectorAll('.comment-form-container').forEach(form => form.style.display = 'none');
 
-    if (userName != null) {
-        btnMencionar.disabled = true;
-        menu.style.display = 'none'
-    }
+            if (form) {
+                form.style.display = 'block';
+                form.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }
+        });
+    });
 
-    let cursorPos = textarea.selectionStart;
-    let textBefore = textarea.value.substring(0, cursorPos);
-    let textAfter = textarea.value.substring(cursorPos);
+    // Toggle de visibilidade do menu de menções
+    let usuarios = [];
+    let nomeUsuarioMencionado = '';
 
-    textarea.value = textBefore + ` @${userName}` + textAfter;
-    textarea.focus();
-    nomeUsuarioMencionado = userName;
+    document.querySelectorAll('.mention-user').forEach(btn =>
+        btn.addEventListener('click', function () {
+            let respostaId = btn.getAttribute('data-id');
+            let menu = document.getElementById(`mention-menu-${respostaId}`);
+            let userList = document.getElementById(`user-list-${respostaId}`);
+            let noUsersMessage = document.getElementById(`no-users-${respostaId}`);
 
-    // Fecha o menu após a menção ser adicionada
-    if (menu) menu.style.display = 'none';
-});
+            let openMenus = document.querySelectorAll('.mention-menu');
 
-// Adiciona um ouvinte de evento para monitorar alterações no texto do comentário
-document.addEventListener('input', function (event) {
-    if (event.target && event.target.matches('.mention-input')) {
-        let respostaId = event.target.getAttribute('id').split('-')[1];
-        let textarea = event.target;
+            if (!btn) {
+                openMenus.forEach(menu => {
+                    menu.style.visibility = 'hidden';
+                });
+                return;
+            }
+
+            event.preventDefault();
+
+            if (!menu || !userList) {
+                return;
+            }
+
+            if (menu.style.visibility === 'visible') {
+                menu.style.visibility = 'hidden';
+                return;
+            }
+
+            // Faz a requisição AJAX para obter os usuários e abrir o menu
+            fetch(`/comentarios/usuarios/${respostaId}`)
+                .then(response => response.json())
+                .then(data => {
+                    usuarios = data.usuariosUnicos;
+                    usuarioAutenticado = data.userAuth;
+                    usuarios = usuarios.filter(usuario => usuario.id != usuarioAutenticado.id)
+                    if (usuarios && Array.isArray(usuarios)) {
+                        userList.innerHTML = '';
+                        usuarios.forEach(usuario => {
+                            let li = document.createElement('li');
+                            li.classList.add('mention-user-item');
+                            li.setAttribute('data-user', usuario.name);
+                            li.setAttribute('data-idUsuarioMencionado', usuario.id);
+                            li.setAttribute('data-id', respostaId);
+                            li.textContent = usuario.name;
+                            userList.appendChild(li);
+
+                        });
+
+                        // Exibe o menu de menção
+                        if (usuarios && usuarios.length > 0) {
+                            menu.style.visibility = 'visible';
+                        } else {
+                            noUsersMessage.style.visibility = 'visible';
+                            btn.style.visibility = 'hidden';
+
+                            setTimeout(function () {
+                                noUsersMessage.style.visibility = 'hidden';
+                            }, 5000);
+                        }
+
+                    } else {
+                        console.error("Erro: dados de usuários inválidos.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Erro ao carregar usuários:", error);
+                });
+        })
+    )
+
+    // Pega o usuario para mencionar no textarea
+    document.addEventListener('click', function (event) {
+        let userItem = event.target.closest('.mention-user-item');
+        if (!userItem) return;
+
+        let respostaId = userItem.getAttribute('data-id');
         let btnMencionar = document.getElementById(`mention-user-${respostaId}`);
+        let menu = document.getElementById(`mention-menu-${respostaId}`);
+        let userName = userItem.getAttribute('data-user');
+        let userId = userItem.getAttribute('data-idUsuarioMencionado')
+        let textarea = document.getElementById(`comentario-${respostaId}`);
+        let inputUsuarioMencionado = document.getElementById('usuarioMencionado');
+        inputUsuarioMencionado.value = userId
 
-        let texto = textarea.value.trim();
+        if (userName != null) {
+            btnMencionar.disabled = true;
+            menu.style.display = 'none'
+        }
 
-        // Verifica se já existe uma menção
-        let nomeParaProcurar = nomeUsuarioMencionado
-        let regex = new RegExp("\\b" + nomeParaProcurar + "\\b", "g");
-        let resultado = texto.match(regex);
+        let cursorPos = textarea.selectionStart;
+        let textBefore = textarea.value.substring(0, cursorPos);
+        let textAfter = textarea.value.substring(cursorPos);
 
-        let nomeUsuarioEncontrado = false;
+        textarea.value = textBefore + ` @${userName}` + textAfter;
+        textarea.focus();
+        nomeUsuarioMencionado = userName;
 
-        // Verifica se a menção é válida e pertence a um usuário existente
-        if (resultado) {
-            for (let usuario of usuarios) {
-                if (resultado[0] === usuario.name) {
-                    nomeUsuarioEncontrado = true;
+        // Fecha o menu após a menção ser adicionada
+        if (menu) menu.style.display = 'none';
+    });
+
+    // Adiciona um ouvinte de evento para monitorar alterações no texto do comentário
+    document.addEventListener('input', function (event) {
+        if (event.target && event.target.matches('.mention-input')) {
+            let respostaId = event.target.getAttribute('id').split('-')[1];
+            let textarea = event.target;
+            let btnMencionar = document.getElementById(`mention-user-${respostaId}`);
+
+            let texto = textarea.value.trim();
+
+            // Verifica se já existe uma menção
+            let nomeParaProcurar = nomeUsuarioMencionado
+            let regex = new RegExp("\\b" + nomeParaProcurar + "\\b", "g");
+            let resultado = texto.match(regex);
+
+            let nomeUsuarioEncontrado = false;
+
+            // Verifica se a menção é válida e pertence a um usuário existente
+            if (resultado) {
+                for (let usuario of usuarios) {
+                    if (resultado[0] === usuario.name) {
+                        nomeUsuarioEncontrado = true;
+                    }
                 }
             }
-        }
 
-        if (resultado != null && nomeUsuarioEncontrado) {
-            btnMencionar.disabled = true;
-        } else {
-            btnMencionar.disabled = false;
-        }
-    }
-});
-
-// Fechar formulario de comentario quando clicar em cancelar
-document.querySelectorAll('.btn-cancelar-comment').forEach(btn => {
-    btn.addEventListener('click', function () {
-        let respostaId = btn.getAttribute('data-id');
-        let formComentar = document.getElementById(`comment-form-${respostaId}`);
-
-        formComentar.style.display = 'none'
-        let textarea = document.getElementById(`comentario-${respostaId}`);
-        textarea.value = ""
-    });
-});
-
-// Logica do botao de arquivo em editar documento
-const arquivo = document.querySelector('#arquivo');
-const previa = document.querySelector('#previaDocumento');
-
-if (arquivo && previa) {  // Check if elements are found
-    arquivo.addEventListener('change', function () {
-        if (arquivo.files.length != 0) {
-            previa.classList.remove('d-block');
-            previa.classList.add('d-none');
+            if (resultado != null && nomeUsuarioEncontrado) {
+                btnMencionar.disabled = true;
+            } else {
+                btnMencionar.disabled = false;
+            }
         }
     });
-};
 
-/* Modal excluir conta */
-/*var myModal = new bootstrap.Modal(document.getElementById('confirmUserDeletionModal'), {
-    backdrop: true, // Isso impede o fechamento do modal quando clicado fora.
-    keyboard: false  // Isso impede o fechamento do modal com a tecla ESC.
-});*/
+    // Fechar formulario de comentario quando clicar em cancelar
+    document.querySelectorAll('.btn-cancelar-comment').forEach(btn => {
+        btn.addEventListener('click', function () {
+            let respostaId = btn.getAttribute('data-id');
+            let formComentar = document.getElementById(`comment-form-${respostaId}`);
 
-
-/* Estados e cidades dos Nai no Painel de usuários */
-const estadoSelect = document.getElementById('estado');
-const cidadeSelect = document.getElementById('cidade');
-
-if (estadoSelect && cidadeSelect) {
-    const estadoBd = estadoSelect.getAttribute('data-estado');
-    const cidadeBd = cidadeSelect.getAttribute('data-cidade');
-    fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
-        .then(response => response.json())
-        .then(estados => {
-            estados.sort((a, b) => a.nome.localeCompare(b.nome)); //ordena por nome
-            estados.forEach(estado => {
-                const option = document.createElement('option');
-                option.value = estado.sigla;
-                option.text = estado.sigla + " - " + estado.nome;
-                if (estadoBd) {
-                    if (estadoBd === estado.sigla) {
-                        option.selected = true;
-                        carregarCidades(estado.id);
-                    }
-                }
-                option.setAttribute('data-id', estado.id);
-                estadoSelect.add(option);
-            });
-
+            formComentar.style.display = 'none'
+            let textarea = document.getElementById(`comentario-${respostaId}`);
+            textarea.value = ""
         });
-
-    estadoSelect.addEventListener('change', () => {
-        const selectedOption = estadoSelect.options[estadoSelect.selectedIndex];
-        const estadoId = selectedOption.getAttribute('data-id');
-        cidadeSelect.innerHTML = '<option value="" disabled selected>Carregando...</option>';
-
-        carregarCidades(estadoId)
     });
 
-    function carregarCidades(estadoId) {
-        if (estadoId) {
-            fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoId}/municipios`)
-                .then(response => response.json())
-                .then(cidades => {
-                    cidadeSelect.innerHTML = '<option value="" disabled selected>Selecione a cidade</option>';
-                    cidades.forEach(cidade => {
-                        const option = document.createElement('option');
-                        option.value = cidade.nome;
-                        if (cidadeBd) {
-                            if (cidadeBd === cidade.nome) {
-                                option.selected = true;
-                            }
-                        }
-                        option.text = cidade.nome
-                        cidadeSelect.add(option)
-                    });
-                });
-        }
-    }
-}
+    // Logica do botao de arquivo em editar documento
+    const arquivo = document.querySelector('#arquivo');
+    const previa = document.querySelector('#previaDocumento');
 
-/* Visualizar nome do estado na tabela de NAI em painel de usuários */
-const tableNais = document.getElementById('table-nais');
+    if (arquivo && previa) {  // Check if elements are found
+        arquivo.addEventListener('change', function () {
+            if (arquivo.files.length != 0) {
+                previa.classList.remove('d-block');
+                previa.classList.add('d-none');
+            }
+        });
+    };
 
-if (tableNais) {
-    const estadoTds = tableNais.querySelectorAll('td[id^="estado-"]');
+    /* Modal excluir conta */
+    /*var myModal = new bootstrap.Modal(document.getElementById('confirmUserDeletionModal'), {
+        backdrop: true, // Isso impede o fechamento do modal quando clicado fora.
+        keyboard: false  // Isso impede o fechamento do modal com a tecla ESC.
+    });*/
 
-    estadoTds.forEach(td => {
-        const uf = td.textContent.trim();
 
+    /* Estados e cidades dos Nai no Painel de usuários */
+    const estadoSelect = document.getElementById('estado');
+    const cidadeSelect = document.getElementById('cidade');
+
+    if (estadoSelect && cidadeSelect) {
+        const estadoBd = estadoSelect.getAttribute('data-estado');
+        const cidadeBd = cidadeSelect.getAttribute('data-cidade');
         fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
             .then(response => response.json())
             .then(estados => {
-                estados.sort((a, b) => a.nome.localeCompare(b.nome));
+                estados.sort((a, b) => a.nome.localeCompare(b.nome)); //ordena por nome
                 estados.forEach(estado => {
-                    if (uf === estado.sigla) {
-                        td.innerHTML = estado.nome;
+                    const option = document.createElement('option');
+                    option.value = estado.sigla;
+                    option.text = estado.sigla + " - " + estado.nome;
+                    if (estadoBd) {
+                        if (estadoBd === estado.sigla) {
+                            option.selected = true;
+                            carregarCidades(estado.id);
+                        }
                     }
+                    option.setAttribute('data-id', estado.id);
+                    estadoSelect.add(option);
                 });
+
             });
-    });
-}
+
+        estadoSelect.addEventListener('change', () => {
+            const selectedOption = estadoSelect.options[estadoSelect.selectedIndex];
+            const estadoId = selectedOption.getAttribute('data-id');
+            cidadeSelect.innerHTML = '<option value="" disabled selected>Carregando...</option>';
+
+            carregarCidades(estadoId)
+        });
+
+        function carregarCidades(estadoId) {
+            if (estadoId) {
+                fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoId}/municipios`)
+                    .then(response => response.json())
+                    .then(cidades => {
+                        cidadeSelect.innerHTML = '<option value="" disabled selected>Selecione a cidade</option>';
+                        cidades.forEach(cidade => {
+                            const option = document.createElement('option');
+                            option.value = cidade.nome;
+                            if (cidadeBd) {
+                                if (cidadeBd === cidade.nome) {
+                                    option.selected = true;
+                                }
+                            }
+                            option.text = cidade.nome
+                            cidadeSelect.add(option)
+                        });
+                    });
+            }
+        }
+    }
+
+    /* Visualizar nome do estado na tabela de NAI em painel de usuários */
+    const tableNais = document.getElementById('table-nais');
+
+    if (tableNais) {
+        const estadoTds = tableNais.querySelectorAll('td[id^="estado-"]');
+
+        estadoTds.forEach(td => {
+            const uf = td.textContent.trim();
+
+            fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+                .then(response => response.json())
+                .then(estados => {
+                    estados.sort((a, b) => a.nome.localeCompare(b.nome));
+                    estados.forEach(estado => {
+                        if (uf === estado.sigla) {
+                            td.innerHTML = estado.nome;
+                        }
+                    });
+                });
+        });
+    }
 
 });
 

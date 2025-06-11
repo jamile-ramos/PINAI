@@ -6,6 +6,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Nai;
+use Laravel\Pail\ValueObjects\Origin\Console;
 
 class UsuarioController extends Controller
 {
@@ -13,22 +14,31 @@ class UsuarioController extends Controller
     public function index(Request $request)
     {
         $query = $request->input('query');
+        $abaAtiva = $request->input('abaAtiva');
 
         $paginaUsuarios = $request->input('users_page', 1);
         $paginaNais = $request->input('nais_page', 1);
 
-        if($query){
+
+        if($query && $abaAtiva === 'all-users'){
             $usuarios = User::with('nai')
             ->where('name', 'like', '%' . $query . '%')
             ->paginate(10, ['*'], 'users_page', $paginaUsuarios)
-            ->appends(['query' => $query]);
+            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
         } else{
             $usuarios = User::with('nai')->paginate(10, ['*'], 'users_page', $paginaUsuarios);
         }
 
-        $nais = Nai::where('status', 'ativo')->paginate(10, ['*'], 'nais_page', $paginaNais);
+        if($query && $abaAtiva === 'all-nais'){
+            $nais = Nai::where('status', 'ativo')
+            ->where('nome', 'like', '%' . $query . '%')
+            ->paginate(10, ['*'], 'nais_page', $paginaNais)
+            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+        } else{
+            $nais = Nai::where('status', 'ativo')->paginate(10, ['*'], 'nais_page', $paginaNais);
+        }
 
-        return view('usuarios.painelUsuarios', compact('usuarios','query', 'nais'));
+        return view('usuarios.painelUsuarios', compact('usuarios','query', 'nais', 'abaAtiva'));
     }
 
     public function update(Request $request, $id)

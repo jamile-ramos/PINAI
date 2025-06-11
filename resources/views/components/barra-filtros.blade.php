@@ -1,10 +1,11 @@
-@props(['links' => [], 'actions' => []])
+@props(['links' => [], 'actions' => [], 'urlQuery' => url()->current()])
 
 <div class="tab-buttons">
-    <form action="/" method="GET" class="search-form" style="display: none;">
+    <form action="{{ $urlQuery }}" method="GET" class="search-form" style="display: none;">
         <div class="search-container">
             <i class="fas fa-search mr-2"></i>
             <label for="search-query" class="sr-only">Pesquisar</label>
+            <input type="hidden" name="abaAtiva" id="abaAtiva" value="">
             <input type="text" class="search-input" name="query" placeholder="Pesquisar..." value="{{ request('query') }}" />
         </div>
     </form>

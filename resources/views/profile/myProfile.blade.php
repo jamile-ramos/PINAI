@@ -21,7 +21,7 @@
                             </div>
                         </div>
                         <div class="ms-3">
-                            <h3 class="mb-0">{{ Auth::user()->name }}</h3>
+                            <p class="h5 mb-0 fw-bold">{{ Auth::user()->name }}</p>
                         </div>
                     </div>
 
@@ -29,28 +29,28 @@
                         <div class="col cardMy">
                             <div class="card card-profile cardMyChild text-center">
                                 <span class="mb-1 text-roxo"><i class="fas fa-newspaper"></i></span>
-                                <h3 class="mb-0">{{ $myNoticias->count() }}</h3>
+                                <p class="h5 fw-bold mb-0">{{ $myNoticias->count() }}</p>
                                 <p class="text-muted-small px-4">Notícias</p>
                             </div>
                         </div>
                         <div class="col cardMy">
                             <div class="card card-profile cardMyChild text-center">
                                 <span class="mb-1 text-roxo"><i class="fas fa-pencil-alt"></i></span>
-                                <h3 class="mb-0">{{ $myPostagens->count() }}</h3>
+                                <p class="h5 fw-bold mb-0">{{ $myPostagens->count() }}</p>
                                 <p class="text-muted-small px-4">Postagens</p>
                             </div>
                         </div>
                         <div class="col cardMy">
                             <div class="card card-profile cardMyChild text-center">
                                 <span class="mb-1 text-roxo"><i class="fas fa-file-alt"></i></span>
-                                <h3 class="mb-0">{{ $myDocumentos->count() }}</h3>
+                                <p class="h5 fw-bold mb-0">{{ $myDocumentos->count() }}</p>
                                 <p class="text-muted-small">Documentos</p>
                             </div>
                         </div>
                         <div class="col cardMy">
                             <div class="card card-profile cardMyChild text-center">
                                 <span class="mb-1 text-roxo"><i class="fas fa-tools"></i></span>
-                                <h3 class="mb-0">{{ $mySolucoes->count() }}</h3>
+                                <p class="h5 fw-bold mb-0">{{ $mySolucoes->count() }}</p>
                                 <p class="text-muted-small">Solucões</p>
                             </div>
                         </div>

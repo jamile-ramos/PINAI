@@ -2699,7 +2699,7 @@ body[data-background-color=dark] .border-top {
 .card-title {
    margin: 0;
    color: #011C37;
-   font-size: 20px;
+   /*font-size: 20px;*/
    font-weight: 600;
    line-height: 1.6
 }

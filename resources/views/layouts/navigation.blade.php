@@ -84,7 +84,7 @@
             <span class="sidebar-mini-icon">
               <i class="fa fa-ellipsis-h"></i>
             </span>
-            <h4 class="text-section">Outras páginas</h4>
+            <p class="h4 text-section">Outras páginas</p>
           </li>
           <li class="nav-item {{ request()->is('myProfile*') || request()->is('profile*') ? 'active submenu' : ''}}">
             <a href="/myProfile" data-btnNav="profile" aria-label="Ir para Meu perfil">

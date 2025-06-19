@@ -57,7 +57,7 @@
 
     <!-- Paginação -->
     <div class="d-flex justify-content-center mt-3">
-        {{ $usuarios->appends(request()->except('users_page'))->links() }}
+        {{ $usuarios->appends(request()->except('users_page'))->links('vendor.pagination.bootstrap-5') }}
     </div>
 </div>
 

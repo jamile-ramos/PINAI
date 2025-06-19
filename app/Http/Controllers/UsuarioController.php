@@ -22,7 +22,13 @@ class UsuarioController extends Controller
 
         if($query && $abaAtiva === 'all-users'){
             $usuarios = User::with('nai')
-            ->where('name', 'like', '%' . $query . '%')
+            ->where(function($q) use ($query){
+                $q->where('name', 'like', $query . '%')
+                ->orWhere('email', 'like', $query . '%');
+            })
+            ->orWhereHas('nai', function($q) use ($query){
+                $q->where('siglaNai', 'like', $query . '%');
+            })
             ->paginate(10, ['*'], 'users_page', $paginaUsuarios)
             ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
         } else{
@@ -31,7 +37,11 @@ class UsuarioController extends Controller
 
         if($query && $abaAtiva === 'all-nais'){
             $nais = Nai::where('status', 'ativo')
-            ->where('nome', 'like', '%' . $query . '%')
+            ->where(function($q) use ($query){
+                $q->where('nome', 'like', $query . '%')
+                ->orwhere('instituicao', 'like', $query . '%')
+                ->orwhere('siglaNai', 'like', $query . '%');
+            })
             ->paginate(10, ['*'], 'nais_page', $paginaNais)
             ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
         } else{

@@ -9,13 +9,32 @@ use Illuminate\Http\Request;
 
 class NoticiaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $query = $request->input('query');
+        $abaAtiva = $request->input('abaAtiva');
+
+        $paginaVisaoNoticias = $request->input('noticias_page',1);
+        $paginaMyNoticias = $request->input('myNoticias_page', 1);
+        $paginaAllNoticias = $request->input('allNoticias_page', 1);
+        $paginaCategorias = $request->input('categorias_page', 1);
+        $noticiasBusca = collect();
+
+        if ($query && $abaAtiva === 'visaoNoticias') {
+            $noticiasBusca = Noticia::where('status', 'ativo')
+                ->where(function ($q) use ($query) {
+                    $q->where('titulo', 'like','%'. $query . '%')
+                        ->orwhere('subtitulo', 'like', '%' .$query . '%');
+                })
+                ->paginate(10, ['*'], 'noticias_page', $paginaVisaoNoticias)
+                ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+        }
+
+        $noticias = Noticia::where('status', 'ativo')->get();
         $categorias = CategoriaNoticia::where('status', 'ativo')->get();
         $minhasNoticias = $this->myNoticias();
-        $noticias = Noticia::where('status', 'ativo')->get();
         $noticiasRecentes = Noticia::where('status', 'ativo')->latest()->take(3)->get();
-        return view('noticias.index', compact('noticias', 'categorias', 'minhasNoticias', 'noticiasRecentes'));
+        return view('noticias.index', compact('noticias', 'categorias', 'minhasNoticias', 'noticiasRecentes', 'noticiasBusca', 'query'));
     }
 
     public function myNoticias()
@@ -66,10 +85,10 @@ class NoticiaController extends Controller
     {
         $noticia = Noticia::findOrFail($request->id);
         $noticia->update(['status' => 'inativo']);
-    
+
         return redirect()->route('noticias.index')->with('success', 'Notícia excluída com sucesso!');
     }
-    
+
 
     public function edit($id)
     {
@@ -96,12 +115,14 @@ class NoticiaController extends Controller
         return redirect()->route('noticias.index')->with('success', 'Notícia atualizada com sucesso!');
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $noticia = Noticia::findOrFail($id);
         return view('noticias.show', compact('noticia'));
     }
 
-    public function noticiasCategorias($idCategoria){
+    public function noticiasCategorias($idCategoria)
+    {
         $categoria = CategoriaNoticia::findOrFail($idCategoria);
         $noticias = $categoria->noticias()->where('status', 'ativo')->get();
 

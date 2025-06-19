@@ -4,13 +4,13 @@
 
 @section('content')
 <div class="col">
-    <div>
-        {{ Breadcrumbs::render('noticiasCategorias', $categoria)}}
-    </div>
-    <div class="home-news titulo-categoria">
-        <h1 class="fw-semibold">{{ $categoria->nomeCategoria }}</a></h1>
+  <div>
+    {{ Breadcrumbs::render('noticiasCategorias', $categoria)}}
+  </div>
+  <div class="home-news titulo-categoria">
+    <h1 class="fw-semibold">{{ $categoria->nomeCategoria }}</a></h1>
 
-        <div class="row row-cols-1 g-4">
+    <div class="row row-cols-1 g-4">
       @foreach($noticias as $noticia)
       <div class="col card-not-home">
         <div class="card h-100 border-0 bg-transparent shadow-none">
@@ -25,11 +25,11 @@
             </div>
             <div class="col-md-8">
               <div class="card-body d-flex flex-column h-100 bg-transparent p-0">
-                <h5 class="card-title title-new mb-2">
+                <h3 class="card-title title-new mb-2 pl-0">
                   <a href="{{ route('noticias.show', $noticia->id) }}" class="text-decoration-none text-dark" data-btn="noticias">
                     {{ $noticia->titulo }}
                   </a>
-                </h5>
+                </h3>
 
                 <p class="card-text mb-5">{{ Str::limit($noticia->subtitulo, 150) }}</p>
                 <p class="card-text"><small class="text-muted">Publicado dia {{ $noticia->created_at->format('d/m/Y') }}</small></p>
@@ -40,7 +40,7 @@
       </div>
       @endforeach
     </div>
-    </div>
+  </div>
 
 </div>
 @endsection

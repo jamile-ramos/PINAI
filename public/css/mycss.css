@@ -66,7 +66,7 @@ h3 {
     outline: none
 }
 
-.btn-edit{
+.btn-edit {
     background: #007BFF;
 }
 
@@ -91,6 +91,7 @@ h3 {
 }
 
 .nomeCategoria a:hover {
+    color: #1572e8 !important;
     text-decoration: underline #1572e8 !important;
 }
 
@@ -1395,8 +1396,8 @@ h1 {
 }
 
 .noticia-img-wrapper {
-    height: 400px; 
-    max-height: 60vh; 
+    height: 400px;
+    max-height: 60vh;
 }
 
 .link-hover:hover {
@@ -1405,12 +1406,25 @@ h1 {
 
 .content-link {
     display: none;
-  }
-  
-  .content-link.show {
+}
+
+.content-link.show {
     display: block;
-  }
-  
+}
+
+/* Tamanhos padrões das fontes do bootstrap*/
+h1 { font-size: 2.5rem !important; }
+h2 { font-size: 2rem !important; }
+h3 { font-size: 1.75rem !important; }
+h4 { font-size: 1.5rem !important; }
+h5 { font-size: 1.25rem !important; }
+
+/* Adicionar underline no hover */
+.hover-underline:hover {
+    text-decoration: underline;
+}
+
+
 @media (max-width: 576px) {
     .noticia-img-wrapper {
         height: 200px;
@@ -1476,7 +1490,7 @@ h1 {
         font-size: 25px;
     }
 
-    .home-text h3 {
+    .home-text {
         font-size: 18px;
         text-align: justify;
     }

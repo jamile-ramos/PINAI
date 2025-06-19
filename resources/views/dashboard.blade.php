@@ -8,8 +8,10 @@
 <div class="content-home">
   <div class="home-text">
     <h1 class="pb-5">Bem vindo à PINAI, {{ Auth::user()->name }}!</h1>
-    <h2 class="h4 fw-normal">A Plataforma Interativa de Núcleos de Acessibilidade e Inclusão (PINAI) é uma plataforma criada para
-      centralizar e facilitar a comunicação entre os Núcleos de Acessibilidade e Inclusão (NAIs).</h2>
+    <p class="h4 fw-normal">
+      A Plataforma Interativa de Núcleos de Acessibilidade e Inclusão (PINAI) é uma plataforma criada para
+      centralizar e facilitar a comunicação entre os Núcleos de Acessibilidade e Inclusão (NAIs).
+    </p>
   </div>
   <div class="content-card">
     <div class="card text-center" style="width: 18rem;">
@@ -51,7 +53,7 @@
 
   <!-- Card de Noticias -->
   <div class="home-news container">
-    <h2 class="mb-4">ÚLTIMAS NOTÍCIAS</h2>
+    <p class="h4 fw-bolder">ÚLTIMAS NOTÍCIAS</p>
 
     <div class="row row-cols-1 g-4">
       @foreach($noticias as $noticia)
@@ -68,11 +70,11 @@
             </div>
             <div class="col-md-8">
               <div class="card-body d-flex flex-column h-100 bg-transparent p-0">
-                <h5 class="card-title title-new mb-2">
+                <h4 class="card-title title-new mb-2">
                   <a href="{{ route('noticias.show', $noticia->id) }}" class="text-decoration-none" data-btn="noticias" aria-label="Abrir a notícia completa: {{ $noticia->titulo }}">
                     {{ $noticia->titulo }}
                   </a>
-                </h5>
+                </h4>
 
                 <p class="card-text mb-5">{{ Str::limit($noticia->subtitulo, 150) }}</p>
                 <p class="card-text"><small class="text-muted">Publicado dia {{ $noticia->created_at->format('d/m/Y') }}</small></p>

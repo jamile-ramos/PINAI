@@ -358,6 +358,12 @@ document.addEventListener('DOMContentLoaded', function () {
         tabs.forEach(tabElement => tabElement.classList.remove('active'));
         tab.classList.add('active');
 
+        // Limpa o campo de pesquisa
+        const searchInput = document.querySelector('.search-form input[name="query"]');
+        if (searchInput) {
+            searchInput.value = '';
+        }
+
         contents.forEach(content => content.classList.remove('show'));
 
         const contentId = tab.getAttribute('content-id');

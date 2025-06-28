@@ -40,18 +40,14 @@
         @foreach(['success', 'success-delete'] as $status)
         @if(session($status))
         @if($status === 'success')
-        <div class="alert alert-success alert-dismissible fade show" role="alert" id="{{ $status }}-alert">
+        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
             <strong>{{ session($status) }}</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         @elseif($status === 'success-delete')
-        <div class="alert alert-warning alert-dismissible fade show" role="alert" id="{{ $status }}-alert">
+        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
             <strong>{{ session($status) }}</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         @endif
         @endif
@@ -106,7 +102,7 @@
 
                 <!--Comentários nas respostas-->
                 <div class="comment-section">
-                    <h4>Comentários ({{ $resposta->comentarios->count() }})</h4>
+                    <p class="h5">Comentários ({{ $resposta->comentarios->count() }})</p>
                     @foreach($resposta->comentarios as $comentario)
                     <div class="comment-card">
                         <div class="comment-header">

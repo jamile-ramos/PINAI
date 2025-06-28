@@ -10,7 +10,7 @@
 
     @php
     $links = [
-    ['content-id' => 'visaoPostagens', 'nomeAba' => 'Visão Geral', 'classActive' => 'active', 'data-tipo' => 'postagens'],
+    ['content-id' => 'visaoPostagens', 'nomeAba' => 'Visão Geral', 'data-tipo' => 'postagens'],
     ['content-id' => 'myPostagens','nomeAba' => 'Minhas Postagens','data-tipo' => 'postagens']
     ];
 
@@ -41,21 +41,21 @@
     @endif
     <!-- Conteúdo das abas -->
     <div class="tab-contents">
-        <div class="content-link show" id="visaoPostagens">
+        <div class="content-link" id="visaoPostagens">
             <div class="infos">
-                @include('postagens.init', ['postagens' => $postagens])
+                @include('postagens.init', ['postagens' => $postagens, 'topico' => $topico])
             </div>
         </div>
 
         <div class="content-link" id="allPostagens">
             <div class="infos">
-                @include('postagens.tablePostagens', ['itens' => $postagens, 'tipoAba' => 'allPostagens'])
+                @include('postagens.tablePostagens', ['postagens' => $allPostagens, 'topico' => $topico, 'tipoAba' => 'allPostagens'])
             </div>
         </div>
 
         <div class="content-link" id="myPostagens">
             <div class="infos">
-                @include('postagens.tablePostagens', ['itens' => $minhasPostagens, 'tipoAba' => 'myPostagens'])
+                @include('postagens.tablePostagens', ['postagens' => $minhasPostagens, 'tipoAba' => 'myPostagens'])
             </div>
         </div>
     </div>

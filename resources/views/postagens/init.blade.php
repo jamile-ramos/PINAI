@@ -20,6 +20,21 @@
         </div>
     </div>
 
+
+    @if(request()->filled('query') && $abaAtiva === 'visaoPostagens')
+    <div class="d-flex justify-content-between align-items-center mb-3 p-3 rounded border border-secondary-subtle bg-light">
+        <span class="result-count" aria-live="polite" aria-atomic="true" style="color:#333; font-weight:600; font-size: 1rem;">
+            Foram encontrados {{ $postagens->total() }} resultado{{ $postagens->total() > 1 ? 's' : '' }} para: <span class="text-primary">"{{ $query }}"</span>
+        </span>
+        <a href="{{ route('postagens.index', ['idTopico' => $topico->id]) }}?abaAtiva={{ request('abaAtiva') }}"
+            class="btn-limpar-filtro"
+            aria-label="Limpar filtro de pesquisa e exibir todos os usuários">
+            <i class="fas fa-times-circle" aria-hidden="true"></i>
+            Limpar Filtro
+        </a>
+    </div>
+    @endif
+
     @foreach($postagens as $postagem)
     <div class="post-card">
         <div class="post-header">
@@ -43,20 +58,9 @@
     @endforeach
     @endif
 
-    <nav aria-label="Paginação">
-        <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Anterior</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item active">
-                <a class="page-link" href="#">2 <span class="visually-hidden"></span></a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Próximo</a>
-            </li>
-        </ul>
-    </nav>
+<!-- Paginação -->
+<div class="d-flex justify-content-center mt-3">
+    {{ $postagens->appends(request()->except('postagens_page'))->links('vendor.pagination.bootstrap-5') }}
+</div>
 
 </div>

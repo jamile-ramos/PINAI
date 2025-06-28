@@ -1,4 +1,18 @@
 <div class="table-responsive">
+    @if(request()->filled('query') && $abaAtiva == $tipoAba)
+    <div class="d-flex justify-content-between align-items-center mb-3 p-3 rounded border border-secondary-subtle bg-light">
+        <span class="result-count" aria-live="polite" aria-atomic="true" style="color:#333; font-weight:600; font-size: 1rem;">
+            Foram encontrados {{ $noticias->total() }} resultado{{ $noticias->total() > 1 ? 's' : '' }} para: <span class="text-primary">"{{ $query }}"</span>
+        </span>
+        <a href="{{ route('noticias.index') }}?abaAtiva={{ request('abaAtiva') }}"
+            class="btn-limpar-filtro"
+            aria-label="Limpar filtro de pesquisa e exibir todos os usuários">
+            <i class="fas fa-times-circle" aria-hidden="true"></i>
+            Limpar Filtro
+        </a>
+    </div>
+    @endif
+
     <table class="table table-hover table-striped">
         <thead class="forum-azul">
             <tr>
@@ -12,7 +26,7 @@
             </tr>
         </thead>
         <tbody>
-            @if(!$noticias->isEmpty())
+        @if($noticias->isNotEmpty())
             @foreach($noticias as $noticia)
             <tr>
                 <td class="fw-bold">{{ $noticia->titulo }}</td>
@@ -55,9 +69,14 @@
             @endforeach
             @else
             <tr>
-                <td colspan="4" class="text-center">Você não criou nenhuma notícia!</td>
+                <td colspan="5" class="text-center">Nenhuma notícia encontrada!</td>
             </tr>
             @endif
         </tbody>
     </table>
+</div>
+
+<!-- Paginação -->
+<div class="d-flex justify-content-center mt-3">
+    {{ $noticias->appends(request()->except($tipoAba.'_page'))->links('vendor.pagination.bootstrap-5') }}
 </div>

@@ -10,7 +10,7 @@
 
     @php
     $links = [
-    ['content-id' => 'visaoTopicos', 'nomeAba' => 'Visão Geral', 'classActive' => 'active', 'data-tipo' => 'topicos']
+    ['content-id' => 'visaoTopicos', 'nomeAba' => 'Visão Geral', 'data-tipo' => 'topicos']
     ];
 
     if (Auth::check() && Auth::user()->tipoUsuario != 'comum') {
@@ -42,7 +42,7 @@
     @endif
     <!-- Conteúdo das abas -->
     <div class="tab-contents">
-        <div class="content-link show" id="visaoTopicos">
+        <div class="content-link" id="visaoTopicos">
             <div class="infos">
                 @include('topicos.init', ['topicos' => $topicos])
             </div>
@@ -50,20 +50,20 @@
 
         <div class="content-link" id="allTopicos">
             <div class="infos">
-                @include('topicos.tableTopicos', ['itens' => $topicos, 'title' => 'Gerenciar Tópicos'])
+                @include('topicos.tableTopicos', ['topicos' => $allTopicos, 'title' => 'Gerenciar Tópicos', 'tipoAba' => 'allTopicos'])
             </div>
         </div>
 
 
         <div class="content-link" id="myTopicos">
             <div class="infos">
-                @include('topicos.tableTopicos', ['itens' => $meusTopicos, 'title' => 'Meus Tópicos'])
+                @include('topicos.tableTopicos', ['topicos' => $meusTopicos, 'title' => 'Meus Tópicos', 'tipoAba' => 'myTopicos'])
             </div>
         </div>
 
         <div class="content-link" id="sugestoes">
             <div class="infos" id="categorias-content">
-                @include('topicos.tableTopicos', ['itens' => $topicosSugeridos, 'title' => 'Tópicos Sugeridos'])
+                @include('topicos.tableTopicos', ['topicos' => $topicosSugeridos, 'title' => 'Tópicos Sugeridos', 'tipoAba' => 'sugestoes'])
             </div>
         </div>
 

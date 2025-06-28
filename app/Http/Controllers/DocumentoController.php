@@ -9,11 +9,14 @@ use Illuminate\Http\Request;
 
 class DocumentoController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
+
+        $abaAtiva = $request->input('abaAtiva');
+
         $categorias = CategoriaDocumento::where('status', 'ativo')->get();
         $documentos = Documento::where('status', 'ativo')->get();
         $myDocumentos = Documento::where('idUsuario', Auth::id())->where('status', 'ativo')->get();
-        return view('documentos.index', compact('categorias', 'documentos', 'myDocumentos'));
+        return view('documentos.index', compact('categorias', 'documentos', 'myDocumentos', 'abaAtiva'));
     }
 
     public function create(){

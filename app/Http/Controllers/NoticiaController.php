@@ -6,6 +6,7 @@ use App\Models\CategoriaNoticia;
 use App\Models\Noticia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class NoticiaController extends Controller
 {
@@ -14,34 +15,84 @@ class NoticiaController extends Controller
         $query = $request->input('query');
         $abaAtiva = $request->input('abaAtiva');
 
-        $paginaVisaoNoticias = $request->input('noticias_page',1);
+        $paginaVisaoNoticias = $request->input('noticias_page', 1);
         $paginaMyNoticias = $request->input('myNoticias_page', 1);
         $paginaAllNoticias = $request->input('allNoticias_page', 1);
-        $paginaCategorias = $request->input('categorias_page', 1);
-        $noticiasBusca = collect();
+        $paginaCategoriaNoticias = $request->input('categoriasNoticias_page',1);
 
+        // Visão Noticias
         if ($query && $abaAtiva === 'visaoNoticias') {
             $noticiasBusca = Noticia::where('status', 'ativo')
                 ->where(function ($q) use ($query) {
-                    $q->where('titulo', 'like','%'. $query . '%')
-                        ->orwhere('subtitulo', 'like', '%' .$query . '%');
+                    $q->where('titulo', 'like', '%' . $query . '%')
+                        ->orWhere('subtitulo', 'like', '%' . $query . '%');
                 })
                 ->paginate(10, ['*'], 'noticias_page', $paginaVisaoNoticias)
                 ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+        }else{
+            // Criar um paginator vazio para evitar erros
+            $emptyCollection = collect([]);
+            $noticiasBusca = new LengthAwarePaginator(
+                $emptyCollection,
+                0,
+                10,
+                $paginaVisaoNoticias,
+                ['path' => LengthAwarePaginator::resolveCurrentPath()]
+            );
         }
 
-        $noticias = Noticia::where('status', 'ativo')->get();
-        $categorias = CategoriaNoticia::where('status', 'ativo')->get();
-        $minhasNoticias = $this->myNoticias();
-        $noticiasRecentes = Noticia::where('status', 'ativo')->latest()->take(3)->get();
-        return view('noticias.index', compact('noticias', 'categorias', 'minhasNoticias', 'noticiasRecentes', 'noticiasBusca', 'query'));
-    }
+        // Minhas Noticias
+        if ($query && $abaAtiva === 'myNoticias') {
+            $minhasNoticias = Noticia::with('categoria')
+                ->where('status', 'ativo')
+                ->where('idUsuario', Auth::user()->id)
+                ->where(function ($q) use ($query) {
+                    $q->where('titulo', 'like', '%' . $query . '%')
+                        ->orWhereHas('categoria', function ($sub) use ($query) {
+                            $sub->where('nomeCategoria', 'like', '%' . $query . '%');
+                        });
+                })
+                ->paginate(10, ['*'], 'myNoticias_page', $paginaMyNoticias)
+                ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+        } else {
+            $minhasNoticias = Noticia::where('status', 'ativo')
+            ->where('idUsuario', Auth::user()->id)
+            ->paginate(10, ['*'], 'myNoticias_page', $paginaMyNoticias);
+        }
 
-    public function myNoticias()
-    {
-        $idUsuario = Auth::user()->id;
-        $minhasNoticias = Noticia::where('idUsuario', $idUsuario)->where('status', 'ativo')->get();
-        return $minhasNoticias;
+        // Gerenciar Noticias
+        if ($query && $abaAtiva === 'allNoticias') {
+            $noticias = Noticia::with('categoria')
+                ->where('status', 'ativo')
+                ->where(function ($q) use ($query) {
+                    $q->where('titulo', 'like', '%' . $query . '%')
+                        ->orWhereHas('categoria', function ($sub) use ($query) {
+                            $sub->where('nomeCategoria', 'like', '%' . $query . '%');
+                        })
+                        ->orWhereHas('user', function($sub) use($query){
+                            $sub->where('name', 'like', '%' . $query . '%');
+                        });
+                })
+                ->paginate(10, ['*'], 'allNoticias_page', $paginaAllNoticias)
+                ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+        } else {
+            $noticias = Noticia::where('status', 'ativo')
+            ->paginate(10, ['*'], 'allNoticias_page', $paginaAllNoticias);
+        }
+
+        // Categorias
+        if($query && $abaAtiva === 'categoriasNoticias'){
+            $categorias = CategoriaNoticia::where('status', 'ativo')
+            ->where('nomeCategoria', 'like', '%' . $query . '%')
+            ->paginate(10, ['*'], 'categoriasNoticias_page', $paginaCategoriaNoticias)
+            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+        }else{
+            $categorias = CategoriaNoticia::where('status', 'ativo')
+            ->paginate(10, ['*'], 'categoriasNoticias_page', $paginaCategoriaNoticias);
+        }
+
+        $noticiasRecentes = Noticia::where('status', 'ativo')->latest()->take(3)->get();
+        return view('noticias.index', compact('noticias', 'categorias', 'minhasNoticias', 'noticiasRecentes', 'noticiasBusca', 'query', 'abaAtiva'));
     }
 
     public function create()

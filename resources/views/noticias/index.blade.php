@@ -12,7 +12,7 @@
 
     $links = [
     ['content-id' => 'visaoNoticias', 'nomeAba' => 'Visão Geral', 'data-tipo' => 'noticias'],
-    ['content-id' => 'mysNoticias', 'nomeAba' => 'Minhas Noticias', 'data-tipo' => 'noticias']
+    ['content-id' => 'myNoticias', 'nomeAba' => 'Minhas Noticias', 'data-tipo' => 'noticias']
     ];
 
     if (Auth::check() && Auth::user()->tipoUsuario != 'comum') {
@@ -20,7 +20,7 @@
     }
 
     $actions = [
-    ['classBtn' => 'btn-primary', 'content-id' => 'mysNoticias', 'nomeButton' => 'Criar Notícia', 'data-url' => '/noticias/create']
+    ['classBtn' => 'btn-primary', 'content-id' => 'myNoticias', 'nomeButton' => 'Criar Notícia', 'data-url' => '/noticias/create']
     ];
 
     if (Auth::check() && Auth::user()->tipoUsuario != 'comum') {
@@ -35,7 +35,6 @@
             <p class="text-secondary mt-3 ">Atualizações, eventos e novidades sobre acessibilidade nos NAIs de todo o Brasil.</p>
         </div>
     </header>
-
 
     <x-barra-filtros
         :links="$links"
@@ -55,16 +54,15 @@
             </div>
         </div>
 
-        <div class="content-link" id="allNoticias">
+        <div class="content-link" id="myNoticias">
             <div class="infos">
-                @include('noticias.tableNoticias', ['noticias' => $noticias, 'tipoAba' => 'allNoticias'])
+                @include('noticias.tableNoticias', ['noticias' => $minhasNoticias, 'tipoAba' => 'myNoticias'])
             </div>
         </div>
 
-
-        <div class="content-link" id="mysNoticias">
+        <div class="content-link" id="allNoticias">
             <div class="infos">
-                @include('noticias.tableNoticias', ['noticias' => $minhasNoticias, 'tipoAba' => 'mysNoticias'])
+                @include('noticias.tableNoticias', ['noticias' => $noticias, 'tipoAba' => 'allNoticias'])
             </div>
         </div>
 

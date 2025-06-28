@@ -1,4 +1,17 @@
 <div class="table-responsive">
+    @if(request('query') && $abaAtiva === 'all-nais')
+    <div class="d-flex justify-content-between align-items-center mb-3 p-3 rounded border border-secondary-subtle bg-light">
+    <span class="result-count" aria-live="polite" aria-atomic="true" style="color:#333; font-weight:600; font-size: 1rem;">
+            Foram encontrados {{ $nais->total() }} resultado{{ $nais->total() > 1 ? 's' : '' }} para: <span class="text-primary">"{{ $query }}"</span>
+        </span>
+        <a href="{{ route('painel.usuarios') }}?abaAtiva={{ request('abaAtiva') }}"
+            class="btn-limpar-filtro"
+            aria-label="Limpar filtro de pesquisa e exibir todos os usuários">
+            <i class="fas fa-times-circle" aria-hidden="true"></i>
+            Limpar Filtro
+        </a>
+    </div>
+    @endif
     <table class="table table-hover table-striped">
         <thead class="forum-azul">
             <tr>

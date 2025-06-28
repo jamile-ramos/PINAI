@@ -63,7 +63,7 @@
             @endforeach
             @else
             <tr>
-                <td colspan="4" class="text-center">Você não criou nenhuma notícia!</td>
+                <td colspan="4" class="text-center">Nenhuma solução encontrada!</td>
             </tr>
             @endif
         </tbody>

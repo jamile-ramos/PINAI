@@ -11,7 +11,7 @@
     @php
 
     $links = [
-    ['content-id' => 'visaoDocumentos', 'nomeAba' => 'Visão Geral', 'classActive' => 'active', 'data-tipo' => 'documentos'],
+    ['content-id' => 'visaoDocumentos', 'nomeAba' => 'Visão Geral', 'data-tipo' => 'documentos'],
     ['content-id' => 'myDocumentos', 'nomeAba' => 'Meus documentos', 'data-tipo' => 'documentos']
     ];
 
@@ -49,25 +49,25 @@
     @endif
     <!-- Conteúdo das abas -->
     <div class="tab-contents">
-        <div class="content-link show" id="visaoDocumentos">
+        <div class="content-link" id="visaoDocumentos">
             <div class="infos">
-                @include('documentos.init', ['categorias' => $categorias])
+                @include('documentos.init', ['categorias' => $categorias, 'documentos' => $documentos])
             </div>
         </div>
         <div class="content-link" id="myDocumentos">
             <div class="infos">
-                @include('documentos.tableDocumentos', ['documentos' => $myDocumentos])
+                @include('documentos.tableDocumentos', ['documentos' => $myDocumentos, 'tipoAba' => 'myDocumentos'])
             </div>
         </div>
         <div class="content-link" id="allDocumentos">
             <div class="infos">
-                @include('documentos.tableDocumentos', ['documentos' => $documentos])
+                @include('documentos.tableDocumentos', ['documentos' => $allDocumentos, 'tipoAba' => 'allDocumentos'])
             </div>
         </div>
 
         <div class="content-link" id="categoriasDocumentos">
             <div class="infos" id="categorias-content">
-                @include('layouts.tabelaCategorias', ['categorias' => $categorias, 'tipo' => "documentos"])
+                @include('layouts.tabelaCategorias', ['categorias' => $categoriasDocumentos, 'tipo' => "documentos"])
             </div>
         </div>
 

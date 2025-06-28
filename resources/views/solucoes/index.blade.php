@@ -50,7 +50,7 @@
     <div class="tab-contents">
         <div class="content-link show" id="visaoSolucoes">
             <div class="infos">
-                @include('solucoes.init', ['solucoes' => $solucoes])
+                @include('solucoes.init', ['solucoes' => $solucoes, 'categorias' => $categorias])
             </div>
         </div>
 

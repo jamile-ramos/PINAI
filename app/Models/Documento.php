@@ -16,7 +16,7 @@ class Documento extends Model
     ];
 
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'idUsuario');
     }
 
     public function categoria_documento(){

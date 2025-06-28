@@ -1,9 +1,46 @@
-@foreach($categorias as $categoria)
-@php
-$documentosCategoria = $categoria->documentos()->where('status', 'ativo')->latest()->take(3)->get();
-@endphp
+@if(request()->filled('query') && $abaAtiva === 'visaoDocumentos')
+<div class="d-flex justify-content-between align-items-center mb-3 p-3 rounded border border-secondary-subtle bg-light">
+    <span class="result-count" aria-live="polite" aria-atomic="true" style="color:#333; font-weight:600; font-size: 1rem;">
+        Foram encontrados {{ $documentos->total() }} resultado{{ $documentos->total() > 1 ? 's' : '' }} para: <span class="text-primary">"{{ $query }}"</span>
+    </span>
+    <a href="{{ route('documentos.index') }}?abaAtiva={{ request('abaAtiva') }}"
+        class="btn-limpar-filtro"
+        aria-label="Limpar filtro de pesquisa e exibir todos os usuários">
+        <i class="fas fa-times-circle" aria-hidden="true"></i>
+        Limpar Filtro
+    </a>
+</div>
 
-@if($documentosCategoria->isNotEmpty())
+<div class="row g-4 mb-4">
+    @foreach($documentos as $documento)
+    <div class="col-md-4 col-sm-6">
+        <div class="card h-100 shadow rounded-4 border-0">
+            <div class="card-body text-center d-flex flex-column justify-content-between">
+                <div class="mb-3">
+                    <i class="fa fa-file-pdf fa-3x text-primary"></i>
+                </div>
+                <h5 class="card-title fw-semibold">{{ $documento->nomeArquivo }}</h5>
+                <p class="card-text text-muted small">{{ Str::limit($documento->descricao, 100) }}</p>
+                <a href="{{ asset('storage/' . $documento->caminhoArquivo) }}" target="_blank" class="btn btn-link text-wrap">
+                    <i class="fa fa-eye"></i> Visualizar
+                </a>
+                <a href="{{ asset('storage/' . $documento->caminhoArquivo) }}" download class="btn btn-primary text-wrap">
+                    <i class="fa fa-download"></i> Download
+                </a>
+            </div>
+        </div>
+    </div>
+    @endforeach
+</div>
+
+<div class="d-flex justify-content-center mt-3">
+    {{ $documentos->appends(request()->except('documentos_page'))->links('vendor.pagination.bootstrap-5') }}
+</div>
+
+@else
+
+@foreach($categorias as $categoria)
+@if($categoria->documentos->isNotEmpty())
 <div class="row mb-4">
     <div class="col">
         <p class="h3 nomeCategoria fw-bold">
@@ -18,14 +55,14 @@ $documentosCategoria = $categoria->documentos()->where('status', 'ativo')->lates
 </div>
 
 <div class="row g-4 mb-4">
-    @foreach($documentosCategoria as $documento)
+    @foreach($categoria->documentos as $documento)
     <div class="col-md-4 col-sm-6">
         <div class="card h-100 shadow rounded-4 border-0">
             <div class="card-body text-center d-flex flex-column justify-content-between">
                 <div class="mb-3">
                     <i class="fa fa-file-pdf fa-3x text-primary"></i>
                 </div>
-                <h5 class="card-title fw-semibold">{{ $documento->titulo }}</h5>
+                <h5 class="card-title fw-semibold">{{ $documento->nomeArquivo }}</h5>
                 <p class="card-text text-muted small">{{ Str::limit($documento->descricao, 100) }}</p>
                 <a href="{{ asset('storage/' . $documento->caminhoArquivo) }}" target="_blank" class="btn btn-link text-wrap">
                     <i class="fa fa-eye"></i> Visualizar
@@ -40,3 +77,10 @@ $documentosCategoria = $categoria->documentos()->where('status', 'ativo')->lates
 </div>
 @endif
 @endforeach
+
+<!-- Paginação -->
+<div class="d-flex justify-content-center mt-3">
+    {{ $categorias->appends(request()->except('visaoCategoriasDoc_page'))->links('vendor.pagination.bootstrap-5') }}
+</div>
+
+@endif

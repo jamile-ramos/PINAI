@@ -20,35 +20,46 @@ class UsuarioController extends Controller
         $paginaNais = $request->input('nais_page', 1);
 
 
-        if($query && $abaAtiva === 'all-users'){
-            $usuarios = User::with('nai')
-            ->where(function($q) use ($query){
+        if ($query && $abaAtiva === 'all-users') {
+            $usuarios = $this->buscarUsuarios($query, $paginaUsuarios, $abaAtiva);
+        } else {
+            $usuarios = User::with('nai')->paginate(10, ['*'], 'users_page', $paginaUsuarios);
+        }
+
+        if ($query && $abaAtiva === 'all-nais') {
+            $nais = $this->buscarNais($query, $paginaNais, $abaAtiva);
+        } else {
+            $nais = Nai::ativos()->paginate(10, ['*'], 'nais_page', $paginaNais);
+        }
+
+        return view('usuarios.painelUsuarios', compact('usuarios', 'query', 'nais', 'abaAtiva'));
+    }
+
+    public function buscarUsuarios($query, $paginaUsuarios, $abaAtiva)
+    {
+        return User::ativos()
+            ->with('nai')
+            ->where(function ($q) use ($query) {
                 $q->where('name', 'like', $query . '%')
-                ->orWhere('email', 'like', $query . '%');
+                    ->orWhere('email', 'like', $query . '%');
             })
-            ->orWhereHas('nai', function($q) use ($query){
+            ->orWhereHas('nai', function ($q) use ($query) {
                 $q->where('siglaNai', 'like', $query . '%');
             })
             ->paginate(10, ['*'], 'users_page', $paginaUsuarios)
             ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
-        } else{
-            $usuarios = User::with('nai')->paginate(10, ['*'], 'users_page', $paginaUsuarios);
-        }
+    }
 
-        if($query && $abaAtiva === 'all-nais'){
-            $nais = Nai::where('status', 'ativo')
-            ->where(function($q) use ($query){
+    public function buscarNais($query, $paginaNais, $abaAtiva)
+    {
+        return Nai::ativos()
+            ->where(function ($q) use ($query) {
                 $q->where('nome', 'like', $query . '%')
-                ->orwhere('instituicao', 'like', $query . '%')
-                ->orwhere('siglaNai', 'like', $query . '%');
+                    ->orwhere('instituicao', 'like', $query . '%')
+                    ->orwhere('siglaNai', 'like', $query . '%');
             })
             ->paginate(10, ['*'], 'nais_page', $paginaNais)
             ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
-        } else{
-            $nais = Nai::where('status', 'ativo')->paginate(10, ['*'], 'nais_page', $paginaNais);
-        }
-
-        return view('usuarios.painelUsuarios', compact('usuarios','query', 'nais', 'abaAtiva'));
     }
 
     public function update(Request $request, $id)
@@ -67,10 +78,9 @@ class UsuarioController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
-        //dd($request->all());
-        if($request->status == 'ativo'){
+        if ($request->status == 'ativo') {
             $status = 'inativo';
-        }else{
+        } else {
             $status = 'ativo';
         }
 

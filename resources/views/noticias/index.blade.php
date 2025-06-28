@@ -68,7 +68,7 @@
 
         <div class="content-link" id="categoriasNoticias">
             <div class="infos" id="categorias-content">
-                @include('layouts.tabelaCategorias', ['categorias' => $categorias, 'tipo' => "noticias"])
+                @include('layouts.tabelaCategorias', ['categorias' => $categoriasNoticias, 'tipo' => "noticias"])
             </div>
         </div>
 

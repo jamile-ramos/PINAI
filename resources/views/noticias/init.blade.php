@@ -94,11 +94,8 @@
         </div>
 
         @foreach($categorias as $categoria)
-        @php
-        $noticiasCategorias = $categoria->noticias()->where('status', 'ativo')->take(3)->get();
-        @endphp
 
-        @if($noticiasCategorias->isNotEmpty())
+        @if($categoria->noticias->isNotEmpty())
         <div class="home-news titulo-categoria mb-2 mt-4 pt-2">
             <p class=" h3 fw-bolder nomeCategoria">
                 <a href="{{ route('noticias.noticiasCategorias', $categoria->id) }}" class="categoria d-inline-flex align-items-center gap-2">
@@ -110,7 +107,7 @@
             </p>
 
             <div class="row">
-                @foreach($noticiasCategorias as $noticiaCategoria)
+                @foreach($categoria->noticias as $noticiaCategoria)
                 <div class="col-md-4 mb-2">
                     <div class="card h-100 bg-transparent border-0 shadow-none">
                         <img src="{{ asset('img/imgNoticias/' . $noticiaCategoria->imagem) }}" class="card-img-top img-capa" alt="{{ 'Imagem da notícia: ' . Str::limit($noticiaCategoria->titulo, 80) }}">

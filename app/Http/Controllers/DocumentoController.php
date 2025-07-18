@@ -16,96 +16,126 @@ class DocumentoController extends Controller
         $abaAtiva = $request->input('abaAtiva');
         $query = $request->input('query');
 
-        $paginaVisaoDocumentos = $request->input('documentos_page', 1);
-        $paginaVisaoCategoriasDoc = $request->input('visaoCategoriasDoc_page', 1);
-        $paginaMyDocumentos = $request->input('myDocumentos_page', 1);
-        $paginaAllDocumentos = $request->input('allDocumentos_page', 1);
-        $paginaCategoriaDocumentos = $request->input('categoriasDocumentos_page', 1);
+        $pages = [
+            'visaoDocumentos' => $request->input('documentos_page', 1),
+            'visaoCategoriasDoc' => $request->input('visaoCategoriasDoc_page', 1),
+            'myDocumentos' => $request->input('myDocumentos_page', 1),
+            'allDocumentos' => $request->input('allDocumentos_page', 1),
+            'categoriasDocumentos' => $request->input('categoriasDocumentos_page', 1),
+        ];
 
         // Visão Documentos
         if ($query && $abaAtiva === 'visaoDocumentos') {
-            $documentos = Documento::where('status', 'ativo')
-                ->where(function ($q) use ($query) {
-                    $q->where('nomeArquivo', 'like', '%' . $query . '%')
-                        ->orWhere('descricao', 'like', '%' . $query . '%');
-                })
-                ->latest()
-                ->paginate(9, ['*'], 'documentos_page', $paginaVisaoDocumentos)
-                ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
-            $categorias = new LengthAwarePaginator(
-                collect(),
-                0,
-                9,
-                $paginaVisaoCategoriasDoc ?? 1,
-                ['path' => request()->url(), 'query' => request()->query()]
-            );
+            $documentos = $this->buscarDocumentosComQuery($query, $pages['visaoDocumentos'], $abaAtiva);
+            $categorias = $this->paginaVazia(9, $pages['visaoCategoriasDoc']);
         } else {
-            $categorias = CategoriaDocumento::where('status', 'ativo')
-                ->whereHas('documentos', function ($q) {
-                    $q->where('status', 'ativo');
-                })
-                ->with(['documentos' => function ($q) {
-                    $q->where('status', 'ativo')
-                        ->latest()
-                        ->take(3);
-                }])
-                ->paginate(5, ['*'], 'visaoCategoriasDoc_page', $paginaVisaoCategoriasDoc)
-                ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
-            $documentos = new LengthAwarePaginator(
-                collect(),
-                0,
-                9,
-                $paginaVisaoDocumentos ?? 1,
-                ['path' => request()->url(), 'query' => request()->query()]
-            );
+            $categorias = $this->buscarCategoriasDocumentos(null, $pages['visaoCategoriasDoc'], $abaAtiva);
+            $documentos = $this->paginaVazia(9, $pages['visaoCategoriasDoc']);
         }
 
         // Meus Documentos
         if ($query && $abaAtiva === 'myDocumentos') {
-            $myDocumentos = Documento::where('status', 'ativo')
-                ->where('idUsuario', Auth::user()->id)
-                ->where(function ($q) use ($query) {
-                    $q->where('nomeArquivo', 'like', '%' . $query . '%')
-                        ->orWhere('descricao', 'like', '%' . $query . '%');
-                })
-                ->paginate(9, ['*'], 'myDocumentos_page', $paginaMyDocumentos)
-                ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+            $myDocumentos = $this->buscarMeusDocumentos($query, $pages['myDocumentos'], $abaAtiva);
         } else {
-            $myDocumentos = Documento::where('status', 'ativo')
-                ->where('idUsuario', Auth::user()->id)  
-                ->paginate(9, ['*'], 'myDocumentos_page', $paginaMyDocumentos)
-                ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+            $myDocumentos = $this->buscarMeusDocumentos(null, $pages['myDocumentos'], $abaAtiva);
         }
 
         // Gerenciar Documentos
         if ($query && $abaAtiva === 'allDocumentos') {
-            $allDocumentos = Documento::where('status', 'ativo')
-                ->where(function ($q) use ($query) {
-                    $q->where('nomeArquivo', 'like', '%' . $query . '%')
-                        ->orWhere('descricao', 'like', '%' . $query . '%');
-                })
-                ->with('user')
-                ->paginate(9, ['*'], 'allDocumentos_page', $paginaAllDocumentos)
-                ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+            $allDocumentos = $this->buscarTodosDocumentos($query, $pages['allDocumentos'], $abaAtiva);
         } else {
-            $allDocumentos = Documento::where('status', 'ativo')
-                ->with('user')
-                ->paginate(9, ['*'], 'allDocumentos_page', $paginaAllDocumentos)
-                ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+            $allDocumentos = $this->buscarTodosDocumentos(null, $pages['allDocumentos'], $abaAtiva);
         }
 
         // Categorias
-        if($query && $abaAtiva === 'categoriasDocumentos'){
-            $categoriasDocumentos = CategoriaDocumento::where('status', 'ativo')
-            ->where('nomeCategoria', 'like', '%' . $query . '%')
-            ->paginate(10, ['*'], 'categoriasDocumentos_page', $paginaCategoriaDocumentos)
-            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
-        }else{
-            $categoriasDocumentos = CategoriaDocumento::where('status', 'ativo')
-            ->paginate(10, ['*'], 'categoriasDocumentos_page', $paginaCategoriaDocumentos);
+        if ($query && $abaAtiva === 'categoriasDocumentos') {
+            $categoriasDocumentos = $this->buscarCategoriasDocumentos($query, $pages['categoriasDocumentos'], $abaAtiva);
+        } else {
+            $categoriasDocumentos = $this->buscarCategoriasDocumentos(null, $pages['categoriasDocumentos'], $abaAtiva);
         }
 
         return view('documentos.index', compact('categorias', 'documentos', 'allDocumentos', 'categoriasDocumentos', 'myDocumentos', 'abaAtiva', 'query'));
+    }
+
+    public function buscarDocumentosComQuery($query, $pagina, $abaAtiva)
+    {
+        $resultados = Documento::ativos();
+
+        if (!empty($query)) {
+            $resultados->where(function ($q) use ($query) {
+                $q->where('nomeArquivo', 'like', '%' . $query . '%')
+                    ->orWhere('descricao', 'like', '%' . $query . '%');
+            });
+        }
+
+        return $resultados->latest()
+            ->paginate(9, ['*'], 'documentos_page', $pagina)
+            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+    }
+
+    public function buscarCategoriasDocumentos($query, $pagina, $abaAtiva)
+    {
+        $resultado = CategoriaDocumento::ativos();
+
+        // Se estiver na aba de categorias com busca
+        if (!empty($query) && $abaAtiva === 'categoriasDocumentos') {
+            $resultado->where('nomeCategoria', 'like', '%' . $query . '%');
+        }else{
+            $resultado->whereHas('documentos', function ($q) {
+                $q->ativos();
+            })
+            ->with(['documentos' => function ($q) {
+                $q->ativos()
+                    ->latest()
+                    ->take(3);
+            }]);
+        }
+
+        return $resultado->paginate($abaAtiva === 'categoriasDocumentos' ? 5 : 10, ['*'], $abaAtiva === 'categoriasDocumentos' ? 'categoriasDocumentos_page' : 'visaoCategoriasDoc_page', $pagina)
+        ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+    }
+
+    public function buscarMeusDocumentos($query, $pagina, $abaAtiva)
+    {
+        $resultados = Documento::ativos()
+            ->where('idUsuario', Auth::user()->id);
+
+        if (!empty($query)) {
+            $resultados->where(function ($q) use ($query) {
+                $q->where('nomeArquivo', 'like', '%' . $query . '%')
+                    ->orWhere('descricao', 'like', '%' . $query . '%');
+            });
+        }
+
+        return $resultados->paginate(9, ['*'], 'myDocumentos_page', $pagina)
+            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+    }
+
+    public function buscarTodosDocumentos($query, $pagina, $abaAtiva)
+    {
+        $resultados = Documento::ativos();
+
+        if (!empty($query)) {
+            $resultados->where(function ($q) use ($query) {
+                $q->where('nomeArquivo', 'like', '%' . $query . '%')
+                    ->orWhere('descricao', 'like', '%' . $query . '%');
+            });
+        }
+
+        return $resultados->with('user')
+            ->paginate(9, ['*'], 'allDocumentos_page', $pagina)
+            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+    }
+
+    public function paginaVazia($itensPorPagina, $pagina)
+    {
+        return new LengthAwarePaginator(
+            collect([]),
+            0,
+            $itensPorPagina,
+            $pagina,
+            ['path' => LengthAwarePaginator::resolveCurrentPath()]
+        );
     }
 
     public function create()

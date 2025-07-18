@@ -22,4 +22,8 @@ class Documento extends Model
     public function categoria_documento(){
         return $this->belongsTo(CategoriaDocumento::class, 'idCategoria');
     }
+
+    public function scopeAtivos($query){
+        return $query->where('status', 'ativo');
+    }
 }

@@ -24,5 +24,9 @@ class CategoriaDocumento extends Model
         return $this->hasMany(Documento::class, 'idCategoria');
     }
 
+    public function scopeAtivos($query){
+        return $this->where('status', 'ativo');
+    }
+
     
 }

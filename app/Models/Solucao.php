@@ -30,4 +30,8 @@ class Solucao extends Model
     public function publicosAlvo(){
         return $this->belongsToMany(PublicoAlvo::class, 'publicos_alvo_solucoes', 'idSolucao', 'idPublicoAlvo')->withTimestamps();
     }
+
+    public function scopeAtivos($query){
+        return $query->where('status', 'ativo');
+    }
 }

@@ -15,4 +15,9 @@ class Topico extends Model
     public function postagens(){
         return $this->hasMany(Postagem::class, 'idTopico');
     }
+
+    public function scopeAtivos($query){
+        return $query->where('status', 'ativo');
+    }
 }
+

@@ -16,80 +16,88 @@ class PostagemController extends Controller
         $abaAtiva = $request->input('abaAtiva');
         $query = $request->input('query');
 
-        $paginaVisaoPostagens = $request->input('postagens_page', 1);
-        $paginaMyPostagens = $request->input('myPostagens_page', 1);
-        $paginaAllPostagens = $request->input('allPostagens_page', 1);
+        $pages = [
+            'visaoPostagens' => (int) $request->input('postagens_page', 1),
+            'myPostagens' => (int) $request->input('myPostagens_page', 1),
+            'allPostagens' => (int) $request->input('allPostagens_page', 1),
+        ];
 
         // Visao Postagens
         if ($query && $abaAtiva === 'visaoPostagens') {
-            $postagens = Postagem::where('idTopico', $idTopico)
-                ->where('titulo', 'like', '%' . $query . '%')
-                ->whereHas('topico', function ($q) use ($query) {
-                    $q->where('status', 'ativo');
-                })
-                ->withCount('respostas')
-                ->orderByDesc('updated_at')
-                ->paginate(10, ['*'], 'postagens_page', $paginaVisaoPostagens)
-                ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+            $postagens = $this->buscarPostagensComQuery($idTopico, $query, $abaAtiva, $pages['visaoPostagens']);
         } else {
-            $postagens = Postagem::where('idTopico', $idTopico)
-                ->whereHas('topico', function ($q) use ($query) {
-                    $q->where('status', 'ativo');
-                })
-                ->withCount('respostas')
-                ->orderByDesc('updated_at')
-                ->paginate(10, ['*'], 'postagens_page', $paginaVisaoPostagens)
-                ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+            $postagens = $this->buscarPostagensComQuery($idTopico, null, $abaAtiva, $pages['visaoPostagens']);
         }
 
         // Minhas Postagens
         if ($query && $abaAtiva === 'myPostagens') {
-            $minhasPostagens = Postagem::where('idTopico', $idTopico)
-                ->where('idUsuario', Auth::user()->id)
-                ->where('titulo', 'like', '%' . $query . '%')
-                ->whereHas('topico', function ($q) use ($query) {
-                    $q->where('status', 'ativo');
-                })
-                ->orderByDesc('created_at')
-                ->paginate(10, ['*'], 'myPostagens_page', $paginaMyPostagens)
-                ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+            $minhasPostagens = $this->buscarMinhasPostagens($idTopico, $query, $pages['myPostagens'], $abaAtiva);
         } else {
-            $minhasPostagens = Postagem::where('idTopico', $idTopico)
-                ->where('idUsuario', Auth::user()->id)
-                ->whereHas('topico', function ($q) use ($query) {
-                    $q->where('status', 'ativo');
-                })
-                ->orderByDesc('created_at')
-                ->paginate(10, ['*'], 'myPostagens_page', $paginaMyPostagens)
-                ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+            $minhasPostagens = $this->buscarMinhasPostagens($idTopico, null, $pages['myPostagens'], $abaAtiva);
         }
 
         // Gerenciar Postagens
         if ($query && $abaAtiva === 'allPostagens') {
-            $allPostagens = Postagem::where('idTopico', $idTopico)
-                ->whereHas('topico', function ($q) use ($query) {
-                    $q->where('status', 'ativo');
-                })
-                ->where(function ($q) use ($query) {
-                    $q->where('titulo', 'like', '%' . $query . '%')
-                        ->orWhereHas('user', function ($sub) use ($query) {
-                            $sub->where('name', 'like', '%' . $query . '%');
-                        });
-                })
-                ->paginate(10, ['*'], 'allPostagens_page', $paginaAllPostagens)
-                ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+            $allPostagens = $this->buscarTodasPostagens($idTopico, $query, $pages['allPostagens'], $abaAtiva);
         } else {
-            $allPostagens = Postagem::where('idTopico', $idTopico)
-                ->whereHas('topico', function ($q) use ($query) {
-                    $q->where('status', 'ativo');
-                })
-                ->orderByDesc('updated_at')
-                ->paginate(10, ['*'], 'allPostagens_page', $paginaAllPostagens)
-                ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+            $allPostagens = $this->buscarTodasPostagens($idTopico, null, $pages['allPostagens'], $abaAtiva);
         }
 
         $topico = Topico::findOrFail($idTopico);
         return view('postagens.index', compact('postagens', 'allPostagens', 'minhasPostagens', 'topico', 'abaAtiva', 'query'));
+    }
+
+    public function buscarPostagensComQuery($idTopico, $query, $abaAtiva, $pagina){
+
+        $resultado = Postagem::where('idTopico', $idTopico)
+        ->whereHas('topico', function ($q) {
+            $q->ativos();
+        });
+
+        if(!empty($query)){
+            $resultado->where('titulo', 'like', '%' . $query . '%');
+        }
+        
+        return $resultado->withCount('respostas')
+        ->orderByDesc('updated_at')
+        ->paginate(10, ['*'], 'postagens_page', $pagina)
+        ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+    }
+
+    public function buscarMinhasPostagens($idTopico, $query, $pagina, $abaAtiva){
+
+        $resultado = Postagem::where('idTopico', $idTopico)
+        ->where('idUsuario', Auth::user()->id)
+        ->whereHas('topico', function ($q) {
+            $q->ativos();
+        });
+
+        if(!empty($query)){
+            $resultado->where('titulo', 'like', '%' . $query . '%');
+        }
+        
+        return $resultado->orderByDesc('created_at')
+        ->paginate(10, ['*'], 'myPostagens_page', $pagina)
+        ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+    }
+
+    public function buscarTodasPostagens($idTopico, $query, $pagina, $abaAtiva){
+        $resultado = Postagem::where('idTopico', $idTopico)
+                ->whereHas('topico', function ($q) {
+                    $q->ativos();
+                });
+                
+                if(!empty($query)){
+                    $resultado->where(function ($q) use ($query) {
+                        $q->where('titulo', 'like', '%' . $query . '%')
+                            ->orWhereHas('user', function ($sub) use ($query) {
+                                $sub->where('name', 'like', '%' . $query . '%');
+                            });
+                    });
+                }
+                
+                return $resultado->paginate(10, ['*'], 'allPostagens_page', $pagina)
+                ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
     }
 
     public function create($idTopico)

@@ -24,93 +24,107 @@ class TopicoController extends Controller
         $query = $request->input('query');
         $abaAtiva = $request->input('abaAtiva');
 
-        $paginaVisaoTopicos = $request->input('topicos_page', 1);
-        $paginaMyTopicos = $request->input('myTopicos_page', 1);
-        $paginaAllTopicos = $request->input('allTopicos_page', 1);
-        $paginaSugestoesTopicos = $request->input('sugestoes_page', 1);
+        $pages = [
+            'visaoTopicos' => $request->input('topicos_page', 1),
+            'myTopicos' => $request->input('myTopicos_page', 1),
+            'allTopicos' => $request->input('allTopicos_page', 1),
+            'sugestoesTopicos' => $request->input('sugestoes_page', 1),
+        ];
 
         // Visão Topicos
-        if($query && $abaAtiva === 'visaoTopicos'){
-            $topicos = Topico::where('status', 'ativo')
-            ->where('titulo', 'like', '%' . $query . '%')
+        if ($query && $abaAtiva === 'visaoTopicos') {
+            $topicos = $this->buscarTopicosComQuery($query, $abaAtiva, $pages['visaoTopicos']);
+        } else {
+            $topicos = $this->buscarTopicosComQuery(null, $abaAtiva, $pages['visaoTopicos']);
+        }
+
+        // Meus Tópicos
+        if ($query && $abaAtiva === 'myTopicos') {
+            $meusTopicos = $this->buscarMeusTopicos($query, $pages['myTopicos'], $abaAtiva);
+        } else {
+            $meusTopicos = $this->buscarMeusTopicos(null, $pages['myTopicos'], $abaAtiva);
+        }
+
+        // Gerenciar Tópicos
+        if ($query && $abaAtiva === 'allTopicos') {
+            $allTopicos = $this->buscarTodosTopicos($query, $pages['allTopicos'], $abaAtiva);
+        } else {
+            $allTopicos = $this->buscarTodosTopicos(null, $pages['allTopicos'], $abaAtiva);
+        }
+
+        // Tópicos Sugeridos
+        if ($query && $abaAtiva === 'sugestoes') {
+            $topicosSugeridos = $this->buscarTopicosSugeridos($query, $pages['sugestoesTopicos'], $abaAtiva);
+        } else {
+            $topicosSugeridos = $this->buscarTopicosSugeridos(null, $pages['sugestoesTopicos'], $abaAtiva);
+        }
+        return view('topicos.index', compact('topicos', 'allTopicos', 'meusTopicos', 'topicosSugeridos', 'abaAtiva', 'query'));
+    }
+
+    public function buscarTopicosComQuery($query, $abaAtiva, $pagina)
+    {
+        $resultados = Topico::ativos()
             // ordena Topicos pela data da postagem mais recente
             ->orderByDesc(
                 Postagem::select('updated_at')
                     ->whereColumn('idTopico', 'topicos.id')
                     ->orderByDesc('updated_at')
                     ->limit(1)
-            )
-            // Eager load da postagem mais recente (limit 1)
-            ->with(['postagens' => function ($q) {
-                $q->orderBy('updated_at', 'desc')->limit(1);
-            }])
-            ->paginate(10, ['*'], 'topicos_page', $paginaVisaoTopicos)
-            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
-            
-        }else{
-            $topicos = Topico::withCount('postagens')
-            ->with(['postagens' => function ($query) {
-                $query->orderBy('updated_at', 'desc')->take(1);
-            }])->where('status', 'ativo')
-            ->orderBy(Postagem::select('updated_at')->whereColumn('idTopico', 'topicos.id')
-                ->latest()->limit(1), 'desc')
-                ->paginate(10, ['*'], 'topicos_page', $paginaVisaoTopicos)
-                ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
-        }
+            );
 
-        // Meus Tópicos
-        if ($query && $abaAtiva === 'myTopicos') {
-            $meusTopicos = Topico::where('status', 'ativo')
-            ->where('titulo', 'like', '%' . $query . '%')
-            // ordena Topicos pela data criacão
-            ->orderByDesc('created_at')
-            ->paginate(10, ['*'], 'myTopicos_page', $paginaMyTopicos)
-            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
-        } else {
-            $meusTopicos = Topico::where('status', 'ativo')
-            ->where('idUsuario', Auth::user()->id)
-            // ordena Topicos pela data criacão
-            ->orderByDesc('created_at')
-            ->paginate(10, ['*'], 'myTopicos_page', $paginaMyTopicos)
-            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+        if (!empty($query)) {
+            $resultados->where('titulo', 'like', '%' . $query . '%');
         }
+        // Eager load da postagem mais recente (limit 1)
+        return $resultados->with(['postagens' => function ($q) {
+            $q->orderBy('updated_at', 'desc')->limit(1);
+        }])
+            ->paginate(10, ['*'], 'topicos_page', $pagina)
+            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+    }
 
-        // Gerenciar Tópicos
-        if ($query && $abaAtiva === 'allTopicos') {
-            $allTopicos = Topico::where('status', 'ativo')
-            ->where(function($q) use ($query){
+    public function buscarMeusTopicos($query, $pagina, $abaAtiva)
+    {
+        $resultados = Topico::ativos();
+
+        if (!empty($query)) {
+            $resultados->where('titulo', 'like', '%' . $query . '%');
+        }
+        // ordena Topicos pela data criacão
+        return $resultados->orderByDesc('created_at')
+            ->paginate(10, ['*'], 'myTopicos_page', $pagina)
+            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+    }
+
+    public function buscarTodosTopicos($query, $pagina, $abaAtiva){
+        $resultados = Topico::ativos();
+
+        if(!empty($query)){
+            $resultados->where(function ($q) use ($query) {
                 $q->where('titulo', 'like', '%' . $query . '%')
-                ->orWhereHas('user', function($sub) use($query){
-                    $sub->where('name', 'like', '%' . $query . '%');
-                });
-            })
-            // ordena Topicos pela data criacão
-            ->orderByDesc('created_at')
-            ->paginate(10, ['*'], 'allTopicos_page', $paginaAllTopicos)
-            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
-        } else {
-            $allTopicos = Topico::where('status', 'ativo')
-            // ordena Topicos pela data criacão
-            ->orderByDesc('created_at')
-            ->paginate(10, ['*'], 'allTopicos_page', $paginaAllTopicos)
-            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+                    ->orWhereHas('user', function ($sub) use ($query) {
+                        $sub->where('name', 'like', '%' . $query . '%');
+                    });
+            });
         }
+                
+        // ordena Topicos pela data criacão
+        return $resultados->orderByDesc('created_at')
+                ->paginate(10, ['*'], 'allTopicos_page', $pagina)
+                ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+    }
 
-        // Tópicos Sugeridos
-        if ($query && $abaAtiva === 'sugestoes') {
-            $topicosSugeridos = SugestaoTopico::where('status', 'ativo')
-            ->where('titulo', 'like', '%' . $query . '%')
-            // ordena Topicos pela data criacão
-            ->orderByDesc('created_at')
-            ->paginate(10, ['*'], 'sugestoes_page', $paginaSugestoesTopicos)
-            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
-        } else {
-            $topicosSugeridos = SugestaoTopico::where('status', 'ativo')
-            ->orderByDesc('created_at')
-            ->paginate(10, ['*'], 'sugestoes_page', $paginaSugestoesTopicos)
-            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+    public function buscarTopicosSugeridos($query, $pagina, $abaAtiva){
+        $resultados = SugestaoTopico::ativos();
+        
+        if(!empty($query)){
+            $resultados->where('titulo', 'like', '%' . $query . '%');
         }
-        return view('topicos.index', compact('topicos','allTopicos', 'meusTopicos', 'topicosSugeridos', 'abaAtiva', 'query'));
+                
+                // ordena Topicos pela data criacão
+                return $resultados->orderByDesc('created_at')
+                ->paginate(10, ['*'], 'sugestoes_page', $pagina)
+                ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
     }
 
     public function create()

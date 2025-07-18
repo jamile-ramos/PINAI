@@ -8,6 +8,7 @@ use App\Models\PublicoAlvo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
+use PhpParser\Node\Expr\FuncCall;
 
 class SolucaoController extends Controller
 {
@@ -17,53 +18,98 @@ class SolucaoController extends Controller
         $abaAtiva = $request->input('abaAtiva');
         $query = $request->input('query');
 
+        $pages = [
+            'visaoSolucoes' => $request->input('solucoes_page', 1),
+            'visaoCategoriasSol' => $request->input('visaoCategoriasSol_page', 1),
+            'mySolucoes' => $request->input('mySolucoes_page', 1)
+        ];
+
         $paginaVisaoSolucoes = $request->input('solucoes_page', 1);
         $paginaVisaoCategoriasSol = $request->input('visaoCategoriasSol_page', 1);
 
         // Visão Soluções
         if ($query && $abaAtiva === 'visaoSolucoes') {
-            $solucoes = Solucao::where('status', 'ativo')
-                ->where(function ($q) use ($query) {
-                    $q->where('titulo', 'like', '%' . $query . '%')
-                        ->orWhere('descricao', 'like', '%' . $query . '%');
-                })
-                ->latest()
-                ->paginate(10, ['*'], 'solucoes_page', $paginaVisaoSolucoes)
-                ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
-            $categorias = new LengthAwarePaginator(
-                collect(),
-                0,
-                10,
-                $paginaVisaoCategoriasSol,
-                ['path' => request()->url(), 'query' => request()->query()]
-            );
+            $solucoes = $this->buscarSolucoesComQuery($query, $pages['visaoSolucoes'], $abaAtiva);
+            $categorias = $this->paginaVazia(10, $pages['visaoCategoriasSol']);
         } else {
-            $categorias = CategoriaSolucao::where('status', 'ativo')
-                ->whereHas('solucoes', function ($q) {
-                    $q->where('status', 'ativo');
-                })
-                ->with(['solucoes' => function ($q) {
-                    $q->where('status', 'ativo')
-                        ->latest()
-                        ->take(2)
-                        ->with(['user.nai', 'publicosAlvo']);  // eager load
-                }])
-                ->paginate(5, ['*'], 'visaoCategoriasSol_page', $paginaVisaoCategoriasSol)
-                ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
-            $solucoes = new LengthAwarePaginator(
-                collect(),
-                0,
-                10,
-                $paginaVisaoSolucoes,
-                ['path' => request()->url(), 'query' => request()->query()]
-            );
+            $categorias = $this->buscarCategoriaSolucao($query, $pages['visaoCategoriasSol'], $abaAtiva);
+            $solucoes = $this->paginaVazia(10, $pages['visaoSolucoes']);
         }
 
         // Minhas Soluções
-        
+        if ($query && $abaAtiva === 'mySolucoes') {
+            $mySolucoes = $this->buscarMinhasSolucoes($query, $pages['mySolucoes'], $abaAtiva);
+        } else {
+            //$mySolucoes = $this->buscarMinhasSolucoes(10, $pages['visaoSolucoes']);
+        }
+
+
 
         $mySolucoes = Solucao::where('status', 'ativo')->where('idUsuario', Auth::user()->id)->get();
         return view('solucoes.index', compact('categorias', 'solucoes', 'mySolucoes', 'abaAtiva', 'query'));
+    }
+
+    public function buscarSolucoesComQuery($query, $pagina, $abaAtiva)
+    {
+        $resultados = Solucao::ativos();
+
+        if (!empty($query)) {
+            $resultados->where(function ($q) use ($query) {
+                $q->where('titulo', 'like', '%' . $query . '%')
+                    ->orWhere('descricao', 'like', '%' . $query . '%');
+            });
+        }
+
+        return $resultados->latest()
+            ->paginate(10, ['*'], 'solucoes_page', $pagina)
+            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+    }
+
+    public function buscarCategoriaSolucao($query, $pagina, $abaAtiva)
+    {
+        $resultados = CategoriaSolucao::ativos();
+
+        $resultados->whereHas('solucoes', function ($q) {
+            $q->ativos();
+        })
+            ->with(['solucoes' => function ($q) {
+                $q->where('status', 'ativo')
+                    ->latest()
+                    ->take(2)
+                    ->with(['user.nai', 'publicosAlvo']);  // eager load
+            }]);
+
+        return $resultados->paginate(5, ['*'], 'visaoCategoriasSol_page', $pagina)
+            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+    }
+
+    public function buscarMinhasSolucoes($query, $pagina, $abaAtiva)
+    {
+        $resultados = Solucao::ativos();
+
+        $resultados->whereHas('solucoes', function ($q) {
+            $q->ativos()
+                ->where('idUsuario', Auth::user()->id);
+        });
+
+        if(!empty($query)){
+            $resultados->where('titulo', 'like', '%' . $query . '%');
+        }
+
+        return $resultados->paginate(10, ['*'], 'mySolucoes', $pagina)
+            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+    }
+
+
+    public function paginaVazia($itensPorPagina, $pagina)
+    {
+        return new LengthAwarePaginator(
+            collect([]),
+            0,
+            $itensPorPagina,
+            $pagina,
+            ['path' => LengthAwarePaginator::resolveCurrentPath()]
+        );
     }
 
     public function create()

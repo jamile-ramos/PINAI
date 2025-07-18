@@ -27,4 +27,8 @@ class Postagem extends Model
     public function respostas(){
         return $this->hasMany(Resposta::class, 'idPostagem');
     }
+
+    public function scopeAtivos($query){
+        return $query->where('status', 'ativo');
+    }
 }

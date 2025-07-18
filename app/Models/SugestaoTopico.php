@@ -23,4 +23,8 @@ public function getStatusSituacaoAttribute(): string
     return $statusMap[$valor] ?? 'Desconhecido';
 }
 
+    public function scopeAtivos($query) {
+        return $query->where('status', 'ativo');
+    }
+
 }

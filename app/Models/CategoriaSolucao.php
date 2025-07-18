@@ -19,4 +19,8 @@ class CategoriaSolucao extends Model
     public function user(){
         return $this->belongsTo(User::class, 'idUsuario');
     }
+
+    public function scopeAtivos($query){
+        return $query->where('status', 'ativo');
+    }
 }

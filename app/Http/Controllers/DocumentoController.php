@@ -77,22 +77,30 @@ class DocumentoController extends Controller
     {
         $resultado = CategoriaDocumento::ativos();
 
-        // Se estiver na aba de categorias com busca
-        if (!empty($query) && $abaAtiva === 'categoriasDocumentos') {
-            $resultado->where('nomeCategoria', 'like', '%' . $query . '%');
-        }else{
-            $resultado->whereHas('documentos', function ($q) {
+        if ($abaAtiva === 'categoriasDocumentos') {
+            $resultado = $resultado->whereHas('documentos', function ($q) {
                 $q->ativos();
-            })
-            ->with(['documentos' => function ($q) {
-                $q->ativos()
-                    ->latest()
-                    ->take(3);
-            }]);
+            });
         }
 
-        return $resultado->paginate($abaAtiva === 'categoriasDocumentos' ? 5 : 10, ['*'], $abaAtiva === 'categoriasDocumentos' ? 'categoriasDocumentos_page' : 'visaoCategoriasDoc_page', $pagina)
-        ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+        if (!empty($query)) {
+            $resultado = $resultado->where('nomeCategoria', 'like', '%' . $query . '%');
+        }
+
+        $resultado = $resultado->with(['documentos' => function ($q) {
+            $q->ativos()
+                ->latest()
+                ->take(3);
+        }]);
+
+        return $resultado
+            ->paginate(
+                $abaAtiva === 'categoriasDocumentos' ? 5 : 10,
+                ['*'],
+                $abaAtiva === 'categoriasDocumentos' ? 'categoriasDocumentos_page' : 'visaoCategoriasDoc_page',
+                $pagina
+            )
+            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
     }
 
     public function buscarMeusDocumentos($query, $pagina, $abaAtiva)
@@ -201,9 +209,9 @@ class DocumentoController extends Controller
         return view('documentos.documentosCategorias', compact('categoria', 'documentos'));
     }
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $documento = Documento::findOrFail($request->id);
+        $documento = Documento::findOrFail($id);
         $documento->update(['status' => 'inativo']);
 
         return redirect()->route('documentos.index')->with('success', 'Documento excluído com sucesso!');

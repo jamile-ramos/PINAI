@@ -9,7 +9,7 @@
                 </button>
             </div>
             <div class="modal-body modalCorpoConfirmacao">
-                <!-- Formulário para desativar o usuário -->
+                <!-- Formulário mudar situacao do topico sugerido -->
                 <form id="formConfirmacaoTopico" data-route="{{ route('sugestoes.updateStatusSituacao', ':id') }}" method="POST">
                     @csrf
                     @method('PUT')

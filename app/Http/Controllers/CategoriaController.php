@@ -36,7 +36,7 @@ class CategoriaController extends Controller
         return redirect()->route("{$tipo}.index")->with('success', 'Categoria criada com sucesso!');
     }
 
-    public function destroy(Request $request, $tipo)
+    public function destroy($tipo, $id)
     {
         $model = $this->getModelByTipo($tipo);
 
@@ -44,7 +44,7 @@ class CategoriaController extends Controller
             return response()->json(['error' => 'Tipo de categoria inválido'], 400);
         }
 
-        $categoria = $model::findOrFail($request->id);
+        $categoria = $model::findOrFail($id);
         $categoria->update(['status' => 'inativo']);
 
         return redirect()->route("{$tipo}.index")->with('success', 'Categoria excluida com sucesso!');

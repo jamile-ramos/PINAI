@@ -1,7 +1,7 @@
 <div class="table-responsive">
     @if(request('query') && $abaAtiva === 'all-nais')
     <div class="d-flex justify-content-between align-items-center mb-3 p-3 rounded border border-secondary-subtle bg-light">
-    <span class="result-count" aria-live="polite" aria-atomic="true" style="color:#333; font-weight:600; font-size: 1rem;">
+        <span class="result-count" aria-live="polite" aria-atomic="true" style="color:#333; font-weight:600; font-size: 1rem;">
             Foram encontrados {{ $nais->total() }} resultado{{ $nais->total() > 1 ? 's' : '' }} para: <span class="text-primary">"{{ $query }}"</span>
         </span>
         <a href="{{ route('painel.usuarios') }}?abaAtiva={{ request('abaAtiva') }}"
@@ -49,16 +49,17 @@
                             aria-label="Editar dados do {{ $nai->nome }}">
                             Editar
                         </button>
-                        <button type="button" data-bs-toggle="tooltip"
+                        <button type="button"
                             class="btn btn-danger btn-remove"
-                            data-original-title="Excluir"
-                            data-modal="#confirmExcluirModal"
-                            data-url="{{ route('nais.destroy') }}"
-                            data-id="{{ $nai->id }}"
+                            data-bs-toggle="modal"
+                            data-bs-target="#confirmExcluirModal"
+                            data-bs-toggle="tooltip"
                             title="Excluir"
-                            aria-label="Excluir cadastro {{ $nai->id }}">
+                            aria-label="Excluir cadastro {{ $nai->id }}"
+                            data-url="{{ route('nais.destroy', $nai->id) }}">
                             <i class="fas fa-trash-alt"></i>
                         </button>
+
                     </div>
                 </td>
             </tr>

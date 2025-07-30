@@ -50,69 +50,90 @@ class NoticiaController extends Controller
         if ($query && $abaAtiva === 'categoriasNoticias') {
             $categoriasNoticias = $this->buscarCategoriasNoticias($query, $pages['categoriasNoticias'], $abaAtiva);
         } else {
-            $categoriasNoticias = $this->buscarCategoriasNoticias(null, $pages['categoriasNoticias'], $abaAtiva); 
+            $categoriasNoticias = $this->buscarCategoriasNoticias(null, $pages['categoriasNoticias'], $abaAtiva);
         }
 
         $noticiasRecentes = Noticia::where('status', 'ativo')->latest()->take(3)->get();
         return view('noticias.index', compact('noticias', 'categorias', 'categoriasNoticias', 'minhasNoticias', 'noticiasRecentes', 'noticiasBusca', 'query', 'abaAtiva'));
     }
-    
+
     public function buscarNoticiasComQuery($query, $pagina, $abaAtiva)
     {
-        return Noticia::ativos()
-            ->where(function ($q) use ($query) {
+        $resultado =  Noticia::ativos();
+
+        if (!empty($query)) {
+            $resultado->where(function ($q) use ($query) {
                 $q->where('titulo', 'like', '%' . $query . '%')
                     ->orWhere('subtitulo', 'like', '%' . $query . '%');
-            })
-            ->paginate(10, ['*'], 'noticias_page', $pagina)
+            });
+        }
+
+        return $resultado->paginate(10, ['*'], 'noticias_page', $pagina)
             ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
     }
 
     public function buscarCategoriasNoticias($query, $pagina, $abaAtiva)
     {
-        return CategoriaNoticia::ativos()
-        ->where('nomeCategoria', 'like', '%' . $query . '%')
-            ->whereHas('noticias', function ($q) {
+        $resultados = CategoriaNoticia::ativos();
+
+        if($abaAtiva == 'visaoNoticias'){
+            $resultados->whereHas('noticias', function ($q) {
                 $q->ativos();
-            })
-            ->with(['noticias' => function ($q) {
-                $q->ativos()
-                    ->latest()
-                    ->take(3);
-            }])
+            });
+        }   
+
+        if (!empty($query)) {
+            $resultados->where('nomeCategoria', 'like', '%' . $query . '%');
+        }
+
+        return $resultados->with(['noticias' => function ($q) {
+            $q->ativos()
+                ->latest()
+                ->take(3);
+        }])
             ->paginate(10, ['*'], 'visaoCategoriasNoticias_page', $pagina)
             ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
     }
 
+
     public function buscarMinhasNoticias($query, $pagina, $abaAtiva)
     {
-        return Noticia::ativos()
+        $resultado = Noticia::ativos()
             ->with('categoria')
-            ->where('idUsuario', Auth::user()->id)
-            ->where(function ($q) use ($query) {
+            ->where('idUsuario', Auth::user()->id);
+
+        if (!empty($query)) {
+            $resultado->where(function ($q) use ($query) {
                 $q->where('titulo', 'like', '%' . $query . '%')
                     ->orWhereHas('categoria', function ($sub) use ($query) {
                         $sub->where('nomeCategoria', 'like', '%' . $query . '%');
                     });
-            })
-            ->paginate(10, ['*'], 'myNoticias_page', $pagina)
+            });
+        }
+
+        return $resultado->paginate(10, ['*'], 'myNoticias_page', $pagina)
             ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
     }
 
+
     public function buscarTodasNoticias($query, $pagina, $abaAtiva)
     {
-        return Noticia::ativos()
-            ->with('categoria')
-            ->where(function ($q) use ($query) {
-                $q->where('titulo', 'like', '%' . $query . '%')
-                    ->orWhereHas('categoria', function ($sub) use ($query) {
-                        $sub->where('nomeCategoria', 'like', '%' . $query . '%');
-                    })
-                    ->orWhereHas('user', function ($sub) use ($query) {
-                        $sub->where('name', 'like', '%' . $query . '%');
-                    });
-            })
-            ->paginate(10, ['*'], 'allNoticias_page', $pagina)
+        $resultado = Noticia::ativos()
+            ->with('categoria');
+
+            if(!empty($query)){
+                $resultado->where(function ($q) use ($query) {
+                    $q->where('titulo', 'like', '%' . $query . '%')
+                        ->orWhereHas('categoria', function ($sub) use ($query) {
+                            $sub->where('nomeCategoria', 'like', '%' . $query . '%');
+                        })
+                        ->orWhereHas('user', function ($sub) use ($query) {
+                            $sub->where('name', 'like', '%' . $query . '%');
+                        });
+                });
+            }
+            
+            return $resultado->paginate(10, ['*'], 'allNoticias_page', $pagina)
             ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
     }
 
@@ -126,7 +147,6 @@ class NoticiaController extends Controller
             ['path' => LengthAwarePaginator::resolveCurrentPath()]
         );
     }
-
 
     public function create()
     {
@@ -165,9 +185,9 @@ class NoticiaController extends Controller
         return redirect()->route('noticias.index')->with('success', 'Notícia criada com sucesso!');
     }
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $noticia = Noticia::findOrFail($request->id);
+        $noticia = Noticia::findOrFail($id);
         $noticia->update(['status' => 'inativo']);
 
         return redirect()->route('noticias.index')->with('success', 'Notícia excluída com sucesso!');

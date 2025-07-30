@@ -32,71 +32,73 @@ class SolucaoController extends Controller
             $solucoes = $this->buscarSolucoesComQuery($query, $pages['visaoSolucoes'], $abaAtiva);
             $categorias = $this->paginaVazia(10, $pages['visaoCategoriasSol']);
         } else {
+            $solucoes = $this->buscarSolucoesComQuery(null, $pages['visaoSolucoes'], $abaAtiva);
             $categorias = $this->buscarCategoriaSolucao($query, $pages['visaoCategoriasSol'], $abaAtiva);
-            $solucoes = $this->paginaVazia(10, $pages['visaoSolucoes']);
         }
 
         // Minhas Soluções
         if ($query && $abaAtiva === 'mySolucoes') {
             $mySolucoes = $this->buscarMinhasSolucoes($query, $pages['mySolucoes'], $abaAtiva);
         } else {
-            //$mySolucoes = $this->buscarMinhasSolucoes(10, $pages['visaoSolucoes']);
+            $mySolucoes = $this->buscarMinhasSolucoes(null, $pages['mySolucoes'], $abaAtiva);
         }
 
+        // Gerenciar Soluções
 
 
-        $mySolucoes = Solucao::where('status', 'ativo')->where('idUsuario', Auth::user()->id)->get();
+        // Categorias
+
+        
         return view('solucoes.index', compact('categorias', 'solucoes', 'mySolucoes', 'abaAtiva', 'query'));
+        
     }
 
     public function buscarSolucoesComQuery($query, $pagina, $abaAtiva)
     {
-        $resultados = Solucao::ativos();
+        $resultado = Solucao::ativos();
 
         if (!empty($query)) {
-            $resultados->where(function ($q) use ($query) {
+            $resultado->where(function ($q) use ($query) {
                 $q->where('titulo', 'like', '%' . $query . '%')
                     ->orWhere('descricao', 'like', '%' . $query . '%');
             });
         }
 
-        return $resultados->latest()
+        return $resultado->latest()
             ->paginate(10, ['*'], 'solucoes_page', $pagina)
             ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
     }
 
     public function buscarCategoriaSolucao($query, $pagina, $abaAtiva)
     {
-        $resultados = CategoriaSolucao::ativos();
+        $resultado = CategoriaSolucao::ativos();
 
-        $resultados->whereHas('solucoes', function ($q) {
-            $q->ativos();
-        })
-            ->with(['solucoes' => function ($q) {
+        if($abaAtiva == 'visaoSolucoes'){
+            $resultado->whereHas('solucoes', function ($q) {
+                $q->ativos();
+            });
+        }
+            $resultado->with(['solucoes' => function ($q) {
                 $q->where('status', 'ativo')
                     ->latest()
                     ->take(2)
                     ->with(['user.nai', 'publicosAlvo']);  // eager load
             }]);
 
-        return $resultados->paginate(5, ['*'], 'visaoCategoriasSol_page', $pagina)
+        return $resultado->paginate(5, ['*'], 'visaoCategoriasSol_page', $pagina)
             ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
     }
 
     public function buscarMinhasSolucoes($query, $pagina, $abaAtiva)
     {
-        $resultados = Solucao::ativos();
-
-        $resultados->whereHas('solucoes', function ($q) {
-            $q->ativos()
-                ->where('idUsuario', Auth::user()->id);
-        });
+        $resultado = Solucao::ativos()
+        ->where('idUsuario', Auth::user()->id);
 
         if(!empty($query)){
-            $resultados->where('titulo', 'like', '%' . $query . '%');
+            $resultado->where('titulo', 'like', '%' . $query . '%');
         }
 
-        return $resultados->paginate(10, ['*'], 'mySolucoes', $pagina)
+        return $resultado->paginate(10, ['*'], 'mySolucoes_page', $pagina)
             ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
     }
 
@@ -176,21 +178,21 @@ class SolucaoController extends Controller
         }
 
         $solucao->update([
-            'titulo' => $solucao->titulo,
-            'descricao' => $solucao->descricao,
-            'passosImplementacao' => $solucao->passosImplementacao,
+            'titulo' => $request->input('titulo'),
+            'descricao' => $request->input('descricao'),
+            'passosImplementacao' => $request->input('passosImplementacao'),
             'arquivo' => $caminho,
-            'idCategoria' => $solucao->idCategoria,
+            'idCategoria' => $request->input('idCategoria'),
             'idUsuario' => Auth::user()->id
-        ]);
+        ]);        
 
         $solucao->publicosAlvo()->sync($request->publicos_alvo);
         return redirect()->route('solucoes.index')->with('success', 'Solução atualizada com sucesso!');
     }
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $solucao = Solucao::findOrFail($request->id);
+        $solucao = Solucao::findOrFail($id);
         $solucao->status = 'inativo';
         $solucao->save();
 

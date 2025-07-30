@@ -49,8 +49,8 @@ class RespostaController extends Controller
         return redirect()->route('postagens.show', $postagem)->with('success', 'Resposta atualizada com sucesso!');
     }
 
-    public function destroy(Request $request){
-        $resposta = Resposta::findOrFail($request->id);
+    public function destroy($id){
+        $resposta = Resposta::findOrFail($id);
         $resposta->update(['status' => 'inativo']);
 
         return back()->with('success-delete', 'Resposta excluida com sucesso!');

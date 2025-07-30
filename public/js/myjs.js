@@ -586,12 +586,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const deleteButtons = container.querySelectorAll('.btn-remove');
         deleteButtons.forEach(btn => {
             btn.addEventListener('click', () => {
-                const id = btn.getAttribute('data-id');
                 const modal = btn.getAttribute('data-modal');
                 const form = document.getElementById('confirmExcluirForm');
                 const url = btn.getAttribute('data-url');
                 form.setAttribute('action', url);
-                document.getElementById('id').value = id;
+                console.log(url)
 
                 $(modal).modal('show');
             });
@@ -613,7 +612,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     const form = document.getElementById('confirmExcluirForm');
                     const url = excluir.getAttribute('data-url');
                     form.setAttribute('action', url);
-                    document.getElementById('id').value = id;
                     $(modal).modal('show');
                 })
             });

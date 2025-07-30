@@ -8,10 +8,17 @@
 $tipoForm = isset($solucao) ? 'Editar Solução' : 'Adicionar Solução';
 @endphp
 <div class="container">
-
     <div class="mx-3">
         {{ Breadcrumbs::render('formSolucao', $tipoForm) }}
     </div>
+
+    @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+        <strong>{{ session('success') }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+
 
     @if ($errors->any())
     @foreach ($errors->all() as $message)
@@ -96,6 +103,12 @@ $tipoForm = isset($solucao) ? 'Editar Solução' : 'Adicionar Solução';
                     </div>
                     @endforeach
                 </div>
+
+                @if(Auth::user()->tipoUsuario != 'comum')
+                <button type="button" class="btn btn-link btn-secondary mt-0" data-bs-toggle="modal" data-bs-target="#modalPublicoAlvo">
+                    <i class="fas fa-users me-1"></i> Adicionar / Gerenciar Público-Alvo
+                </button>
+                @endif
             </div>
 
             <!-- Campo Categoria -->
@@ -129,5 +142,8 @@ $tipoForm = isset($solucao) ? 'Editar Solução' : 'Adicionar Solução';
         </form>
     </div>
 </div>
+
+@include('layouts.modalPublicoAlvo')
+@include('layouts.modalExclusao')
 
 @endsection

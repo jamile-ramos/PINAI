@@ -55,10 +55,8 @@ class SugestaoTopicoController extends Controller
         return redirect()->route('topicos.index')->with('success', 'Status da sugestão atualizado com sucesso!');
     }
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $id = $request->id;
-
         $sugestao = SugestaoTopico::findOrFail($id);
 
         if ($sugestao->status_situacao == 'aprovado') {

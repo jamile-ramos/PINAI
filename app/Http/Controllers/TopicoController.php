@@ -64,6 +64,7 @@ class TopicoController extends Controller
     public function buscarTopicosComQuery($query, $abaAtiva, $pagina)
     {
         $resultados = Topico::ativos()
+        ->withCount('postagens')
             // ordena Topicos pela data da postagem mais recente
             ->orderByDesc(
                 Postagem::select('updated_at')
@@ -160,9 +161,9 @@ class TopicoController extends Controller
         return redirect()->route('topicos.index')->with('success', 'Topico atualizado com sucesso!');
     }
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $topico = Topico::findOrFail($request->id);
+        $topico = Topico::findOrFail($id);
         $topico->update(['status' => 'inativo']);
         return redirect()->route('topicos.index')->with('success', 'Topico excluído com sucesso!');
     }

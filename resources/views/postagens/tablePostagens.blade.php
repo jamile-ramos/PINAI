@@ -43,8 +43,7 @@
                             data-bs-toggle="tooltip"
                             data-original-title="Remover"
                             data-modal="#confirmExcluirModal"
-                            data-url="{{ route('postagens.destroy') }}"
-                            data-id="{{ $postagem->id }}">
+                            data-url="{{ route('postagens.destroy', $postagem->id) }}">
                             Excluir
                         </button>
                     </div>

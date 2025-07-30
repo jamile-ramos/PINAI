@@ -11,7 +11,7 @@
     @php
 
     $links = [
-    ['content-id' => 'visaoSolucoes', 'nomeAba' => 'Visão Geral', 'classActive' => 'active', 'data-tipo' => 'solucoes'],
+    ['content-id' => 'visaoSolucoes', 'nomeAba' => 'Visão Geral', 'data-tipo' => 'solucoes'],
     ['content-id' => 'mySolucoes', 'nomeAba' => 'Minhas Soluções', 'data-tipo' => 'solucoes']
     ];
 
@@ -48,7 +48,7 @@
     @endif
     <!-- Conteúdo das abas -->
     <div class="tab-contents">
-        <div class="content-link show" id="visaoSolucoes">
+        <div class="content-link" id="visaoSolucoes">
             <div class="infos">
                 @include('solucoes.init', ['solucoes' => $solucoes, 'categorias' => $categorias])
             </div>

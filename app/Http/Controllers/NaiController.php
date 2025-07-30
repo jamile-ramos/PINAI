@@ -68,8 +68,8 @@ class NaiController extends Controller
 
     }
 
-    public function destroy(Request $request){
-        $nai = Nai::findOrFail($request->id);
+    public function destroy($id){
+        $nai = Nai::findOrFail($id);
         $nai->status = 'inativo';
         $nai->save();
 

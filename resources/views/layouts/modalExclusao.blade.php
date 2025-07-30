@@ -16,7 +16,6 @@
                 <form id="confirmExcluirForm" method="POST">
                     @csrf
                     @method('DELETE')
-                    <input type="hidden" name="id" id="id" value="0">
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" id="confirmActionBtn" class="btn btn-danger">Excluir</button>

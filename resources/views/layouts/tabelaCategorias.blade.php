@@ -2,7 +2,7 @@
 
     @php
     if (str_contains($abaAtiva, 'categorias')){
-        $abaAtiva = 'categorias';
+    $abaAtiva = 'categorias';
     }
     @endphp
 
@@ -37,16 +37,15 @@
                 <td>
                     <div class="form-button-action">
                         <button type="button"
+                            class="btn btn-danger btn-remove"
                             data-bs-toggle="tooltip"
                             data-modal="#confirmExcluirModal"
-                            data-url="{{ route('categorias.destroy', ['tipo' => $tipo]) }}"
+                            data-url="{{ route('categorias.destroy', ['tipo' => $tipo, 'id' => $categoria->id]) }}"
                             data-id="{{ $categoria->id }}"
-                            class="btn btn-danger btn-remove"
-                            data-original-title="Remover"
-                            data-toggle="tooltip"
                             title="Excluir">
                             <i class="fas fa-trash-alt"></i>
                         </button>
+
                     </div>
                 </td>
             </tr>
@@ -61,4 +60,4 @@
 
 <div class="d-flex justify-content-center mt-3">
     {{ $categorias->appends(request()->except($tipo.'_page'))->links('vendor.pagination.bootstrap-5') }}
-</div>  
+</div>

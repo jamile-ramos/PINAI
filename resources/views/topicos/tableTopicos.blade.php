@@ -66,8 +66,7 @@
                                 type="button"
                                 class="btn btn-danger btn-remove"
                                 data-modal="#confirmExcluirModal"
-                                data-id="{{ $topico->id }}"
-                                data-url="{{ route('sugestoes.destroy') }}"
+                                data-url="{{ route('sugestoes.destroy', $topico->id) }}"
                                 data-bs-toggle="tooltip"
                                 title="Excluir">
                                 <i class="fas fa-trash-alt"></i>
@@ -82,13 +81,14 @@
                             <button
                                 type="button"
                                 class="btn btn-danger btn-remove"
-                                data-modal="#confirmExcluirModal"
-                                data-id="{{ $topico->id }}"
-                                data-url="{{ route('topicos.destroy') }}"
+                                data-bs-toggle="modal"
+                                data-bs-target="#confirmExcluirModal"
+                                data-url="{{ route('topicos.destroy', $topico->id) }}"
                                 data-bs-toggle="tooltip"
                                 title="Excluir">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
+
                             @endif
                         </div>
                     </td>

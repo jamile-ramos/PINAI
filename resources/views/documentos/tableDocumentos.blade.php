@@ -51,16 +51,18 @@
                             aria-label="Editar notícia">
                             Editar
                         </button>
-                        <button type="button" data-bs-toggle="tooltip"
+                        <button type="button"
                             class="btn btn-danger btn-remove"
-                            data-original-title="Excluir"
-                            data-modal="#confirmExcluirModal"
-                            data-url="{{ route('documentos.destroy')}}"
-                            data-id="{{ $documento->id }}"
+                            data-bs-toggle="modal"
+                            data-bs-target="#confirmExcluirModal"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
                             title="Excluir"
-                            aria-label="Excluir notícia">
+                            aria-label="Excluir notícia"
+                            data-url="{{ route('documentos.destroy', $documento->id ) }}">
                             <i class="fas fa-trash-alt"></i>
                         </button>
+
                     </div>
                 </td>
             </tr>
@@ -71,4 +73,9 @@
             @endforelse
         </tbody>
     </table>
+</div>
+
+<!-- Paginação -->
+<div class="d-flex justify-content-center mt-3">
+    {{ $documentos->appends(request()->except($tipoAba.'_page'))->links('vendor.pagination.bootstrap-5') }}
 </div>

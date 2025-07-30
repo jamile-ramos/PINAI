@@ -47,57 +47,61 @@ class PostagemController extends Controller
         return view('postagens.index', compact('postagens', 'allPostagens', 'minhasPostagens', 'topico', 'abaAtiva', 'query'));
     }
 
-    public function buscarPostagensComQuery($idTopico, $query, $abaAtiva, $pagina){
+    public function buscarPostagensComQuery($idTopico, $query, $abaAtiva, $pagina)
+    {
 
         $resultado = Postagem::where('idTopico', $idTopico)
-        ->whereHas('topico', function ($q) {
-            $q->ativos();
-        });
+            ->whereHas('topico', function ($q) {
+                $q->ativos();
+            });
 
-        if(!empty($query)){
+        if (!empty($query)) {
             $resultado->where('titulo', 'like', '%' . $query . '%');
         }
-        
+
         return $resultado->withCount('respostas')
-        ->orderByDesc('updated_at')
-        ->paginate(10, ['*'], 'postagens_page', $pagina)
-        ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+            ->orderByDesc('updated_at')
+            ->paginate(10, ['*'], 'postagens_page', $pagina)
+            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
     }
 
-    public function buscarMinhasPostagens($idTopico, $query, $pagina, $abaAtiva){
+    public function buscarMinhasPostagens($idTopico, $query, $pagina, $abaAtiva)
+    {
 
         $resultado = Postagem::where('idTopico', $idTopico)
-        ->where('idUsuario', Auth::user()->id)
-        ->whereHas('topico', function ($q) {
-            $q->ativos();
-        });
+            ->where('idUsuario', Auth::user()->id)
+            ->whereHas('topico', function ($q) {
+                $q->ativos();
+            });
 
-        if(!empty($query)){
+        if (!empty($query)) {
             $resultado->where('titulo', 'like', '%' . $query . '%');
         }
-        
+
         return $resultado->orderByDesc('created_at')
-        ->paginate(10, ['*'], 'myPostagens_page', $pagina)
-        ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+            ->paginate(10, ['*'], 'myPostagens_page', $pagina)
+            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
     }
 
-    public function buscarTodasPostagens($idTopico, $query, $pagina, $abaAtiva){
-        $resultado = Postagem::where('idTopico', $idTopico)
-                ->whereHas('topico', function ($q) {
-                    $q->ativos();
-                });
-                
-                if(!empty($query)){
-                    $resultado->where(function ($q) use ($query) {
-                        $q->where('titulo', 'like', '%' . $query . '%')
-                            ->orWhereHas('user', function ($sub) use ($query) {
-                                $sub->where('name', 'like', '%' . $query . '%');
-                            });
+    public function buscarTodasPostagens($idTopico, $query, $pagina, $abaAtiva)
+    {
+        $resultado = Postagem::ativos()
+            ->where('idTopico', $idTopico)
+            ->whereHas('topico', function ($q) {
+                $q->ativos();
+            });
+
+        if (!empty($query)) {
+            $resultado->where(function ($q) use ($query) {
+                $q->where('titulo', 'like', '%' . $query . '%')
+                    ->orWhereHas('user', function ($sub) use ($query) {
+                        $sub->where('name', 'like', '%' . $query . '%');
                     });
-                }
-                
-                return $resultado->paginate(10, ['*'], 'allPostagens_page', $pagina)
-                ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+            });
+        }
+
+        return $resultado->paginate(10, ['*'], 'allPostagens_page', $pagina)
+            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
     }
 
     public function create($idTopico)
@@ -157,9 +161,9 @@ class PostagemController extends Controller
         return redirect()->route('postagens.index', ['idTopico' => $postagem->idTopico])->with('success', 'Postagem atualizada com sucesso!');
     }
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $postagem = Postagem::findOrFail($request->id);
+        $postagem = Postagem::findOrFail($id);
         $postagem->update(['status' => 'inativo']);
         return back()->with('success', 'Postagem excluída com sucesso!');
     }

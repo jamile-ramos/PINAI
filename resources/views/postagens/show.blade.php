@@ -80,8 +80,7 @@
                                 class="resposta-destroy"
                                 type="button"
                                 data-modal="#confirmExcluirModal"
-                                data-id="{{ $resposta->id }}"
-                                data-url="{{ route('respostas.destroy') }}"
+                                data-url="{{ route('respostas.destroy', $resposta->id) }}"
                                 data-bs-toggle="tooltip"
                                 aria-label="Excluir resposta">
                                 Excluir

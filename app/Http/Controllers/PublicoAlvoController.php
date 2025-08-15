@@ -25,8 +25,8 @@ class PublicoAlvoController extends Controller
         return redirect(url()->previous())->with('success', 'Público Alvo criado com sucesso!');
     }
 
-    public function destroy(Request $request){
-        $publico = PublicoAlvo::findOrFail($request->id);
+    public function destroy($id){
+        $publico = PublicoAlvo::findOrFail($id);
         $publico->status = 'inativo';
         $publico->save();
         return redirect()->back()->with('success', 'Público-alvo excluído com sucesso!');

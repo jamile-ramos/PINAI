@@ -7,7 +7,6 @@
 <div class="container-abas" id="abaPostagens">
 
     {{ Breadcrumbs::render('postagens', $topico) }}
-
     @php
     $links = [
     ['content-id' => 'visaoPostagens', 'nomeAba' => 'Visão Geral', 'data-tipo' => 'postagens'],

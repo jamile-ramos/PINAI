@@ -60,12 +60,13 @@
                                             class="btn btn-danger btn-remove"
                                             data-bs-toggle="modal"
                                             data-bs-target="#confirmExcluirModal"
-                                            data-id="{{ $publico->id }}"
+                                            data-bs-toggle="tooltip"
+                                            data-bs-placement="top"
                                             title="Excluir"
-                                            aria-label="Excluir público">
+                                            aria-label="Excluir público alvo"
+                                            data-url="{{ route('publicosAlvo.destroy', $publico->id ) }}">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
-
                                     </td>
                                 </tr>
                                 @endforeach

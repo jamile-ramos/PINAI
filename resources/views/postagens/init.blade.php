@@ -37,21 +37,22 @@
 
     @foreach($postagens as $postagem)
     <div class="post-card">
-        <div class="post-header">
+        <div class="post-header border-bottom border-secondary pb-3">
             <div class="post-author">
                 <div class="user-icon-circle user-post">
                     <i class="fa fa-user"></i>
                 </div>
                 <span>Postado por <strong>{{ $postagem->user->name }}</strong></span>
             </div>
-            <span>{{ $postagem->created_at->format('d/m/Y') }}</span>
+            <span class="text-muted">{{ $postagem->created_at->format('d/m/Y') }}</span>
         </div>
+
         <div class="post-title">{{ $postagem->titulo }}</div>
-        <div class="post-content">
+        <div class="post-content border-bottom border-light pb-3">
             {{ Str::limit($postagem->conteudo, 100, '...') }}
         </div>
-        <div class="post-footer">
-            <a href="{{ route('postagens.show', $postagem->id )}}" class="btn btn-primary">Ver Respostas</a>
+        <div class="post-footer mt-2">
+            <a href="{{ route('postagens.show', $postagem->id )}}" class="btn btn-primary">Ver Postagem</a>
             <span><i class="fa-regular fa-comment"></i> {{ $postagem->respostas_count }} respostas</span>
         </div>
     </div>

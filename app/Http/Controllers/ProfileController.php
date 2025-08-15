@@ -23,12 +23,14 @@ class ProfileController extends Controller
         ->orderBy('noticias.titulo', 'asc')
         ->select('noticias.*')
         ->get();
-        $minhasPostagens = Postagem::join('topicos', 'postagens.idTopico', '=', 'topicos.id')
-            ->where('postagens.status', 'ativo')
-            ->where('postagens.idUsuario', Auth::user()->id)
-            ->orderBy('topicos.titulo', 'asc')
-            ->select('postagens.*')
-            ->get();
+        $minhasPostagens = Postagem::withCount('respostas') 
+        ->with('topico') // relacionamento para pegar o tópico
+        ->where('status', 'ativo')
+        ->where('idUsuario', Auth::user()->id)
+        ->get()
+        ->sortBy(function($p) {
+            return $p->topico->titulo;
+        });    
         $meusDocumentos = Documento::join('categorias_documentos', 'documentos.idCategoria', '=', 'categorias_documentos.id')
         ->where('documentos.status', 'ativo')
         ->where('documentos.idUsuario', Auth::user()->id)

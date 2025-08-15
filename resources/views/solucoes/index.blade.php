@@ -62,13 +62,13 @@
 
         <div class="content-link" id="allSolucoes">
             <div class="infos">
-            @include('solucoes.tableSolucoes', ['solucoes' => $solucoes, 'tipoAba' => 'allSolucoes'])
+            @include('solucoes.tableSolucoes', ['solucoes' => $allSolucoes, 'tipoAba' => 'allSolucoes'])
             </div>
         </div>
 
         <div class="content-link" id="categoriasSolucoes">
             <div class="infos" id="categorias-content">
-                @include('layouts.tabelaCategorias', ['categorias' => $categorias , 'tipo' => 'solucoes'])
+                @include('layouts.tabelaCategorias', ['categorias' => $categoriasSolucoes , 'tipo' => 'solucoes'])
             </div>
         </div>
 

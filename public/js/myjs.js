@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const barraId = container.id;
         const selectOption = container.querySelector(".select-option");
         if (selectOption.innerText.trim() === 'Visão Geral' && barraId == 'abaProfile') {
-            selectOption.innerText = 'Minhas publicações';
+            selectOption.innerText = 'Minhas Notícias';
         }
 
         if (barraId === 'abaProfile') {
@@ -582,20 +582,14 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Abrir o modal de exclusão 
-    document.querySelectorAll('.container-abas').forEach(container => {
-        const deleteButtons = container.querySelectorAll('.btn-remove');
-        deleteButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const modal = btn.getAttribute('data-modal');
-                const form = document.getElementById('confirmExcluirForm');
-                const url = btn.getAttribute('data-url');
-                form.setAttribute('action', url);
-                console.log(url)
-
-                $(modal).modal('show');
-            });
+    document.querySelectorAll('.btn-remove').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const form = document.getElementById('confirmExcluirForm');
+            const url = btn.getAttribute('data-url');
+            form.setAttribute('action', url);
         });
     });
+
 
     // Abrir o modal de exclusão Resposta
     document.querySelectorAll('.post-options').forEach(container => {
@@ -937,6 +931,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
         });
     }
+
+    $(document).ready(function () {
+        // Verifica se main-panel existe e se o footer já não está dentro
+        if ($('.main-panel').length && $('#rodape').length) {
+            // Move o footer para dentro do main-panel
+            $('.main-panel').append($('#rodape'));
+        }
+    });
 
 });
 

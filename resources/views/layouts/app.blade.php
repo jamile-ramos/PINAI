@@ -34,14 +34,14 @@
 
     @include('layouts.navigation')
 
-    <main class="container-all" role="main" id="main-content" tabindex="-1">
+    <div class="container-all" role="main" id="main-content" tabindex="-1">
         @yield('content')
-    </main>
-
+    </div>
+    @yield('footer')
     <footer class="footer" role="contentinfo" id="rodape">
         <div class="container-fluid d-flex justify-content-between flex-column">
             <nav class="pull-left">
-                <ul class="nav">
+                <ul class="nav justify-content-center">
                     <li class="nav-item">
                         <a class="nav-link" href="/noticias">Portal de Notícias</a>
                     </li>
@@ -59,7 +59,7 @@
                     </li>
                 </ul>
             </nav>
-            <div class="copyright my-3">
+            <div class="copyright my-3 text-center">
                 &copy 2025, PINAI | Todos os direitos reservados.
             </div>
             <div>

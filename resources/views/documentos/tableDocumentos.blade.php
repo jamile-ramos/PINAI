@@ -12,6 +12,9 @@
         </a>
     </div>
     @endif
+
+    {{-- Cards desktop --}}
+    <div class="d-none d-md-block">
     <table class="table table-hover table-striped">
         <thead class="forum-azul">
             <tr>
@@ -73,6 +76,50 @@
             @endforelse
         </tbody>
     </table>
+    </div>
+
+    {{-- Cards mobile --}}
+    <div class="d-block d-md-none">
+        @forelse($documentos as $documento)
+        <div class="card mb-3 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title fw-bold mt-0 border-bottom border-secondary pb-2">{{ $documento->nomeArquivo }}</h5>
+                <div class="mb-2 border-bottom border-light pb-2 pt-2">
+                    <p class="mb-2"><i class="fas fa-folder text-primary me-1" aria-hidden="true"></i> {{ $documento->categoria_documento->nomeCategoria }}</p>
+
+                    @if($tipoAba === 'allDocumentos')
+                    <p class="mb-2"><i class="fas fa-user text-primary me-1" aria-hidden="true"></i> {{ $documento->user->name }}</p>
+                    @endif
+
+                    <p class="mb-2 text-muted"><i class="fas fa-calendar-alt text-primary me-1" aria-hidden="true"></i> Adicionado em: {{ $documento->created_at->format('d/m/Y') }}</p>
+
+                </div>
+                <div class="d-flex gap-2 flex-wrap">
+                    <a class="btn btn-sm btn-visualizar flex-fill text-center" href="{{ asset('storage/' . $documento->caminhoArquivo) }}" target="_blank">
+                        Visualizar
+                    </a>
+                    <a class="btn btn-sm btn-info flex-fill text-center" href="{{ route('documentos.edit', $documento->id) }}">
+                        Editar
+                    </a>
+                    <button class="btn btn-sm btn-danger btn-remove flex-fill text-center"
+                        data-bs-toggle="modal"
+                        data-bs-target="#confirmExcluirModal"
+                        data-url="{{ route('documentos.destroy', $documento->id) }}">
+                        Excluir
+                    </button>
+                </div>
+            </div>
+        </div>
+        @empty
+        <p class="text-center text-muted">Nenhum documento encontrado!</p>
+        @endforelse
+
+        {{-- Paginação --}}
+        <div class="d-flex justify-content-center mt-3">
+            {{ $documentos->appends(request()->except($tipoAba.'_page'))->links('vendor.pagination.bootstrap-5') }}
+        </div>
+    </div>
+
 </div>
 
 <!-- Paginação -->

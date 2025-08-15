@@ -54,7 +54,6 @@
             </div>
         </div>
 
-
         <div class="content-link" id="myTopicos">
             <div class="infos">
                 @include('topicos.tableTopicos', ['topicos' => $meusTopicos, 'title' => 'Meus Tópicos', 'tipoAba' => 'myTopicos'])

@@ -21,7 +21,9 @@ class SolucaoController extends Controller
         $pages = [
             'visaoSolucoes' => $request->input('solucoes_page', 1),
             'visaoCategoriasSol' => $request->input('visaoCategoriasSol_page', 1),
-            'mySolucoes' => $request->input('mySolucoes_page', 1)
+            'mySolucoes' => $request->input('mySolucoes_page', 1),
+            'allSolucoes' => $request->input('allSolucoes_page', 1),
+            'categoriasSolucoes' => $request->input('categoriasSolucoes_page', 1)
         ];
 
         $paginaVisaoSolucoes = $request->input('solucoes_page', 1);
@@ -33,7 +35,7 @@ class SolucaoController extends Controller
             $categorias = $this->paginaVazia(10, $pages['visaoCategoriasSol']);
         } else {
             $solucoes = $this->buscarSolucoesComQuery(null, $pages['visaoSolucoes'], $abaAtiva);
-            $categorias = $this->buscarCategoriaSolucao($query, $pages['visaoCategoriasSol'], $abaAtiva);
+            $categorias = $this->buscarCategoriaSolucao($query, $pages['visaoCategoriasSol'], $abaAtiva, 'visaoCategoriasSol_page');
         }
 
         // Minhas Soluções
@@ -44,12 +46,21 @@ class SolucaoController extends Controller
         }
 
         // Gerenciar Soluções
-
+        if($query && $abaAtiva == 'allSolucoes'){
+            $allSolucoes = $this->buscarMinhasSolucoes($query, $pages['allSolucoes'], $abaAtiva);
+        } else{
+            $allSolucoes = $this->buscarMinhasSolucoes(null, $pages['allSolucoes'], $abaAtiva);
+        }
 
         // Categorias
+        if($query && $abaAtiva == 'categoriasSolucoes'){
+            $categoriasSolucoes = $this->buscarCategoriaSolucao($query, $pages['categoriasSolucoes'], $abaAtiva, 'categoriasSolucoes_page');
+        }else{
+            $categoriasSolucoes = $this->buscarCategoriaSolucao(null, $pages['categoriasSolucoes'], $abaAtiva, 'categoriasSolucoes_page');
+        }
 
         
-        return view('solucoes.index', compact('categorias', 'solucoes', 'mySolucoes', 'abaAtiva', 'query'));
+        return view('solucoes.index', compact('categorias', 'solucoes', 'mySolucoes', 'allSolucoes', 'abaAtiva', 'query', 'categoriasSolucoes'));
         
     }
 
@@ -69,7 +80,7 @@ class SolucaoController extends Controller
             ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
     }
 
-    public function buscarCategoriaSolucao($query, $pagina, $abaAtiva)
+    public function buscarCategoriaSolucao($query, $pagina, $abaAtiva, $nomePagina)
     {
         $resultado = CategoriaSolucao::ativos();
 
@@ -78,6 +89,9 @@ class SolucaoController extends Controller
                 $q->ativos();
             });
         }
+        if($abaAtiva == 'categoriasSolucoes'){
+            $resultado->where('nomeCategoria', 'like', '%' . $query . '%');
+        }
             $resultado->with(['solucoes' => function ($q) {
                 $q->where('status', 'ativo')
                     ->latest()
@@ -85,7 +99,7 @@ class SolucaoController extends Controller
                     ->with(['user.nai', 'publicosAlvo']);  // eager load
             }]);
 
-        return $resultado->paginate(5, ['*'], 'visaoCategoriasSol_page', $pagina)
+        return $resultado->paginate(5, ['*'], $nomePagina, $pagina)
             ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
     }
 

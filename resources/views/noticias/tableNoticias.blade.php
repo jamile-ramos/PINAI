@@ -13,6 +13,7 @@
     </div>
     @endif
 
+    <div class="d-none d-sm-block">
     <table class="table table-hover table-striped">
         <thead class="forum-azul">
             <tr>
@@ -76,6 +77,58 @@
             @endif
         </tbody>
     </table>
+    </div>
+
+    {{-- Versão em cards (somente para mobile) --}}
+    <div class="d-sm-none">
+        @forelse($noticias as $noticia)
+        <div class="card mb-3 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title fw-bold mt-0 border-bottom border-secondary pb-2">
+                    {{ $noticia->titulo }}
+                </h5>
+                <div class="mb-2 border-bottom border-light pb-2 pt-2">
+                    {{-- Categoria --}}
+                    <p class="mb-1">
+                        <i class="fas fa-folder text-primary me-1" aria-hidden="true"></i>
+                        {{ $noticia->categoria->nomeCategoria }}
+                    </p>
+
+                    {{-- Autor --}}
+                    @if($tipoAba == 'allNoticias')
+                    <p class="mb-1">
+                        <i class="fas fa-user-edit text-primary me-1" aria-hidden="true"></i>Por: {{ $noticia->user->name }}
+                    </p>
+                    @endif
+
+                    {{-- Data de criação --}}
+                    <p class="mb-2 text-muted">
+                        <i class="fas fa-calendar-alt text-primary me-1" aria-hidden="true"></i>
+                        Criada em: {{ $noticia->created_at->format('d/m/Y') }}
+                    </p>
+                </div>
+
+                <div class="d-flex gap-2 flex-wrap pt-2">
+                    <a class="btn btn-sm btn-visualizar flex-fill text-center" href="{{ route('noticias.show', ['id' => $noticia->id]) }}">
+                        Ver
+                    </a>
+                    <a class="btn btn-sm btn-info flex-fill text-center" href="{{ route('noticias.edit', $noticia->id) }}">
+                        Editar
+                    </a>
+                    <button class="btn btn-sm btn-danger btn-remove flex-fill text-center"
+                        data-bs-toggle="modal"
+                        data-bs-target="#confirmExcluirModal"
+                        data-url="{{ route('noticias.destroy', $noticia->id) }}">
+                        Excluir
+                    </button>
+                </div>
+            </div>
+        </div>
+        @empty
+        <p class="text-center text-muted">Nenhuma notícia encontrada!</p>
+        @endforelse
+    </div>
+
 </div>
 
 <!-- Paginação -->

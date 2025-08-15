@@ -20,7 +20,7 @@
             </div>
             <div class="main-post-title">{{ $postagem->titulo }}</div>
             <div class="main-post-content">
-                {{ $postagem->conteudo }}
+                {!! nl2br(e($postagem->conteudo)) !!}
             </div>
             <!-- Imagem da postagem -->
             @if($postagem->imagem)

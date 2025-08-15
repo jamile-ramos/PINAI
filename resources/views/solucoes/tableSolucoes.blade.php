@@ -14,79 +14,150 @@
     @endif
     <h2 class="fw-bold text-primary mb-3 d-flex justify-content-center align-items-center">
     </h2>
-    <table class="table table-hover table-striped">
-        <thead class="forum-azul">
-            <tr>
-                <th>Título</th>
-                <th>Categoria</th>
-                <th>Público-alvo</th>
-                @if($tipoAba == 'allSolucoes')
-                <th>Autor</th>
-                @endif
-                <th>Data de criação</th>
-                <th style="width: 10%">Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if(!$solucoes->isEmpty())
-            @foreach($solucoes as $solucao)
-            <tr>
-                <td class="fw-bold">{{ $solucao->titulo }}</td>
-                <td class="text-start">
-                    {{ $solucao->categoria->nomeCategoria }}
-                </td>
-                <td>
-                    @if($solucao->publicosAlvo->count())
-                    @foreach($solucao->publicosAlvo as $publico)
-                    <span class="badge bg-secondary me-1 mb-1">{{ $publico->nome }}</span>
-                    @endforeach
-                    @else
-                    <span class="text-muted">Nenhum público cadastrado</span>
+
+    <div class="d-none d-md-block">
+        <table class="table table-hover table-striped">
+            <thead class="forum-azul">
+                <tr>
+                    <th>Título</th>
+                    <th>Categoria</th>
+                    <th>Público-alvo</th>
+                    @if($tipoAba == 'allSolucoes')
+                    <th>Autor</th>
                     @endif
-                </td>
-                @if($tipoAba == 'allSolucoes')
-                <td class="text-start">
-                    {{ $solucao->user->name }}
-                </td>
+                    <th>Data de criação</th>
+                    <th style="width: 10%">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if(!$solucoes->isEmpty())
+                @foreach($solucoes as $solucao)
+                <tr>
+                    <td class="fw-bold">{{ $solucao->titulo }}</td>
+                    <td class="text-start">
+                        {{ $solucao->categoria->nomeCategoria }}
+                    </td>
+                    <td>
+                        @php
+                        $limit = 3;
+                        $publicos = $solucao->publicosAlvo;
+                        $extraCount = $publicos->count() - $limit;
+                        @endphp
+
+                        @if($publicos->count())
+                        @foreach($publicos->take($limit) as $publico)
+                        <span class="badge bg-secondary me-1 mb-1">{{ $publico->nome }}</span>
+                        @endforeach
+
+                        @if($extraCount > 0)
+                        <span class="badge bg-secondary mb-1">+ {{ $extraCount }} {{ $extraCount == 1 ? 'público' : 'públicos' }}</span>
+                        @endif
+                        @else
+                        <span class="text-muted">Nenhum público cadastrado</span>
+                        @endif
+                    </td>
+                    @if($tipoAba == 'allSolucoes')
+                    <td class="text-start">
+                        {{ $solucao->user->name }}
+                    </td>
+                    @endif
+                    <td class="text-start">
+                        {{ $solucao->created_at->format('d/m/Y') }}
+                    </td>
+                    <td>
+                        <div class="form-button-action">
+                            <a class="btn btn-visualizar" href="{{ route('solucoes.show', ['id' => $solucao->id]) }}" aria-label="Ver solução">
+                                Ver solução
+                            </a>
+                            <button type="button" data-bs-toggle="tooltip"
+                                class="btn btn-info btn-edit"
+                                data-url="{{ route('solucoes.edit', $solucao->id) }}"
+                                data-original-title="Editar"
+                                aria-label="Editar solução">
+                                Editar
+                            </button>
+                            <button type="button"
+                                class="btn btn-danger btn-remove"
+                                data-bs-toggle="modal"
+                                data-bs-target="#confirmExcluirModal"
+                                title="Excluir"
+                                aria-label="Excluir solução"
+                                data-url="{{ route('solucoes.destroy', $solucao->id) }}">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+                @else
+                @php
+                $colspan = ($tipoAba == 'allSolucoes') ? 6 : 5;
+                @endphp
+                <tr>
+                    <td colspan="{{ $colspan }}" class="text-center">Nenhuma solução encontrada!</td>
+                </tr>
                 @endif
-                <td class="text-start">
-                    {{ $solucao->created_at->format('d/m/Y') }}
-                </td>
-                <td>
-                    <div class="form-button-action">
-                        <a class="btn btn-visualizar" href="{{ route('solucoes.show', ['id' => $solucao->id]) }}" aria-label="Ver solução">
-                            Ver solução
-                        </a>
-                        <button type="button" data-bs-toggle="tooltip"
-                            class="btn btn-info btn-edit"
-                            data-url="{{ route('solucoes.edit', $solucao->id) }}"
-                            data-original-title="Editar"
-                            aria-label="Editar solução">
-                            Editar
-                        </button>
-                        <button type="button"
-                            class="btn btn-danger btn-remove"
-                            data-bs-toggle="modal"
-                            data-bs-target="#confirmExcluirModal"
-                            title="Excluir"
-                            aria-label="Excluir solução"
-                            data-url="{{ route('solucoes.destroy', $solucao->id) }}">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
+            </tbody>
+        </table>
+    </div>
+
+    {{-- Cards mobile (768px) --}}
+    <div class="d-block d-md-none">
+        @forelse($solucoes as $solucao)
+        <div class="card mb-3 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title fw-bold mt-0 border-bottom border-secondary pb-2">{{ $solucao->titulo }}</h5>
+
+                <div class="mb-2 border-bottom border-light pb-2 pt-2">
+                    <div class="mb-2">
+                        <i class="fas fa-folder text-primary me-1"></i><strong>Categoria:</strong> {{ $solucao->categoria->nomeCategoria }}
                     </div>
-                </td>
-            </tr>
-            @endforeach
-            @else
-            @php
-            $colspan = ($tipoAba == 'allSolucoes') ? 6 : 5;
-            @endphp
-            <tr>
-                <td colspan="{{ $colspan }}" class="text-center">Nenhuma solução encontrada!</td>
-            </tr>
-            @endif
-        </tbody>
-    </table>
+
+                    @if($tipoAba == 'allSolucoes')
+                    <div class="mb-2">
+                        <i class="fas fa-user text-primary me-1"></i><strong>Autor:</strong> {{ $solucao->user->name }}
+                    </div>
+                    @endif
+
+                    <div class="mb-2">
+                        <i class="fas fa-users text-primary me-1"></i><strong>Público-alvo:</strong>
+                        @php
+                        $limit = 2;
+                        $publicos = $solucao->publicosAlvo;
+                        $extraCount = $publicos->count() - $limit;
+                        @endphp
+
+                        @foreach($publicos->take($limit) as $publico)
+                        <span class="badge bg-secondary me-1 mb-1">{{ $publico->nome }}</span>
+                        @endforeach
+
+                        @if($extraCount > 0)
+                        <span class="badge bg-secondary mb-1">+ {{ $extraCount }} {{ $extraCount == 1 ? 'público' : 'públicos' }}</span>
+                        @endif
+                    </div>
+
+                    <div class="text-muted">
+                        <i class="fas fa-calendar-alt text-primary me-1"></i><strong>Criado em:</strong> {{ $solucao->created_at->format('d/m/Y') }}
+                    </div>
+                </div>
+
+
+                <div class="d-flex gap-2 flex-wrap">
+                    <a class="btn btn-sm btn-visualizar flex-fill text-center" href="{{ route('solucoes.show', ['id' => $solucao->id]) }}">Ver</a>
+                    <a class="btn btn-sm btn-info flex-fill text-center" href="{{ route('solucoes.edit', $solucao->id) }}">Editar</a>
+                    <button class="btn btn-sm btn-danger btn-remove flex-fill text-center"
+                        data-bs-toggle="modal"
+                        data-bs-target="#confirmExcluirModal"
+                        data-url="{{ route('solucoes.destroy', $solucao->id) }}">
+                        Excluir
+                    </button>
+                </div>
+            </div>
+        </div>
+        @empty
+        <p class="text-center text-muted">Nenhuma solução encontrada!</p>
+        @endforelse
+    </div>
 </div>
 
 <!-- Paginação -->

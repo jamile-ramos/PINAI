@@ -122,5 +122,5 @@ Route::middleware('auth')->group(function () {
     // Público alvo de soluções
     Route::get('/solucoes/publicosAlvo/create', [PublicoAlvoController::class, 'create'])->name('publicosAlvo.create');
     Route::post('/solucoes/publicosAlvo/store', [PublicoAlvoController::class, 'store'])->name('publicosAlvo.store');
-    Route::delete('/solucoes/publicosAlvo/destroy', [PublicoAlvoController::class, 'destroy'])->name('publicosAlvo.destroy');
+    Route::delete('/solucoes/publicosAlvo/destroy/{id}', [PublicoAlvoController::class, 'destroy'])->name('publicosAlvo.destroy');
 });

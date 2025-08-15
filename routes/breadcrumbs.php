@@ -88,12 +88,21 @@ Breadcrumbs::for('formPostagem', function (BreadcrumbTrail $trail, $idTopico, $t
     $trail->push($tipoForm, route('postagens.create', ['idTopico' => $idTopico]));
 });
 
+// Página Inicial > Fórum de Discussão > Topico > Postagem > Add / Editar Resposta
+Breadcrumbs::for('addResposta', function (BreadcrumbTrail $trail, $postagem, $tipoForm) {
+    $topico = Topico::findOrFail($postagem->idTopico);
+    $trail->parent('postagens', $topico);
+    $trail->push($postagem->titulo, route('postagens.show', ['idTopico' => $topico->id, 'id' => $postagem->id]));
+    $trail->push($tipoForm, route('respostas.create', ['idPostagem' => $postagem->id]));
+});
+
 // Página Inicial > Fórum de Discussão > Tópico > Ver postagem
 Breadcrumbs::for('verPostagem', function (BreadcrumbTrail $trail, $postagem) {
     $topico = Topico::findOrFail($postagem->idTopico);
     $trail->parent('postagens', $topico);
     $trail->push($postagem->titulo, route('postagens.show', ['id' => $postagem->id]));
 });
+
 
 // Página Inicial > Biblioteca Digital
 Breadcrumbs::for('documentos', function (BreadcrumbTrail $trail) {

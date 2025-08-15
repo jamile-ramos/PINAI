@@ -13,61 +13,111 @@
     </div>
     @endif
 
-    <table class="table table-hover table-striped">
-        <thead class="forum-azul">
-            <tr>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>NAI</th>
-                <th>Tipo de usuário</th>
-                <th>Status</th>
-                <th>Data de criação</th>
-                <th style="width: 10%">Ação</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($usuarios as $usuario)
-            <tr>
-                <td>{{ $usuario->name }}</td>
-                <td>{{ $usuario->email }}</td>
-                <td>{{ $usuario->nai?->siglaNai ?? 'Não selecionado' }}</td>
-                <td>@if ($usuario->tipoUsuario == 'comum')
-                    Comum
-                    @elseif ($usuario->tipoUsuario == 'admin')
-                    Admin
-                    @elseif ($usuario->tipoUsuario == 'moderador')
-                    Moderador
-                    @endif
-                </td>
-                <td>{{ $usuario->status == 'ativo' ? 'Ativo' : 'Inativo' }}</td>
-                <td>{{ $usuario->created_at->format('d/m/Y') }}</td>
-                <td>
-                    <div class="form-button-action">
-                        <button type="button" class="btn btn-info d-inline btn-alterar"
-                            data-id="{{ $usuario->id }}"
-                            data-name="{{ $usuario->name }}"
-                            data-email="{{ $usuario->email }}"
-                            data-type="{{ $usuario->tipoUsuario }}"
-                            data-nai="{{ $usuario->nai?->id ?? 'selecione'  }}"
-                            aria-label="Editar Usuário">
-                            Editar
-                        </button>
-                        <button type="button" class="btn toggle-status btn-status {{ $usuario->status == 'ativo' ? 'btn-danger' : 'btn-success' }}"
-                            data-id="{{ $usuario->id }}"
-                            data-status="{{ $usuario->status }}"
-                            aria-label="{{ $usuario->status == 'ativo' ? 'Desabilitar' : 'Ativar' }} usuário">
-                            {{ $usuario->status == 'ativo' ? 'Desabilitar' : 'Ativar' }}
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            @empty
-            <tr>
-                <td colspan="7" class="text-center">Nenhum usuário encontrado.</td>
-            </tr>
-            @endforelse
-        </tbody>
-    </table>
+    {{-- Table Desktop --}}
+    <div class="d-none d-md-block">
+        <table class="table table-hover table-striped ">
+            <thead class="forum-azul">
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>NAI</th>
+                    <th>Tipo de usuário</th>
+                    <th>Status</th>
+                    <th>Data de criação</th>
+                    <th style="width: 10%">Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($usuarios as $usuario)
+                <tr>
+                    <td>{{ $usuario->name }}</td>
+                    <td>{{ $usuario->email }}</td>
+                    <td>{{ $usuario->nai?->siglaNai ?? 'Não selecionado' }}</td>
+                    <td>@if ($usuario->tipoUsuario == 'comum')
+                        Comum
+                        @elseif ($usuario->tipoUsuario == 'admin')
+                        Admin
+                        @elseif ($usuario->tipoUsuario == 'moderador')
+                        Moderador
+                        @endif
+                    </td>
+                    <td>{{ $usuario->status == 'ativo' ? 'Ativo' : 'Inativo' }}</td>
+                    <td>{{ $usuario->created_at->format('d/m/Y') }}</td>
+                    <td>
+                        <div class="form-button-action">
+                            <button type="button" class="btn btn-info d-inline btn-alterar"
+                                data-id="{{ $usuario->id }}"
+                                data-name="{{ $usuario->name }}"
+                                data-email="{{ $usuario->email }}"
+                                data-type="{{ $usuario->tipoUsuario }}"
+                                data-nai="{{ $usuario->nai?->id ?? 'selecione'  }}"
+                                aria-label="Editar Usuário">
+                                Editar
+                            </button>
+                            <button type="button" class="btn toggle-status btn-status {{ $usuario->status == 'ativo' ? 'btn-danger' : 'btn-success' }}"
+                                data-id="{{ $usuario->id }}"
+                                data-status="{{ $usuario->status }}"
+                                aria-label="{{ $usuario->status == 'ativo' ? 'Desabilitar' : 'Ativar' }} usuário">
+                                {{ $usuario->status == 'ativo' ? 'Desabilitar' : 'Ativar' }}
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="7" class="text-center">Nenhum usuário encontrado.</td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+
+    {{-- Cards mobile --}}
+    <div class="d-block d-md-none">
+        @forelse($usuarios as $usuario)
+        <div class="card mb-3 shadow-sm border-0 rounded-3 overflow-hidden">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0 fw-bold">{{ $usuario->name }}</h5>
+                <span class="badge {{ $usuario->status == 'ativo' ? 'bg-success' : 'bg-danger' }}">
+                    {{ $usuario->status == 'ativo' ? 'Ativo' : 'Inativo' }}
+                </span>
+            </div>
+            <div class="card-body">
+                <p class="mb-1"><i class="fas fa-envelope me-2 text-primary"></i>{{ $usuario->email }}</p>
+                <p class="mb-1"><i class="fas fa-university me-2 text-primary"></i>NAI: {{ $usuario->nai?->siglaNai ?? 'Não selecionado' }}</p>
+                <p class="mb-2"><i class="fas fa-user-tag me-2 text-primary"></i>Tipo:
+                    @switch($usuario->tipoUsuario)
+                    @case('comum') Comum @break
+                    @case('admin') Admin @break
+                    @case('moderador') Moderador @break
+                    @endswitch
+                </p>
+                <div class="d-flex gap-2 flex-wrap mt-2">
+                    <button type="button" class="btn btn-sm btn-info btn-alterar flex-grow-1"
+                        data-id="{{ $usuario->id }}"
+                        data-name="{{ $usuario->name }}"
+                        data-email="{{ $usuario->email }}"
+                        data-type="{{ $usuario->tipoUsuario }}"
+                        data-nai="{{ $usuario->nai?->id ?? 'selecione' }}">
+                        <i class="fas fa-edit me-1"></i>Editar
+                    </button>
+                    <button type="button" class="btn btn-sm toggle-status btn-status flex-grow-1 {{ $usuario->status == 'ativo' ? 'btn-danger' : 'btn-success' }}"
+                        data-id="{{ $usuario->id }}"
+                        data-status="{{ $usuario->status }}">
+                        <i class="fas {{ $usuario->status == 'ativo' ? 'fa-ban' : 'fa-check' }} me-1"></i>
+                        {{ $usuario->status == 'ativo' ? 'Desabilitar' : 'Ativar' }}
+                    </button>
+                </div>
+            </div>
+            <div class="card-footer text-muted text-end small">
+                Criado em: {{ $usuario->created_at->format('d/m/Y') }}
+            </div>
+        </div>
+        @empty
+        <p class="text-center text-muted">Nenhum usuário encontrado.</p>
+        @endforelse
+    </div>
+
 
     <!-- Paginação -->
     <div class="d-flex justify-content-center mt-3">
@@ -86,7 +136,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body border-bottom border-secondary p-2">
                 <form id="editUserForm" method="POST" data-route="{{ route('painel.update', ':id') }}">
                     @csrf
                     @method('PUT')
@@ -116,7 +166,7 @@
                             <option value="moderador">Moderador</option>
                         </select>
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer border-top border-light mt-3">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                         <button type="submit" class="btn btn-primary">Salvar alterações</button>
                     </div>

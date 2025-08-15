@@ -724,7 +724,7 @@ label.form-label {
 }
 
 .user-post {
-    background-color: #333;
+    background-color: #011C37;
     margin-right: 10px;
 }
 
@@ -756,7 +756,7 @@ label.form-label {
     background-color: #ffffff;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 25px;
+    padding: 20px;
     margin-bottom: 30px;
 }
 
@@ -1414,11 +1414,25 @@ h1 {
 }
 
 /* Tamanhos padrões das fontes do bootstrap*/
-h1 { font-size: 2.5rem !important; }
-h2 { font-size: 2rem !important; }
-h3 { font-size: 1.75rem !important; }
-h4 { font-size: 1.5rem !important; }
-h5 { font-size: 1.25rem !important; }
+h1 {
+    font-size: 2.5rem !important;
+}
+
+h2 {
+    font-size: 2rem !important;
+}
+
+h3 {
+    font-size: 1.75rem !important;
+}
+
+h4 {
+    font-size: 1.5rem !important;
+}
+
+h5 {
+    font-size: 1.25rem !important;
+}
 
 /* Adicionar underline no hover */
 .hover-underline:hover {
@@ -1426,7 +1440,8 @@ h5 { font-size: 1.25rem !important; }
 }
 
 .btn-limpar-filtro {
-    background-color: #4a4a4a; /* cinza escuro */
+    background-color: #4a4a4a;
+    /* cinza escuro */
     color: #ffffff;
     border: none;
     border-radius: 999px;
@@ -1442,7 +1457,8 @@ h5 { font-size: 1.25rem !important; }
 
 .btn-limpar-filtro:hover,
 .btn-limpar-filtro:focus {
-    background-color: #373737; /* cinza mais escuro no hover/focus */
+    background-color: #373737;
+    /* cinza mais escuro no hover/focus */
     color: #fff;
     outline: none;
     box-shadow: 0 0 0 3px rgba(55, 55, 55, 0.6);
@@ -1455,28 +1471,52 @@ h5 { font-size: 1.25rem !important; }
 }
 
 .publico-alvo-list {
-    column-count: 2;     /* Duas colunas por padrão */
-    column-gap: 1.5rem;  /* Espaço entre as colunas */
-    list-style: none;    /* Remove o estilo padrão de lista */
-    padding-left: 1rem;  /* Para alinhar os bullets */
-  }
-  
-  .publico-alvo-list li::before {
+    column-count: 2;
+    /* Duas colunas por padrão */
+    column-gap: 1.5rem;
+    /* Espaço entre as colunas */
+    list-style: none;
+    /* Remove o estilo padrão de lista */
+    padding-left: 1rem;
+    /* Para alinhar os bullets */
+}
+
+.publico-alvo-list li::before {
     content: '• ';
-    color: #6c757d;      /* Cor do bullet (text-secondary do Bootstrap) */
-  }
-  
+    color: #6c757d;
+    /* Cor do bullet (text-secondary do Bootstrap) */
+}
+
+.footer {
+    width: 100%;
+    border-top: 1px solid #eee;
+    padding: 15px;
+    background: #fff;
+    position: relative; /* garante que siga o fluxo do documento */
+    clear: both;        /* limpa floats anteriores */
+}
 
 @media (max-width: 576px) {
     .noticia-img-wrapper {
         height: 200px;
     }
+
 }
 
 .object-fit-cover {
     object-fit: cover;
 }
 
+.img-miniatura {
+    width: 200px;
+    /* largura fixa */
+    height: 150px;
+    /* altura fixa */
+    object-fit: cover;
+    /* a imagem se ajusta preenchendo o espaço sem distorcer */
+    cursor: pointer;
+    /* efeito de pointer */
+}
 
 /* Respostas de mídia em tela pequena */
 @media (max-width: 768px) {
@@ -1509,7 +1549,7 @@ h5 { font-size: 1.25rem !important; }
 
     .publico-alvo-list {
         column-count: 1;
-      }
+    }
 
 }
 
@@ -1663,5 +1703,11 @@ h5 { font-size: 1.25rem !important; }
 
     .search-container i {
         margin-left: 0px;
+    }
+
+    .user-icon-circle {
+        font-size: 10px;
+        width: 30px;
+        height: 25px;
     }
 }

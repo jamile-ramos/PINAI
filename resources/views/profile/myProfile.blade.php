@@ -116,29 +116,24 @@
                 <div class="content-link" id="myPostagens">
                     <div class="infos">
                         @forelse($myPostagens as $postagem)
-                        <div class="card">
-                            <div class="card-body p-4">
-                                <!-- Tag de Tópico no canto superior direito -->
-                                <div class="topic-tag position-absolute top-0 end-0 m-3 px-2 py-1 bg-primary text-white rounded">
-                                    {{ $postagem->topico->titulo }}
-                                </div>
-
-                                <div class="d-flex align-items-center mb-2">
-                                    <div class="user-icon-circle user-post user-post2">
+                        <div class="post-card">
+                            <div class="post-header border-bottom border-secondary pb-3">
+                                <div class="post-author">
+                                    <div class="user-icon-circle user-post">
                                         <i class="fa fa-user"></i>
                                     </div>
-                                    <div class="ms-3">
-                                        <h5 class="d-flex flex-column mb-2">{{ $postagem->user->name }} <small class="text-muted">{{ $postagem->created_at->format('d/m/Y H:i') }}</small></h5>
-                                    </div>
+                                    <span>Postado por <strong>{{ $postagem->user->name }}</strong></span>
                                 </div>
-                                <div class="media-text">
-                                    <div class="main-post-title">{{ $postagem->titulo }}</div>
-                                    <p>{{ $postagem->conteudo }}</p>
-                                </div>
-                                <div class="post-footer btn-padding">
-                                    <a href="{{ route('postagens.show', $postagem->id )}}" class="btn btn-primary">Ver Respostas</a>
-                                    <span><i class="fa-regular fa-comment"></i> {{ $postagem->respostas->count() }} respostas</span>
-                                </div>
+                                <span class="text-muted">{{ $postagem->created_at->format('d/m/Y') }}</span>
+                            </div>
+
+                            <div class="post-title">{{ $postagem->titulo }}</div>
+                            <div class="post-content border-bottom border-light pb-3">
+                                {{ Str::limit($postagem->conteudo, 100, '...') }}
+                            </div>
+                            <div class="post-footer mt-2">
+                                <a href="{{ route('postagens.show', $postagem->id )}}" class="btn btn-primary">Ver Postagem</a>
+                                <span><i class="fa-regular fa-comment"></i> {{ $postagem->respostas_count }} respostas</span>
                             </div>
                         </div>
                         @empty
@@ -178,34 +173,25 @@
                 <div class="content-link" id="mySolucoes">
                     <div class="infos">
                         @foreach($mySolucoes as $solucao)
-                        <div class="mb-4">
-                            <div class="card shadow-lg rounded-4 border-0 p-4">
-                                <div class="card-body p-4">
-                                    <h4 class="card-title fw-semibold text-dark mb-3">{{ $solucao->titulo }}</h4>
-
-                                    <p class="card-text text-muted mb-4">
-                                        {{ $solucao->descricao }}
-                                    </p>
-
-                                    <div class="row mb-2">
-                                        <div class="col-md-6 mb-2">
-                                            <strong class="text-secondary d-block">Público-Alvo:</strong>
-                                            <ul>
+                        <div class="col">
+                            <div class="card h-100 border-0 shadow-lg rounded-4">
+                                <div class="card-body d-flex flex-column p-4">
+                                    <h5 class="card-title text-primary fw-bold mb-3">{{ $solucao->titulo }}</h5>
+                                    <p class="text-muted mb-2 small mb-4"><strong>Por:</strong> {{ $solucao->user->nai->siglaNai }} - {{ $solucao->user->nai->siglaInstituicao }}</p>
+                                    <p class="card-text text-muted mb-4">{{ Str::limit($solucao->descricao, 120) }}</p>
+                                    <div class="d-flex justify-content-between mt-auto">
+                                        <div class="text-secondary">
+                                            <strong>Público-Alvo:</strong>
+                                            <ul class="list-unstyled mb-3">
                                                 @foreach($solucao->publicosAlvo as $publico)
                                                 <li>• {{ $publico->nome }}</li>
                                                 @endforeach
                                             </ul>
                                         </div>
-                                        <div class="col-md-6">
-                                            <strong class="text-secondary d-block">Categoria:</strong>
-                                            <span>{{ $solucao->categoria->nomeCategoria }}</span>
-                                        </div>
                                     </div>
-
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <small class="text-muted">Por NAI IFSP</small>
-                                        <a href="{{ route('solucoes.show', $solucao->id) }}" class="btn btn-primary rounded-pill px-4">Ver Mais</a>
-                                    </div>
+                                    <a href="{{ route('solucoes.show', $solucao->id) }}" class="btn btn-primary rounded-pill px-4 py-2 mt-2">
+                                        Ver mais
+                                    </a>
                                 </div>
                             </div>
                         </div>

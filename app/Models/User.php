@@ -94,5 +94,10 @@ class User extends Authenticatable
         return $query->where('status', 'ativo');
     }
 
+    public function isComum()
+    {
+        return $this->role === 'comum';
+    }
+
 
 }

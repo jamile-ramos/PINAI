@@ -16,50 +16,56 @@
 
     {{-- Bloco exibido em telas grandes (>= 768px) --}}
     <div class="d-none d-md-block">
-    <table class="table table-striped table-hover">
-        <thead class="forum-azul">
-            <tr>
-                <th>Título da postagem</th>
-                @if($tipoAba == 'allPostagens')
-                <th>Autor</th>
-                @endif
-                <th>Data de Criação</th>
-                <th style="width: 10%">Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($postagens as $postagem)
-            <tr>
-                <td class="text-start fw-bold">{{ $postagem->titulo }}</td>
-                @if($tipoAba == 'allPostagens')
-                <td>{{ $postagem->user->name }}</td>
-                @endif
-                <td>{{ $postagem->created_at->format('d/m/Y') }}</td>
-                <td>
-                    <div class="form-button-action">
-                        <button type="button" class="btn btn-info btn-edit"
-                            data-bs-toggle="tooltip"
-                            data-url="{{ route('postagens.edit', $postagem->id) }}"
-                            data-original-title="Editar">
-                            Editar
-                        </button>
-                        <button type="button" class="btn btn-danger btn-remove"
-                            data-bs-toggle="tooltip"
-                            data-original-title="Remover"
-                            data-modal="#confirmExcluirModal"
-                            data-url="{{ route('postagens.destroy', $postagem->id) }}">
-                            Excluir
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            @empty
-            <tr>
-                <td colspan="4" class="text-center">Nenhuma postagem encontrada.</td>
-            </tr>
-            @endforelse
-        </tbody>
-    </table>
+        <table class="table table-striped table-hover">
+            <thead class="forum-azul">
+                <tr>
+                    <th>Título da postagem</th>
+                    @if($tipoAba == 'allPostagens')
+                    <th>Autor</th>
+                    @endif
+                    <th>Data de Criação</th>
+                    <th style="width: 10%">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($postagens as $postagem)
+                <tr>
+                    <td class="text-start fw-bold">{{ $postagem->titulo }}</td>
+                    @if($tipoAba == 'allPostagens')
+                    <td>{{ $postagem->user->name }}</td>
+                    @endif
+                    <td>{{ $postagem->created_at->format('d/m/Y') }}</td>
+                    <td>
+                        <div class="form-button-action">
+                            <a class="btn btn-visualizar" href="{{ route('postagens.show', ['id' => $postagem->id]) }}" aria-label="Ver postagem">
+                                Ver postagem
+                            </a>
+                            @if(Auth::user()->tipoUsuario == 'admin' || (Auth::user()->id == $postagem->idUsuario && $tipoAba == 'myPostagens'))
+                            <button type="button" class="btn btn-info btn-edit"
+                                data-bs-toggle="tooltip"
+                                data-url="{{ route('postagens.edit', $postagem->id) }}"
+                                data-original-title="Editar">
+                                Editar
+                            </button>
+                            @endif
+                            <button type="button" class="btn btn-danger btn-remove"
+                                data-bs-toggle="tooltip"
+                                data-original-title="Remover"
+                                data-modal="#confirmExcluirModal"
+                                data-url="{{ route('postagens.destroy', $postagem->id) }}">
+                                Excluir
+                            </button>
+                        </div>
+                    </td>
+
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="4" class="text-center">Nenhuma postagem encontrada.</td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -81,12 +87,14 @@
                 <a class="btn btn-sm btn-visualizar flex-fill text-center" href="{{ route('postagens.show', ['id' => $postagem->id]) }}">
                     Ver
                 </a>
+                @if(Auth::user()->tipoUsuario == 'admin' || (Auth::user()->id == $postagem->idUsuario && $tipoAba == 'myPostagens'))
                 <button type="button" class="btn btn-info btn-sm btn-edit flex-fill text-center"
                     data-bs-toggle="tooltip"
                     data-url="{{ route('postagens.edit', $postagem->id) }}"
                     data-original-title="Editar">
                     Editar
                 </button>
+                @endif
                 <button type="button" class="btn btn-danger btn-sm btn-remove flex-fill text-center"
                     data-bs-toggle="tooltip"
                     data-original-title="Remover"

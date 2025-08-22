@@ -16,6 +16,18 @@ Breadcrumbs::for('dashboard', function (BreadcrumbTrail $trail) {
 });
 
 // Página Inicial > Painel de Usuários
+Breadcrumbs::for('acessibilidade', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Acessibilidade', route('acessibilidade'));
+});
+
+// Página Inicial > Sobre
+Breadcrumbs::for('sobre', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Sobre', route('sobre'));
+});
+
+// Página Inicial > Painel de Usuários
 Breadcrumbs::for('painelUsuarios', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
     $trail->push('Painel de Usuários', route('painel.usuarios'));

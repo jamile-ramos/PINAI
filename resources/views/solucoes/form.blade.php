@@ -104,7 +104,7 @@ $tipoForm = isset($solucao) ? 'Editar Solução' : 'Adicionar Solução';
                     @endforeach
                 </div>
 
-                @if(Auth::user()->tipoUsuario != 'comum')
+                @if(Auth::user()->tipoUsuario == 'admin')
                 <button type="button" class="btn btn-link btn-secondary mt-0" data-bs-toggle="modal" data-bs-target="#modalPublicoAlvo">
                     <i class="fas fa-users me-1"></i> Adicionar / Gerenciar Público-Alvo
                 </button>

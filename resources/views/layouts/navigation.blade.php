@@ -25,7 +25,7 @@
     <div class="sidebar-wrapper scrollbar scrollbar-inner" role="navigation">
       <div class="sidebar-content">
         <ul class="nav nav-secondary">
-          <li class="nav-item {{ request()->is('dashboard') ? 'active submenu' : '' }}">
+          <li class="nav-item {{ request()->is('dashboard') ? 'active submenu' : '' }} ">
             <a
               tabindex="0"
               href="/dashboard"
@@ -37,38 +37,38 @@
             </a>
           </li>
           @if(Auth::user()->tipoUsuario == 'admin')
-          <li class="nav-item {{ request()->is('painelUsuarios*') ? 'active submenu' : '' }}">
+          <li class="nav-item {{ request()->is('painelUsuarios*') ? 'active submenu' : '' }} ">
             <a href="/painelUsuarios" tabindex="0" aria-label="Ir para a página de administração do Painel de Usuários">
               <i class="fas fa-users {{ request()->is('painelUsuarios*') ? 'icon-active' : '' }}" aria-hidden="true"></i>
               <p>Painel de usuários</p>
             </a>
           </li>
           @endif
-          <li class="nav-item {{ request()->is('noticias*') ? 'active submenu' : '' }}">
+          <li class="nav-item {{ request()->is('noticias*') ? 'active submenu' : '' }} ">
             <a href="/noticias" data-btnNav="noticias" aria-label="Ir para o Portal de Notícias">
               <i class="fas fa-newspaper {{ request()->is('noticias*') ? 'icon-active' : '' }}" aria-hidden="true"></i>
               <p>Portal de Notícias</p>
             </a>
           </li>
-          <li class="nav-item {{ request()->is('topicos*') || request()->is('postagens*') || request()->is('respostas*') ? 'active submenu' : '' }}">
+          <li class="nav-item  {{ request()->is('topicos*') || request()->is('postagens*') || request()->is('respostas*') ? 'active submenu' : '' }}">
             <a href="/topicos" data-btnNav="topicos" aria-label="Ir para o Fórum de Discussão">
               <i class="fas fa-comments {{ request()->is('topicos*') || request()->is('postagens*') || request()->is('respostas*') ? 'icon-active' : '' }}" aria-hidden="true"></i>
               <p>Fórum de Discussão</p>
             </a>
           </li>
-          <li class="nav-item {{ request()->is('documentos*') ? 'active submenu' : '' }}">
+          <li class="nav-item  {{ request()->is('documentos*') ? 'active submenu' : '' }}">
             <a href="/documentos" data-btnNav="documentos" aria-label="Ir para a Biblioteca de Documentos">
               <i class="fas fa-pen-square {{ request()->is('documentos*') ? 'icon-active' : '' }}" aria-hidden="true"></i>
               <p>Biblioteca Digital</p>
             </a>
           </li>
-          <li class="nav-item {{ request()->is('solucoes*') ? 'active submenu' : '' }}">
+          <li class="nav-item  {{ request()->is('solucoes*') ? 'active submenu' : '' }}">
             <a href="/solucoes" data-btnNav="solucoes" aria-label="Ir para o Banco de Soluções">
               <i class="fas fa-table {{ request()->is('solucoes*') ? 'icon-active' : '' }}" aria-hidden="true"></i>
               <p>Banco de Soluções</p>
             </a>
           </li>
-          <li class="nav-item">
+          <!--<li class="nav-item">
             <a data-bs-toggle="collapse" href="#maps">
               <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
               <p>Mapa Interativo</p>
@@ -79,7 +79,7 @@
               <i class="far fa-chart-bar" aria-hidden="true"></i>
               <p>Projetos em andamento</p>
             </a>
-          </li>
+          </li>-->
           <li class="nav-section">
             <span class="sidebar-mini-icon">
               <i class="fa fa-ellipsis-h"></i>
@@ -88,8 +88,20 @@
           </li>
           <li class="nav-item {{ request()->is('myProfile*') || request()->is('profile*') ? 'active submenu' : ''}}">
             <a href="/myProfile" data-btnNav="profile" aria-label="Ir para Meu perfil">
-              <i class="far fa-user {{ request()->is('myProfile') || request()->is('profile*') ? 'icon-active' : ''}}" aria-hidden="true"></i>
+              <i class="fas fa-user user-login {{ request()->is('myProfile') || request()->is('profile*') ? 'icon-active' : ''}}" aria-hidden="true"></i>
               <p>Perfil</p>
+            </a>
+          </li>
+          <li class="nav-item {{ request()->is('acessibilidade*') || request()->is('acessibilidade*') ? 'active submenu' : ''}}">
+            <a href="/acessibilidade" data-btnNav="profile" aria-label="Ir para página de acessibilidade">
+              <i class="fas fa-universal-access me-1 {{ request()->is('acessibilidade') || request()->is('acessibilidade*') ? 'icon-active' : ''}}" aria-hidden="true"></i>
+              <p>Acessibilidade</p>
+            </a>
+          </li>
+          <li class="nav-item {{ request()->is('sobre*') || request()->is('sobre*') ? 'active submenu' : ''}}">
+            <a href="/sobre" data-btnNav="profile" aria-label="Ir para página de sobre">
+              <i class="fas fa-info-circle me-1 {{ request()->is('sobre') || request()->is('sobre*') ? 'icon-active' : ''}}" aria-hidden="true"></i>
+              <p>Sobre</p>
             </a>
           </li>
         </ul>
@@ -126,7 +138,7 @@
         <div class="container-fluid">
           <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
           </nav>
-          <ul class="navbar-nav topbar-nav align-items-start small">
+          <ul class="navbar-nav topbar-nav align-items-start small d-none d-md-flex">
             <li class="nav-item topbar-icon dropdown hidden-caret me-2 d-flex align-items-center">
               <a href="#main-content" class="skip-link text-white-50 fs-7 link-underline-opacity-0 link-underline-opacity-100-hover px-1">Ir para o conteúdo</a>
               <span class="badge text-bg-primary rounded-pill py-0 px-1" style="font-size: 0.65rem;">1</span>
@@ -141,23 +153,18 @@
             </li>
           </ul>
 
-
           <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
-            <li class="nav-item topbar-icon dropdown hidden-caret">
-              <a class="nav-link dropdown-toggle" href="#" id="constraste" role="button"
-                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Contraste da página">
-                <i class="fas fa-adjust"></i>
+            <li class="nav-item hidden-caret">
+              <a class="nav-link d-flex align-items-center" href="#" id="contraste" role="button" aria-label="Alterar contraste da página">
+                <i class="fas fa-adjust me-1"></i>
+                <span class="d-none d-md-inline fw-bold"> Alto Contraste</span>
               </a>
             </li>
-            <li class="nav-item topbar-icon dropdown hidden-caret">
-              <a class="nav-link dropdown-toggle" href="#" id="aumentarFonte" role="button" data-bs-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false" aria-label="Aumentar fonte">
-                <i class="fas fa-font"></i><sup><i class="fas fa-plus"></i></sup>
-              </a>
-            </li>
-            <li class="nav-item topbar-icon dropdown hidden-caret">
-              <a class="nav-link" data-bs-toggle="dropdown" href="#" id="diminuirFonte" aria-expanded="false" aria-label="Diminuir fonte">
-                <i class="fas fa-font"></i><sup><i class="fas fa-minus"></i></sup>
+
+            <li class="nav-item hidden-caret">
+              <a class="nav-link d-flex align-items-center" href="/acessibilidade" role="button" aria-label="Acessibilidade do site">
+                <i class="fas fa-universal-access me-1"></i>
+                <span class="d-none d-md-inline fw-bold">Acessibilidade</span>
               </a>
             </li>
 

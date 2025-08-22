@@ -70,6 +70,7 @@
                         <span class="response-date">{{ $resposta->created_at->format('d/m/Y H:i') }}</span>
                     </div>
                     <!-- 3 pontinhos -->
+                     @if(Auth::user()->tipoUsuario != 'comum'|| Auth::user()->id == $resposta->idUsuario)
                     <div class="post-options">
                         <button class="options-button" aria-label="Botão de opções: Editar e Excluir Resposta">
                             <i class="fa fa-ellipsis-v"></i>
@@ -87,6 +88,7 @@
                             </button>
                         </div>
                     </div>
+                    @endif
                 </div>
                 <div class="response-content">
                     {{ $resposta->conteudo }}

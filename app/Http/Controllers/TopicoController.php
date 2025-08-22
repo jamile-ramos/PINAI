@@ -86,7 +86,8 @@ class TopicoController extends Controller
 
     public function buscarMeusTopicos($query, $pagina, $abaAtiva)
     {
-        $resultados = Topico::ativos();
+        $resultados = Topico::ativos()
+        ->where('idUsuario', Auth::user()->id);
 
         if (!empty($query)) {
             $resultados->where('titulo', 'like', '%' . $query . '%');

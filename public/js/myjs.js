@@ -7,6 +7,24 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // Código dos botões de acessibilidade (contraste)
+    // CONTRASTE
+    const body = document.body;
+    const contraste = document.getElementById('contraste');
+
+    // Aplica no body ao carregar a página
+    if (localStorage.getItem('altoContraste') === 'true') {
+        body.classList.add('alto-contraste');
+    }
+
+    if (contraste) {
+        contraste.addEventListener("click", (e) => {
+            e.preventDefault();
+            body.classList.toggle("alto-contraste");
+            localStorage.setItem('altoContraste', body.classList.contains("alto-contraste"));
+        });
+    }
+   
     // Clicar no icone e aparece a barra de pesquisa
     $(document).ready(function () {
         $(".search-icon").on("click", function () {
@@ -476,7 +494,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const sidebarLinks = document.querySelectorAll('.nav-secondary');
     sidebarLinks.forEach(link => {
         link.addEventListener('click', () => {
+            const contraste = localStorage.getItem('altoContraste');
             localStorage.clear();
+
+            // Verifica se tem contraste e se tiver, mesmo que mude de rota o contraste vai persistir
+            if (contraste === 'true') {
+                localStorage.setItem('altoContraste', 'true');
+            }
         });
     });
 

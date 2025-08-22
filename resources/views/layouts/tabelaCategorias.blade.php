@@ -20,42 +20,44 @@
     </div>
     @endif
 
-    <table class="table table-hover table-striped d-none d-md-table w-100">
-        <thead class="forum-azul">
-            <tr>
-                <th style="width: 50%">Categoria</th>
-                <th>Usuário responsável pela publicação</th>
-                <th style="width: 10%">Ação</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($categorias as $categoria)
-            <tr>
-                <td>{{ $categoria->nomeCategoria }}</td>
-                <td>{{ $categoria->user->name }}</td>
+    <div class="borda-alto-contraste">
+        <table class="table table-hover table-striped d-none d-md-table w-100 ">
+            <thead class="forum-azul">
+                <tr>
+                    <th style="width: 50%">Categoria</th>
+                    <th>Usuário responsável pela publicação</th>
+                    <th style="width: 10%">Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($categorias as $categoria)
+                <tr>
+                    <td>{{ $categoria->nomeCategoria }}</td>
+                    <td>{{ $categoria->user->name }}</td>
 
-                <td>
-                    <div class="form-button-action">
-                        <button type="button"
-                            class="btn btn-danger btn-remove"
-                            data-bs-toggle="tooltip"
-                            data-modal="#confirmExcluirModal"
-                            data-url="{{ route('categorias.destroy', ['tipo' => $tipo, 'id' => $categoria->id]) }}"
-                            data-id="{{ $categoria->id }}"
-                            title="Excluir">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
+                    <td>
+                        <div class="form-button-action">
+                            <button type="button"
+                                class="btn btn-danger btn-remove"
+                                data-bs-toggle="tooltip"
+                                data-modal="#confirmExcluirModal"
+                                data-url="{{ route('categorias.destroy', ['tipo' => $tipo, 'id' => $categoria->id]) }}"
+                                data-id="{{ $categoria->id }}"
+                                title="Excluir">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
 
-                    </div>
-                </td>
-            </tr>
-            @empty
-            <tr>
-                <td colspan="3" class="text-center">Nenhuma categoria encontrada.</td>
-            </tr>
-            @endforelse
-        </tbody>
-    </table>
+                        </div>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="3" class="text-center">Nenhuma categoria encontrada.</td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 
     {{-- Cards mobile (768px) --}}
     <div class="d-block d-md-none">

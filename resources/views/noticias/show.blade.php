@@ -59,7 +59,7 @@
         </div>
 
         <!-- Conteúdo -->
-        <section class="fs-6 lh-lg">
+        <section class="fs-6 lh-lg conteudo">
             {!! nl2br(e($noticia->conteudo)) !!}
         </section>
     </article>

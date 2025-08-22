@@ -12,9 +12,6 @@
         </a>
     </div>
     @endif
-    <h2 class="fw-bold text-primary mb-3 d-flex justify-content-center align-items-center">
-    </h2>
-
     <div class="d-none d-md-block">
         <table class="table table-hover table-striped">
             <thead class="forum-azul">
@@ -69,6 +66,7 @@
                             <a class="btn btn-visualizar" href="{{ route('solucoes.show', ['id' => $solucao->id]) }}" aria-label="Ver solução">
                                 Ver solução
                             </a>
+                            @if(Auth::user()->tipoUsuario == 'admin' || (Auth::user()->id == $solucao->idUsuario && $tipoAba == 'mySolucoes'))
                             <button type="button" data-bs-toggle="tooltip"
                                 class="btn btn-info btn-edit"
                                 data-url="{{ route('solucoes.edit', $solucao->id) }}"
@@ -76,6 +74,7 @@
                                 aria-label="Editar solução">
                                 Editar
                             </button>
+                            @endif
                             <button type="button"
                                 class="btn btn-danger btn-remove"
                                 data-bs-toggle="modal"
@@ -144,7 +143,9 @@
 
                 <div class="d-flex gap-2 flex-wrap">
                     <a class="btn btn-sm btn-visualizar flex-fill text-center" href="{{ route('solucoes.show', ['id' => $solucao->id]) }}">Ver</a>
+                    @if(Auth::user()->tipoUsuario == 'admin' || (Auth::user()->id == $solucao->idUsuario && $tipoAba == 'mySolucoes'))
                     <a class="btn btn-sm btn-info flex-fill text-center" href="{{ route('solucoes.edit', $solucao->id) }}">Editar</a>
+                    @endif
                     <button class="btn btn-sm btn-danger btn-remove flex-fill text-center"
                         data-bs-toggle="modal"
                         data-bs-target="#confirmExcluirModal"

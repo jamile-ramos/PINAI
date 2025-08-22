@@ -3,7 +3,7 @@
 @section('title', 'Meu perfil')
 
 @section('content')
-<div class="col mx-4">
+<div class="container-abas">
     {{ Breadcrumbs::render('myProfile') }}
     <header class="text-center py-3 mb-4">
         <div class="container">
@@ -81,34 +81,45 @@
                 <div class="content-link show" id="myNoticias">
                     <div class="infos">
                         <div class="row row-cols-1 g-4">
-                            @foreach($myNoticias as $noticia)
-                            <div class="col card-not-home">
-                                <div class="card h-100 border-0 bg-transparent shadow-none">
+                            @forelse($myNoticias as $noticia)
+                            <div class="col card-not-home pb-0">
+                                <div class="card border-0 bg-white shadow-none">
                                     <div class="row g-0 h-100">
                                         <div class="col-md-4">
                                             <div class="h-100 w-100 overflow-hidden">
                                                 <img src="{{ asset('img/imgNoticias/' . $noticia->imagem) }}"
-                                                    class="img-fluid rounded w-100 h-100"
-                                                    style="min-height: 200px; max-height: 200px; object-fit: cover;"
+                                                    class="img-fluid w-100 h-100"
+                                                    style="min-height: 200px; max-height: 300px; object-fit: cover;"
                                                     alt="{{ $noticia->titulo }}">
                                             </div>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="card-body d-flex flex-column h-100 bg-transparent p-0">
+                                            <div class="card-body d-flex flex-column h-100 bg-transparent p-4">
                                                 <h5 class="card-title title-new mb-2">
                                                     <a href="{{ route('noticias.show', $noticia->id) }}" class="text-decoration-none text-dark" data-btn="noticias" aria-label="Abrir a notícia completa: {{ $noticia->titulo }}">
                                                         {{ $noticia->titulo }}
                                                     </a>
                                                 </h5>
 
-                                                <p class="card-text mb-5">{{ Str::limit($noticia->subtitulo, 150) }}</p>
-                                                <p class="card-text"><small class="text-muted">Publicado dia {{ $noticia->created_at->format('d/m/Y') }}</small></p>
+                                                <p class="card-text">{{ Str::limit($noticia->subtitulo, 150) }}</p>
+                                                <p class="card-text mt-2"><small class="text-muted">Publicado dia {{ $noticia->created_at->format('d/m/Y') }}</small></p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            @endforeach
+                            @empty
+                            <div class="card my-4 p-4 text-center border-0 shadow-sm bg-light">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary">A busca não retornou resultados</h5>
+                                    <p class="card-text text-muted">
+                                        Não encontramos nenhuma notícia.
+                                        <br>
+                                    </p>
+                                    <i class="fas fa-search-location fa-4x text-muted mt-3"></i>
+                                </div>
+                            </div>
+                            @endforelse
                         </div>
                     </div>
                 </div>
@@ -137,7 +148,16 @@
                             </div>
                         </div>
                         @empty
-                        <h5 class="px-4">Nenhuma postagem encontrada!</h5>
+                        <div class="card my-4 p-4 text-center border-0 shadow-sm bg-light">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">A busca não retornou resultados</h5>
+                                <p class="card-text text-muted">
+                                    Não encontramos nenhuma postagem.
+                                    <br>
+                                </p>
+                                <i class="fas fa-search-location fa-4x text-muted mt-3"></i>
+                            </div>
+                        </div>
                         @endforelse
                     </div>
                 </div>
@@ -164,7 +184,16 @@
                                 </div>
                             </div>
                             @empty
-                            <h5 class="px-6">Nenhum documento encontrado!</h5>
+                            <div class="card my-4 p-4 text-center border-0 shadow-sm bg-light">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary">A busca não retornou resultados</h5>
+                                    <p class="card-text text-muted">
+                                        Não encontramos nenhum documento.
+                                        <br>
+                                    </p>
+                                    <i class="fas fa-search-location fa-4x text-muted mt-3"></i>
+                                </div>
+                            </div>
                             @endforelse
                         </div>
                     </div>
@@ -172,7 +201,7 @@
 
                 <div class="content-link" id="mySolucoes">
                     <div class="infos">
-                        @foreach($mySolucoes as $solucao)
+                        @forelse($mySolucoes as $solucao)
                         <div class="col">
                             <div class="card h-100 border-0 shadow-lg rounded-4">
                                 <div class="card-body d-flex flex-column p-4">
@@ -195,7 +224,18 @@
                                 </div>
                             </div>
                         </div>
-                        @endforeach
+                        @empty
+                        <div class="card my-4 p-4 text-center border-0 shadow-sm bg-light">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">A busca não retornou resultados</h5>
+                                <p class="card-text text-muted">
+                                    Não encontramos nenhuma solução.
+                                    <br>
+                                </p>
+                                <i class="fas fa-search-location fa-4x text-muted mt-3"></i>
+                            </div>
+                        </div>
+                        @endforelse
                     </div>
                 </div>
             </div>

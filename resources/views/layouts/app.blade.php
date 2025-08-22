@@ -30,7 +30,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="tema-escuro">
+<body class="tema-escuro @if(Auth::user()->tipoUsuario == 'comum') is-comum @else is-admin @endif">
 
     @include('layouts.navigation')
 
@@ -42,20 +42,23 @@
         <div class="container-fluid d-flex justify-content-between flex-column">
             <nav class="pull-left">
                 <ul class="nav justify-content-center">
-                    <li class="nav-item">
+                    <li class="nav-item item-footer">
                         <a class="nav-link" href="/noticias">Portal de Notícias</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item item-footer">
                         <a class="nav-link" href="/topicos">Fórum de Discussão</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item item-footer">
                         <a class="nav-link" href="/documentos">Biblioteca Digital</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item item-footer">
                         <a class="nav-link" href="/solucoes">Banco de Soluções</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"> Sobre </a>
+                    <li class="nav-item item-footer">
+                        <a class="nav-link" href="/acessibilidade"> Acessibilidade </a>
+                    </li>
+                    <li class="nav-item item-footer">
+                        <a class="nav-link" href="/sobre"> Sobre </a>
                     </li>
                 </ul>
             </nav>
@@ -89,6 +92,7 @@
     <!-- Carregar os scripts locais principais -->
     <script src="{{ asset('js/myjs.js') }}"></script>
 
+
     <!-- Carregar plugins adicionais -->
     <script src="/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
     <script src="/js/plugin/chart.js/chart.min.js"></script>
@@ -105,6 +109,7 @@
 
     <!-- Métodos de demonstração do Kaiadmin, não inclua no seu projeto -->
     <script src="/js/setting-demo.js"></script>
+    
 
 </body>
 

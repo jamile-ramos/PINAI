@@ -23,8 +23,8 @@
             <p class="card-text text-muted mb-4">{{ Str::limit($solucao->descricao, 120) }}</p>
             <div class="d-flex justify-content-between mt-auto">
               <div class="text-secondary">
-                <strong>Público-Alvo:</strong>
-                <ul class="list-unstyled mb-3">
+                <strong class="lista-publico">Público-Alvo:</strong>
+                <ul class="list-unstyled lista-publico mb-3">
                   @foreach($solucao->publicosAlvo as $publico)
                   <li>• {{ $publico->nome }}</li>
                   @endforeach

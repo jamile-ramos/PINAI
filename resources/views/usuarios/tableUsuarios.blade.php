@@ -136,7 +136,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body border-bottom border-secondary p-2">
+            <div class="modal-body border-secondary p-2">
                 <form id="editUserForm" method="POST" data-route="{{ route('painel.update', ':id') }}">
                     @csrf
                     @method('PUT')

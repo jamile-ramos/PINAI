@@ -13,74 +13,75 @@
     </div>
     @endif
 
-    <div class="d-none d-sm-block">
-    <table class="table table-hover table-striped">
-        <thead class="forum-azul">
-            <tr>
-                <th>Título</th>
-                <th>Categoria</th>
-                @if($tipoAba == 'allNoticias')
-                <th>Autor</th>
+    <div class="d-none d-md-block">
+        <table class="table table-hover table-striped">
+            <thead class="forum-azul">
+                <tr>
+                    <th>Título</th>
+                    <th>Categoria</th>
+                    @if($tipoAba == 'allNoticias')
+                    <th>Autor</th>
+                    @endif
+                    <th>Data de criação</th>
+                    <th style="width: 10%">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if($noticias->isNotEmpty())
+                @foreach($noticias as $noticia)
+                <tr>
+                    <td class="fw-bold">{{ $noticia->titulo }}</td>
+                    <td class="text-start">
+                        {{ $noticia->categoria->nomeCategoria }}
+                    </td>
+                    @if($tipoAba == 'allNoticias')
+                    <td class="text-start">
+                        {{ $noticia->user->name }}
+                    </td>
+                    @endif
+                    <td class="text-start">
+                        {{ $noticia->created_at->format('d/m/Y') }}
+                    </td>
+                    <td>
+                        <div class="d-flex gap-2 flex-fill form-button-action">
+                            <a class="btn btn-visualizar flex-fill" href="{{ route('noticias.show', ['id' => $noticia->id]) }}" aria-label="Ver a notícia">
+                                Ver notícia
+                            </a>
+                            @if(Auth::user()->tipoUsuario == 'admin' || (Auth::user()->id == $noticia->idUsuario && $tipoAba == 'myNoticias'))
+                            <button type="button" data-bs-toggle="tooltip"
+                                class="btn btn-info btn-edit flex-fill"
+                                data-url="{{ route('noticias.edit', $noticia->id) }}"
+                                data-original-title="Editar"
+                                aria-label="Editar notícia">
+                                Editar
+                            </button>
+                            @endif
+                            <button type="button"
+                                class="btn btn-danger btn-remove flex-fill"
+                                data-bs-toggle="modal"
+                                data-bs-target="#confirmExcluirModal"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
+                                title="Excluir"
+                                aria-label="Excluir notícia"
+                                data-url="{{ route('noticias.destroy', $noticia->id) }}">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+                @else
+                <tr>
+                    <td colspan="5" class="text-center">Nenhuma notícia encontrada!</td>
+                </tr>
                 @endif
-                <th>Data de criação</th>
-                <th style="width: 10%">Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if($noticias->isNotEmpty())
-            @foreach($noticias as $noticia)
-            <tr>
-                <td class="fw-bold">{{ $noticia->titulo }}</td>
-                <td class="text-start">
-                    {{ $noticia->categoria->nomeCategoria }}
-                </td>
-                @if($tipoAba == 'allNoticias')
-                <td class="text-start">
-                    {{ $noticia->user->name }}
-                </td>
-                @endif
-                <td class="text-start">
-                    {{ $noticia->created_at->format('d/m/Y') }}
-                </td>
-                <td>
-                    <div class="form-button-action">
-                        <a class="btn btn-visualizar" href="{{ route('noticias.show', ['id' => $noticia->id]) }}" aria-label="Ver a notícia">
-                            Ver notícia
-                        </a>
-                        <button type="button" data-bs-toggle="tooltip"
-                            class="btn btn-info btn-edit"
-                            data-url="{{ route('noticias.edit', $noticia->id) }}"
-                            data-original-title="Editar"
-                            aria-label="Editar notícia">
-                            Editar
-                        </button>
-                        <button type="button"
-                            class="btn btn-danger btn-remove"
-                            data-bs-toggle="modal"
-                            data-bs-target="#confirmExcluirModal"
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="top"
-                            title="Excluir"
-                            aria-label="Excluir notícia"
-                            data-url="{{ route('noticias.destroy', $noticia->id) }}">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-
-                    </div>
-                </td>
-            </tr>
-            @endforeach
-            @else
-            <tr>
-                <td colspan="5" class="text-center">Nenhuma notícia encontrada!</td>
-            </tr>
-            @endif
-        </tbody>
-    </table>
+            </tbody>
+        </table>
     </div>
 
     {{-- Versão em cards (somente para mobile) --}}
-    <div class="d-sm-none">
+    <div class="d-block d-md-none">
         @forelse($noticias as $noticia)
         <div class="card mb-3 shadow-sm">
             <div class="card-body">
@@ -112,9 +113,11 @@
                     <a class="btn btn-sm btn-visualizar flex-fill text-center" href="{{ route('noticias.show', ['id' => $noticia->id]) }}">
                         Ver
                     </a>
+                    @if(Auth::user()->tipoUsuario == 'admin' && $tipoAba == 'allNoticias')
                     <a class="btn btn-sm btn-info flex-fill text-center" href="{{ route('noticias.edit', $noticia->id) }}">
                         Editar
                     </a>
+                    @endif
                     <button class="btn btn-sm btn-danger btn-remove flex-fill text-center"
                         data-bs-toggle="modal"
                         data-bs-target="#confirmExcluirModal"

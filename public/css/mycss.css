@@ -1150,7 +1150,7 @@ label.form-label {
 }
 
 .user-icon-circle-profile {
-    background-color: #333;
+    background-color: #011C37;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1492,15 +1492,10 @@ h5 {
     border-top: 1px solid #eee;
     padding: 15px;
     background: #fff;
-    position: relative; /* garante que siga o fluxo do documento */
-    clear: both;        /* limpa floats anteriores */
-}
-
-@media (max-width: 576px) {
-    .noticia-img-wrapper {
-        height: 200px;
-    }
-
+    position: relative;
+    /* garante que siga o fluxo do documento */
+    clear: both;
+    /* limpa floats anteriores */
 }
 
 .object-fit-cover {
@@ -1509,13 +1504,298 @@ h5 {
 
 .img-miniatura {
     width: 200px;
-    /* largura fixa */
     height: 150px;
-    /* altura fixa */
     object-fit: cover;
-    /* a imagem se ajusta preenchendo o espaço sem distorcer */
     cursor: pointer;
-    /* efeito de pointer */
+}
+
+/* Contraste */
+
+/* === Alto Contraste Global === */
+.alto-contraste {
+    background-color: #000 !important;
+    color: #fff !important;
+}
+
+/* === Cores === */
+
+/* Cor Branca */
+/* Agrupamento de todos os elementos que têm a cor do texto branca */
+.alto-contraste a,
+.alto-contraste p,
+.alto-contraste span,
+.alto-contraste strong,
+.alto-contraste h3,
+.alto-contraste h4,
+.alto-contraste .card-title,
+.alto-contraste .card-body.card-functions i,
+.alto-contraste .user-login,
+.alto-contraste .text-secondary,
+.alto-contraste .text-secondary *,
+.alto-contraste .main-post-content,
+.alto-contraste .post-content,
+.alto-contraste .response-content,
+.alto-contraste .comment-content,
+.alto-contraste .comment-username,
+.alto-contraste .response-username,
+.alto-contraste .post-date,
+.alto-contraste .response-date,
+.alto-contraste .comment-date,
+.alto-contraste .main-post-title,
+.alto-contraste .card-title i,
+.alto-contraste .fa-comments,
+.alto-contraste .resposta-destroy,
+.alto-contraste .forum-container .card-title,
+.alto-contraste .forum-container .post-title,
+.alto-contraste .forum-container p,
+.alto-contraste .forum-container .post-content,
+.alto-contraste .forum-container .post-footer span,
+.alto-contraste .forum-container .text-muted,
+.alto-contraste .forum-container .result-count,
+.alto-contraste .post-author,
+.alto-contraste .table,
+.alto-contraste .table th,
+.alto-contraste .table td,
+.alto-contraste .borda-alto-contraste,
+.alto-contraste .navbar,
+.alto-contraste .topbar,
+.alto-contraste .sidebar,
+.alto-contraste .footer,
+.alto-contraste .tab-buttons,
+.alto-contraste .logo-header,
+.alto-contraste .filtros,
+.alto-contraste .filter-bar,
+.alto-contraste .card-not-home,
+.alto-contraste .card,
+.alto-contraste .card-functions,
+.alto-contraste .forum-container .card,
+.alto-contraste .forum-container .post-card,
+.alto-contraste .main-post-card,
+.alto-contraste .post-card,
+.alto-contraste .response-card,
+.alto-contraste .comment-card,
+.alto-contraste .table thead,
+.alto-contraste .form-label,
+.alto-contraste .form-group,
+.alto-contraste label,
+.alto-contraste i.fas.fa-calendar-alt,
+.alto-contraste .post-title,
+.alto-contraste .section-title {
+    color: #fff !important;
+}
+
+/* Cor Amarela (#ff0) */
+/* Agrupamento de todos os elementos que têm a cor do texto amarela */
+.alto-contraste .card-title a:hover,
+.alto-contraste .sidebar .nav.nav-secondary>.nav-item.active a i,
+.sidebar[data-background-color=white] .nav.nav-secondary>.nav-item.active a i,
+.alto-contraste .search-icon i:hover,
+.alto-contraste .close-search i:hover,
+.alto-contraste .forum-container .card-title i,
+.alto-contraste .forum-container .result-count .text-primary,
+.alto-contraste .post-author strong,
+.alto-contraste .card a,
+.alto-contraste .nav-link,
+.alto-contraste .tab-btn.active,
+.alto-contraste .tab-btn:hover,
+.alto-contraste .nomeCategoria a:hover,
+.alto-contraste .breadcrumb-item,
+.alto-contraste .breadcrumb-item a:hover,
+.alto-contraste td a:hover,
+.alto-contraste .card.card-body,
+.alto-contraste .card .card-body,
+.alto-contraste .card .card-title,
+.alto-contraste .card i,
+.alto-contraste .options-menu,
+.alto-contraste .btn-cancelar-comment,
+.alto-contraste .btn-coment,
+.alto-contraste .card .btn,
+.alto-contraste .btn,
+.alto-contraste .btn-response,
+.alto-contraste h1.text-primary,
+.alto-contraste .result-count,
+.alto-contraste .result-count span.text-primary,
+.alto-contraste .publico-alvo-list li,
+.alto-contraste h5.text-primary,
+.alto-contraste .icon-acessibilidade {
+    color: #ff0 !important;
+}
+
+/* Cor Preta */
+.alto-contraste .dropdown-icon,
+.alto-contraste .post-author .user-icon-circle i,
+.alto-contraste .options-menu a:hover,
+.alto-contraste .btn-cancelar-comment:hover,
+.alto-contraste .btn-coment:hover,
+.alto-contraste .resposta-destroy:hover,
+.alto-contraste .badge,
+.alto-contraste .btn:hover,
+.alto-contraste .btn-response,
+.alto-contraste .btn-limpar-filtro,
+.alto-contraste .btn-limpar-filtro i,
+.alto-contraste .alert-success strong,
+.alto-contraste .alert-danger strong {
+    color: #000 !important;
+}
+
+/* === Fundos === */
+
+/* Fundo Transparente */
+.alto-contraste .response-header .user-icon-circle {
+    background-color: transparent !important;
+}
+
+/* Fundo Preto (#000) */
+.alto-contraste .btn,
+.alto-contraste .table,
+.alto-contraste .table th,
+.alto-contraste .table td,
+.alto-contraste .borda-alto-contraste,
+.alto-contraste .btn-limpar-filtro,
+.alto-contraste .btn-limpar-filtro i {
+    background-color: #000 !important;
+}
+
+
+/* Fundo Cinza Escuro (#111) */
+.alto-contraste .options-menu,
+.alto-contraste .btn-cancelar-comment,
+.alto-contraste .btn-coment,
+.alto-contraste .card .btn,
+.alto-contraste .navbar,
+.alto-contraste .topbar,
+.alto-contraste .sidebar,
+.alto-contraste .footer,
+.alto-contraste .tab-buttons,
+.alto-contraste .logo-header,
+.alto-contraste .filtros,
+.alto-contraste .filter-bar,
+.alto-contraste .card-not-home,
+.alto-contraste .table thead,
+.alto-contraste .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #111 !important;
+}
+
+/* Fundo Cinza Claro (#222) */
+.alto-contraste .card,
+.alto-contraste .card-functions,
+.alto-contraste .forum-container .card,
+.alto-contraste .forum-container .post-card,
+.alto-contraste .main-post-card,
+.alto-contraste .post-card,
+.alto-contraste .response-card,
+.alto-contraste .comment-card,
+.alto-contraste .p-4.border-bottom.bg-white,
+.alto-contraste .p-4.bg-light,
+.alto-contraste .table tbody tr:hover,
+.alto-contraste article.bg-white,
+.alto-contraste .modal-content,
+.alto-contraste .d-flex.justify-content-between.align-items-center {
+    background-color: #222 !important;
+}
+
+/* Fundo Amarelo (#ff0) */
+.alto-contraste .options-menu a:hover,
+.alto-contraste .btn-cancelar-comment:hover,
+.alto-contraste .btn-coment:hover,
+.alto-contraste .resposta-destroy:hover,
+.alto-contraste .badge,
+.alto-contraste .btn:hover,
+.alto-contraste .btn-response,
+.alto-contraste .btn-limpar-filtro,
+.alto-contraste .btn-limpar-filtro i {
+    background-color: #ff0 !important;
+}
+
+/* Fundo Cinza Mais Claro (#333) */
+.alto-contraste .table-hover tbody tr:hover {
+    background-color: #333 !important;
+}
+
+/* Fundo Branco */
+.alto-contraste .post-author .user-icon-circle {
+    background-color: #fff !important;
+}
+
+/* === Bordas === */
+
+/* Borda Branca */
+.alto-contraste .table th,
+.alto-contraste .table td,
+.alto-contraste .card,
+.alto-contraste .card-functions,
+.alto-contraste .forum-container .card,
+.alto-contraste .forum-container .post-card,
+.alto-contraste .main-post-card,
+.alto-contraste .post-card,
+.alto-contraste .response-card,
+.alto-contraste .comment-card,
+.alto-contraste .img-thumbnail,
+.alto-contraste .tab-buttons,
+.alto-contraste .btn,
+.alto-contraste .options-menu,
+.alto-contraste .btn-cancelar-comment,
+.alto-contraste .btn-coment,
+.alto-contraste .card .btn,
+.alto-contraste .table-responsive {
+    border: 1px solid #fff !important;
+}
+
+.alto-contraste .img-thumbnail {
+    border: 2px solid #fff !important;
+}
+
+/* Borda Amarela */
+.alto-contraste .options-menu,
+.alto-contraste .btn-cancelar-comment,
+.alto-contraste .btn-coment,
+.alto-contraste .card .btn,
+.alto-contraste .btn {
+    border-color: #ff0 !important;
+}
+
+/* Outras bordas */
+.alto-contraste .tab-btn.active,
+.alto-contraste .tab-btn:hover {
+    border-bottom: 2px solid #ff0;
+}
+
+/* === Outros Estilos === */
+.alto-contraste .post-author .user-icon-circle {
+    border-radius: 50%;
+    padding: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.alto-contraste .nomeCategoria a:hover,
+.alto-contraste .item-footer a {
+    text-decoration: underline !important;
+}
+
+.alto-contraste td a:hover {
+    text-decoration: none !important;
+}
+
+.icon-acessibilidade {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
+
+.section-title {
+    font-weight: bold;
+}
+
+.texto-justificado {
+    text-align: justify;
+}
+
+@media (max-width: 576px) {
+    .noticia-img-wrapper {
+        height: 200px;
+    }
+
 }
 
 /* Respostas de mídia em tela pequena */
@@ -1563,114 +1843,83 @@ h5 {
     }
 }
 
-@media screen and (min-width: 320px) and (max-width: 778px) {
-    .container-all {
-        padding: 100px 30px 100px 30px;
-    }
-
-    body {
-        overflow-x: auto;
-    }
-
-    .home-text h1 {
-        font-size: 25px;
-    }
-
-    .home-text {
-        font-size: 18px;
-        text-align: justify;
-    }
-
-    .logo-login img {
-        width: 100px;
-    }
-
-    .search-icon {
-        margin: 0px 5px 0 5px;
-    }
-
-    .subtitulo-slide {
-        display: none;
-    }
-
-    .card .card-title {
-        margin-top: 15px;
-    }
-
-    .btn-home {
-        left: 10%;
-        right: 10%;
-    }
-
-    .btn:not(:disabled):not(.disabled) {
-        white-space: unset;
-    }
-
-    .main-post-title {
-        font-size: 20px;
-    }
-
-    .main-post-content {
-        font-size: 14px;
-    }
-
-    .responses-title {
-        font-size: 15px;
-    }
-
-    .response-content {
-        font-size: 14px;
-    }
-
-    .comment-section h4 {
-        font-size: 14px;
-    }
+/* Usuário comum: aplicar a partir de telas menores que 1400px */
+@media screen and (max-width: 500px) {
+    body.is-comum .btn-dark { background: #343a40 !important; }
+    body.is-comum i.dropdown-icon.fas.fa-chevron-down { position: absolute; top: 30%; right: 10px; }
+    body.is-comum .hidden { display: none; }
+    body.is-comum .select-btn { display: inline-block; }
+    body.is-comum .tab-btn { display: none; }
+    body.is-comum .line-button,
+    body.is-comum .btns-select { display: none; }
+    body.is-comum .tab-buttons .active { border-bottom: 0px; }
+    body.is-comum .tab-buttons button:hover { color: white; }
+    body.is-comum .add { top: 20%; }
+    body.is-comum .btn { padding: 10px; }
 }
 
+/* Admin e Moderador: aplicar a partir de telas menores que 1490px */
 @media screen and (max-width: 1490px) {
-    .btn-dark {
+    body.is-admin .btn-dark { background: #343a40 !important; }
+    body.is-admin i.dropdown-icon.fas.fa-chevron-down { position: absolute; top: 30%; right: 10px; }
+    body.is-admin .hidden { display: none; }
+    body.is-admin .select-btn { display: inline-block; }
+    body.is-admin .tab-btn { display: none; }
+    body.is-admin .line-button,
+    body.is-admin .btns-select { display: none; }
+    body.is-admin .tab-buttons .active { border-bottom: 0px; }
+    body.is-admin .tab-buttons button:hover { color: white; }
+    body.is-admin .add { top: 20%; }
+    body.is-admin .btn { padding: 10px; }
+}
+
+
+/* Para usuário admin: aplicar a partir de telas menores que 1490px */
+@media screen and (max-width: 1490px) {
+    body.is-admin .btn-dark {
         background: #343a40 !important;
     }
 
-    i.dropdown-icon.fas.fa-chevron-down {
+    body.is-admin i.dropdown-icon.fas.fa-chevron-down {
         position: absolute;
         top: 30%;
         right: 10px;
     }
 
-    .hidden {
+    body.is-admin .hidden {
         display: none;
     }
 
-    .select-btn {
+    body.is-admin .select-btn {
         display: inline-block;
     }
 
-    .tab-btn {
+    body.is-admin .tab-btn {
         display: none;
     }
 
-    .line-button,
-    .btns-select {
+    body.is-admin .line-button,
+    body.is-admin .btns-select {
         display: none;
     }
 
-    .tab-buttons .active {
+    body.is-admin .tab-buttons .active {
         border-bottom: 0px;
     }
 
-    .tab-buttons button:hover {
+    body.is-admin .tab-buttons button:hover {
         color: white;
     }
 
-    .add {
+    body.is-admin .add {
         top: 20%;
     }
 
-    .btn {
+    body.is-admin .btn {
         padding: 10px;
     }
 }
+
 
 @media screen and (max-width: 1040px) {
 

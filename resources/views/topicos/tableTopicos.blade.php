@@ -73,12 +73,17 @@
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                                 @else
+                                <a class="btn btn-visualizar" href="{{ route('postagens.index', ['idTopico' => $topico->id]) }}" aria-label="Ver tópico">
+                                    Ver Tópico
+                                </a>
+                                @if(Auth::user()->tipoUsuario == 'admin' || (Auth::user()->id == $topico->idUsuario && $tipoAba == 'myTopicos'))
                                 <button
                                     type="button"
                                     class="btn btn-info btn-editTopico"
                                     data-id="{{ $topico->id }}">
                                     Editar
                                 </button>
+                                @endif
                                 <button
                                     type="button"
                                     class="btn btn-danger btn-remove"
@@ -149,10 +154,15 @@
                             Excluir
                         </button>
                         @else
+                        <a class="btn btn-visualizar btn-sm flex-fill" href="{{ route('postagens.index', ['idTopico' => $topico->id]) }}" aria-label="Ver tópico">
+                            Ver Tópico
+                        </a>
+                        @if(Auth::user()->tipoUsuario == 'admin' || (Auth::user()->id == $topico->idUsuario && $tipoAba == 'myTopicos'))
                         <button type="button" class="btn btn-info btn-sm flex-fill text-center btn-editTopico"
                             data-id="{{ $topico->id }}">
                             Editar
                         </button>
+                        @endif
                         <button type="button" class="btn btn-danger btn-sm flex-fill text-center btn-remove"
                             data-bs-toggle="modal"
                             data-bs-target="#confirmExcluirModal"

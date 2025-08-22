@@ -47,9 +47,9 @@ class SolucaoController extends Controller
 
         // Gerenciar Soluções
         if($query && $abaAtiva == 'allSolucoes'){
-            $allSolucoes = $this->buscarMinhasSolucoes($query, $pages['allSolucoes'], $abaAtiva);
+            $allSolucoes = $this->buscarSolucoesComQuery($query, $pages['allSolucoes'], $abaAtiva);
         } else{
-            $allSolucoes = $this->buscarMinhasSolucoes(null, $pages['allSolucoes'], $abaAtiva);
+            $allSolucoes = $this->buscarSolucoesComQuery(null, $pages['allSolucoes'], $abaAtiva);
         }
 
         // Categorias
@@ -58,7 +58,6 @@ class SolucaoController extends Controller
         }else{
             $categoriasSolucoes = $this->buscarCategoriaSolucao(null, $pages['categoriasSolucoes'], $abaAtiva, 'categoriasSolucoes_page');
         }
-
         
         return view('solucoes.index', compact('categorias', 'solucoes', 'mySolucoes', 'allSolucoes', 'abaAtiva', 'query', 'categoriasSolucoes'));
         

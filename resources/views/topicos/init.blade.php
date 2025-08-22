@@ -1,7 +1,7 @@
 <section class="forum">
 
     {{-- Bloco exibido apenas em telas médias para cima (>= 768px) --}}
-    <div class="table-responsive table-bordas d-none d-md-block">
+    <div class="table-responsive table-bordas d-none d-md-block borda-alto-contraste">
         <table class="table table-hover table-striped">
             <thead class="forum-azul">
                 <tr>

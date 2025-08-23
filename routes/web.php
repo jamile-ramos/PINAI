@@ -64,7 +64,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/destroy/{id}', 'destroy')->name('destroy');
         Route::get('/edit/{id}', 'edit')->name('edit');
         Route::put('/update/{id}', 'update')->name('update');
-        Route::get('/show/{id}', 'show')->name('show');
+        Route::get('/{slug}', 'show')->name('show');
         Route::get('/categorias/{idCategoria}', 'noticiasCategorias')->name('noticiasCategorias');
     });
 

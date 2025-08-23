@@ -3,9 +3,13 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Notifications\ResetPasswordNotification;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Lang;
 
 class User extends Authenticatable
 {
@@ -49,20 +53,23 @@ class User extends Authenticatable
         ];
     }
 
-    public function noticias() {
+    public function noticias()
+    {
         return $this->hasMany(Noticia::class, 'idUsuario');
-    }   
-    
+    }
+
     public function topicos()
     {
         return $this->belongsToMany(Topico::class)->withPivot('status')->withTimestamps();
-    } 
+    }
 
-    public function respostas(){
+    public function respostas()
+    {
         return $this->hasMany(Resposta::class, 'idUsuario');
     }
 
-    public function comentarios(){
+    public function comentarios()
+    {
         return $this->hasMany(Comentario::class, 'idUsuario');
     }
 
@@ -71,19 +78,23 @@ class User extends Authenticatable
         return $this->belongsToMany(Comentario::class, 'comentarios_mencoes', 'idUsuarioMencionado', 'idComentario');
     }
 
-    public function documentos(){
+    public function documentos()
+    {
         return $this->hasMany(Documento::class);
     }
 
-    public function categoria_documento(){
+    public function categoria_documento()
+    {
         return $this->hasMany(CategoriaDocumento::class);
     }
 
-    public function solucoes(){
+    public function solucoes()
+    {
         return $this->hasMany(Solucao::class, 'idUsuario');
     }
 
-    public function nai(){
+    public function nai()
+    {
         return $this->belongsTo(Nai::class, 'idNai', 'id');
     }
 
@@ -99,5 +110,8 @@ class User extends Authenticatable
         return $this->role === 'comum';
     }
 
-
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
+    }
 }

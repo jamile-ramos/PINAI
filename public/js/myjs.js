@@ -75,13 +75,20 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Barra dropdown com acessibilidade
+    // =============================
+    // Barra dropdown com acessibilidade + persistência
+    // =============================
+
     const selectBtn = document.querySelector(".select-btn");
+    const selectOption = document.querySelector(".select-option");
+    const dropdown = document.querySelector(".dropdown-select");
+
     document.querySelectorAll('.container-abas').forEach(container => {
         const barraId = container.id;
-        const selectOption = container.querySelector(".select-option");
-        if (selectOption.innerText.trim() === 'Visão Geral' && barraId == 'abaProfile') {
-            selectOption.innerText = 'Minhas Notícias';
+        const optionInside = container.querySelector(".select-option");
+        // Renomeia "Visão Geral" para "Minhas Notícias" em abaProfile
+        if (optionInside && optionInside.innerText.trim() === 'Visão Geral' && barraId === 'abaProfile') {
+            optionInside.innerText = 'Minhas Notícias';
         }
 
         if (barraId === 'abaProfile') {
@@ -89,35 +96,25 @@ document.addEventListener('DOMContentLoaded', function () {
                 selectBtn.addEventListener("focus", () => {
                     const selected = selectBtn.querySelector(".select-option");
                     if (selected) selected.focus();
-
-
                 });
             }
-
-            const optionButtons = document.querySelectorAll(".option-btn, .btns-select .option-add");
-
             container.querySelectorAll(".line-button, .btns-select").forEach(el => el.remove());
         }
     });
-
-    const dropdown = document.querySelector(".dropdown-select");
 
     if (dropdown) {
         dropdown.setAttribute('role', 'listbox');
         dropdown.setAttribute('id', 'dropdown-options');
     }
 
-    const selectOption = document.querySelector(".select-option");
     let optionBtns = [];
+    let actionBtns = document.querySelectorAll(".btns-select .option-add");
+    let allBtns = [...optionBtns, ...actionBtns];
+    let activeIndex = 0;
 
     if (dropdown) {
         optionBtns = dropdown.querySelectorAll(".option-btn");
     }
-
-    // Agora inclui os botões do btns-select
-    let actionBtns = document.querySelectorAll(".btns-select .option-add");
-    let allBtns = [...optionBtns, ...actionBtns];
-    let activeIndex = 0;
 
     // Atribui IDs e ARIA aos botões, incluindo os btns-select
     allBtns.forEach((btn, index) => {
@@ -387,7 +384,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (selectOption) {
             selectOption.textContent = tab.innerText;
         }
-
+        localStorage.setItem('dropdownSelected', tab.innerText);
         localStorage.setItem(`active_tab_${barraId}`, contentId);
     };
 
@@ -400,6 +397,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     updateTabs();
+
+    // Restaura a última seleção ao carregar a página
+    const savedValue = localStorage.getItem("dropdownSelected");
+    if (savedValue && selectOption) {
+        selectOption.innerText = savedValue;
+    }
 
     // Função que restaura o estado da aba ativa ao redimensionar a página
     const restoreActiveTabOnResize = () => {
@@ -619,12 +622,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         form.setAttribute('action', url);
                         $(modal).modal('show');
-                    }, { once: true }); 
+                    }, { once: true });
                 }
             });
         }
     });
-
 
     // Fazer a requisição para editar publicacao
     document.querySelectorAll('.container-abas').forEach(container => {
@@ -977,6 +979,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Corrigir posicionamento do footer
     $(document).ready(function () {
         // Verifica se main-panel existe e se o footer já não está dentro
         if ($('.main-panel').length && $('#rodape').length) {
@@ -985,6 +988,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Compartilhar noticia
+    const btn = document.getElementById("shareButton");
+    if (btn) {
+        btn.addEventListener("click", () => {
+            const url = btn.getAttribute("data-url");
+            compartilharNoticia(url);
+        });
+    }
 });
 
 // Evento para ocultar alertas com jQuery
@@ -993,3 +1004,20 @@ $(document).ready(function () {
         $('.alert').fadeOut('slow');
     }, 3000);
 });
+
+// Compartilhar noticia
+function compartilharNoticia(url) {
+    if (navigator.share) {
+        navigator.share({
+            title: document.title,
+            text: 'Confira esta notícia:',
+            url: url,
+        })
+            .catch(err => console.log('Erro ao compartilhar:', err));
+    } else {
+        // Fallback: copia o link para área de transferência
+        navigator.clipboard.writeText(url);
+        alert('Link copiado para a área de transferência!');
+    }
+}
+

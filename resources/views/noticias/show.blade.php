@@ -11,19 +11,17 @@
 
     <article class="bg-white p-3 p-md-5 rounded-4 shadow-sm">
         <!-- Cabeçalho da Notícia -->
-        <header class="mb-4">
+        <header class="mb-4 text-center">
+            {{-- Removendo o justify-content-between para centralizar todo o conteúdo --}}
             <h1 class="fw-bold fs-3 fs-md-2 fs-lg-1 text-primary">{{ $noticia->titulo }}</h1>
-            <p class="fs-6 fs-md-5 text-secondary mb-3">{{ $noticia->subtitulo }}</p>
+            <p class="fs-6 fs-md-5 text-secondary mt-3">{{ $noticia->subtitulo }}</p>
 
-            <div class="d-flex flex-column flex-sm-row flex-wrap align-items-start align-items-sm-center gap-2 gap-sm-3 text-muted small">
+            <div class="d-flex flex-wrap justify-content-center align-items-center gap-2 text-muted small mt-2">
                 <!-- Autor -->
-                <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center me-sm-3">
                     <i class="bi bi-person-fill me-2" aria-hidden="true"></i>
                     <span>Por <strong class="text-dark">{{ $noticia->user->name }}</strong></span>
                 </div>
-
-                <!-- Separador -->
-                <div class="vr d-none d-sm-block"></div>
 
                 <!-- Datas -->
                 @if($noticia->created_at == $noticia->updated_at)
@@ -34,7 +32,7 @@
                     </time>
                 </div>
                 @else
-                <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center me-sm-3">
                     <i class="bi bi-pencil-square me-2" aria-hidden="true"></i>
                     <time datetime="{{ $noticia->updated_at }}">
                         Atualizado em {{ \Carbon\Carbon::parse($noticia->updated_at)->format('d/m/Y \à\s H:i') }}
@@ -47,6 +45,16 @@
                     </time>
                 </div>
                 @endif
+
+                {{-- Botão de Compartilhar --}}
+                <div class="mt-2 mt-sm-0">
+                    <button id="shareButton"
+                        data-url="{{ route('noticias.show', $noticia->slug) }}"
+                        class="btn btn-link d-flex align-items-center gap-2">
+                        <i class="fas fa-share-alt"></i>
+                        Compartilhar
+                    </button>
+                </div>
             </div>
         </header>
 

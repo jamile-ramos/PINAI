@@ -44,7 +44,7 @@
                     </td>
                     <td>
                         <div class="d-flex gap-2 flex-fill form-button-action">
-                            <a class="btn btn-visualizar flex-fill" href="{{ route('noticias.show', ['id' => $noticia->id]) }}" aria-label="Ver a notícia">
+                            <a class="btn btn-visualizar flex-fill" href="{{ route('noticias.show', ['slug' => $noticia->slug]) }}" aria-label="Ver a notícia">
                                 Ver notícia
                             </a>
                             @if(Auth::user()->tipoUsuario == 'admin' || (Auth::user()->id == $noticia->idUsuario && $tipoAba == 'myNoticias'))
@@ -110,7 +110,7 @@
                 </div>
 
                 <div class="d-flex gap-2 flex-wrap pt-2">
-                    <a class="btn btn-md btn-visualizar flex-fill text-center" href="{{ route('noticias.show', ['id' => $noticia->id]) }}">
+                    <a class="btn btn-md btn-visualizar flex-fill text-center" href="{{ route('noticias.show', ['slug' => $noticia->slug]) }}">
                         Ver
                     </a>
                     @if(Auth::user()->tipoUsuario == 'admin' && $tipoAba == 'allNoticias')

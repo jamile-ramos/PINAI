@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 class Noticia extends Model
 {
@@ -31,5 +32,39 @@ class Noticia extends Model
     public function scopeAtivos($query)
     {
         return $query->where('status', 'ativo');
+    }
+
+    // Gerar slug automaticamente
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($noticia) {
+            $noticia->slug = static::generateUniqueSlug($noticia->titulo);
+        });
+
+        static::updating(function ($noticia) {
+            if ($noticia->isDirty('titulo')) { // só atualiza se o título mudar
+                $noticia->slug = static::generateUniqueSlug($noticia->titulo, $noticia->id);
+            }
+        });
+    }
+
+    protected static function generateUniqueSlug($titulo, $id = null)
+    {
+        $slug = Str::slug($titulo);
+        $original = $slug;
+        $count = 1;
+
+        // verifica duplicados
+        while (static::where('slug', $slug)
+            ->when($id, fn($q) => $q->where('id', '!=', $id))
+            ->exists()
+        ) {
+            $slug = "{$original}-{$count}";
+            $count++;
+        }
+
+        return $slug;
     }
 }

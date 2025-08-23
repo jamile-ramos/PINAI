@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\CategoriaNoticia;
 use App\Models\Noticia;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Notification; 
+use App\Notifications\NovaNoticiaNotification; 
 
 class NoticiaController extends Controller
 {
@@ -182,6 +185,9 @@ class NoticiaController extends Controller
         }
         $noticia->save();
 
+        $users = User::all();
+        Notification::send($users, new NovaNoticiaNotification($noticia));  
+
         return redirect()->route('noticias.index')->with('success', 'Notícia criada com sucesso!');
     }
 
@@ -219,9 +225,9 @@ class NoticiaController extends Controller
         return redirect()->route('noticias.index')->with('success', 'Notícia atualizada com sucesso!');
     }
 
-    public function show($id)
+    public function show($slug)
     {
-        $noticia = Noticia::findOrFail($id);
+        $noticia = Noticia::where('slug', $slug)->firstOrFail();
         return view('noticias.show', compact('noticia'));
     }
 

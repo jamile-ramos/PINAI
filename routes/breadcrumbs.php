@@ -72,7 +72,7 @@ Breadcrumbs::for('formNoticia', function (BreadcrumbTrail $trail, $tipoForm) {
 // Página Inicial > Portal de notícias > Ver notícia
 Breadcrumbs::for('verNoticia', function (BreadcrumbTrail $trail, $noticia) {
     $trail->parent('noticias');
-    $trail->push($noticia->titulo, route('noticias.show', ['id' => $noticia->id]));
+    $trail->push($noticia->titulo, route('noticias.show', ['slug' => $noticia->slug]));
 });
 
 // Página Inicial > Potal de notícias > Categoria

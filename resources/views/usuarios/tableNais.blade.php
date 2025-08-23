@@ -77,7 +77,7 @@
     {{-- Cards mobile (768px) --}}
     <div class="d-block d-md-none">
         @forelse($nais as $nai)
-        <div class="card mb-3 shadow-sm">
+        <div class="card mb-3 shadow-md">
             <div class="card-body">
                 <h5 class="card-title fw-bold pb-2 border-bottom border-secondary mt-0">{{ $nai->nome }} - {{ $nai->siglaNai }}</h5>
                 <div class="mb-2 border-bottom border-light pb-2 pt-2">
@@ -87,13 +87,13 @@
                     <p class="mb-0"><i class="fas fa-calendar-alt text-primary me-1"></i>Cadastro: {{ $nai->created_at->format('d/m/Y') }}</p>
                 </div>
                 <div class="d-flex gap-2 pt-2">
-                    <a class="btn btn-sm btn-visualizar flex-fill text-center" href="{{ route('nais.show', ['id' => $nai->id ]) }}">
+                    <a class="btn btn-md btn-visualizar flex-fill text-center" href="{{ route('nais.show', ['id' => $nai->id ]) }}">
                         Ver mais
                     </a>
-                    <button type="button" class="btn btn-sm btn-primary btn-edit flex-fill text-center" data-url="{{ route('nais.edit', ['id' => $nai->id ]) }}">
+                    <button type="button" class="btn btn-md btn-primary btn-edit flex-fill text-center" data-url="{{ route('nais.edit', ['id' => $nai->id ]) }}">
                         Editar
                     </button>
-                    <button type="button" class="btn btn-sm btn-danger btn-remove flex-fill text-center" data-bs-toggle="modal" data-bs-target="#confirmExcluirModal" data-url="{{ route('nais.destroy', $nai->id) }}">
+                    <button type="button" class="btn btn-md btn-danger btn-remove flex-fill text-center" data-bs-toggle="modal" data-bs-target="#confirmExcluirModal" data-url="{{ route('nais.destroy', $nai->id) }}">
                         Excluir
                     </button>
                 </div>

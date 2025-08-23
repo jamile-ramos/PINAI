@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="container-abas">
+<div class="container-abas" id="acessibilidade">
     {{ Breadcrumbs::render('acessibilidade')}}
     <div class="row mb-5">
         <div class="col-12">

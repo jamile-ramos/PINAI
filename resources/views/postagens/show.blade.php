@@ -6,6 +6,32 @@
 
 <div class="forum-wrapper">
     {{Breadcrumbs::render('verPostagem', $postagem)}}
+
+    <!-- Respostas -->
+    @foreach(['success', 'success-delete'] as $status)
+    @if(session($status))
+    @if($status === 'success')
+    <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+        <strong>{{ session($status) }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @elseif($status === 'success-delete')
+    <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+        <strong>{{ session($status) }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+    @endif
+    @endforeach
+
+    @if($errors->any())
+    <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+        @foreach($errors->all() as $error)
+        <div>{{ $error }}</div>
+        @endforeach
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
     <!-- Postagem Principal -->
     <div class="postagem-completa">
         <div class="main-post-card">
@@ -36,26 +62,7 @@
             </div>
         </div>
 
-        <!-- Respostas -->
-        @foreach(['success', 'success-delete'] as $status)
-        @if(session($status))
-        @if($status === 'success')
-        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
-            <strong>{{ session($status) }}</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        @elseif($status === 'success-delete')
-        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
-            <strong>{{ session($status) }}</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        @endif
-        @endif
-        @endforeach
-
-        @error('conteudo')
-        <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
+        <!-- Container de Respostas -->
         <div class="respostas-container">
             <h3 class="responses-title">Respostas ({{ $postagem->respostas->count() }})</h3>
 
@@ -69,16 +76,18 @@
                         <span class="response-username">{{ $resposta->user->name }}</span>
                         <span class="response-date">{{ $resposta->created_at->format('d/m/Y H:i') }}</span>
                     </div>
-                    <!-- 3 pontinhos -->
-                     @if(Auth::user()->tipoUsuario != 'comum'|| Auth::user()->id == $resposta->idUsuario)
+                    @if($resposta->podeEditar())
+                    <!-- 3 pontinhos de resposta -->
                     <div class="post-options">
                         <button class="options-button" aria-label="Botão de opções: Editar e Excluir Resposta">
                             <i class="fa fa-ellipsis-v"></i>
                         </button>
                         <div class="options-menu">
+                            @if(Auth::user()->tipoUsuario == 'admin' || Auth::user()->id == $resposta->idUsuario)
                             <a href="{{ route('respostas.edit', $resposta->id) }}">Editar</a>
+                            @endif
                             <button
-                                class="resposta-destroy"
+                                class="btn-destroy"
                                 type="button"
                                 data-modal="#confirmExcluirModal"
                                 data-url="{{ route('respostas.destroy', $resposta->id) }}"
@@ -106,18 +115,76 @@
                     <p class="h5">Comentários ({{ $resposta->comentarios->count() }})</p>
                     @foreach($resposta->comentarios as $comentario)
                     <div class="comment-card">
-                        <div class="comment-header">
-                            <div class="user-icon-circle">
-                                <i class="fa fa-user"></i>
+                        <div class="comment-header d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <div class="user-icon-circle">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                                <div class="comment-info ms-2">
+                                    <span class="comment-username">{{ $comentario->user->name }}</span>
+                                    <span class="comment-date d-block small text-muted">
+                                        {{ $comentario->created_at->format('d/m/Y H:i') }}
+                                    </span>
+                                </div>
                             </div>
-                            <div class="comment-info">
-                                <span class="comment-username">{{ $comentario->user->name }}</span>
-                                <span class="comment-date">{{ $comentario->created_at->format('d/m/Y H:i') }}</span>
+
+                            <!--3 pontinhos de comentários-->
+                            @if($comentario->podeEditar())
+                            <div class="dropdown comment-options ms-auto">
+                                <button
+                                    class="options-button"
+                                    type="button"
+                                    id="dropdownMenuButton{{ $comentario->id }}"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    aria-label="Opções do comentário: Editar e Excluir">
+                                    <i class="fa fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end options-menu"
+                                    aria-labelledby="dropdownMenuButton{{ $comentario->id }}">
+                                    <li><a
+                                            class="dropdown-item edit-comment-toggle"
+                                            data-id="{{ $comentario->id }}"
+                                            data-conteudo="{{ $comentario->conteudo }}">Editar
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <button
+                                            class="dropdown-item btn-destroy"
+                                            type="button"
+                                            data-modal="#confirmExcluirModal"
+                                            data-url="{{ route('comentarios.destroy', $comentario->id) }}"
+                                            data-bs-toggle="tooltip"
+                                            aria-label="Excluir comentário">
+                                            Excluir
+                                        </button>
+                                    </li>
+                                </ul>
                             </div>
+                            @endif
+
                         </div>
-                        <div class="comment-content">
+                        <div class="comment-content" id="comment-content-{{ $comentario->id }}">
                             {{ $comentario->conteudo }}
                         </div>
+
+                        <!-- Form edição inline (invisível até clicar em editar) -->
+                        <form action="{{ route('comentarios.update', $comentario->id) }}"
+                            method="POST"
+                            class="edit-comment-form d-none"
+                            id="edit-form-{{ $comentario->id }}">
+                            @csrf
+                            @method('PUT')
+                            <textarea name="conteudo" class="form-control mb-2" id="edit-textarea-{{ $comentario->id }}"></textarea>
+                            <div class="btns-comment gap-2 w-100">
+                                <button type="button" class="btn btn-secondary btn-cancelar-edit" data-id="{{ $comentario->id }}">
+                                    Cancelar
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    Salvar
+                                </button>
+                            </div>
+                        </form>
                     </div>
                     @endforeach
                 </div>

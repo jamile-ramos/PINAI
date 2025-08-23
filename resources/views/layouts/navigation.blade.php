@@ -14,7 +14,6 @@
           <button class="btn btn-toggle sidenav-toggler" aria-label="Alternar barra lateral" aria-expanded="false" tabindex="0">
             <i class="gg-menu"></i>
           </button>
-          <p class="px-2 text-menu">Menu</p>
         </div>
         <button class="topbar-toggler more">
           <i class="gg-more-vertical-alt"></i>

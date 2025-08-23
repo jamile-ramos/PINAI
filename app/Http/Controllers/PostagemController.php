@@ -171,9 +171,14 @@ class PostagemController extends Controller
     public function show($id)
     {
         //$usuarios = User::all();
-        $postagem = Postagem::with(['respostas' => function ($query) {
-            $query->where('status', 'ativo');
-        }])->findOrFail($id);
+        $postagem = Postagem::with([
+            'respostas' => function ($query) {
+                $query->where('status', 'ativo')
+                ->with(['comentarios' => function ($q){
+                    $q->where('status', 'ativo');
+                }]);
+            }
+        ])->findOrFail($id);
         //return view('postagens.show', compact('postagem', 'usuarios'));
         return view('postagens.show', compact('postagem'));
     }

@@ -20,6 +20,7 @@
     </div>
     @endif
 
+    {{-- Tabela para telas desktop --}}
     <div class="borda-alto-contraste">
         <table class="table table-hover table-striped d-none d-md-table w-100 ">
             <thead class="forum-azul">
@@ -62,7 +63,7 @@
     {{-- Cards mobile (768px) --}}
     <div class="d-block d-md-none">
         @forelse($categorias as $categoria)
-        <div class="card mb-3 shadow-sm">
+        <div class="card mb-3 shadow-md">
             <div class="card-body">
                 {{-- Título da Categoria --}}
                 <h5 class="card-title fw-bold border-bottom pb-2 mt-0">{{ $categoria->nomeCategoria }}</h5>
@@ -77,7 +78,7 @@
 
                 {{-- Botão de ação --}}
                 <div class="d-flex gap-2 mt-3">
-                    <button class="btn btn-sm btn-danger flex-fill text-center btn-remove"
+                    <button class="btn btn-md btn-danger flex-fill text-center btn-remove"
                         data-bs-toggle="modal"
                         data-bs-target="#confirmExcluirModal"
                         data-url="{{ route('categorias.destroy', ['tipo' => $tipo, 'id' => $categoria->id]) }}"

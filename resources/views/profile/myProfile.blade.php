@@ -3,7 +3,7 @@
 @section('title', 'Meu perfil')
 
 @section('content')
-<div class="container-abas">
+<div class="container-abas" id="myProfile">
     {{ Breadcrumbs::render('myProfile') }}
     <header class="text-center py-3 mb-4">
         <div class="container">
@@ -109,7 +109,7 @@
                                 </div>
                             </div>
                             @empty
-                            <div class="card my-4 p-4 text-center border-0 shadow-sm bg-light">
+                            <div class="card my-4 p-4 text-center border-0 shadow-md bg-light">
                                 <div class="card-body">
                                     <h5 class="card-title text-primary">A busca não retornou resultados</h5>
                                     <p class="card-text text-muted">
@@ -148,7 +148,7 @@
                             </div>
                         </div>
                         @empty
-                        <div class="card my-4 p-4 text-center border-0 shadow-sm bg-light">
+                        <div class="card my-4 p-4 text-center border-0 shadow-md bg-light">
                             <div class="card-body">
                                 <h5 class="card-title text-primary">A busca não retornou resultados</h5>
                                 <p class="card-text text-muted">
@@ -166,7 +166,7 @@
                     <div class="infos">
                         <div class="row g-4">
                             @forelse($myDocumentos as $documento)
-                            <div class="col-md-4 col-sm-6">
+                            <div class="col-md-4 col-md-6">
                                 <div class="card h-100 shadow rounded-4 border-0">
                                     <div class="card-body text-center d-flex flex-column justify-content-between">
                                         <div class="mb-3">
@@ -184,7 +184,7 @@
                                 </div>
                             </div>
                             @empty
-                            <div class="card my-4 p-4 text-center border-0 shadow-sm bg-light">
+                            <div class="card my-4 p-4 text-center border-0 shadow-md bg-light">
                                 <div class="card-body">
                                     <h5 class="card-title text-primary">A busca não retornou resultados</h5>
                                     <p class="card-text text-muted">
@@ -225,7 +225,7 @@
                             </div>
                         </div>
                         @empty
-                        <div class="card my-4 p-4 text-center border-0 shadow-sm bg-light">
+                        <div class="card my-4 p-4 text-center border-0 shadow-md bg-light">
                             <div class="card-body">
                                 <h5 class="card-title text-primary">A busca não retornou resultados</h5>
                                 <p class="card-text text-muted">

@@ -37,7 +37,7 @@
     {{-- Bloco exibido apenas em telas pequenas (< 768px) --}}
     <div class="d-block d-md-none">
         @forelse($topicos as $topico)
-        <div class="card mb-3 shadow-sm">
+        <div class="card mb-3 shadow-md">
             <div class="card-body">
                 <h5 class="card-title fw-bold mt-0">
                     <a href="{{ route('postagens.index', ['idTopico' => $topico->id]) }}">

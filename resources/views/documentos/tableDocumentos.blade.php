@@ -83,7 +83,7 @@
     {{-- Cards mobile --}}
     <div class="d-block d-md-none">
         @forelse($documentos as $documento)
-        <div class="card mb-3 shadow-sm">
+        <div class="card mb-3 shadow-md">
             <div class="card-body">
                 <h5 class="card-title fw-bold mt-0 border-bottom border-secondary pb-2">{{ $documento->nomeArquivo }}</h5>
                 <div class="mb-2 border-bottom border-light pb-2 pt-2">
@@ -97,15 +97,15 @@
 
                 </div>
                 <div class="d-flex gap-2 flex-wrap">
-                    <a class="btn btn-sm btn-visualizar flex-fill text-center" href="{{ asset('storage/' . $documento->caminhoArquivo) }}" target="_blank">
+                    <a class="btn btn-md btn-visualizar flex-fill text-center" href="{{ asset('storage/' . $documento->caminhoArquivo) }}" target="_blank">
                         Visualizar
                     </a>
                     @if(Auth::user()->tipoUsuario == 'admin' || (Auth::user()->id == $documento->idUsuario && $tipoAba == 'myDocumentos'))
-                    <a class="btn btn-sm btn-info flex-fill text-center" href="{{ route('documentos.edit', $documento->id) }}">
+                    <a class="btn btn-md btn-info flex-fill text-center" href="{{ route('documentos.edit', $documento->id) }}">
                         Editar
                     </a>
                     @endif
-                    <button class="btn btn-sm btn-danger btn-remove flex-fill text-center"
+                    <button class="btn btn-md btn-danger btn-remove flex-fill text-center"
                         data-bs-toggle="modal"
                         data-bs-target="#confirmExcluirModal"
                         data-url="{{ route('documentos.destroy', $documento->id) }}">

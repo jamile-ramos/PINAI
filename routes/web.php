@@ -109,6 +109,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('comentarios')->name('comentarios.')->controller(ComentarioController::class)->group(function () {
         Route::post('/store', 'store')->name('store');
         Route::get('/usuarios/{idResposta}', 'usuariosDaResposta')->name('usuarios');
+        Route::put('/update/{id}', 'update')->name('update');
+        Route::delete('/destroy/{id}', 'destroy')->name('destroy');
     });
 
     // Sugestões de Tópicos

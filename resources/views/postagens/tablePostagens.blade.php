@@ -72,7 +72,7 @@
 {{-- Versão em cards para mobile (< 768px) --}}
 <div class="d-block d-md-none">
     @forelse($postagens as $postagem)
-    <div class="card mb-3 shadow-sm">
+    <div class="card mb-3 shadow-md">
         <div class="card-body">
             <h5 class="card-title fw-bold mt-0 border-bottom border-secondary pb-2">{{ $postagem->titulo }}</h5>
 
@@ -84,18 +84,18 @@
             </div>
 
             <div class="d-flex gap-2 flex-wrap">
-                <a class="btn btn-sm btn-visualizar flex-fill text-center" href="{{ route('postagens.show', ['id' => $postagem->id]) }}">
+                <a class="btn btn-md btn-visualizar flex-fill text-center" href="{{ route('postagens.show', ['id' => $postagem->id]) }}">
                     Ver
                 </a>
                 @if(Auth::user()->tipoUsuario == 'admin' || (Auth::user()->id == $postagem->idUsuario && $tipoAba == 'myPostagens'))
-                <button type="button" class="btn btn-info btn-sm btn-edit flex-fill text-center"
+                <button type="button" class="btn btn-info btn-md btn-edit flex-fill text-center"
                     data-bs-toggle="tooltip"
                     data-url="{{ route('postagens.edit', $postagem->id) }}"
                     data-original-title="Editar">
                     Editar
                 </button>
                 @endif
-                <button type="button" class="btn btn-danger btn-sm btn-remove flex-fill text-center"
+                <button type="button" class="btn btn-danger btn-md btn-remove flex-fill text-center"
                     data-bs-toggle="tooltip"
                     data-original-title="Remover"
                     data-modal="#confirmExcluirModal"

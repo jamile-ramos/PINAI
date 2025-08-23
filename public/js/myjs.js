@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
             localStorage.setItem('altoContraste', body.classList.contains("alto-contraste"));
         });
     }
-   
+
     // Clicar no icone e aparece a barra de pesquisa
     $(document).ready(function () {
         $(".search-icon").on("click", function () {
@@ -220,19 +220,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
-
-    // Fazer a palavra menu aparecer quando a tela ficar menor e o sidebar sumir
-    function verificarTamanhoTela() {
-        const textMenu = document.querySelector('.text-menu');
-        if (window.innerWidth < 998) {
-            textMenu.style.display = 'block';
-        } else {
-            textMenu.style.display = 'none';
-        }
-    }
-
-    verificarTamanhoTela();
-    window.addEventListener('resize', verificarTamanhoTela);
 
     //Editar dados do usuário
     $(document).ready(function () {
@@ -616,22 +603,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     // Abrir o modal de exclusão Resposta
-    document.querySelectorAll('.post-options').forEach(container => {
+    document.querySelectorAll('.post-options, .comment-options').forEach(container => {
         const btnPontinhos = container.querySelector(".options-button");
 
         if (btnPontinhos) {
             btnPontinhos.addEventListener('click', () => {
-                const btnsOpcoes = container.querySelector(".options-menu")
-                const excluir = btnsOpcoes.querySelector(".resposta-destroy")
-                excluir.addEventListener('click', () => {
-                    const id = excluir.getAttribute('data-id');
-                    const modal = excluir.getAttribute('data-modal');
+                const btnsOpcoes = container.querySelector(".options-menu");
+                const excluir = btnsOpcoes.querySelector(".btn-destroy");
 
-                    const form = document.getElementById('confirmExcluirForm');
-                    const url = excluir.getAttribute('data-url');
-                    form.setAttribute('action', url);
-                    $(modal).modal('show');
-                })
+                if (excluir) {
+                    excluir.addEventListener('click', () => {
+                        const modal = excluir.getAttribute('data-modal');
+                        const form = document.getElementById('confirmExcluirForm');
+                        const url = excluir.getAttribute('data-url');
+
+                        form.setAttribute('action', url);
+                        $(modal).modal('show');
+                    }, { once: true }); 
+                }
             });
         }
     });
@@ -705,6 +694,38 @@ document.addEventListener('DOMContentLoaded', function () {
                     block: 'center'
                 });
             }
+        });
+    });
+
+    // Exibe o formulario de editar comentário ao clicar no botao comentar dentro da postagem
+    document.querySelectorAll(".edit-comment-toggle").forEach(btn => {
+        btn.addEventListener("click", function (e) {
+            e.preventDefault();
+            const id = this.dataset.id;
+            const conteudo = this.dataset.conteudo;
+
+            // esconder o texto normal
+            document.getElementById(`comment-content-${id}`).classList.add("d-none");
+
+            // mostrar form
+            const form = document.getElementById(`edit-form-${id}`);
+            form.classList.remove("d-none");
+
+            // preencher textarea
+            document.getElementById(`edit-textarea-${id}`).value = conteudo;
+        });
+    });
+
+    // Clicar em "Cancelar"
+    document.querySelectorAll(".btn-cancelar-edit").forEach(btn => {
+        btn.addEventListener("click", function () {
+            const id = this.dataset.id;
+
+            // esconder form
+            document.getElementById(`edit-form-${id}`).classList.add("d-none");
+
+            // mostrar comentário normal
+            document.getElementById(`comment-content-${id}`).classList.remove("d-none");
         });
     });
 

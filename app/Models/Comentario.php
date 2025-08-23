@@ -1,11 +1,16 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 
 class Comentario extends Model
 {
+    protected $fillable = [
+        'conteudo',
+        'status'
+    ];
+
     public function resposta()
     {
         return $this->belongsTo(Resposta::class, 'idResposta');
@@ -17,6 +22,16 @@ class Comentario extends Model
 
     public function mencoes(){
         return $this->belongsToMany(User::class, 'comentarios_mencoes', 'idComentario', 'idUsuarioMencionado');
+    }
+
+    public function podeEditar(){
+        $user = Auth::user();
+
+        if($user && $user->tipoUsuario !== 'comum'){
+            return true;
+        }
+
+        return $user && $user->id === $this->idUsuario && $this->created_at->gt(now()->subHour());
     }
 }
 

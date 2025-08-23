@@ -103,7 +103,7 @@
     {{-- Cards mobile (768px) --}}
     <div class="d-block d-md-none">
         @forelse($solucoes as $solucao)
-        <div class="card mb-3 shadow-sm">
+        <div class="card mb-3 shadow-md">
             <div class="card-body">
                 <h5 class="card-title fw-bold mt-0 border-bottom border-secondary pb-2">{{ $solucao->titulo }}</h5>
 
@@ -142,11 +142,11 @@
 
 
                 <div class="d-flex gap-2 flex-wrap">
-                    <a class="btn btn-sm btn-visualizar flex-fill text-center" href="{{ route('solucoes.show', ['id' => $solucao->id]) }}">Ver</a>
+                    <a class="btn btn-md btn-visualizar flex-fill text-center" href="{{ route('solucoes.show', ['id' => $solucao->id]) }}">Ver</a>
                     @if(Auth::user()->tipoUsuario == 'admin' || (Auth::user()->id == $solucao->idUsuario && $tipoAba == 'mySolucoes'))
-                    <a class="btn btn-sm btn-info flex-fill text-center" href="{{ route('solucoes.edit', $solucao->id) }}">Editar</a>
+                    <a class="btn btn-md btn-info flex-fill text-center" href="{{ route('solucoes.edit', $solucao->id) }}">Editar</a>
                     @endif
-                    <button class="btn btn-sm btn-danger btn-remove flex-fill text-center"
+                    <button class="btn btn-md btn-danger btn-remove flex-fill text-center"
                         data-bs-toggle="modal"
                         data-bs-target="#confirmExcluirModal"
                         data-url="{{ route('solucoes.destroy', $solucao->id) }}">

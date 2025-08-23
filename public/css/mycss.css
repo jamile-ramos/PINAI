@@ -14,8 +14,7 @@
     max-width: 1200px;
 }
 
-.home-text h1,
-h3 {
+.home-text h1 {
     display: flex;
     justify-content: center;
     text-align: justify;
@@ -31,7 +30,6 @@ h3 {
 
 .content-card {
     display: flex;
-    margin-top: 60px;
     flex-wrap: wrap;
     justify-content: space-around;
     width: 100%;
@@ -257,10 +255,6 @@ form.search-form {
 .titulo-categoria h2 {
     text-align: start;
     width: 100%;
-}
-
-h2 {
-    font-size: 1.5em !important;
 }
 
 [type=text],
@@ -1353,10 +1347,6 @@ button:focus-visible,
     width: 98%;
 }
 
-h1 {
-    font-size: 2.5rem !important;
-}
-
 .breadcrumb-item+.breadcrumb-item::before {
     content: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%228%22 height=%228%22%3E%3Cpath d=%22M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z%22 fill=%22%236c757d%22/%3E%3C/svg%3E');
     padding: 0 5px;
@@ -1413,26 +1403,7 @@ h1 {
     display: block;
 }
 
-/* Tamanhos padrões das fontes do bootstrap*/
-h1 {
-    font-size: 2.5rem !important;
-}
 
-h2 {
-    font-size: 2rem !important;
-}
-
-h3 {
-    font-size: 1.75rem !important;
-}
-
-h4 {
-    font-size: 1.5rem !important;
-}
-
-h5 {
-    font-size: 1.25rem !important;
-}
 
 /* Adicionar underline no hover */
 .hover-underline:hover {
@@ -1551,6 +1522,7 @@ h5 {
 .alto-contraste .forum-container .post-content,
 .alto-contraste .forum-container .post-footer span,
 .alto-contraste .forum-container .text-muted,
+.alto-contraste .text-muted,
 .alto-contraste .forum-container .result-count,
 .alto-contraste .post-author,
 .alto-contraste .table,
@@ -1578,9 +1550,17 @@ h5 {
 .alto-contraste .form-label,
 .alto-contraste .form-group,
 .alto-contraste label,
-.alto-contraste i.fas.fa-calendar-alt,
+.alto-contraste .forum i.fas.fa-calendar-alt,
 .alto-contraste .post-title,
-.alto-contraste .section-title {
+.alto-contraste .section-title,
+.alto-contraste .nav-item a,
+.alto-contraste .dropdown-user .user-box h4,
+.alto-contraste .dropdown-user .user-box p,
+.alto-contraste .topbar-user .profile-pic,
+.alto-contraste .dropdown-user .custom-dropdown-link,
+.alto-contraste section.space-y-6,
+.alto-contraste section.space-y-6 p,
+.alto-contraste .modal-body input.form-control::placeholder {
     color: #fff !important;
 }
 
@@ -1617,7 +1597,10 @@ h5 {
 .alto-contraste .result-count span.text-primary,
 .alto-contraste .publico-alvo-list li,
 .alto-contraste h5.text-primary,
-.alto-contraste .icon-acessibilidade {
+.alto-contraste .icon-acessibilidade,
+.alto-contraste .text-muted i,
+.alto-contraste section.space-y-6 h2,
+.alto-contraste section h2 {
     color: #ff0 !important;
 }
 
@@ -1634,7 +1617,13 @@ h5 {
 .alto-contraste .btn-limpar-filtro,
 .alto-contraste .btn-limpar-filtro i,
 .alto-contraste .alert-success strong,
-.alto-contraste .alert-danger strong {
+.alto-contraste .alert-danger strong,
+.alto-contraste .dropdown-user .custom-dropdown-link:hover,
+.alto-contraste .dropdown-user .custom-dropdown-link:focus,
+.alto-contraste section input[type="password"],
+.alto-contraste section input::placeholder,
+.alto-contraste section input[type="text"],
+.alto-contraste section input[type="email"] {
     color: #000 !important;
 }
 
@@ -1652,7 +1641,8 @@ h5 {
 .alto-contraste .table td,
 .alto-contraste .borda-alto-contraste,
 .alto-contraste .btn-limpar-filtro,
-.alto-contraste .btn-limpar-filtro i {
+.alto-contraste .btn-limpar-filtro i,
+.alto-contraste .user-icon-circle-profile {
     background-color: #000 !important;
 }
 
@@ -1670,14 +1660,13 @@ h5 {
 .alto-contraste .logo-header,
 .alto-contraste .filtros,
 .alto-contraste .filter-bar,
-.alto-contraste .card-not-home,
 .alto-contraste .table thead,
-.alto-contraste .table-striped tbody tr:nth-of-type(odd) {
+.alto-contraste .table-striped tbody tr:nth-of-type(odd),
+.alto-contraste .modal-body input.form-control {
     background-color: #111 !important;
 }
 
 /* Fundo Cinza Claro (#222) */
-.alto-contraste .card,
 .alto-contraste .card-functions,
 .alto-contraste .forum-container .card,
 .alto-contraste .forum-container .post-card,
@@ -1690,7 +1679,24 @@ h5 {
 .alto-contraste .table tbody tr:hover,
 .alto-contraste article.bg-white,
 .alto-contraste .modal-content,
-.alto-contraste .d-flex.justify-content-between.align-items-center {
+.alto-contraste .card.h-100.shadow.rounded-4.border-0,
+.alto-contraste .card.h-100.border-0.shadow-lg.rounded-4,
+.alto-contraste .card.mb-3.shadow-md,
+.alto-contraste .card.mb-3.shadow-md.border-0.rounded-3.overflow-hidden,
+.alto-contraste .card-profile-all .card,
+.alto-contraste #myNoticias .card,
+.alto-contraste .topbar-user .profile-pic,
+.alto-contraste .dropdown-user,
+.alto-contraste .container-fluid .card,
+.alto-contraste .d-block.d-md-none .card,
+.alto-contraste .card.shadow-lg.border-0.rounded-4.p-5.bg-white,
+.alto-contraste section.space-y-6,
+.alto-contraste .modal-content,
+.alto-contraste .p-4,
+.alto-contraste .sm\:p-8,
+.alto-contraste .bg-white,
+.alto-contraste .dark\:bg-gray-800,
+.alto-contraste #acessibilidade .card{
     background-color: #222 !important;
 }
 
@@ -1722,7 +1728,6 @@ h5 {
 /* Borda Branca */
 .alto-contraste .table th,
 .alto-contraste .table td,
-.alto-contraste .card,
 .alto-contraste .card-functions,
 .alto-contraste .forum-container .card,
 .alto-contraste .forum-container .post-card,
@@ -1737,7 +1742,22 @@ h5 {
 .alto-contraste .btn-cancelar-comment,
 .alto-contraste .btn-coment,
 .alto-contraste .card .btn,
-.alto-contraste .table-responsive {
+.alto-contraste .table-responsive,
+.alto-contraste .dropdown-user .dropdown-divider,
+.alto-contraste #myNoticias .card,
+.alto-contraste .card.h-100.shadow.rounded-4.border-0,
+.alto-contraste #myPostagens .post-card,
+.alto-contraste #myDocs .card,
+.alto-contraste #mySolucoes .card,
+.alto-contraste .card-profile-all .card,
+.alto-contraste .card.mb-3.card.mb-3.shadow-md,
+.alto-contraste .card.h-100.border-0.shadow-lg.rounded-4,
+.alto-contraste .container-fluid .card,
+.alto-contraste article.bg-white,
+.alto-contraste .sm\:p-8,
+.alto-contraste .bg-white,
+.alto-contraste .dark\:bg-gray-800,
+.alto-contraste #acessibilidade .card {
     border: 1px solid #fff !important;
 }
 
@@ -1791,6 +1811,40 @@ h5 {
     text-align: justify;
 }
 
+/* Botão dos 3 pontinhos */
+.comment-options .options-button {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.comment-options .options-button:hover {
+    color: #000;
+}
+
+/* Menu igual ao das respostas */
+.comment-options .options-menu {
+    min-width: 120px;
+    border-radius: 6px;
+    box-shadow: 0px 4px 6px rgba(0,0,0,0.15);
+    font-size: 0.9rem;
+    padding: 5px 0;
+}
+
+.comment-options .options-menu .dropdown-item {
+    padding: 8px 15px;
+    color: #333;
+}
+
+.comment-options .options-menu .dropdown-item:hover {
+    background-color: #f5f5f5;
+}
+
+
+
 @media (max-width: 576px) {
     .noticia-img-wrapper {
         height: 200px;
@@ -1830,6 +1884,21 @@ h5 {
     .publico-alvo-list {
         column-count: 1;
     }
+    .alto-contraste .table-responsive {
+        border: 1px solid transparent !important;
+    }
+    .alto-contraste .card .card-body i.fas {
+        color: #fff !important;
+    }
+    .alto-contraste .card .card-body p {
+    color: #fff !important;
+  }
+  .alto-contraste .card .card-body p {
+    color: #fff !important;
+  }
+  .alto-contraste .card-not-home{
+    background-color: #000;
+  }
 
 }
 

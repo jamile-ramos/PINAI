@@ -40,7 +40,7 @@
     @yield('footer')
     <footer class="footer" role="contentinfo" id="rodape">
         <div class="container-fluid d-flex justify-content-between flex-column">
-            <nav class="pull-left">
+            <nav class="pull-left" aria-label="Links do rodapé">
                 <ul class="nav justify-content-center">
                     <li class="nav-item item-footer">
                         <a class="nav-link" href="/noticias">Portal de Notícias</a>

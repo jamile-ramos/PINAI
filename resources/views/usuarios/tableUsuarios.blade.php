@@ -75,7 +75,7 @@
     {{-- Cards mobile --}}
     <div class="d-block d-md-none">
         @forelse($usuarios as $usuario)
-        <div class="card mb-3 shadow-sm border-0 rounded-3 overflow-hidden">
+        <div class="card mb-3 shadow-md border-0 rounded-3 overflow-hidden">
             <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                 <h5 class="card-title mb-0 fw-bold">{{ $usuario->name }}</h5>
                 <span class="badge {{ $usuario->status == 'ativo' ? 'bg-success' : 'bg-danger' }}">
@@ -93,7 +93,7 @@
                     @endswitch
                 </p>
                 <div class="d-flex gap-2 flex-wrap mt-2">
-                    <button type="button" class="btn btn-sm btn-info btn-alterar flex-grow-1"
+                    <button type="button" class="btn btn-md btn-info btn-alterar flex-grow-1"
                         data-id="{{ $usuario->id }}"
                         data-name="{{ $usuario->name }}"
                         data-email="{{ $usuario->email }}"
@@ -101,7 +101,7 @@
                         data-nai="{{ $usuario->nai?->id ?? 'selecione' }}">
                         <i class="fas fa-edit me-1"></i>Editar
                     </button>
-                    <button type="button" class="btn btn-sm toggle-status btn-status flex-grow-1 {{ $usuario->status == 'ativo' ? 'btn-danger' : 'btn-success' }}"
+                    <button type="button" class="btn btn-md toggle-status btn-status flex-grow-1 {{ $usuario->status == 'ativo' ? 'btn-danger' : 'btn-success' }}"
                         data-id="{{ $usuario->id }}"
                         data-status="{{ $usuario->status }}">
                         <i class="fas {{ $usuario->status == 'ativo' ? 'fa-ban' : 'fa-check' }} me-1"></i>
@@ -109,7 +109,7 @@
                     </button>
                 </div>
             </div>
-            <div class="card-footer text-muted text-end small">
+            <div class="card-footer text-muted text-end mdall">
                 Criado em: {{ $usuario->created_at->format('d/m/Y') }}
             </div>
         </div>
@@ -132,7 +132,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title fw-bold" id="exampleModalLabel">Editar</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Fechar">
+                <button type="button" class="close" data-bs-dimdiss="modal" aria-label="Fechar">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -167,7 +167,7 @@
                         </select>
                     </div>
                     <div class="modal-footer border-top border-light mt-3">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dimdiss="modal">Fechar</button>
                         <button type="submit" class="btn btn-primary">Salvar alterações</button>
                     </div>
                 </form>
@@ -182,7 +182,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title fw-bold" id="confirmModalLabel">Confirmar Ação</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Fechar">
+                <button type="button" class="close" data-bs-dimdiss="modal" aria-label="Fechar">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -196,7 +196,7 @@
                     @method('PUT')
                     <input type="hidden" name="status" id="status">
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dimdiss="modal">Cancelar</button>
                         <button type="submit" id="confirmActionBtn" class="btn">Desabilitar</button>
                     </div>
                 </form>

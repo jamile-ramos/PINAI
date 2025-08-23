@@ -111,7 +111,7 @@
         {{-- Cards mobile (768px) --}}
         <div class="d-block d-md-none">
             @forelse($topicos as $topico)
-            <div class="card mb-3 shadow-sm">
+            <div class="card mb-3 shadow-md">
                 <div class="card-body">
                     {{-- Título --}}
                     <h5 class="card-title fw-bold pb-2 border-bottom border-secondarymt-0">{{ $topico->titulo }}</h5>
@@ -142,28 +142,28 @@
                     <div class="d-flex gap-2 flex-wrap border-top pt-2 border-secondary">
                         @if($title == 'Tópicos Sugeridos')
                         @if($topico->status_situacao != 'aprovado')
-                        <button type="button" class="btn btn-info btn-sm flex-fill text-center btn-statusTop"
+                        <button type="button" class="btn btn-info btn-md flex-fill text-center btn-statusTop"
                             data-id="{{ $topico->id }}"
                             data-selected="{{ $topico->getRawOriginal('status_situacao') }}">
                             Alterar status
                         </button>
                         @endif
-                        <button type="button" class="btn btn-danger btn-sm flex-fill text-center btn-remove"
+                        <button type="button" class="btn btn-danger btn-md flex-fill text-center btn-remove"
                             data-modal="#confirmExcluirModal"
                             data-url="{{ route('sugestoes.destroy', $topico->id) }}">
                             Excluir
                         </button>
                         @else
-                        <a class="btn btn-visualizar btn-sm flex-fill" href="{{ route('postagens.index', ['idTopico' => $topico->id]) }}" aria-label="Ver tópico">
+                        <a class="btn btn-visualizar btn-md flex-fill" href="{{ route('postagens.index', ['idTopico' => $topico->id]) }}" aria-label="Ver tópico">
                             Ver Tópico
                         </a>
                         @if(Auth::user()->tipoUsuario == 'admin' || (Auth::user()->id == $topico->idUsuario && $tipoAba == 'myTopicos'))
-                        <button type="button" class="btn btn-info btn-sm flex-fill text-center btn-editTopico"
+                        <button type="button" class="btn btn-info btn-md flex-fill text-center btn-editTopico"
                             data-id="{{ $topico->id }}">
                             Editar
                         </button>
                         @endif
-                        <button type="button" class="btn btn-danger btn-sm flex-fill text-center btn-remove"
+                        <button type="button" class="btn btn-danger btn-md flex-fill text-center btn-remove"
                             data-bs-toggle="modal"
                             data-bs-target="#confirmExcluirModal"
                             data-url="{{ route('topicos.destroy', $topico->id) }}">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ConteudoExcluido;
 use App\Events\TopicoCriado;
 use App\Http\Controllers\Concerns\EnforcesCorrectSlug;
 use App\Models\SugestaoTopico;
@@ -66,19 +67,13 @@ class TopicoController extends Controller
     public function buscarTopicosComQuery($query, $abaAtiva, $pagina)
     {
         $resultados = Topico::ativos()
-        ->withCount('postagens')
-            // ordena Topicos pela data da postagem mais recente
-            ->orderByDesc(
-                Postagem::select('updated_at')
-                    ->whereColumn('idTopico', 'topicos.id')
-                    ->orderByDesc('updated_at')
-                    ->limit(1)
-            );
+            ->withCount('postagens')
+            ->ultimaAtividade();
 
         if (!empty($query)) {
             $resultados->where('titulo', 'like', '%' . $query . '%');
         }
-        // Eager load da postagem mais recente (limit 1)
+
         return $resultados->with(['postagens' => function ($q) {
             $q->orderBy('updated_at', 'desc')->limit(1);
         }])
@@ -89,7 +84,7 @@ class TopicoController extends Controller
     public function buscarMeusTopicos($query, $pagina, $abaAtiva)
     {
         $resultados = Topico::ativos()
-        ->where('idUsuario', Auth::user()->id);
+            ->where('idUsuario', Auth::user()->id);
 
         if (!empty($query)) {
             $resultados->where('titulo', 'like', '%' . $query . '%');
@@ -100,10 +95,11 @@ class TopicoController extends Controller
             ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
     }
 
-    public function buscarTodosTopicos($query, $pagina, $abaAtiva){
+    public function buscarTodosTopicos($query, $pagina, $abaAtiva)
+    {
         $resultados = Topico::ativos();
 
-        if(!empty($query)){
+        if (!empty($query)) {
             $resultados->where(function ($q) use ($query) {
                 $q->where('titulo', 'like', '%' . $query . '%')
                     ->orWhereHas('user', function ($sub) use ($query) {
@@ -111,24 +107,25 @@ class TopicoController extends Controller
                     });
             });
         }
-                
+
         // ordena Topicos pela data criacão
         return $resultados->orderByDesc('created_at')
-                ->paginate(10, ['*'], 'allTopicos_page', $pagina)
-                ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+            ->paginate(10, ['*'], 'allTopicos_page', $pagina)
+            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
     }
 
-    public function buscarTopicosSugeridos($query, $pagina, $abaAtiva){
+    public function buscarTopicosSugeridos($query, $pagina, $abaAtiva)
+    {
         $resultados = SugestaoTopico::ativos();
-        
-        if(!empty($query)){
+
+        if (!empty($query)) {
             $resultados->where('titulo', 'like', '%' . $query . '%');
         }
-                
-                // ordena Topicos pela data criacão
-                return $resultados->orderByDesc('created_at')
-                ->paginate(10, ['*'], 'sugestoes_page', $pagina)
-                ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+
+        // ordena Topicos pela data criacão
+        return $resultados->orderByDesc('created_at')
+            ->paginate(10, ['*'], 'sugestoes_page', $pagina)
+            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
     }
 
     public function create()
@@ -142,11 +139,10 @@ class TopicoController extends Controller
             'titulo' => 'required|string|max:255'
         ]);
 
-        $topico = new Topico;
-        $topico->titulo = $request->titulo;
-        $topico->idUsuario = Auth::user()->id;
-
-        $topico->save();
+        $topico = Topico::create([
+            'titulo' => $request->titulo,
+            'idUsuario' =>  Auth::user()->id
+        ]);
 
         event(new TopicoCriado($topico));
 
@@ -170,6 +166,7 @@ class TopicoController extends Controller
     {
         $topico = Topico::findOrFail($id);
         $topico->update(['status' => 'inativo']);
+        event(new ConteudoExcluido($topico->titulo, 'topico'));
         return redirect()->route('topicos.index')->with('success', 'Topico excluído com sucesso!');
     }
 

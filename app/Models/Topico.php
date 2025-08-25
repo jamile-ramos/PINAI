@@ -2,11 +2,16 @@
 
 namespace App\Models;
 
+use App\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Topico extends Model
 {
-    protected $fillable = ['titulo', 'status', 'slug'];
+
+    use HasSlug;
+
+    protected $fillable = ['titulo', 'status', 'slug', 'idUsuario'];
 
     // Ajudante para gerar URL
     public function getUrlAttribute(): string
@@ -27,5 +32,27 @@ class Topico extends Model
     public function scopeAtivos($query)
     {
         return $query->where('status', 'ativo');
+    }
+
+    public function getUltimaAtividadeAttribute()
+    {
+        $lastPost = $this->postagens()->latest('updated_at')->value('updated_at');
+        return $lastPost ?? $this->updated_at;
+    }
+
+    // Scope para ordenar por última atividade.
+    public function scopeUltimaAtividade($query)
+    {
+        return $query
+            ->addSelect([
+                'ultimaAtividade' => DB::raw('GREATEST(
+                topicos.updated_at,
+                IFNULL((SELECT MAX(p.updated_at) FROM postagens p WHERE p.idTopico = topicos.id), topicos.updated_at)
+            )')
+            ])
+            ->orderByRaw('GREATEST(
+            topicos.updated_at,
+            IFNULL((SELECT MAX(p.updated_at) FROM postagens p WHERE p.idTopico = topicos.id), topicos.updated_at)
+        ) DESC');
     }
 }

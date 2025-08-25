@@ -45,11 +45,12 @@ class NovaNoticiaNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Nova Notícia: ' . $this->noticia->titulo)
-            ->line('Uma nova notícia foi publicada: ' . $this->noticia->titulo)
-            ->line($this->noticia->subtitulo)
-            ->action('Ler Notícia', route('noticias.show', $this->noticia->slug))
-            ->line('Obrigado por acompanhar o nosso site!');
+            ->subject('Nova notícia publicada!')
+            ->markdown('emails.noticias.nova', [
+                'notifiable' => $notifiable,
+                'noticia'     => $this->noticia,
+                'url' => url('/noticias/' . $this->noticia->id . '-' . $this->noticia->slug),
+            ]);
     }
 
     /**

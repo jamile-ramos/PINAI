@@ -22,7 +22,7 @@ class DispararEmailTopicoCriado
      */
     public function handle(TopicoCriado $event): void
     {
-        User::ativos()->select('id', 'email')
+        User::ativos()->select('id','name', 'email')
         ->chunkById(500, function($users) use ($event){
             Notification::send($users, new NovoTopicoNotification($event->topico));
         });

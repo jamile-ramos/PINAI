@@ -49,7 +49,8 @@
                             </button>
                             @endif
                             <button type="button" class="btn btn-danger btn-remove"
-                                data-bs-toggle="tooltip"
+                                data-bs-toggle="modal"
+                                data-bs-target="#confirmExcluirModal"
                                 data-original-title="Remover"
                                 data-modal="#confirmExcluirModal"
                                 data-url="{{ route('postagens.destroy', $postagem->id) }}">

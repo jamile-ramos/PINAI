@@ -35,11 +35,11 @@ class NovoTopicoNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-        ->subject('Novo Tópico Publicado!')
+        ->subject('Novo tópico criado!')
         ->markdown('emails.topicos.novo', [
             'notifiable' => $notifiable,
             'topico'     => $this->topico,
-            'url'        => url('/postagens/'.$this->topico->id),
+            'url'        => url('/topicos/'.$this->topico->id . '-' .  $this->topico->slug),
         ]);
     }
 

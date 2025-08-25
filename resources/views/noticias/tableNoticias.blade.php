@@ -120,6 +120,7 @@
                     @endif
                     <button class="btn btn-md btn-danger btn-remove flex-fill text-center"
                         data-bs-toggle="modal"
+                        data-original-title="Remover"
                         data-bs-target="#confirmExcluirModal"
                         data-url="{{ route('noticias.destroy', $noticia->id) }}">
                         Excluir

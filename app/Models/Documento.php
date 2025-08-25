@@ -17,16 +17,6 @@ class Documento extends Model
         'slug'
     ];
 
-    use HasSlug;
-
-    protected string $slugFrom = 'nomeArquivo';
-
-    // Ajudante para gerar URL
-    public function getUrlAttribute(): string
-    {
-        return route('documentos.show', ['id' => $this->id, 'slug' => $this->slug]);
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class, 'idUsuario');

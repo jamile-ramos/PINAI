@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 class Postagem extends Model
 {
+
+    use HasSlug;
+
     protected $table = 'postagens';
 
     protected $fillable = [

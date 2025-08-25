@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ConteudoExcluido;
+use App\Events\NoticiaCriada;
 use App\Http\Controllers\Concerns\EnforcesCorrectSlug;
 use App\Models\CategoriaNoticia;
 use App\Models\Noticia;
@@ -186,8 +188,7 @@ class NoticiaController extends Controller
         }
         $noticia->save();
 
-        $users = User::all();
-        Notification::send($users, new NovaNoticiaNotification($noticia));  
+        event(new NoticiaCriada($noticia));
 
         return redirect()->route('noticias.index')->with('success', 'Notícia criada com sucesso!');
     }
@@ -197,6 +198,8 @@ class NoticiaController extends Controller
         $noticia = Noticia::findOrFail($id);
         $noticia->update(['status' => 'inativo']);
 
+        event(new ConteudoExcluido($noticia->titulo, 'notícia'));
+        
         return redirect()->route('noticias.index')->with('success', 'Notícia excluída com sucesso!');
     }
 

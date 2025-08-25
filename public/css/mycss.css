@@ -1560,7 +1560,11 @@ button:focus-visible,
 .alto-contraste .dropdown-user .custom-dropdown-link,
 .alto-contraste section.space-y-6,
 .alto-contraste section.space-y-6 p,
-.alto-contraste .modal-body input.form-control::placeholder {
+.alto-contraste .modal-body input.form-control::placeholder,
+.alto-contraste .my-4.mb-0.pb-4 > h1.h2.fw-bolder.text-uppercase.text-dark.mb-0.position-relative,
+.alto-contraste .my-4.mb-0.pb-4 > h1.h2.fw-bolder.text-uppercase.text-dark.mb-0.position-relative, i.fas.fa-folder.me-3.text-primary,
+.alto-contraste .my-4.mb-0 > h1.h2.fw-bolder.text-uppercase.text-dark.mb-0.position-relative,
+.my-4.mb-0 > h1.h2.fw-bolder.text-uppercase.text-dark.mb-0.position-relative i.fas.fa-folder.me-3.text-primary {
     color: #fff !important;
 }
 
@@ -1623,7 +1627,10 @@ button:focus-visible,
 .alto-contraste section input[type="password"],
 .alto-contraste section input::placeholder,
 .alto-contraste section input[type="text"],
-.alto-contraste section input[type="email"] {
+.alto-contraste section input[type="email"],
+.alto-contraste .d-flex.justify-content-center.mt-3 .page-item.active .page-link,
+.alto-contraste .d-flex.justify-content-center.mt-3 .page-link:hover,
+.alto-contraste .d-flex.justify-content-center.mt-3 .page-link:focus {
     color: #000 !important;
 }
 
@@ -1642,7 +1649,8 @@ button:focus-visible,
 .alto-contraste .borda-alto-contraste,
 .alto-contraste .btn-limpar-filtro,
 .alto-contraste .btn-limpar-filtro i,
-.alto-contraste .user-icon-circle-profile {
+.alto-contraste .user-icon-circle-profile,
+.alto-contraste .d-flex.justify-content-center.mt-3 .page-link {
     background-color: #000 !important;
 }
 
@@ -1662,7 +1670,8 @@ button:focus-visible,
 .alto-contraste .filter-bar,
 .alto-contraste .table thead,
 .alto-contraste .table-striped tbody tr:nth-of-type(odd),
-.alto-contraste .modal-body input.form-control {
+.alto-contraste .modal-body input.form-control,
+.alto-contraste .d-flex.justify-content-center.mt-3 .page-item.disabled .page-link {
     background-color: #111 !important;
 }
 
@@ -1696,7 +1705,8 @@ button:focus-visible,
 .alto-contraste .sm\:p-8,
 .alto-contraste .bg-white,
 .alto-contraste .dark\:bg-gray-800,
-.alto-contraste #acessibilidade .card{
+.alto-contraste #acessibilidade .card,
+.alto-contraste .d-flex.justify-content-center.mt-3 > nav[role="navigation"]{
     background-color: #222 !important;
 }
 
@@ -1709,7 +1719,9 @@ button:focus-visible,
 .alto-contraste .btn:hover,
 .alto-contraste .btn-response,
 .alto-contraste .btn-limpar-filtro,
-.alto-contraste .btn-limpar-filtro i {
+.alto-contraste .btn-limpar-filtro i,
+.alto-contraste .d-flex.justify-content-center.mt-3 .page-item.active .page-link,
+.alto-contraste .d-flex.justify-content-center.mt-3 .page-link:hover {
     background-color: #ff0 !important;
 }
 
@@ -1770,7 +1782,8 @@ button:focus-visible,
 .alto-contraste .btn-cancelar-comment,
 .alto-contraste .btn-coment,
 .alto-contraste .card .btn,
-.alto-contraste .btn {
+.alto-contraste .btn,
+.alto-contraste .d-flex.justify-content-center.mt-3 .page-item.active .page-link {
     border-color: #ff0 !important;
 }
 

@@ -28,6 +28,16 @@
     </div>
     @endif
     @endforeach
+    
+    @if ($errors->any())
+    @foreach ($errors->all() as $message)
+    <div class="alert alert-danger alert-dismissible fade show mt-2 mx-3 rounded" role="alert">
+        {{ $message }}
+        <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Fechar">
+        </button>
+    </div>
+    @endforeach
+    @endif
 
     <div class="tab-contents-users" role="tabpanel" id="panel-1" aria-labelledby="tab-1" tabindex="0">
         <div class="content-link" id="all-users">

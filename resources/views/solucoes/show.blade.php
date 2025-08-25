@@ -11,14 +11,14 @@
 
         <!-- Título, Categoria e Descrição -->
         <div class="mb-4 text-center">
-            <h1 class="fw-bold text-primary display-5">{{ $solucao->titulo }}</h1>
+            <h1 class="h3 fw-bold text-primary">{{ $solucao->titulo }}</h1>
             <p class="mb-3 mt-5">
                 <span class="visually-hidden">Categoria da solução:</span>
                 <span class="badge bg-primary fs-6" role="status" aria-label="Categoria: {{ $solucao->categoria->nomeCategoria }}">
                     <i class="fas fa-tag me-1" aria-hidden="true"></i>
                     {{ $solucao->categoria->nomeCategoria }}
                 </span>
-            </p>
+            <p>
 
             <p class="text-muted fs-5 mt-3" style="text-align: justify;">
                 {{ $solucao->descricao }}

@@ -1,21 +1,22 @@
 <x-mail::message>
     
-# Novo tópico publicado!
-Olá!
+# 💬 Um novo tópico está no ar!
 
-Um novo tópico foi criado em nossa comunidade.
-Participe da conversa e contribua com a sua opinião:
+Olá {{ $notifiable->name ?? '' }},
+
+A comunidade está agitada com uma nova discussão! Sua opinião é fundamental para enriquecer a conversa.
+
+Não fique de fora, participe agora mesmo:
 
 ---
 
 ### {{ $topico->titulo }}
-{{ $topico->resumo }}
 
 <x-mail::button :url="$url">
-Participar da discussão
+🗣️ Participe da discussão
 </x-mail::button>
 
-Esperamos que a discussão seja útil para você!
+Sua voz é o que faz a nossa comunidade ser incrível
 
 Atenciosamente,<br>
 A equipe do {{ config('app.name') }}

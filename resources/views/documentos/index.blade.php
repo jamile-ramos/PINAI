@@ -47,6 +47,17 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
+
+    @if ($errors->any())
+    @foreach ($errors->all() as $message)
+    <div class="alert alert-danger alert-dismissible fade show mt-2 mx-3 rounded" role="alert">
+        {{ $message }}
+        <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Fechar">
+        </button>
+    </div>
+    @endforeach
+    @endif
+    
     <!-- Conteúdo das abas -->
     <div class="tab-contents">
         <div class="content-link" id="visaoDocumentos">

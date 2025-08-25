@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ConteudoExcluido;
 use App\Models\CategoriaDocumento;
 use App\Models\Documento;
 use Illuminate\Support\Facades\Auth;
@@ -163,14 +164,14 @@ class DocumentoController extends Controller
 
         $caminho = $request->file('arquivo')->store('documentos', 'public');
 
-        Documento::create([
+        $documento = Documento::create([
             'nomeArquivo' => $request->nomeArquivo,
             'descricao' => $request->descricao,
             'idCategoria' => $request->idCategoria,
             'caminhoArquivo' => $caminho,
             'idUsuario' => Auth::id()
         ]);
-
+        event(new \App\Events\DocumentoCriado($documento));
         return redirect()->route('documentos.index')->with('success', 'Documento adicionado com sucesso!');
     }
 
@@ -213,7 +214,7 @@ class DocumentoController extends Controller
     {
         $documento = Documento::findOrFail($id);
         $documento->update(['status' => 'inativo']);
-
+        event(new ConteudoExcluido($documento->nomeArquivo, 'documento'));
         return redirect()->route('documentos.index')->with('success', 'Documento excluído com sucesso!');
     }
 }

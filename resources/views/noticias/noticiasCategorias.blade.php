@@ -7,10 +7,17 @@
   <div>
     {{ Breadcrumbs::render('noticiasCategorias', $categoria)}}
   </div>
-  <div class="home-news titulo-categoria">
-    <h1 class="fw-semibold">{{ $categoria->nomeCategoria }}</a></h1>
 
-    <div class="row row-cols-1 g-4">
+  <div class="home-news titulo-categoria g-0">
+
+    <div class="my-4 mb-0">
+      <h1 class="h2 fw-bolder text-uppercase text-dark mb-0 position-relative">
+        <i class="fas fa-folder me-3 text-primary"></i>
+        {{ $categoria->nomeCategoria }}
+      </h1>
+    </div>
+
+    <div class="row row-cols-1 g-4 pt-3">
       @foreach($noticias as $noticia)
       <div class="col card-not-home">
         <div class="card h-100 border-0 bg-transparent shadow-none">
@@ -25,7 +32,7 @@
             </div>
             <div class="col-md-8">
               <div class="card-body d-flex flex-column h-100 bg-transparent p-0">
-                <h3 class="card-title title-new mb-2 pl-0">
+                <h3 class=" h3 card-title title-new mb-2 pl-0">
                   <a href="{{ route('noticias.show', ['id' => $noticia->id, 'slug' => $noticia->slug]) }}" class="text-decoration-none text-dark" data-btn="noticias">
                     {{ $noticia->titulo }}
                   </a>

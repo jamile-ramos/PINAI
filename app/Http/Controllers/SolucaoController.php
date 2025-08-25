@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ConteudoExcluido;
 use App\Http\Controllers\Concerns\EnforcesCorrectSlug;
 use App\Models\CategoriaSolucao;
 use App\Models\Solucao;
@@ -163,7 +164,7 @@ class SolucaoController extends Controller
         ]);
 
         $solucao->publicosAlvo()->attach($request->publicos_alvo);
-
+        event(new \App\Events\SolucaoCriada($solucao));
         return redirect()->route('solucoes.index')->with('success', 'Solução criada com sucesso!');
     }
 
@@ -173,7 +174,7 @@ class SolucaoController extends Controller
     {
         $solucao = Solucao::findOrFail($id);
 
-        if($r = $this->redirectIfWrongSlug($solucao, $slug, 'noticias.show')){
+        if($r = $this->redirectIfWrongSlug($solucao, $slug, 'solucoes.show')){
             return $r;
         }
 
@@ -216,7 +217,7 @@ class SolucaoController extends Controller
         $solucao = Solucao::findOrFail($id);
         $solucao->status = 'inativo';
         $solucao->save();
-
+        event(new ConteudoExcluido($solucao->titulo, 'solucao'));
         return redirect()->route('solucoes.index')->with('success', 'Solução excluída com sucesso!');
     }
 

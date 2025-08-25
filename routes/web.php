@@ -88,7 +88,7 @@ Route::middleware('auth')->group(function () {
 
     // Postagens
     Route::prefix('postagens')->name('postagens.')->controller(PostagemController::class)->group(function () {
-        Route::get('/create/{idTopico}', 'create')->name('create');
+        Route::get('/create/{id}', 'create')->name('create');
         Route::post('/store', 'store')->name('store');
         Route::get('/edit/{id}', 'edit')->name('edit');
         Route::put('/update/{id}', 'update')->name('update');

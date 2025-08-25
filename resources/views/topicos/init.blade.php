@@ -20,9 +20,7 @@
                     </td>
                     <td><i class="fas fa-comments text-primary me-1" aria-hidden="true"></i> {{ $topico->postagens_count }}</td>
                     <td>
-                        @if($topico->postagens->isNotEmpty())
-                        <i class="fas fa-calendar-alt text-primary me-1" aria-hidden="true"></i> {{ $topico->postagens->first()->updated_at->format('d/m/Y H:i') }}
-                        @endif
+                        {{ optional($topico->ultimaAtividade)->format('d/m/Y H:i') }}
                     </td>
                 </tr>
                 @empty

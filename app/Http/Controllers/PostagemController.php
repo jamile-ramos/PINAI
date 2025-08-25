@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ConteudoExcluido;
+use App\Events\PostagemCriada;
 use App\Models\Postagem;
 use App\Models\Comentario;
 use Illuminate\Http\Request;
@@ -45,7 +47,7 @@ class PostagemController extends Controller
         $postagem->save();
 
         $topico = Topico::findOrFail($postagem->idTopico);
-
+        event(new PostagemCriada($postagem));
         return redirect()->route('topicos.show', ['id' => $postagem->idTopico, 'slug' => $topico->slug])->with('success', 'Postagem criada com sucesso!');
     }
 
@@ -78,6 +80,7 @@ class PostagemController extends Controller
     {
         $postagem = Postagem::findOrFail($id);
         $postagem->update(['status' => 'inativo']);
+        event(new ConteudoExcluido($postagem->titulo, 'postagem'));
         return back()->with('success', 'Postagem excluída com sucesso!');
     }
 

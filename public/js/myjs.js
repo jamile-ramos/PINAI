@@ -598,7 +598,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // Abrir o modal de exclusão 
     document.querySelectorAll('.btn-remove').forEach(btn => {
         btn.addEventListener('click', () => {
+            console.log(btn)
             const form = document.getElementById('confirmExcluirForm');
+            console.log(form)
             const url = btn.getAttribute('data-url');
             form.setAttribute('action', url);
         });

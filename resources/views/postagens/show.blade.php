@@ -84,9 +84,7 @@
                             <i class="fa fa-ellipsis-v"></i>
                         </button>
                         <div class="options-menu">
-                            @if(Auth::user()->tipoUsuario == 'admin' || Auth::user()->id == $resposta->idUsuario)
                             <a href="{{ route('respostas.edit', $resposta->id) }}">Editar</a>
-                            @endif
                             <button
                                 class="btn-destroy"
                                 type="button"
@@ -110,6 +108,7 @@
                         <i class="fa fa-reply"></i> Comentar
                     </button>
                 </div>
+                {{-- debug rápido --}}
 
                 <!--Comentários nas respostas-->
                 <div class="comment-section">
@@ -122,10 +121,12 @@
                                     <i class="fa fa-user"></i>
                                 </div>
                                 <div class="comment-info ms-2">
-                                    <span class="comment-username">{{ $comentario->user->name }}</span>
-                                    <span class="comment-date d-block small text-muted">
-                                        {{ $comentario->created_at->format('d/m/Y H:i') }}
-                                    </span>
+                                    <div class="d-flex justify-content-between">
+                                        <span class="comment-username">{{ $comentario->user->name }}</span>
+                                        <span class="comment-date small text-muted">
+                                            {{ $comentario->created_at->format('d/m/Y H:i') }}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -166,17 +167,34 @@
 
                         </div>
                         <div class="comment-content" id="comment-content-{{ $comentario->id }}">
-                            {{ $comentario->conteudo }}
+                            {!! $comentario->conteudo_formatado !!}
                         </div>
 
                         <!-- Form edição inline (invisível até clicar em editar) -->
                         <form action="{{ route('comentarios.update', $comentario->id) }}"
                             method="POST"
                             class="edit-comment-form d-none"
-                            id="edit-form-{{ $comentario->id }}">
+                            id="edit-form-{{ $comentario->id }}"
+                            data-idresposta="{{ $comentario->idResposta }}">
                             @csrf
                             @method('PUT')
-                            <textarea name="conteudo" class="form-control mb-2" id="edit-textarea-{{ $comentario->id }}"></textarea>
+
+                            <!-- mesma classe mention-input -->
+                            <textarea name="conteudo"
+                                class="form-control mb-2 mention-input"
+                                id="edit-{{ $comentario->id }}">{{ $comentario->conteudo }}</textarea>
+                            <input type="hidden"
+                                id="mencoes-edit-{{ $comentario->idComentario }}"
+                                name="mencoes"
+                                value="{{ json_encode($comentario->mencoes->map(fn($m) => ['id' => $m->id, 'nome' => $m->name])) }}">
+                            <!-- sugestões de usuários -->
+                            <div class="mention-suggestions dropdown-menu shadow rounded-3 overflow-auto"
+                                id="mention-suggestions-edit-{{ $comentario->id }}"
+                                style="display: none;">
+                                <ul class="list-unstyled mb-0" id="suggestions-list-edit-{{ $comentario->id }}">
+                                </ul>
+                            </div>
+
                             <div class="btns-comment gap-2 w-100">
                                 <button type="button" class="btn btn-secondary btn-cancelar-edit" data-id="{{ $comentario->id }}">
                                     Cancelar
@@ -195,30 +213,24 @@
                     <form action="{{ route('comentarios.store') }}" method="POST" class="comment-form">
                         @csrf
                         <input type="hidden" name="idResposta" value="{{ $resposta->id }}">
-                        <input type="hidden" name="usuarioMencionado" id="usuarioMencionado">
+                        <input type="hidden" name="mencoes" id="mencoes-{{ $resposta->id }}">
                         <textarea name="conteudo" rows="3" id="comentario-{{ $resposta->id }}" class="form-control mention-input" placeholder="Escreva um comentário..." aria-label="Escreva um comentário"></textarea>
+                        <!-- Menu de sugestões de usuários -->
+                        <div class="mention-suggestions dropdown-menu shadow rounded-3 overflow-auto" id="mention-suggestions-{{ $resposta->id }}" style="display: none;">
+                            <ul class="list-unstyled mb-0" id="suggestions-list-{{ $resposta->id }}">
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <span class="text-truncate">
+                                            <strong class="d-block">Nome do Usuário</strong>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                         <!--Butão de mencionar usuario-->
-                        <div class="btn-group-comment">
-                            <button class="btn btn-link mention-user" id="mention-user-{{ $resposta->id }}" data-id="{{ $resposta->id}}" data-user="{{ $resposta->idUsuario }}" aria-label="Mencionar usuário no comentário">
-                                <i class="fa fa-at"></i> Mencionar
-                            </button>
-                            <div id="no-users-{{ $resposta->id }}" class=" alert  alert-danger justify-content-center align-items-center my-3 " style="visibility: hidden; position: absolute;" role="alert">
-                                Não há usuários para mencionar no momento.
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <!-- Menu de sugestões de usuários -->
-                            <div class="mention-menu" id="mention-menu-{{ $resposta->id }}" style="visibility: hidden;">
-                                <ul id="user-list-{{ $resposta->id }}">
-                                    <!-- Usuários serão inseridos aqui via Ajax -->
-                                </ul>
-                            </div>
-
-                            <div class="btns-comment">
-                                <button type="button" class="btn btn-secondary btn-cancelar-comment btn-coment" data-id="{{$resposta->id}}" arial-label="Cancelar comentário">Cancelar</button>
-                                <button type="submit" class="btn btn-primary btn-coment" aria-label="Salvar comentário">Comentar</button>
-                            </div>
+                        <div class="btns-comment w-100">
+                            <button type="button" class="btn btn-secondary btn-cancelar-comment btn-coment" data-id="{{$resposta->id}}" arial-label="Cancelar comentário">Cancelar</button>
+                            <button type="submit" class="btn btn-primary btn-coment" aria-label="Salvar comentário">Comentar</button>
                         </div>
                     </form>
                 </div>

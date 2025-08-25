@@ -29,7 +29,7 @@
                         </div>
                         <div class="col-md-8">
                             <div class="card-body d-flex flex-column h-100 bg-transparent p-0">
-                                <h5 class="card-title title-new mb-2">
+                                <h5 class="h5 card-title title-new mb-2">
                                     <a href="{{ route('noticias.show', ['id' => $noticia->id, 'slug' => $noticia->slug]) }}" class="text-decoration-none text-dark" data-btn="noticias">
                                         {{ $noticia->titulo }}
                                     </a>
@@ -112,7 +112,7 @@
                 <div class="card h-100 bg-transparent border-0 shadow-none">
                     <img src="{{ asset('img/imgNoticias/' . $noticiaCategoria->imagem) }}" class="card-img-top img-capa" alt="{{ 'Imagem da notícia: ' . Str::limit($noticiaCategoria->titulo, 80) }}">
                     <div>
-                        <h5 class="card-title pt-3 hover-underline">
+                        <h5 class="h5 card-title pt-3 hover-underline">
                             <a href="{{ route('noticias.show', ['id' => $noticia->id, 'slug' => $noticia->slug]) }}">{{ $noticiaCategoria->titulo }}</a>
                         </h5>
                         <p class="card-text">

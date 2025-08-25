@@ -16,9 +16,11 @@ use App\Http\Controllers\SolucaoController;
 use App\Http\Controllers\SugestaoTopicoController;
 use App\Http\Controllers\TopicoController;
 use App\Models\Comentario;
+use App\Models\Documento;
 use App\Models\Noticia;
 use App\Models\PublicoAlvo;
 use App\Models\Solucao;
+use App\Models\Topico;
 
 Route::middleware('guest')->get('/', function () {
     return view('auth.login');
@@ -26,7 +28,10 @@ Route::middleware('guest')->get('/', function () {
 
 Route::get('/dashboard', function () {
     $noticias = Noticia::latest()->where('status', 'ativo')->take(3)->get();
-    return view('dashboard', compact('noticias'));
+    $topicos = Topico::with('user')->ultimaAtividade()->withCount('postagens')->take(5)->get();
+    $solucoes = Solucao::with('user')->orderBy('created_at', 'desc')->take(3)->get();
+    $documentos = Documento::orderBy('created_at', 'desc')->take(3)->get();
+    return view('dashboard', compact('noticias', 'topicos', 'solucoes', 'documentos'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/myProfile', [ProfileController::class, 'index'])->name('profile.index');
@@ -108,9 +113,10 @@ Route::middleware('auth')->group(function () {
     // Comentários
     Route::prefix('comentarios')->name('comentarios.')->controller(ComentarioController::class)->group(function () {
         Route::post('/store', 'store')->name('store');
-        Route::get('/usuarios/{idResposta}', 'usuariosDaResposta')->name('usuarios');
+        //Route::get('/usuarios/{idResposta}', 'usuariosDaResposta')->name('usuarios');
         Route::put('/update/{id}', 'update')->name('update');
         Route::delete('/destroy/{id}', 'destroy')->name('destroy');
+        Route::get('/usuarios/{respostaId}', 'buscarUsuarios')->name('usuarios');
     });
 
     // Sugestões de Tópicos

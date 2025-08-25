@@ -44,6 +44,7 @@ class Topico extends Model
     public function scopeUltimaAtividade($query)
     {
         return $query
+            ->addSelect('topicos.*') // <-- garante que traz todas as colunas
             ->addSelect([
                 'ultimaAtividade' => DB::raw('GREATEST(
                 topicos.updated_at,

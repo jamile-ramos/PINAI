@@ -47,7 +47,7 @@
                             <a class="btn btn-visualizar flex-fill" href="{{ route('noticias.show', ['id' => $noticia->id, 'slug' => $noticia->slug]) }}" aria-label="Ver a notícia">
                                 Ver notícia
                             </a>
-                            @if(Auth::user()->tipoUsuario == 'admin' || (Auth::user()->id == $noticia->idUsuario && $tipoAba == 'myNoticias'))
+                            @if(Auth::user()->tipoUsuario != 'comum' || (Auth::user()->id == $noticia->idUsuario && $tipoAba == 'myNoticias'))
                             <button type="button" data-bs-toggle="tooltip"
                                 class="btn btn-info btn-edit flex-fill"
                                 data-url="{{ route('noticias.edit', $noticia->id) }}"
@@ -113,7 +113,7 @@
                     <a class="btn btn-md btn-visualizar flex-fill text-center" href="{{ route('noticias.show', ['id' => $noticia->id, 'slug' => $noticia->slug]) }}">
                         Ver
                     </a>
-                    @if(Auth::user()->tipoUsuario == 'admin' && $tipoAba == 'allNoticias')
+                    @if(Auth::user()->tipoUsuario != 'comum' && $tipoAba == 'allNoticias')
                     <a class="btn btn-md btn-info flex-fill text-center" href="{{ route('noticias.edit', $noticia->id) }}">
                         Editar
                     </a>

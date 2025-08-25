@@ -598,9 +598,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Abrir o modal de exclusão 
     document.querySelectorAll('.btn-remove').forEach(btn => {
         btn.addEventListener('click', () => {
-            console.log(btn)
             const form = document.getElementById('confirmExcluirForm');
-            console.log(form)
             const url = btn.getAttribute('data-url');
             form.setAttribute('action', url);
         });
@@ -716,7 +714,7 @@ document.addEventListener('DOMContentLoaded', function () {
             form.classList.remove("d-none");
 
             // preencher textarea
-            document.getElementById(`edit-textarea-${id}`).value = conteudo;
+            document.getElementById(`edit-${id}`).value = conteudo;
         });
     });
 
@@ -733,8 +731,258 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // ===== DEBUG SETUP =====
+    const DEBUG = true;
+    const dlog = (...args) => DEBUG && console.log('[MENTIONS]', ...args);
+
+    //=====================================================
+    // MENCIONAR USUÁRIO EM COMENTÁRIO NAS POSTAGENS DO FÓRUM
+    //=====================================================
+    let mencoesMap = {}; // armazena menções por respostaId ou comentárioId
+
+    // ----------------------------------------------------
+    // LISTENER INPUT
+    // ----------------------------------------------------
+    document.querySelectorAll('.mention-input').forEach(textarea => {
+        textarea.addEventListener('input', function () {
+            const cursorPos = textarea.selectionStart;
+            const text = textarea.value.substring(0, cursorPos);
+
+            let respostaId, tipo, comentarioId;
+
+            if (textarea.id.startsWith("comentario-")) {
+                respostaId = textarea.id.split('-')[1];
+                tipo = 'criar';
+            } else if (textarea.id.startsWith("edit-")) {
+                comentarioId = textarea.id.split('-')[1];
+                const formulario = document.getElementById(`edit-form-${comentarioId}`);
+                respostaId = formulario?.dataset.idresposta;
+                tipo = 'edit';
+            }
+
+            const match = text.match(/@([^\s@]*)$/);
+            dlog('INPUT', { id: textarea.id, tipo, respostaId, comentarioId, hasAtMatch: !!match, cursorPos });
+
+            if (match) {
+                const termo = match[1];
+                const url = `/comentarios/usuarios/${respostaId}?q=${encodeURIComponent(termo)}`;
+                dlog('FETCH start', { url, termo });
+
+                fetch(url)
+                    .then(res => {
+                        dlog('FETCH status', res.status);
+                        return res.json();
+                    })
+                    .then(data => {
+                        dlog('FETCH data', data);
+                        mostrarSugestoes(data.usuarios, respostaId, textarea, tipo, comentarioId);
+                    })
+                    .catch(err => dlog('FETCH error', err));
+            } else {
+                // Se não está digitando @, esconde menu
+                if (tipo === 'criar') {
+                    const menu = document.getElementById(`mention-suggestions-${respostaId}`);
+                    if (menu) menu.style.display = 'none';
+                    dlog('HIDE menu criar', { menuId: `mention-suggestions-${respostaId}`, exists: !!menu });
+                } else if (comentarioId) {
+                    const menu = document.getElementById(`mention-suggestions-edit-${comentarioId}`);
+                    if (menu) menu.style.display = 'none';
+                    dlog('HIDE menu edit', { menuId: `mention-suggestions-edit-${comentarioId}`, exists: !!menu });
+                }
+            }
+        });
+    });
+
+    // ----------------------------------------------------
+    // MENU DE SUGESTÕES
+    // ----------------------------------------------------
+    function mostrarSugestoes(usuarios, respostaId, textarea, tipo, comentarioId) {
+        dlog('mostrarSugestoes()', { tipo, respostaId, comentarioId, count: usuarios?.length });
+
+        let menu, lista, menuId, listaId;
+
+        if (tipo === 'criar') {
+            menuId = `mention-suggestions-${respostaId}`;
+            listaId = `suggestions-list-${respostaId}`;
+        } else {
+            menuId = `mention-suggestions-edit-${comentarioId}`;
+            listaId = `suggestions-list-edit-${comentarioId}`;
+        }
+
+        menu = document.getElementById(menuId);
+        lista = document.getElementById(listaId);
+
+        if (!menu || !lista) {
+            dlog('ERRO: menu/lista não encontrados', { menuId, listaId, menuExists: !!menu, listaExists: !!lista });
+            return;
+        }
+
+        lista.innerHTML = '';
+
+        if (!usuarios || usuarios.length === 0) {
+            menu.style.display = 'none';
+            dlog('Sem usuários, ocultando menu', { menuId });
+            return;
+        }
+
+        usuarios.forEach(usuario => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+      <a class="dropdown-item d-flex align-items-center suggestion-item"
+         href="#"
+         data-idusuario="${usuario.id}"
+         data-nomeusuario="${usuario.name}"
+         data-respostaid="${respostaId}"
+         data-tipo="${tipo}"
+         data-comentarioid="${comentarioId || ''}">
+        <i class="fas fa-user-circle fa-2x text-secondary me-2"></i>
+        <span class="text-truncate"><strong class="d-block">${usuario.name}</strong></span>
+      </a>`;
+            lista.appendChild(li);
+        });
+
+        const rect = textarea.getBoundingClientRect();
+        menu.style.position = 'absolute';
+        menu.style.left = rect.left + 'px';
+        menu.style.top = rect.bottom + window.scrollY + 'px';
+        menu.style.display = 'block';
+
+        dlog('MENU pronto', { menuId, items: lista.children.length, styleDisplay: menu.style.display });
+    }
+
+    // ----------------------------------------------------
+    // CLICK NAS SUGESTÕES
+    // ----------------------------------------------------
+    document.addEventListener('click', function (event) {
+        const link = event.target.closest('.suggestion-item');
+        if (!link) return;
+
+        event.preventDefault();
+
+        const nome = link.dataset.nomeusuario;
+        const id = link.dataset.idusuario;
+        const respostaId = link.dataset.respostaid;
+        const tipo = link.dataset.tipo;
+        const comentarioId = link.dataset.comentarioid;
+
+        dlog('CLICK suggestion', { nome, id, respostaId, tipo, comentarioId });
+
+        let textarea, inputMencoes, chave;
+
+        if (tipo === 'criar') {
+            textarea = document.getElementById(`comentario-${respostaId}`);
+            inputMencoes = document.getElementById(`mencoes-${respostaId}`);
+            chave = respostaId;
+        } else {
+            textarea = document.getElementById(`edit-${comentarioId}`);
+            inputMencoes = document.querySelector(`#edit-form-${comentarioId} input[name="mencoes"]`);
+            chave = `edit-${comentarioId}`;
+        }
+
+        dlog('Targets', { textareaId: textarea?.id, inputId: inputMencoes?.id, chave });
+
+        if (!textarea) {
+            dlog('ERRO: textarea não encontrado!');
+            return;
+        }
+
+        const cursorPos = textarea.selectionStart ?? textarea.value.length;
+        const before = textarea.value.substring(0, cursorPos);
+        const after = textarea.value.substring(cursorPos);
+        textarea.value = before.replace(/@([^\s@]*)$/, `@${nome} `) + after;
+        textarea.focus();
+
+        if (!mencoesMap[chave]) mencoesMap[chave] = [];
+        mencoesMap[chave].push({ id: Number(id), nome: nome });
+
+        dlog('mencoesMap após clique', { chave, mencoes: mencoesMap[chave] });
+
+        if (inputMencoes) {
+            inputMencoes.value = JSON.stringify(mencoesMap[chave]);
+            dlog('input[mencoes] preenchido', inputMencoes.value);
+        }
+
+        const menuId = (tipo === 'criar')
+            ? `mention-suggestions-${respostaId}`
+            : `mention-suggestions-edit-${comentarioId}`;
+        const menu = document.getElementById(menuId);
+        if (menu) {
+            menu.style.display = 'none';
+            dlog('Fechando menu', menuId);
+        } else {
+            dlog('Menu pra fechar não encontrado', menuId);
+        }
+    });
+
+    // ----------------------------------------------------
+    // ATUALIZA MENÇÕES (sync textarea x hidden)
+    // ----------------------------------------------------
+    function atualizarMencoes({ chave, textareaVal }) {
+        dlog('atualizarMencoes() INIT', { chave, textareaVal });
+
+        if (typeof textareaVal !== "string") {
+            const textarea = document.querySelector(`#${chave}`);
+            textareaVal = textarea ? textarea.value : "";
+            dlog('textareaVal obtido do DOM', { chave, textareaVal });
+        }
+
+        const nomesCapturados = [...textareaVal.matchAll(/@([A-Za-zÀ-ú\s]+)/g)]
+            .map(m => m[1].trim());
+
+        const hidden = document.querySelector(`#mencoes-${chave}`);
+        if (!hidden) {
+            dlog('[WARN] Campo hidden não encontrado', { chave });
+            return;
+        }
+
+        let mencoesExistentes = [];
+        try {
+            mencoesExistentes = JSON.parse(hidden.value || "[]");
+        } catch (e) {
+            dlog('[ERROR] JSON parse falhou', { error: e, hiddenVal: hidden.value });
+            mencoesExistentes = [];
+        }
+
+        const resultado = mencoesExistentes.filter(m =>
+            nomesCapturados.includes(m.nome)
+        );
+
+        hidden.value = JSON.stringify(resultado);
+
+        dlog("atualizarMencoes() DONE", {
+            chave,
+            nomesCapturados,
+            mencoesExistentes,
+            resultado,
+            inputVal: hidden.value
+        });
+    }
+
+    // ----------------------------------------------------
+    // INIT NOS FORMS DE EDIÇÃO
+    // ----------------------------------------------------
+    document.querySelectorAll('form.edit-comment-form').forEach(form => {
+        const textarea = form.querySelector('.mention-input');
+        const comentarioId = textarea.id.replace('edit-', '');
+        const chave = `edit-${comentarioId}`;
+
+        if (textarea) {
+            dlog("[INIT] Rodando atualizarMencoes() no carregamento do form", {
+                comentarioId,
+                chave,
+                textareaVal: textarea.value
+            });
+
+            atualizarMencoes({ chave, textareaVal: textarea.value });
+        } else {
+            dlog("[INIT] Nenhum textarea encontrado para form", { comentarioId });
+        }
+    });
+
+
+
     // Toggle de visibilidade do menu de menções
-    let usuarios = [];
+    /*let usuarios = [];
     let nomeUsuarioMencionado = '';
 
     document.querySelectorAll('.mention-user').forEach(btn =>
@@ -868,7 +1116,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 btnMencionar.disabled = false;
             }
         }
-    });
+    });*/
 
     // Fechar formulario de comentario quando clicar em cancelar
     document.querySelectorAll('.btn-cancelar-comment').forEach(btn => {

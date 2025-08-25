@@ -76,7 +76,7 @@
                                 <a class="btn btn-visualizar" href="{{ route('topicos.show', ['id' => $topico->id, 'slug' => $topico->slug]) }}" aria-label="Ver tópico">
                                     Ver Tópico
                                 </a>
-                                @if(Auth::user()->tipoUsuario == 'admin' || (Auth::user()->id == $topico->idUsuario && $tipoAba == 'myTopicos'))
+                                @if(Auth::user()->tipoUsuario != 'comum' || (Auth::user()->id == $topico->idUsuario && $tipoAba == 'myTopicos'))
                                 <button
                                     type="button"
                                     class="btn btn-info btn-editTopico"
@@ -157,7 +157,7 @@
                         <a class="btn btn-visualizar btn-md flex-fill" href="{{ route('topicos.show', ['id' => $topico->id, 'slug' => $topico->slug]) }}" aria-label="Ver tópico">
                             Ver Tópico
                         </a>
-                        @if(Auth::user()->tipoUsuario == 'admin' || (Auth::user()->id == $topico->idUsuario && $tipoAba == 'myTopicos'))
+                        @if(Auth::user()->tipoUsuario != 'comum' || (Auth::user()->id == $topico->idUsuario && $tipoAba == 'myTopicos'))
                         <button type="button" class="btn btn-info btn-md flex-fill text-center btn-editTopico"
                             data-id="{{ $topico->id }}">
                             Editar

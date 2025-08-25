@@ -47,7 +47,7 @@
                         <a class="btn btn-visualizar" href="{{ asset('storage/' . $documento->caminhoArquivo) }}" aria-label="Visualizar documento">
                             Visualizar
                         </a>
-                        @if(Auth::user()->tipoUsuario == 'admin' || (Auth::user()->id == $documento->idUsuario && $tipoAba == 'myDocumentos'))
+                        @if(Auth::user()->tipoUsuario != 'comum' || (Auth::user()->id == $documento->idUsuario && $tipoAba == 'myDocumentos'))
                         <button type="button" data-bs-toggle="tooltip"
                             class="btn btn-info btn-edit"
                             data-url="{{ route('documentos.edit', $documento->id) }}"
@@ -100,7 +100,7 @@
                     <a class="btn btn-md btn-visualizar flex-fill text-center" href="{{ asset('storage/' . $documento->caminhoArquivo) }}" target="_blank">
                         Visualizar
                     </a>
-                    @if(Auth::user()->tipoUsuario == 'admin' || (Auth::user()->id == $documento->idUsuario && $tipoAba == 'myDocumentos'))
+                    @if(Auth::user()->tipoUsuario != 'comum' || (Auth::user()->id == $documento->idUsuario && $tipoAba == 'myDocumentos'))
                     <a class="btn btn-md btn-info flex-fill text-center" href="{{ route('documentos.edit', $documento->id) }}">
                         Editar
                     </a>

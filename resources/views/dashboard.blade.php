@@ -61,8 +61,8 @@
 
 
     <!-- Card de Noticias -->
-    <div class="home-news container">
-      <h2 class="h4 fw-bolder mb-0 pb-0">Últimas Notícias</h2>
+    <div class="home-news container mb-5 mt-5">
+      <h2 class="h3 fw-bolder mb-0 pb-0">Últimas Notícias</h2>
 
       <div class="row row-cols-1 g-4">
         @foreach($noticias as $noticia)
@@ -96,7 +96,80 @@
       </div>
     </div>
 
+    <!-- Último tópicos -->
+    <section class="forum-topics mb-5 w-100">
+      <div class="d-flex align-items-center mb-4">
+        <h2 class="h3 fw-bolder mb-0 pb-0">Atividades Recentes no Fórum</h2>
+      </div>
+
+      <div class="card shadow-sm rounded-3">
+        <div class="card-body p-0">
+          <ul class="list-group list-group-flush">
+            @foreach($topicos as $topico)
+            <li class="list-group-item list-group-item-action py-3 px-4 d-flex align-items-center">
+              <a href="{{ route('topicos.show', ['id' => $topico->id, 'slug' => $topico->slug]) }}" class="text-decoration-none d-flex w-100">
+
+                <div class="flex-grow-1">
+                  <h5 class="h6 fw-bold text-dark mb-1">{{ Str::limit($topico->titulo, 80) }}</h5>
+                  <div class="d-flex flex-wrap small text-muted">
+                    <span class="d-flex align-items-center">
+                      <i class="fas fa-file-alt me-1 text-primary"></i>
+                      {{ $topico->postagens_count }} postagens
+                    </span>
+                  </div>
+                </div>
+
+                <div class="text-end ms-auto d-flex align-items-center text-muted small text-nowrap">
+                  <span class="me-2 d-none d-md-inline"><i class="fas fa-clock me-1"></i> {{ $topico->created_at->format('d/m/Y') }}</span>
+                  <i class="fas fa-chevron-right ms-2 text-primary"></i>
+                </div>
+              </a>
+            </li>
+            @endforeach
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Soluções em Destaque -->
+    <section class="highlighted-solutions w-100">
+      <div class="d-flex align-items-center mb-4">
+        <h2 class="h3 fw-bolder mb-0 pb-0">Soluções em destaque</h2>
+      </div>
+
+      <div class="row g-4">
+        @foreach($solucoes as $solucao)
+        <div class="col-12 col-md-6 col-lg-4">
+          <a href="{{ route('solucoes.show', ['id' => $solucao->id, 'slug' => $solucao->slug]) }}"
+            class="card h-100 text-decoration-none border-0 shadow-sm rounded-3 solution-card"
+            aria-label="Abrir solução: {{ $solucao->titulo }}">
+
+            <div class="card-body d-flex flex-column solutions">
+              <div class="text-center mb-3">
+                <i class="fas fa-lightbulb fa-2x text-primary"></i>
+              </div>
+              <h3 class="h6 fw-bold text-dark mb-2 text-truncate">
+                {{ $solucao->titulo }}
+              </h3>
+              <p class="text-muted small flex-grow-1">
+                {{ Str::limit($solucao->descricao, 100) }}
+              </p>
+              <div class="d-flex justify-content-between align-items-center mt-3">
+                <small class="text-muted">
+                  <i class="fas fa-universal-access me-1"></i> {{ $solucao->user->nai->siglaNai }}
+                </small>
+                <small class="text-muted">
+                  <i class="fas fa-calendar-alt me-1"></i> {{ $solucao->created_at->format('d/m/Y') }}
+                </small>
+              </div>
+            </div>
+          </a>
+        </div>
+        @endforeach
+      </div>
+    </section>
 
   </div>
+</div>
 
-  @endsection
+@endsection

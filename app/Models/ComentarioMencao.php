@@ -14,7 +14,18 @@ class ComentarioMencao extends Model
         'idUsuarioMencionou',
     ];
 
-    public function comentario(){
-        return $this->belongsTo(Comentario::class);
+    public function comentario()
+    {
+        return $this->belongsTo(Comentario::class, 'idComentario', 'id');
+    }
+
+    public function usuarioMencionado()
+    {
+        return $this->belongsTo(User::class, 'idUsuarioMencionado', 'id');
+    }
+
+    public function usuarioMencionou()
+    {
+        return $this->belongsTo(User::class, 'idUsuarioMencionou', 'id');
     }
 }

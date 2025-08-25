@@ -26,14 +26,20 @@ class Resposta extends Model
         return $this->hasMany(Comentario::class, 'idResposta');
     }
 
-    public function podeEditar(){
-        $user = Auth::user();
+    public function podeEditar()
+{
+    $user = Auth::user();
 
-        if($user && $user->tipoUsuario !== 'comum'){
-            return true;
-        }
-
-        return $user && $user->id === $this->idUsuario;
+    if (!$user) {
+        return false;
     }
+
+    if ($user->tipoUsuario !== 'comum') {
+        return true;
+    }
+
+    return $user->id === $this->idUsuario;
+}
+
     
 }

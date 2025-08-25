@@ -40,7 +40,7 @@
                             <a class="btn btn-visualizar" href="{{ route('postagens.show', ['id' => $postagem->id, 'slug' => $postagem->slug]) }}" aria-label="Ver postagem">
                                 Ver postagem
                             </a>
-                            @if(Auth::user()->tipoUsuario == 'admin' || (Auth::user()->id == $postagem->idUsuario && $tipoAba == 'myPostagens'))
+                            @if(Auth::user()->tipoUsuario != 'comum' || (Auth::user()->id == $postagem->idUsuario && $tipoAba == 'myPostagens'))
                             <button type="button" class="btn btn-info btn-edit"
                                 data-bs-toggle="tooltip"
                                 data-url="{{ route('postagens.edit', $postagem->id) }}"
@@ -88,7 +88,7 @@
                 <a class="btn btn-md btn-visualizar flex-fill text-center" href="{{ route('postagens.show', ['id' => $postagem->id, 'slug' => $postagem->slug]) }}">
                     Ver
                 </a>
-                @if(Auth::user()->tipoUsuario == 'admin' || (Auth::user()->id == $postagem->idUsuario && $tipoAba == 'myPostagens'))
+                @if(Auth::user()->tipoUsuario != 'comum' || (Auth::user()->id == $postagem->idUsuario && $tipoAba == 'myPostagens'))
                 <button type="button" class="btn btn-info btn-md btn-edit flex-fill text-center"
                     data-bs-toggle="tooltip"
                     data-url="{{ route('postagens.edit', $postagem->id) }}"

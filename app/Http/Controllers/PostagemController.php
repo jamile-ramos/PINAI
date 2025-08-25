@@ -93,7 +93,8 @@ class PostagemController extends Controller
             'respostas' => function ($query) {
                 $query->where('status', 'ativo')
                     ->with(['comentarios' => function ($q) {
-                        $q->where('status', 'ativo');
+                        $q->where('status', 'ativo')
+                        ->with(['user', 'mencoes']);
                     }]);
             }
         ])->findOrFail($id);

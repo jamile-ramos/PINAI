@@ -29,7 +29,7 @@ class RespostaController extends Controller
 
         $resposta->save();
         $postagem = Postagem::findOrFail($idPostagem);
-        return redirect()->route('postagens.show', $postagem)->with('success', 'Resposta criada com sucesso!');
+        return redirect()->route('postagens.show', ['id' => $postagem->id, 'slug' => $postagem->slug])->with('success', 'Resposta criada com sucesso!');
 
     }
 
@@ -46,7 +46,7 @@ class RespostaController extends Controller
         $resposta = Resposta::findOrFail($idResposta);
         $resposta->update($data);
         $postagem = $resposta->idPostagem;
-        return redirect()->route('postagens.show', $postagem)->with('success', 'Resposta atualizada com sucesso!');
+        return redirect()->route('postagens.show', ['id' => $postagem->id, 'slug' => $postagem->slug])->with('success', 'Resposta atualizada com sucesso!');
     }
 
     public function destroy($id){

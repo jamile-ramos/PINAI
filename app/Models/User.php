@@ -107,11 +107,29 @@ class User extends Authenticatable
 
     public function isComum()
     {
-        return $this->role === 'comum';
+        return $this->tipoUsuario === 'comum';
     }
 
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->tipoUsuario === 'admin';
+    }
+    public function isModerador(): bool
+    {
+        return $this->tipoUsuario === 'moderador';
+    }
+
+    public function scopeAdmins($q)
+    {
+        return $q->where('role', 'admin');
+    }
+    public function scopeModerators($q)
+    {
+        return $q->where('role', 'moderator');
     }
 }

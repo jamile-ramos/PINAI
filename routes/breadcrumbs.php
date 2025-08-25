@@ -72,7 +72,7 @@ Breadcrumbs::for('formNoticia', function (BreadcrumbTrail $trail, $tipoForm) {
 // Página Inicial > Portal de notícias > Ver notícia
 Breadcrumbs::for('verNoticia', function (BreadcrumbTrail $trail, $noticia) {
     $trail->parent('noticias');
-    $trail->push($noticia->titulo, route('noticias.show', ['slug' => $noticia->slug]));
+    $trail->push($noticia->titulo, route('noticias.show', ['id' => $noticia->id, 'slug' => $noticia->slug]));
 });
 
 // Página Inicial > Potal de notícias > Categoria
@@ -90,21 +90,21 @@ Breadcrumbs::for('topicos', function (BreadcrumbTrail $trail) {
 // Página Inicial > Fórum de Discussão > Tópico
 Breadcrumbs::for('postagens', function (BreadcrumbTrail $trail, $topico) {
     $trail->parent('topicos');
-    $trail->push($topico->titulo, route('postagens.index', ['idTopico' => $topico->id]));
+    $trail->push($topico->titulo, route('topicos.show', ['id' => $topico->id, 'slug' => $topico->slug]));
 });
 
 // Página Inicial > Fórum de Discussão > Topico > Adicionar Postagem ou Editar Postagem
 Breadcrumbs::for('formPostagem', function (BreadcrumbTrail $trail, $idTopico, $tipoForm) {
     $topico = Topico::findOrFail($idTopico);
     $trail->parent('postagens', $topico);
-    $trail->push($tipoForm, route('postagens.create', ['idTopico' => $idTopico]));
+    $trail->push($tipoForm, route('postagens.create', ['id' => $idTopico]));
 });
 
 // Página Inicial > Fórum de Discussão > Topico > Postagem > Add / Editar Resposta
 Breadcrumbs::for('addResposta', function (BreadcrumbTrail $trail, $postagem, $tipoForm) {
     $topico = Topico::findOrFail($postagem->idTopico);
     $trail->parent('postagens', $topico);
-    $trail->push($postagem->titulo, route('postagens.show', ['idTopico' => $topico->id, 'id' => $postagem->id]));
+    $trail->push($postagem->titulo, route('postagens.show', ['id' => $postagem->id, 'slug' => $postagem->slug]));
     $trail->push($tipoForm, route('respostas.create', ['idPostagem' => $postagem->id]));
 });
 
@@ -112,7 +112,7 @@ Breadcrumbs::for('addResposta', function (BreadcrumbTrail $trail, $postagem, $ti
 Breadcrumbs::for('verPostagem', function (BreadcrumbTrail $trail, $postagem) {
     $topico = Topico::findOrFail($postagem->idTopico);
     $trail->parent('postagens', $topico);
-    $trail->push($postagem->titulo, route('postagens.show', ['id' => $postagem->id]));
+    $trail->push($postagem->titulo, route('postagens.show', ['id' => $postagem->id, 'slug' => $postagem->slug]));
 });
 
 
@@ -152,7 +152,7 @@ Breadcrumbs::for('verSolucao', function (BreadcrumbTrail $trail, $solucao) {
     if($solucao->idCategoria){
         $trail->push($solucao->categoria->nomeCategoria, route('solucoes.solucoesCategorias', ['idCategoria' => $solucao->idCategoria]));
     }
-    $trail->push($solucao->titulo, route('solucoes.show', $solucao->id));
+    $trail->push($solucao->titulo, route('solucoes.show', ['id'=> $solucao->id, 'slug' => $solucao->slug]));
 });
 
 // Página Inicial > Banco de soluções > Categoria

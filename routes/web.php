@@ -64,8 +64,8 @@ Route::middleware('auth')->group(function () {
         Route::delete('/destroy/{id}', 'destroy')->name('destroy');
         Route::get('/edit/{id}', 'edit')->name('edit');
         Route::put('/update/{id}', 'update')->name('update');
-        Route::get('/{slug}', 'show')->name('show');
         Route::get('/categorias/{idCategoria}', 'noticiasCategorias')->name('noticiasCategorias');
+        Route::get('/{id}-{slug}', 'show')->where(['id' => '[0-9]+'])->name('show');
     });
 
     // Categorias
@@ -83,17 +83,17 @@ Route::middleware('auth')->group(function () {
         Route::delete('/destroy/{id}', 'destroy')->name('destroy');
         Route::get('/edit/{id}', 'edit')->name('edit');
         Route::put('/update/{id}', 'update')->name('update');
+        Route::get('/{id}-{slug}', 'show')->name('show'); 
     });
 
     // Postagens
     Route::prefix('postagens')->name('postagens.')->controller(PostagemController::class)->group(function () {
-        Route::get('/{idTopico}', 'index')->name('index');
         Route::get('/create/{idTopico}', 'create')->name('create');
         Route::post('/store', 'store')->name('store');
         Route::get('/edit/{id}', 'edit')->name('edit');
         Route::put('/update/{id}', 'update')->name('update');
         Route::delete('/destroy/{id}', 'destroy')->name('destroy');
-        Route::get('/show/{id}', 'show')->name('show');
+        Route::get('/{id}-{slug}', 'show')->name('show');
     });
 
     // Respostas
@@ -137,7 +137,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', 'create')->name('create');
         Route::post('/store', 'store')->name('store');
         Route::put('/update/{id}', 'update')->name('update');
-        Route::get('/show/{id}', 'show')->name('show');
+        Route::get('/{id}-{slug}', 'show')->name('show');
         Route::get('/edit/{id}', 'edit')->name('edit');
         Route::delete('/destroy/{id}', 'destroy')->name('destroy');
         Route::get('/categorias/{idCategoria}', 'solucoesCategorias')->name('solucoesCategorias');
@@ -153,4 +153,5 @@ Route::middleware('auth')->group(function () {
     // Páginas estáticas
     Route::view('/acessibilidade', 'acessibilidade')->name('acessibilidade');
     Route::view('/sobre', 'sobre')->name('sobre');
+    
 });

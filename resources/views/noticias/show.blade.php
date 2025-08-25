@@ -49,7 +49,7 @@
                 {{-- Botão de Compartilhar --}}
                 <div class="mt-2 mt-sm-0">
                     <button id="shareButton"
-                        data-url="{{ route('noticias.show', $noticia->slug) }}"
+                        data-url="{{ route('noticias.show', ['id' => $noticia->id, 'slug' => $noticia->slug]) }}"
                         class="btn btn-link d-flex align-items-center gap-2">
                         <i class="fas fa-share-alt"></i>
                         Compartilhar

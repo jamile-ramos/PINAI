@@ -5,7 +5,7 @@
             Foram encontrados {{ $postagens->total() }} resultado{{ $postagens->total() > 1 ? 's' : '' }} para:
             <span class="text-primary">"{{ $query }}"</span>
         </span>
-        <a href="{{ route('postagens.index', ['idTopico' => $topico->id]) }}?abaAtiva={{ request('abaAtiva') }}"
+        <a href="{{ route('topicos.show', ['id' => $topico->id, 'slug' => $topico->slug]) }}?abaAtiva={{ request('abaAtiva') }}"
             class="btn-limpar-filtro"
             aria-label="Limpar filtro de pesquisa e exibir todos os usuários">
             <i class="fas fa-times-circle" aria-hidden="true"></i>
@@ -37,7 +37,7 @@
                     <td>{{ $postagem->created_at->format('d/m/Y') }}</td>
                     <td>
                         <div class="form-button-action">
-                            <a class="btn btn-visualizar" href="{{ route('postagens.show', ['id' => $postagem->id]) }}" aria-label="Ver postagem">
+                            <a class="btn btn-visualizar" href="{{ route('postagens.show', ['id' => $postagem->id, 'slug' => $postagem->slug]) }}" aria-label="Ver postagem">
                                 Ver postagem
                             </a>
                             @if(Auth::user()->tipoUsuario == 'admin' || (Auth::user()->id == $postagem->idUsuario && $tipoAba == 'myPostagens'))
@@ -84,7 +84,7 @@
             </div>
 
             <div class="d-flex gap-2 flex-wrap">
-                <a class="btn btn-md btn-visualizar flex-fill text-center" href="{{ route('postagens.show', ['id' => $postagem->id]) }}">
+                <a class="btn btn-md btn-visualizar flex-fill text-center" href="{{ route('postagens.show', ['id' => $postagem->id, 'slug' => $postagem->slug]) }}">
                     Ver
                 </a>
                 @if(Auth::user()->tipoUsuario == 'admin' || (Auth::user()->id == $postagem->idUsuario && $tipoAba == 'myPostagens'))

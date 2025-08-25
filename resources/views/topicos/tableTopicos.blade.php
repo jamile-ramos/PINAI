@@ -73,7 +73,7 @@
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                                 @else
-                                <a class="btn btn-visualizar" href="{{ route('postagens.index', ['idTopico' => $topico->id]) }}" aria-label="Ver tópico">
+                                <a class="btn btn-visualizar" href="{{ route('topicos.show', ['id' => $topico->id, 'slug' => $topico->slug]) }}" aria-label="Ver tópico">
                                     Ver Tópico
                                 </a>
                                 @if(Auth::user()->tipoUsuario == 'admin' || (Auth::user()->id == $topico->idUsuario && $tipoAba == 'myTopicos'))
@@ -154,7 +154,7 @@
                             Excluir
                         </button>
                         @else
-                        <a class="btn btn-visualizar btn-md flex-fill" href="{{ route('postagens.index', ['idTopico' => $topico->id]) }}" aria-label="Ver tópico">
+                        <a class="btn btn-visualizar btn-md flex-fill" href="{{ route('topicos.show', ['id' => $topico->id, 'slug' => $topico->slug]) }}" aria-label="Ver tópico">
                             Ver Tópico
                         </a>
                         @if(Auth::user()->tipoUsuario == 'admin' || (Auth::user()->id == $topico->idUsuario && $tipoAba == 'myTopicos'))

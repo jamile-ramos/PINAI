@@ -26,7 +26,7 @@
         <span class="result-count" aria-live="polite" aria-atomic="true" style="color:#333; font-weight:600; font-size: 1rem;">
             Foram encontrados {{ $postagens->total() }} resultado{{ $postagens->total() > 1 ? 's' : '' }} para: <span class="text-primary">"{{ $query }}"</span>
         </span>
-        <a href="{{ route('postagens.index', ['idTopico' => $topico->id]) }}?abaAtiva={{ request('abaAtiva') }}"
+        <a href="{{ route('postagens.index', ['id' => $topico->id, 'slug' => $topico->slug]) }}?abaAtiva={{ request('abaAtiva') }}"
             class="btn-limpar-filtro"
             aria-label="Limpar filtro de pesquisa e exibir todos os usuários">
             <i class="fas fa-times-circle" aria-hidden="true"></i>
@@ -52,7 +52,7 @@
             {{ Str::limit($postagem->conteudo, 100, '...') }}
         </div>
         <div class="post-footer mt-2">
-            <a href="{{ route('postagens.show', $postagem->id )}}" class="btn btn-primary">Ver Postagem</a>
+            <a href="{{ route('postagens.show', ['id' => $postagem->id, 'slug' => $postagem->slug] )}}" class="btn btn-primary">Ver Postagem</a>
             <span><i class="fa-regular fa-comment"></i> {{ $postagem->respostas_count }} respostas</span>
         </div>
     </div>

@@ -30,7 +30,7 @@ $tipoForm = isset($resposta) ? 'Editar Resposta' : 'Adicionar Resposta';
                     {!! nl2br(e(Str::limit($postagem->conteudo, 500))) !!}
                     @if(strlen($postagem->conteudo) > 500)
                     <div class="mt-3 mb-3">
-                        <a href="{{ route('postagens.show', $postagem->topico->id) }}" class="text-primary">Ver postagem completa</a>
+                        <a href="{{ route('postagens.show', ['id' => $postagem->id, 'slug' => $postagem->slug]) }}" class="text-primary">Ver postagem completa</a>
                     </div>
                     @endif
                 </div>

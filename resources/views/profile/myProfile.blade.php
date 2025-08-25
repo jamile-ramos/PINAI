@@ -96,7 +96,7 @@
                                         <div class="col-md-8">
                                             <div class="card-body d-flex flex-column h-100 bg-transparent p-4">
                                                 <h5 class="card-title title-new mb-2">
-                                                    <a href="{{ route('noticias.show', $noticia->id) }}" class="text-decoration-none text-dark" data-btn="noticias" aria-label="Abrir a notícia completa: {{ $noticia->titulo }}">
+                                                    <a href="{{ route('noticias.show', ['id' => $noticia->id, 'slug' => $noticia->slug]) }}" class="text-decoration-none text-dark" data-btn="noticias" aria-label="Abrir a notícia completa: {{ $noticia->titulo }}">
                                                         {{ $noticia->titulo }}
                                                     </a>
                                                 </h5>
@@ -143,7 +143,7 @@
                                 {{ Str::limit($postagem->conteudo, 100, '...') }}
                             </div>
                             <div class="post-footer mt-2">
-                                <a href="{{ route('postagens.show', $postagem->id )}}" class="btn btn-primary">Ver Postagem</a>
+                                <a href="{{ route('postagens.show', ['id' => $postagem->id, 'slug' => $postagem->slug] )}}" class="btn btn-primary">Ver Postagem</a>
                                 <span><i class="fa-regular fa-comment"></i> {{ $postagem->respostas_count }} respostas</span>
                             </div>
                         </div>
@@ -218,7 +218,7 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    <a href="{{ route('solucoes.show', $solucao->id) }}" class="btn btn-primary rounded-pill px-4 py-2 mt-2">
+                                    <a href="{{ route('solucoes.show', ['id' => $solucao->id, 'slug' => $solucao->slug]) }}" class="btn btn-primary rounded-pill px-4 py-2 mt-2">
                                         Ver mais
                                     </a>
                                 </div>

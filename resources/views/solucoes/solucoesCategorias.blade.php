@@ -32,7 +32,7 @@
                   </ul>
                 </div>
               </div>
-              <a href="{{ route('solucoes.show', $solucao->id) }}" class="btn btn-primary rounded-pill px-4 py-2 mt-2">
+              <a href="{{ route('solucoes.show', ['id' => $solucao->id, 'slug' => $solucao->slug]) }}" class="btn btn-primary rounded-pill px-4 py-2 mt-2">
                 Ver mais
               </a>
             </div>

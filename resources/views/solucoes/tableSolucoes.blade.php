@@ -63,7 +63,7 @@
                     </td>
                     <td>
                         <div class="form-button-action">
-                            <a class="btn btn-visualizar" href="{{ route('solucoes.show', ['id' => $solucao->id]) }}" aria-label="Ver solução">
+                            <a class="btn btn-visualizar" href="{{ route('solucoes.show', ['id' => $solucao->id, 'slug' => $solucao->slug]) }}" aria-label="Ver solução">
                                 Ver solução
                             </a>
                             @if(Auth::user()->tipoUsuario == 'admin' || (Auth::user()->id == $solucao->idUsuario && $tipoAba == 'mySolucoes'))
@@ -142,7 +142,7 @@
 
 
                 <div class="d-flex gap-2 flex-wrap">
-                    <a class="btn btn-md btn-visualizar flex-fill text-center" href="{{ route('solucoes.show', ['id' => $solucao->id]) }}">Ver</a>
+                    <a class="btn btn-md btn-visualizar flex-fill text-center" href="{{ route('solucoes.show', ['id' => $solucao->id, 'slug' => $solucao->slug]) }}">Ver</a>
                     @if(Auth::user()->tipoUsuario == 'admin' || (Auth::user()->id == $solucao->idUsuario && $tipoAba == 'mySolucoes'))
                     <a class="btn btn-md btn-info flex-fill text-center" href="{{ route('solucoes.edit', $solucao->id) }}">Editar</a>
                     @endif

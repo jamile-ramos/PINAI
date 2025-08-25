@@ -14,7 +14,7 @@
                 @forelse($topicos as $topico)
                 <tr>
                     <td>
-                        <a href="{{ route('postagens.index', ['idTopico' => $topico->id]) }}" class="fw-bold">
+                        <a href="{{ route('topicos.show', ['id' => $topico->id, 'slug' => $topico->slug]) }}" class="fw-bold">
                             {{ $topico->titulo }}
                         </a>
                     </td>
@@ -40,7 +40,7 @@
         <div class="card mb-3 shadow-md">
             <div class="card-body">
                 <h5 class="card-title fw-bold mt-0">
-                    <a href="{{ route('postagens.index', ['idTopico' => $topico->id]) }}">
+                    <a href="{{ route('topicos.show', ['id' => $topico->id, 'slug' => $topico->slug]) }}">
                         {{ $topico->titulo }}
                     </a>
                 </h5>

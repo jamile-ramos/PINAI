@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Concerns\EnforcesCorrectSlug;
 use App\Models\CategoriaNoticia;
 use App\Models\Noticia;
 use App\Models\User;
@@ -225,9 +226,16 @@ class NoticiaController extends Controller
         return redirect()->route('noticias.index')->with('success', 'Notícia atualizada com sucesso!');
     }
 
-    public function show($slug)
+    use EnforcesCorrectSlug;
+
+    public function show($id, $slug)
     {
-        $noticia = Noticia::where('slug', $slug)->firstOrFail();
+        $noticia = Noticia::findOrFail($id);
+
+        if ($r = $this->redirectIfWrongSlug($noticia, $slug, 'noticias.show')) {
+            return $r;
+        }
+
         return view('noticias.show', compact('noticia'));
     }
 

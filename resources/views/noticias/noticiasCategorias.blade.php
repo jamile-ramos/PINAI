@@ -26,7 +26,7 @@
             <div class="col-md-8">
               <div class="card-body d-flex flex-column h-100 bg-transparent p-0">
                 <h3 class="card-title title-new mb-2 pl-0">
-                  <a href="{{ route('noticias.show', $noticia->slug) }}" class="text-decoration-none text-dark" data-btn="noticias">
+                  <a href="{{ route('noticias.show', ['id' => $noticia->id, 'slug' => $noticia->slug]) }}" class="text-decoration-none text-dark" data-btn="noticias">
                     {{ $noticia->titulo }}
                   </a>
                 </h3>

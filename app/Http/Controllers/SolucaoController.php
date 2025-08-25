@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Concerns\EnforcesCorrectSlug;
 use App\Models\CategoriaSolucao;
 use App\Models\Solucao;
 use App\Models\PublicoAlvo;
@@ -166,9 +167,15 @@ class SolucaoController extends Controller
         return redirect()->route('solucoes.index')->with('success', 'Solução criada com sucesso!');
     }
 
-    public function show($id)
+    use EnforcesCorrectSlug;
+
+    public function show($id, $slug)
     {
         $solucao = Solucao::findOrFail($id);
+
+        if($r = $this->redirectIfWrongSlug($solucao, $slug, 'noticias.show')){
+            return $r;
+        }
         return view('solucoes.show', compact('solucao'));
     }
 

@@ -30,7 +30,7 @@
                         <div class="col-md-8">
                             <div class="card-body d-flex flex-column h-100 bg-transparent p-0">
                                 <h5 class="card-title title-new mb-2">
-                                    <a href="{{ route('noticias.show', $noticia->slug) }}" class="text-decoration-none text-dark" data-btn="noticias">
+                                    <a href="{{ route('noticias.show', ['id' => $noticia->id, 'slug' => $noticia->slug]) }}" class="text-decoration-none text-dark" data-btn="noticias">
                                         {{ $noticia->titulo }}
                                     </a>
                                 </h5>
@@ -75,7 +75,7 @@
                         <div class="carousel-overlay position-absolute top-0 start-0 w-100 h-100"></div>
                     </div>
                     <div class="carousel-caption d-md-block">
-                        <a href="{{ route('noticias.show', $noticia->slug) }}" class="link-noticia text-white text-decoration-none fw-bold fs-6 fs-md-5 fs-lg-4">
+                        <a href="{{ route('noticias.show', ['id' => $noticia->id, 'slug' => $noticia->slug]) }}" class="link-noticia text-white text-decoration-none fw-bold fs-6 fs-md-5 fs-lg-4">
                             {{ $noticia->titulo }}
                         </a>
                     </div>
@@ -113,7 +113,7 @@
                     <img src="{{ asset('img/imgNoticias/' . $noticiaCategoria->imagem) }}" class="card-img-top img-capa" alt="{{ 'Imagem da notícia: ' . Str::limit($noticiaCategoria->titulo, 80) }}">
                     <div>
                         <h5 class="card-title pt-3 hover-underline">
-                            <a href="{{ route('noticias.show', $noticiaCategoria->slug) }}">{{ $noticiaCategoria->titulo }}</a>
+                            <a href="{{ route('noticias.show', ['id' => $noticia->id, 'slug' => $noticia->slug]) }}">{{ $noticiaCategoria->titulo }}</a>
                         </h5>
                         <p class="card-text">
                             <small class="text-muted">Publicado dia {{ $noticiaCategoria->created_at->format('d/m/Y') }}</small>

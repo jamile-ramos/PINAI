@@ -13,8 +13,16 @@ class Postagem extends Model
         'conteudo',
         'idTopico',
         'status',
-        'imagem'
+        'imagem',
+        'slug'
     ];
+
+        // Ajudante para gerar URL
+        public function getUrlAttribute(): string
+        {
+            return route('postagens.show', ['id' => $this->id, 'slug' => $this->slug]);
+        }
+    
     
     public function topico(){
         return $this->belongsTo(Topico::class, 'idTopico');

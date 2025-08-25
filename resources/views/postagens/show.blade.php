@@ -5,6 +5,7 @@
 @section('content')
 
 <div class="forum-wrapper">
+
     {{Breadcrumbs::render('verPostagem', $postagem)}}
 
     <!-- Respostas -->

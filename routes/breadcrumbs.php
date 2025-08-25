@@ -2,7 +2,10 @@
 
 // Note: Laravel will automatically resolve `Breadcrumbs::` without
 // this import. This is nice for IDE syntax and refactoring.
+
+use App\Models\CategoriaNoticia;
 use Diglactic\Breadcrumbs\Breadcrumbs;
+use Illuminate\Support\Str;
 
 // This import is also not required, and you could replace `BreadcrumbTrail $trail`
 //  with `$trail`. This is nice for IDE type checking and completion.
@@ -69,16 +72,26 @@ Breadcrumbs::for('formNoticia', function (BreadcrumbTrail $trail, $tipoForm) {
     $trail->push($tipoForm, route('noticias.create'));
 });
 
-// Página Inicial > Portal de notícias > Ver notícia
-Breadcrumbs::for('verNoticia', function (BreadcrumbTrail $trail, $noticia) {
-    $trail->parent('noticias');
-    $trail->push($noticia->titulo, route('noticias.show', ['id' => $noticia->id, 'slug' => $noticia->slug]));
-});
-
 // Página Inicial > Potal de notícias > Categoria
 Breadcrumbs::for('noticiasCategorias', function (BreadcrumbTrail $trail, $categoria) {
     $trail->parent('noticias');
     $trail->push($categoria->nomeCategoria, route('noticias.noticiasCategorias', ['idCategoria' => $categoria->id]));
+});
+
+// Página Inicial > Portal de notícias > Ver notícia
+Breadcrumbs::for('verNoticia', function (BreadcrumbTrail $trail, $noticia) {
+
+    $urlAnterior = url()->previous();
+
+    if (str_contains($urlAnterior, 'categorias')) {
+        $categoria = CategoriaNoticia::findOrFail($noticia->idCategoria);
+        $trail->parent('noticiasCategorias', $categoria);
+    } else if (str_contains($urlAnterior, 'myProfile')) {
+        $trail->parent('myProfile');
+    } else {
+        $trail->parent('noticias');
+    }
+    $trail->push($noticia->titulo, route('noticias.show', ['id' => $noticia->id, 'slug' => $noticia->slug]));
 });
 
 // Página Inicial > Fórum de Discussão
@@ -108,11 +121,26 @@ Breadcrumbs::for('addResposta', function (BreadcrumbTrail $trail, $postagem, $ti
     $trail->push($tipoForm, route('respostas.create', ['idPostagem' => $postagem->id]));
 });
 
-// Página Inicial > Fórum de Discussão > Tópico > Ver postagem
+// Página Inicial > Fórum de Discussão > Topico > Ver postagem
 Breadcrumbs::for('verPostagem', function (BreadcrumbTrail $trail, $postagem) {
+    $urlAnterior = url()->previous();
     $topico = Topico::findOrFail($postagem->idTopico);
-    $trail->parent('postagens', $topico);
-    $trail->push($postagem->titulo, route('postagens.show', ['id' => $postagem->id, 'slug' => $postagem->slug]));
+
+    if (Str::contains($urlAnterior, 'myProfile')) {
+        $trail->parent('myProfile');
+    } elseif (Str::contains($urlAnterior, "/topicos/{$topico->id}-{$topico->slug}")) {
+        $trail->parent('postagens', $topico);
+    } else {
+        $trail->parent('topicos');
+    }
+
+    $trail->push(
+        $postagem->titulo,
+        route('postagens.show', [
+            'id'   => $postagem->id,
+            'slug' => $postagem->slug
+        ])
+    );
 });
 
 
@@ -148,11 +176,24 @@ Breadcrumbs::for('formSolucao', function (BreadcrumbTrail $trail, $tipoForm) {
 
 // Página Inicial > Banco de soluções > Ver solução
 Breadcrumbs::for('verSolucao', function (BreadcrumbTrail $trail, $solucao) {
-    $trail->parent('solucoes');
-    if($solucao->idCategoria){
-        $trail->push($solucao->categoria->nomeCategoria, route('solucoes.solucoesCategorias', ['idCategoria' => $solucao->idCategoria]));
+    $urlAnterior = url()->previous();
+
+    if (Str::contains($urlAnterior, 'myProfile')) {
+        $trail->parent('myProfile');
+    } elseif (Str::contains($urlAnterior, 'solucoes/categorias')) {
+        if ($solucao->categoria) {
+            $trail->parent('categoriaSolucao', $solucao->categoria);
+        } else {
+            $trail->parent('solucoes');
+        }
+    } else {
+        $trail->parent('solucoes');
     }
-    $trail->push($solucao->titulo, route('solucoes.show', ['id'=> $solucao->id, 'slug' => $solucao->slug]));
+
+    $trail->push(
+        $solucao->titulo,
+        route('solucoes.show', ['id' => $solucao->id, 'slug' => $solucao->slug])
+    );
 });
 
 // Página Inicial > Banco de soluções > Categoria

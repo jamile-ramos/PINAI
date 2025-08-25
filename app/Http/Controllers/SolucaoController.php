@@ -176,6 +176,7 @@ class SolucaoController extends Controller
         if($r = $this->redirectIfWrongSlug($solucao, $slug, 'noticias.show')){
             return $r;
         }
+
         return view('solucoes.show', compact('solucao'));
     }
 

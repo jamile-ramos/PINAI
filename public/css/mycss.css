@@ -1561,7 +1561,10 @@ button:focus-visible,
 .alto-contraste .my-4.mb-0 > h1.h2.fw-bolder.text-uppercase.text-dark.mb-0.position-relative,
 .my-4.mb-0 > h1.h2.fw-bolder.text-uppercase.text-dark.mb-0.position-relative i.fas.fa-folder.me-3.text-primary,
 .alto-contraste .forum-topics .list-group-item,
-.alto-contraste .forum-topics h5 {
+.alto-contraste .forum-topics h5,
+.alto-contraste  #editUserModal .form-control,
+.alto-contraste #editUserModal .form-select,
+.alto-contraste #imagem {
     color: #fff !important;
 }
 
@@ -1594,8 +1597,6 @@ button:focus-visible,
 .alto-contraste .btn,
 .alto-contraste .btn-response,
 .alto-contraste h1.text-primary,
-.alto-contraste .result-count,
-.alto-contraste .result-count span.text-primary,
 .alto-contraste .publico-alvo-list li,
 .alto-contraste h5.text-primary,
 .alto-contraste .icon-acessibilidade,
@@ -1632,7 +1633,9 @@ button:focus-visible,
 .alto-contraste .mention-suggestions .dropdown-item:hover,
 .alto-contraste .mention-suggestions .dropdown-item:focus,
 .alto-contraste .mention-suggestions .dropdown-item:hover i,
-.alto-contraste .mention-suggestions .dropdown-item:focus i{
+.alto-contraste .mention-suggestions .dropdown-item:focus i,
+.alto-contraste .result-count span.text-primary,
+.alto-contraste .result-count{
     color: #000 !important;
 }
 .alto-contraste .mention-suggestions strong,
@@ -1655,7 +1658,9 @@ button:focus-visible,
 .alto-contraste .btn-limpar-filtro,
 .alto-contraste .btn-limpar-filtro i,
 .alto-contraste .user-icon-circle-profile,
-.alto-contraste .d-flex.justify-content-center.mt-3 .page-link {
+.alto-contraste .d-flex.justify-content-center.mt-3 .page-link,
+.alto-contraste #editUserModal .form-control,
+.alto-contraste  #editUserModal .form-select {
     background-color: #000 !important;
 }
 
@@ -1676,7 +1681,8 @@ button:focus-visible,
 .alto-contraste .table thead,
 .alto-contraste .table-striped tbody tr:nth-of-type(odd),
 .alto-contraste .modal-body input.form-control,
-.alto-contraste .d-flex.justify-content-center.mt-3 .page-item.disabled .page-link {
+.alto-contraste .d-flex.justify-content-center.mt-3 .page-item.disabled .page-link,
+.alto-contraste .result-count-text {
     background-color: #111 !important;
 }
 
@@ -1791,7 +1797,11 @@ button:focus-visible,
 .alto-contraste .btn-coment,
 .alto-contraste .card .btn,
 .alto-contraste .btn,
-.alto-contraste .d-flex.justify-content-center.mt-3 .page-item.active .page-link {
+.alto-contraste .d-flex.justify-content-center.mt-3 .page-item.active .page-link,
+.alto-contraste #editUserModal .form-control:focus,
+.alto-contraste #editUserModal .form-select:focus,
+.alto-contraste #formnai .form-control:focus,
+.alto-contraste #formnai .form-select:focus {
     border-color: #FFD700 !important;
 }
 

@@ -980,144 +980,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-
-    // Toggle de visibilidade do menu de menções
-    /*let usuarios = [];
-    let nomeUsuarioMencionado = '';
-
-    document.querySelectorAll('.mention-user').forEach(btn =>
-        btn.addEventListener('click', function () {
-            let respostaId = btn.getAttribute('data-id');
-            let menu = document.getElementById(`mention-menu-${respostaId}`);
-            let userList = document.getElementById(`user-list-${respostaId}`);
-            let noUsersMessage = document.getElementById(`no-users-${respostaId}`);
-
-            let openMenus = document.querySelectorAll('.mention-menu');
-
-            if (!btn) {
-                openMenus.forEach(menu => {
-                    menu.style.visibility = 'hidden';
-                });
-                return;
-            }
-
-            event.preventDefault();
-
-            if (!menu || !userList) {
-                return;
-            }
-
-            if (menu.style.visibility === 'visible') {
-                menu.style.visibility = 'hidden';
-                return;
-            }
-
-            // Faz a requisição AJAX para obter os usuários e abrir o menu
-            fetch(`/comentarios/usuarios/${respostaId}`)
-                .then(response => response.json())
-                .then(data => {
-                    usuarios = data.usuariosUnicos;
-                    usuarioAutenticado = data.userAuth;
-                    usuarios = usuarios.filter(usuario => usuario.id != usuarioAutenticado.id)
-                    if (usuarios && Array.isArray(usuarios)) {
-                        userList.innerHTML = '';
-                        usuarios.forEach(usuario => {
-                            let li = document.createElement('li');
-                            li.classList.add('mention-user-item');
-                            li.setAttribute('data-user', usuario.name);
-                            li.setAttribute('data-idUsuarioMencionado', usuario.id);
-                            li.setAttribute('data-id', respostaId);
-                            li.textContent = usuario.name;
-                            userList.appendChild(li);
-
-                        });
-
-                        // Exibe o menu de menção
-                        if (usuarios && usuarios.length > 0) {
-                            menu.style.visibility = 'visible';
-                        } else {
-                            noUsersMessage.style.visibility = 'visible';
-                            btn.style.visibility = 'hidden';
-
-                            setTimeout(function () {
-                                noUsersMessage.style.visibility = 'hidden';
-                            }, 5000);
-                        }
-
-                    } else {
-                        console.error("Erro: dados de usuários inválidos.");
-                    }
-                })
-                .catch(error => {
-                    console.error("Erro ao carregar usuários:", error);
-                });
-        })
-    )
-
-    // Pega o usuario para mencionar no textarea
-    document.addEventListener('click', function (event) {
-        let userItem = event.target.closest('.mention-user-item');
-        if (!userItem) return;
-
-        let respostaId = userItem.getAttribute('data-id');
-        let btnMencionar = document.getElementById(`mention-user-${respostaId}`);
-        let menu = document.getElementById(`mention-menu-${respostaId}`);
-        let userName = userItem.getAttribute('data-user');
-        let userId = userItem.getAttribute('data-idUsuarioMencionado')
-        let textarea = document.getElementById(`comentario-${respostaId}`);
-        let inputUsuarioMencionado = document.getElementById('usuarioMencionado');
-        inputUsuarioMencionado.value = userId
-
-        if (userName != null) {
-            btnMencionar.disabled = true;
-            menu.style.display = 'none'
-        }
-
-        let cursorPos = textarea.selectionStart;
-        let textBefore = textarea.value.substring(0, cursorPos);
-        let textAfter = textarea.value.substring(cursorPos);
-
-        textarea.value = textBefore + ` @${userName}` + textAfter;
-        textarea.focus();
-        nomeUsuarioMencionado = userName;
-
-        // Fecha o menu após a menção ser adicionada
-        if (menu) menu.style.display = 'none';
-    });
-
-    // Adiciona um ouvinte de evento para monitorar alterações no texto do comentário
-    document.addEventListener('input', function (event) {
-        if (event.target && event.target.matches('.mention-input')) {
-            let respostaId = event.target.getAttribute('id').split('-')[1];
-            let textarea = event.target;
-            let btnMencionar = document.getElementById(`mention-user-${respostaId}`);
-
-            let texto = textarea.value.trim();
-
-            // Verifica se já existe uma menção
-            let nomeParaProcurar = nomeUsuarioMencionado
-            let regex = new RegExp("\\b" + nomeParaProcurar + "\\b", "g");
-            let resultado = texto.match(regex);
-
-            let nomeUsuarioEncontrado = false;
-
-            // Verifica se a menção é válida e pertence a um usuário existente
-            if (resultado) {
-                for (let usuario of usuarios) {
-                    if (resultado[0] === usuario.name) {
-                        nomeUsuarioEncontrado = true;
-                    }
-                }
-            }
-
-            if (resultado != null && nomeUsuarioEncontrado) {
-                btnMencionar.disabled = true;
-            } else {
-                btnMencionar.disabled = false;
-            }
-        }
-    });*/
-
     // Fechar formulario de comentario quando clicar em cancelar
     document.querySelectorAll('.btn-cancelar-comment').forEach(btn => {
         btn.addEventListener('click', function () {
@@ -1142,13 +1004,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     };
-
-    /* Modal excluir conta */
-    /*var myModal = new bootstrap.Modal(document.getElementById('confirmUserDeletionModal'), {
-        backdrop: true, // Isso impede o fechamento do modal quando clicado fora.
-        keyboard: false  // Isso impede o fechamento do modal com a tecla ESC.
-    });*/
-
 
     /* Estados e cidades dos Nai no Painel de usuários */
     const estadoSelect = document.getElementById('estado');
@@ -1246,6 +1101,23 @@ document.addEventListener('DOMContentLoaded', function () {
             compartilharNoticia(url);
         });
     }
+
+    ClassicEditor
+        .create(document.querySelector('#conteudo'), {
+            toolbar: [
+                'bold', 'italic', 'link',
+                'blockQuote', 'undo', 'redo'
+            ]
+        })
+        .then(editor => {
+            const form = document.querySelector('#formNoticia');
+            form.addEventListener('submit', () => {
+                document.querySelector('#conteudo').value = editor.getData();
+            });
+        })
+        .catch(error => {
+            console.error(error);
+        });
 });
 
 // Evento para ocultar alertas com jQuery

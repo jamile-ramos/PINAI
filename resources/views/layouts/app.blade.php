@@ -109,6 +109,8 @@
 
     <!-- Métodos de demonstração do Kaiadmin, não inclua no seu projeto -->
     <script src="/js/setting-demo.js"></script>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
     
 
 </body>

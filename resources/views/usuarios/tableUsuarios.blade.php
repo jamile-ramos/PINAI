@@ -1,18 +1,18 @@
-<div class="table-responsive">
-    @if(request('query') && $abaAtiva === 'all-users')
-    <div class="d-flex justify-content-between align-items-center mb-3 p-3 rounded border border-secondary-subtle bg-light">
-        <span class="result-count" aria-live="polite" aria-atomic="true" style="color:#333; font-weight:600; font-size: 1rem;">
-            Foram encontrados {{ $usuarios->total() }} resultado{{ $usuarios->total() > 1 ? 's' : '' }} para: <span class="text-primary">"{{ $query }}"</span>
-        </span>
-        <a href="{{ route('painel.usuarios') }}?abaAtiva={{ request('abaAtiva') }}"
-            class="btn-limpar-filtro"
-            aria-label="Limpar filtro de pesquisa e exibir todos os usuários">
-            <i class="fas fa-times-circle" aria-hidden="true"></i>
-            Limpar Filtro
-        </a>
-    </div>
-    @endif
+@if(request('query') && $abaAtiva === 'all-users')
+<div class="d-flex justify-content-between align-items-center mb-3 p-3 rounded border border-secondary-subtle bg-light">
+    <span class="result-count" aria-live="polite" aria-atomic="true" style="color:#333; font-weight:600; font-size: 1rem;">
+        Foram encontrados {{ $usuarios->total() }} resultado{{ $usuarios->total() > 1 ? 's' : '' }} para: <span class="text-primary">"{{ $query }}"</span>
+    </span>
+    <a href="{{ route('painel.usuarios') }}?abaAtiva={{ request('abaAtiva') }}"
+        class="btn-limpar-filtro"
+        aria-label="Limpar filtro de pesquisa e exibir todos os usuários">
+        <i class="fas fa-times-circle" aria-hidden="true"></i>
+        Limpar Filtro
+    </a>
+</div>
+@endif
 
+<div class="table-responsive">
     {{-- Table Desktop --}}
     <div class="d-none d-md-block">
         <table class="table table-hover table-striped ">
@@ -132,7 +132,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title fw-bold" id="exampleModalLabel">Editar</h5>
-                <button type="button" class="close" data-bs-dimdiss="modal" aria-label="Fechar">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Fechar">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -167,7 +167,7 @@
                         </select>
                     </div>
                     <div class="modal-footer border-top border-light mt-3">
-                        <button type="button" class="btn btn-secondary" data-bs-dimdiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                         <button type="submit" class="btn btn-primary">Salvar alterações</button>
                     </div>
                 </form>
@@ -182,7 +182,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title fw-bold" id="confirmModalLabel">Confirmar Ação</h5>
-                <button type="button" class="close" data-bs-dimdiss="modal" aria-label="Fechar">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Fechar">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -196,7 +196,7 @@
                     @method('PUT')
                     <input type="hidden" name="status" id="status">
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dimdiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" id="confirmActionBtn" class="btn">Desabilitar</button>
                     </div>
                 </form>

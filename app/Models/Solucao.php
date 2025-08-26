@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Solucao extends Model
 {
@@ -47,5 +48,18 @@ class Solucao extends Model
     public function scopeAtivos($query)
     {
         return $query->where('status', 'ativo');
+    }
+
+    public static function buscarMinhasSolucoes($query, $pagina, $abaAtiva, $perPage = 10)
+    {
+        $resultado = Solucao::ativos()
+        ->where('idUsuario', Auth::user()->id);
+
+        if(!empty($query)){
+            $resultado->where('titulo', 'like', '%' . $query . '%');
+        }
+
+        return $resultado->paginate($perPage, ['*'], 'mySolucoes_page', $pagina)
+            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
     }
 }

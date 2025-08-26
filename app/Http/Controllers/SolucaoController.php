@@ -42,9 +42,9 @@ class SolucaoController extends Controller
 
         // Minhas Soluções
         if ($query && $abaAtiva === 'mySolucoes') {
-            $mySolucoes = $this->buscarMinhasSolucoes($query, $pages['mySolucoes'], $abaAtiva);
+            $mySolucoes = Solucao::buscarMinhasSolucoes($query, $pages['mySolucoes'], $abaAtiva);
         } else {
-            $mySolucoes = $this->buscarMinhasSolucoes(null, $pages['mySolucoes'], $abaAtiva);
+            $mySolucoes = Solucao::buscarMinhasSolucoes(null, $pages['mySolucoes'], $abaAtiva);
         }
 
         // Gerenciar Soluções
@@ -104,20 +104,6 @@ class SolucaoController extends Controller
             ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
     }
 
-    public function buscarMinhasSolucoes($query, $pagina, $abaAtiva)
-    {
-        $resultado = Solucao::ativos()
-        ->where('idUsuario', Auth::user()->id);
-
-        if(!empty($query)){
-            $resultado->where('titulo', 'like', '%' . $query . '%');
-        }
-
-        return $resultado->paginate(10, ['*'], 'mySolucoes_page', $pagina)
-            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
-    }
-
-
     public function paginaVazia($itensPorPagina, $pagina)
     {
         return new LengthAwarePaginator(
@@ -174,11 +160,16 @@ class SolucaoController extends Controller
     {
         $solucao = Solucao::findOrFail($id);
 
+        $ultimasSolucoes = Solucao::where('id', '!=', $solucao->id)
+        ->latest()
+        ->take(3)
+        ->get();
+
         if($r = $this->redirectIfWrongSlug($solucao, $slug, 'solucoes.show')){
             return $r;
         }
 
-        return view('solucoes.show', compact('solucao'));
+        return view('solucoes.show', compact('solucao', 'ultimasSolucoes'));
     }
 
     public function edit($id)

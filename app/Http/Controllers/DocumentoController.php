@@ -36,9 +36,9 @@ class DocumentoController extends Controller
 
         // Meus Documentos
         if ($query && $abaAtiva === 'myDocumentos') {
-            $myDocumentos = $this->buscarMeusDocumentos($query, $pages['myDocumentos'], $abaAtiva);
+            $myDocumentos = Documento::buscarMeusDocumentos($query, $pages['myDocumentos'], $abaAtiva);
         } else {
-            $myDocumentos = $this->buscarMeusDocumentos(null, $pages['myDocumentos'], $abaAtiva);
+            $myDocumentos = Documento::buscarMeusDocumentos(null, $pages['myDocumentos'], $abaAtiva);
         }
 
         // Gerenciar Documentos
@@ -101,22 +101,6 @@ class DocumentoController extends Controller
                 $abaAtiva === 'categoriasDocumentos' ? 'categoriasDocumentos_page' : 'visaoCategoriasDoc_page',
                 $pagina
             )
-            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
-    }
-
-    public function buscarMeusDocumentos($query, $pagina, $abaAtiva)
-    {
-        $resultados = Documento::ativos()
-            ->where('idUsuario', Auth::user()->id);
-
-        if (!empty($query)) {
-            $resultados->where(function ($q) use ($query) {
-                $q->where('nomeArquivo', 'like', '%' . $query . '%')
-                    ->orWhere('descricao', 'like', '%' . $query . '%');
-            });
-        }
-
-        return $resultados->paginate(9, ['*'], 'myDocumentos_page', $pagina)
             ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
     }
 

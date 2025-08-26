@@ -11,8 +11,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Notification; 
-use App\Notifications\NovaNoticiaNotification; 
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\NovaNoticiaNotification;
 
 class NoticiaController extends Controller
 {
@@ -39,10 +39,11 @@ class NoticiaController extends Controller
         }
 
         // Minhas Noticias
+        // OBS: Logica de buscarMinhasNoticias estano model para ser reutilizada em Profile
         if ($query && $abaAtiva === 'myNoticias') {
-            $minhasNoticias = $this->buscarMinhasNoticias($query, $pages['myNoticias'], $abaAtiva);
+            $minhasNoticias = Noticia::buscarMinhasNoticias($query, $pages['myNoticias'], $abaAtiva);
         } else {
-            $minhasNoticias = $this->buscarMinhasNoticias(null, $pages['myNoticias'], $abaAtiva);
+            $minhasNoticias = Noticia::buscarMinhasNoticias(null, $pages['myNoticias'], $abaAtiva);
         }
 
         // Gerenciar Noticias
@@ -82,11 +83,11 @@ class NoticiaController extends Controller
     {
         $resultados = CategoriaNoticia::ativos();
 
-        if($abaAtiva == 'visaoNoticias'){
+        if ($abaAtiva == 'visaoNoticias') {
             $resultados->whereHas('noticias', function ($q) {
                 $q->ativos();
             });
-        }   
+        }
 
         if (!empty($query)) {
             $resultados->where('nomeCategoria', 'like', '%' . $query . '%');
@@ -102,44 +103,24 @@ class NoticiaController extends Controller
     }
 
 
-    public function buscarMinhasNoticias($query, $pagina, $abaAtiva)
+    public function buscarTodasNoticias($query, $pagina, $abaAtiva)
     {
         $resultado = Noticia::ativos()
-            ->with('categoria')
-            ->where('idUsuario', Auth::user()->id);
+            ->with('categoria');
 
         if (!empty($query)) {
             $resultado->where(function ($q) use ($query) {
                 $q->where('titulo', 'like', '%' . $query . '%')
                     ->orWhereHas('categoria', function ($sub) use ($query) {
                         $sub->where('nomeCategoria', 'like', '%' . $query . '%');
+                    })
+                    ->orWhereHas('user', function ($sub) use ($query) {
+                        $sub->where('name', 'like', '%' . $query . '%');
                     });
             });
         }
 
-        return $resultado->paginate(10, ['*'], 'myNoticias_page', $pagina)
-            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
-    }
-
-
-    public function buscarTodasNoticias($query, $pagina, $abaAtiva)
-    {
-        $resultado = Noticia::ativos()
-            ->with('categoria');
-
-            if(!empty($query)){
-                $resultado->where(function ($q) use ($query) {
-                    $q->where('titulo', 'like', '%' . $query . '%')
-                        ->orWhereHas('categoria', function ($sub) use ($query) {
-                            $sub->where('nomeCategoria', 'like', '%' . $query . '%');
-                        })
-                        ->orWhereHas('user', function ($sub) use ($query) {
-                            $sub->where('name', 'like', '%' . $query . '%');
-                        });
-                });
-            }
-            
-            return $resultado->paginate(10, ['*'], 'allNoticias_page', $pagina)
+        return $resultado->paginate(10, ['*'], 'allNoticias_page', $pagina)
             ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
     }
 
@@ -199,7 +180,7 @@ class NoticiaController extends Controller
         $noticia->update(['status' => 'inativo']);
 
         event(new ConteudoExcluido($noticia->titulo, 'notícia'));
-        
+
         return redirect()->route('noticias.index')->with('success', 'Notícia excluída com sucesso!');
     }
 
@@ -234,12 +215,16 @@ class NoticiaController extends Controller
     public function show($id, $slug)
     {
         $noticia = Noticia::findOrFail($id);
+        $ultimasNoticias = Noticia::where('id', '!=', $noticia->id)
+            ->latest()
+            ->take(3)
+            ->get();
 
         if ($r = $this->redirectIfWrongSlug($noticia, $slug, 'noticias.show')) {
             return $r;
         }
 
-        return view('noticias.show', compact('noticia'));
+        return view('noticias.show', compact('noticia', 'ultimasNoticias'));
     }
 
     public function noticiasCategorias($idCategoria)

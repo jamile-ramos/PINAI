@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container py-3">
-    
+
     {{ Breadcrumbs::render('verSolucao', $solucao) }}
 
     <div class="card shadow-lg border-0 rounded-4 p-5 bg-white">
@@ -77,5 +77,42 @@
         </div>
 
     </div>
+
+    <section class="highlighted-solutions w-100">
+      <div class="d-flex align-items-center mb-4">
+        <h2 class="h3 fw-bolder mb-0 pb-0">Explore Outras Soluções</h2>
+      </div>
+
+      <div class="row g-4">
+        @foreach($ultimasSolucoes as $solucao)
+        <div class="col-12 col-md-6 col-lg-4">
+          <a href="{{ route('solucoes.show', ['id' => $solucao->id, 'slug' => $solucao->slug]) }}"
+            class="card h-100 text-decoration-none border-0 shadow-sm rounded-3 solution-card"
+            aria-label="Abrir solução: {{ $solucao->titulo }}">
+
+            <div class="card-body d-flex flex-column solutions">
+              <div class="text-center mb-3">
+                <i class="fas fa-lightbulb fa-2x text-primary"></i>
+              </div>
+              <h3 class="h6 fw-bold text-dark mb-2 text-truncate">
+                {{ $solucao->titulo }}
+              </h3>
+              <p class="text-muted small flex-grow-1">
+                {{ Str::limit($solucao->descricao, 100) }}
+              </p>
+              <div class="d-flex justify-content-between align-items-center mt-3">
+                <small class="text-muted">
+                  <i class="fas fa-universal-access me-1"></i> {{ $solucao->user->nai->siglaNai }}
+                </small>
+                <small class="text-muted">
+                  <i class="fas fa-calendar-alt me-1"></i> {{ $solucao->created_at->format('d/m/Y') }}
+                </small>
+              </div>
+            </div>
+          </a>
+        </div>
+        @endforeach
+      </div>
+    </section>
 </div>
 @endsection

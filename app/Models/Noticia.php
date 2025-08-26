@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class Noticia extends Model
@@ -44,4 +45,23 @@ class Noticia extends Model
         return $query->where('status', 'ativo');
     }
 
+    // Coloquei essa busca aqui para ser possivel reutilizar em Profile
+    public static function buscarMinhasNoticias($query, $pagina, $abaAtiva, $perPage = 10)
+    {
+        $resultado = self::ativos()
+            ->with('categoria')
+            ->where('idUsuario', Auth::user()->id);
+
+        if (!empty($query)) {
+            $resultado->where(function ($q) use ($query) {
+                $q->where('titulo', 'like', '%' . $query . '%')
+                    ->orWhereHas('categoria', function ($sub) use ($query) {
+                        $sub->where('nomeCategoria', 'like', '%' . $query . '%');
+                    });
+            });
+        }
+
+        return $resultado->paginate($perPage, ['*'], 'myNoticias_page', $pagina)
+            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+    }
 }

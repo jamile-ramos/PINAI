@@ -26,7 +26,7 @@
         <span class="result-count" aria-live="polite" aria-atomic="true" style="color:#333; font-weight:600; font-size: 1rem;">
             Foram encontrados {{ $postagens->total() }} resultado{{ $postagens->total() > 1 ? 's' : '' }} para: <span class="text-primary">"{{ $query }}"</span>
         </span>
-        <a href="{{ route('postagens.index', ['id' => $topico->id, 'slug' => $topico->slug]) }}?abaAtiva={{ request('abaAtiva') }}"
+        <a href="{{ route('topicos.show', ['id' => $topico->id, 'slug' => $topico->slug]) }}?abaAtiva={{ request('abaAtiva') }}"
             class="btn-limpar-filtro"
             aria-label="Limpar filtro de pesquisa e exibir todos os usuários">
             <i class="fas fa-times-circle" aria-hidden="true"></i>

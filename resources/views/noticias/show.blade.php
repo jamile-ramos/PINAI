@@ -20,7 +20,10 @@
                 <!-- Autor -->
                 <div class="d-flex align-items-center me-sm-3">
                     <i class="bi bi-person-fill me-2" aria-hidden="true"></i>
-                    <span>Por <strong class="text-dark">{{ $noticia->user->name }}</strong></span>
+                    <span>Por <strong class="text-dark">{{ $noticia->user->name }}
+                            @if ($noticia->user->nai)
+                            - {{ $noticia->user->nai->siglaNai }}
+                            @endif</strong></span>
                 </div>
 
                 <!-- Datas -->
@@ -68,8 +71,32 @@
 
         <!-- Conteúdo -->
         <section class="fs-6 lh-lg conteudo">
-            {!! nl2br(e($noticia->conteudo)) !!}
+        {!! $noticia->conteudo !!}
         </section>
     </article>
+
+
+    <section class="mt-5 pt-5">
+        <h2 class="h4 text-primary fw-bold mb-4">Veja Também:</h2>
+        <div class="home-news titulo-categoria mb-2 mt-4 pt-2">
+            <div class="row">
+                @foreach($ultimasNoticias as $noticia)
+                <div class="col-md-4 mb-2">
+                    <div class="card h-100 bg-transparent border-0 shadow-none">
+                        <img src="{{ asset('img/imgNoticias/' . $noticia->imagem) }}" class="card-img-top img-capa" alt="{{ 'Imagem da notícia: ' . Str::limit($noticia->titulo, 80) }}">
+                        <div>
+                            <h5 class="h5 card-title pt-3 hover-underline">
+                                <a href="{{ route('noticias.show', ['id' => $noticia->id, 'slug' => $noticia->slug]) }}">{{ $noticia->titulo }}</a>
+                            </h5>
+                            <p class="card-text">
+                                <small class="text-muted">Publicado dia {{ $noticia->created_at->format('d/m/Y') }}</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
 </div>
 @endsection

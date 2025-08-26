@@ -8,7 +8,7 @@
     {{ Breadcrumbs::render('acessibilidade')}}
     <div class="row mb-5">
         <div class="col-12">
-            <h1 class="section-title mb-3 text-primary text-center fw-bold">O Que É Acessibilidade Web, Afinal?</h1>
+            <h1 class=" h1 section-title mb-3 text-primary text-center fw-bold">O Que É Acessibilidade Web, Afinal?</h1>
             <p class="texto-justificado">A acessibilidade web vai além de uma simples adaptação; é um princípio de design. Conforme definido pela
                 <a href="https://www.w3c.br/traducoes/wcag/wcag21-pt-BR/" target="_blank" class="fw-bold text-primary">Iniciativa para a Acessibilidade da Web (WAI)</a>,
                 ela significa que pessoas com deficiência podem <strong>perceber, operar, entender e interagir</strong> com a web. Isso inclui um vasto grupo de usuários, como pessoas com deficiências:

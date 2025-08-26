@@ -1,5 +1,17 @@
 <x-guest-layout>
     <!-- Session Status (opcional) -->
+    @if (session('success'))
+    <div class="mb-4 p-4 rounded-lg bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+        {{ session('success') }}
+    </div>
+    @endif
+
+    <!-- Alerta de erro geral -->
+    @if (session('error'))
+    <div class="mb-4 p-4 rounded-lg bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
+        {{ session('error') }}
+    </div>
+    @endif
     <x-auth-session-status class="mb-4" :status="session('status')" />
     <form method="POST" action="{{ route('register') }}">
         @csrf

@@ -7,6 +7,7 @@ use App\Models\Postagem;
 use App\Models\Documento;
 use App\Models\Solucao;
 use App\Models\Noticia;
+use App\Models\Topico;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,40 +18,74 @@ class ProfileController extends Controller
 {
     public function index(Request $request): View
     {
-        $minhasNoticias = Noticia::join('categorias_noticias', 'noticias.idCategoria', '=', 'categorias_noticias.id')
-        ->where('noticias.status', 'ativo')
-        ->where('noticias.idUsuario', Auth::user()->id)
-        ->orderBy('noticias.titulo', 'asc')
-        ->select('noticias.*')
-        ->get();
-        $minhasPostagens = Postagem::withCount('respostas') 
-        ->with('topico') // relacionamento para pegar o tópico
-        ->where('status', 'ativo')
-        ->where('idUsuario', Auth::user()->id)
-        ->get()
-        ->sortBy(function($p) {
-            return $p->topico->titulo;
-        });    
-        $meusDocumentos = Documento::join('categorias_documentos', 'documentos.idCategoria', '=', 'categorias_documentos.id')
-        ->where('documentos.status', 'ativo')
-        ->where('documentos.idUsuario', Auth::user()->id)
-        ->orderBy('documentos.nomeArquivo', 'asc')
-        ->select('documentos.*')
-        ->get();
-        $minhasSolucoes = Solucao::join('categorias_solucoes', 'solucoes.idCategoria', '=', 'categorias_solucoes.id')
-        ->where('solucoes.status', 'ativo')
-        ->where('solucoes.idUsuario', Auth::user()->id)
-        ->orderBy('solucoes.titulo', 'asc')
-        ->select('solucoes.*')
-        ->get();
+        $query = $request->input('query');
+        $abaAtiva = $request->input('abaAtiva');
+
+        $pages = [
+            'myNoticias' => $request->input('myNoticias_page', 1),
+            'myPostagens' => $request->input('myPostagens_page', 1),
+            'myDocumentos' => $request->input('myDocumentos_page', 1),
+            'mySolucoes' => $request->input('mySolucoes_page', 1),
+        ];
+
+        if ($query && $abaAtiva === 'myNoticias') {
+            $minhasNoticias = Noticia::buscarMinhasNoticias($query, $pages['myNoticias'], $abaAtiva, 5);
+        } else {
+            $minhasNoticias = Noticia::buscarMinhasNoticias(null, $pages['myNoticias'], $abaAtiva, 5);
+        }
+
+        if ($query && $abaAtiva === 'myDocumentos') {
+            $meusDocumentos = Documento::buscarMeusDocumentos($query, $pages['myDocumentos'], $abaAtiva, 6);
+        } else {
+            $meusDocumentos = Documento::buscarMeusDocumentos(null, $pages['myDocumentos'], $abaAtiva, 6);
+        }
+
+        if ($query && $abaAtiva === 'mySolucoes') {
+            $minhasSolucoes = Solucao::buscarMinhasSolucoes($query, $pages['mySolucoes'], $abaAtiva, 5);
+        } else {
+            $minhasSolucoes = Solucao::buscarMinhasSolucoes($query, $pages['mySolucoes'], $abaAtiva, 5);
+        }
+
+
+        if ($query && $abaAtiva === 'myPostagens') {
+            $minhasPostagens = $this->minhasPostagensProfile($query, $abaAtiva, $pages['myPostagens']);
+        } else {
+            $minhasPostagens = $this->minhasPostagensProfile(null, $abaAtiva, $pages['myPostagens']);
+        }
+
         return view('profile.myProfile', [
             'user' => $request->user(),
             'myPostagens' => $minhasPostagens,
             'myDocumentos' => $meusDocumentos,
             'mySolucoes' => $minhasSolucoes,
-            'myNoticias' => $minhasNoticias
+            'myNoticias' => $minhasNoticias,
+            'abaAtiva' => $abaAtiva,
+            'query' => $query
         ]);
     }
+
+    public function minhasPostagensProfile($query, $abaAtiva, $pagina)
+    {
+        $resultado = Postagem::ativos()
+            ->withCount('respostas')
+            ->with('topico')
+            ->where('idUsuario', Auth::id());
+
+        if ($query) {
+            $resultado->where('titulo', 'like', "%{$query}%");
+        }
+
+        return $resultado
+            ->orderBy(
+                Topico::select('titulo')
+                    ->whereColumn('topicos.id', 'postagens.idTopico')
+                    ->limit(1),
+                'asc' 
+            )
+            ->paginate(5, ['*'], 'myPostagens_page', $pagina)
+            ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
+    }
+
 
 
     public function edit(Request $request): View
@@ -89,7 +124,7 @@ class ProfileController extends Controller
 
         Auth::logout();
 
-        $user->update(['status'=> 'inativo']);
+        $user->update(['status' => 'inativo']);
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

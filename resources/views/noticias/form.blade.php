@@ -69,8 +69,7 @@
                         class="form-control"
                         id="conteudo"
                         rows="20"
-                        placeholder="Escreva o conteúdo da notícia"
-                        required>{{ old('conteudo', isset($noticia) ? $noticia->conteudo : '') }}</textarea>
+                        placeholder="Escreva o conteúdo da notícia">{{ old('conteudo', isset($noticia) ? $noticia->conteudo : '') }}</textarea>
                 </div>
 
                 <!-- Campo Imagem -->

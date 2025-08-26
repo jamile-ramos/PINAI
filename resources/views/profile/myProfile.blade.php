@@ -79,6 +79,20 @@
             <!-- Conteúdo das abas -->
             <div class="tab-contents">
                 <div class="content-link show" id="myNoticias">
+                    @if(request()->filled('query') && $abaAtiva === 'myNoticias')
+                    <!-- MODO DE BUSCA ATIVA -->
+                    <div class="d-flex justify-content-between align-items-center mb-3 p-3 rounded border border-secondary-subtle bg-light">
+                        <span class="result-count" aria-live="polite" aria-atomic="true" style="color:#333; font-weight:600; font-size: 1rem;">
+                            Foram encontrados {{ $myNoticias->total() }} resultado{{ $myNoticias->total() > 1 ? 's' : '' }} para: <span class="text-primary">"{{ $query }}"</span>
+                        </span>
+                        <a href="{{ route('profile.index') }}?abaAtiva={{ request('abaAtiva') }}"
+                            class="btn-limpar-filtro"
+                            aria-label="Limpar filtro de pesquisa e exibir todos os usuários">
+                            <i class="fas fa-times-circle" aria-hidden="true"></i>
+                            Limpar Filtro
+                        </a>
+                    </div>
+                    @endif
                     <div class="infos">
                         <div class="row row-cols-1 g-4">
                             @forelse($myNoticias as $noticia)
@@ -122,9 +136,27 @@
                             @endforelse
                         </div>
                     </div>
+                    <!-- PAGINAÇÃO -->
+                    <div class="d-flex justify-content-center mt-3">
+                        {{ $myNoticias->appends(request()->except('myNoticias_page'))->links('vendor.pagination.bootstrap-5')  }}
+                    </div>
                 </div>
 
                 <div class="content-link" id="myPostagens">
+
+                    @if(request()->filled('query') && $abaAtiva === 'myPostagens')
+                    <div class="d-flex justify-content-between align-items-center mb-3 p-3 rounded border border-secondary-subtle bg-light">
+                        <span class="result-count" aria-live="polite" aria-atomic="true" style="color:#333; font-weight:600; font-size: 1rem;">
+                            Foram encontrados {{ $myPostagens->total() }} resultado{{ $myPostagens->total() > 1 ? 's' : '' }} para: <span class="text-primary">"{{ $query }}"</span>
+                        </span>
+                        <a href="{{ route('profile.index') }}?abaAtiva={{ request('abaAtiva') }}"
+                            class="btn-limpar-filtro"
+                            aria-label="Limpar filtro de pesquisa e exibir todos os usuários">
+                            <i class="fas fa-times-circle" aria-hidden="true"></i>
+                            Limpar Filtro
+                        </a>
+                    </div>
+                    @endif
                     <div class="infos">
                         @forelse($myPostagens as $postagem)
                         <div class="post-card">
@@ -160,9 +192,26 @@
                         </div>
                         @endforelse
                     </div>
+                    <!-- Paginação -->
+                    <div class="d-flex justify-content-center mt-3">
+                        {{ $myPostagens->appends(request()->except('myPostagensProfile_page'))->links('vendor.pagination.bootstrap-5') }}
+                    </div>
                 </div>
 
                 <div class="content-link" id="myDocs">
+                    @if(request()->filled('query') && $abaAtiva === 'myDocumentos')
+                    <div class="d-flex justify-content-between align-items-center mb-3 p-3 rounded border border-secondary-subtle bg-light">
+                        <span class="result-count" aria-live="polite" aria-atomic="true" style="color:#333; font-weight:600; font-size: 1rem;">
+                            Foram encontrados {{ $mydocumentos->total() }} resultado{{ $mydocumentos->total() > 1 ? 's' : '' }} para: <span class="text-primary">"{{ $query }}"</span>
+                        </span>
+                        <a href="{{ route('profile.index') }}?abaAtiva={{ request('abaAtiva') }}"
+                            class="btn-limpar-filtro"
+                            aria-label="Limpar filtro de pesquisa e exibir todos os usuários">
+                            <i class="fas fa-times-circle" aria-hidden="true"></i>
+                            Limpar Filtro
+                        </a>
+                    </div>
+                    @endif
                     <div class="infos">
                         <div class="row g-4">
                             @forelse($myDocumentos as $documento)
@@ -172,7 +221,7 @@
                                         <div class="mb-3">
                                             <i class="fa fa-file-pdf fa-3x text-primary"></i>
                                         </div>
-                                        <h5 class="card-title fw-semibold">{{ $documento->titulo }}</h5>
+                                        <h5 class="card-title fw-semibold">{{ $documento->nomeArquivo }}</h5>
                                         <p class="card-text text-muted small">{{ Str::limit($documento->descricao, 100) }}</p>
                                         <a href="{{ asset('storage/' . $documento->caminhoArquivo) }}" target="_blank" class="btn btn-link text-wrap">
                                             <i class="fa fa-eye"></i> Visualizar
@@ -197,9 +246,26 @@
                             @endforelse
                         </div>
                     </div>
+                    <!-- Paginação -->
+                    <div class="d-flex justify-content-center mt-3">
+                        {{ $myDocumentos->appends(request()->except('myDocumentos_page'))->links('vendor.pagination.bootstrap-5') }}
+                    </div>
                 </div>
 
                 <div class="content-link" id="mySolucoes">
+                    @if(request()->filled('query') && $abaAtiva === 'mySolucoes')
+                    <div class="d-flex justify-content-between align-items-center mb-3 p-3 rounded border border-secondary-subtle bg-light">
+                        <span class="result-count" aria-live="polite" aria-atomic="true" style="color:#333; font-weight:600; font-size: 1rem;">
+                            Foram encontrados {{ $mySolucoes->total() }} resultado{{ $mySolucoes->total() > 1 ? 's' : '' }} para: <span class="text-primary">"{{ $query }}"</span>
+                        </span>
+                        <a href="{{ route('profile.index') }}?abaAtiva={{ request('abaAtiva') }}"
+                            class="btn-limpar-filtro"
+                            aria-label="Limpar filtro de pesquisa e exibir todos os usuários">
+                            <i class="fas fa-times-circle" aria-hidden="true"></i>
+                            Limpar Filtro
+                        </a>
+                    </div>
+                    @endif
                     <div class="infos">
                         @forelse($mySolucoes as $solucao)
                         <div class="col">
@@ -237,6 +303,10 @@
                         </div>
                         @endforelse
                     </div>
+                </div>
+                <!-- Paginação -->
+                <div class="d-flex justify-content-center mt-3">
+                    {{ $mySolucoes->appends(request()->except('mySolucoes_page'))->links('vendor.pagination.bootstrap-5') }}
                 </div>
             </div>
         </div>

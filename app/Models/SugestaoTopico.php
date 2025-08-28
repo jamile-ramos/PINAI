@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class SugestaoTopico extends Model
 {
+    use HasFactory;
+
     protected $table = 'sugestoes_topicos';
 
     protected $fillable = ['status', 'status_situacao'];

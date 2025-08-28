@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use App\Traits\HasSlug;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Postagem extends Model
 {
 
     use HasSlug;
+    use HasFactory;
 
     protected $table = 'postagens';
 

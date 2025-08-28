@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use App\Traits\HasSlug;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class Topico extends Model
 {
-
     use HasSlug;
+    use HasFactory;
 
     protected $fillable = ['titulo', 'status', 'slug', 'idUsuario'];
 

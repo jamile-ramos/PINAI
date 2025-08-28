@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use App\Traits\HasSlug;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class Documento extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'nomeArquivo',
         'descricao',

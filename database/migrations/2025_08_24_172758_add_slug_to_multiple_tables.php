@@ -6,30 +6,28 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-
     public function up(): void
     {
-        Schema::table('multiple_tables', function (Blueprint $table) {
-            $tables = ['noticias', 'solucoes', 'postagens', 'topicos'];
+        $tables = ['noticias', 'solucoes', 'postagens', 'topicos'];
 
-            foreach ($tables as $table) {
-                Schema::table($table, function (Blueprint $table) {
-                    $table->string('slug')->after('titulo');
-                });
-            }
-        });
+        foreach ($tables as $table) {
+            Schema::table($table, function (Blueprint $blueprint) {
+                // adiciona a coluna slug única
+                $blueprint->string('slug')->unique()->after('titulo');
+            });
+        }
     }
 
     public function down(): void
     {
-        Schema::table('multiple_tables', function (Blueprint $table) {
-            $tables = ['noticias', 'solucoes', 'postagens', 'topicos'];
+        $tables = ['noticias', 'solucoes', 'postagens', 'topicos'];
 
-            foreach ($tables as $table) {
-                Schema::table($table, function (Blueprint $table) {
-                    $table->dropColumn('slug');
-                });
-            }
-        });
+        foreach ($tables as $table) {
+            Schema::table($table, function (Blueprint $blueprint) {
+                // remove a constraint unique e a coluna slug
+                $blueprint->dropUnique([$blueprint->getTable().'_slug_unique']);
+                $blueprint->dropColumn('slug');
+            });
+        }
     }
 };

@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Documento;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CategoriaDocumento extends Model
 {
+    use HasFactory;
+
     protected $table = 'categorias_documentos';
 
     protected $fillable = [

@@ -148,7 +148,7 @@ class NoticiaController extends Controller
             'subtitulo' => 'required|string|max:255',
             'conteudo' => 'required|string',
             'idCategoria' => 'required|exists:categorias_noticias,id',
-            'imagem' => 'required|file|mimes:jpg,jpeg,png,webp|max:2048'
+            'imagem' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:2048'
         ]);
 
         $noticia = new Noticia;

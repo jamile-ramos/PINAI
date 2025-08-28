@@ -3,9 +3,9 @@
     @if($postagens->isEmpty())
     <div class="card shadow-sm mb-4 border-start border-4 border-primary p-4">
         <div class="card-body">
-            <h4 class="card-title text-primary">
+            <h2 class="fs-4 card-title text-primary">
                 <i class="fa-solid fa-comments me-2"></i> {{ $topico->titulo }}
-            </h4>
+            </h2>
             <p class="card-text text-muted">Veja abaixo as postagens relacionadas a este tópico</p>
         </div>
     </div>
@@ -13,10 +13,10 @@
     @else
     <div class="card shadow-sm mb-4 border-start border-4 border-primary">
         <div class="card-body">
-            <h4 class="card-title text-primary">
+            <h2 class="fs-5 card-title text-primary">
                 <i class="fa-solid fa-comments me-2"></i> {{ $topico->titulo }}
-            </h4>
-            <p class="card-text text-muted">Veja abaixo as postagens relacionadas a este tópico</p>
+            </h2>
+            <p class="fs-6 card-text text-muted">Veja abaixo as postagens relacionadas a este tópico</p>
         </div>
     </div>
 
@@ -47,7 +47,7 @@
             <span class="text-muted">{{ $postagem->created_at->format('d/m/Y') }}</span>
         </div>
 
-        <div class="post-title">{{ $postagem->titulo }}</div>
+        <div class="post-title"><h3 class="fs-5">{{ $postagem->titulo }}</h3></div>
         <div class="post-content border-bottom border-light pb-3">
             {{ Str::limit($postagem->conteudo, 100, '...') }}
         </div>

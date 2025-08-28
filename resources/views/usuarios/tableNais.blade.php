@@ -17,12 +17,12 @@
         <table class="table table-hover table-striped">
             <thead class="forum-azul">
                 <tr>
-                    <th>Nome</th>
-                    <th>Instituição</th>
-                    <th>Estado</th>
-                    <th>Status</th>
-                    <th>Data de cadastro</th>
-                    <th style="width: 10%">Ações</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Instituição</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Data de cadastro</th>
+                    <th scope="col" style="width: 10%">Ações</th>
                 </tr>
             </thead>
             <tbody id="table-nais">
@@ -60,6 +60,7 @@
                                 aria-label="Excluir cadastro {{ $nai->id }}"
                                 data-url="{{ route('nais.destroy', $nai->id) }}">
                                 <i class="fas fa-trash-alt"></i>
+                                <span class="visually-hidden">Excluir</span>
                             </button>
 
                         </div>
@@ -79,7 +80,7 @@
         @forelse($nais as $nai)
         <div class="card mb-3 shadow-md">
             <div class="card-body">
-                <h5 class="card-title fw-bold pb-2 border-bottom border-secondary mt-0">{{ $nai->nome }} - {{ $nai->siglaNai }}</h5>
+                <h1 class="fs-5 card-title fw-bold pb-2 border-bottom border-secondary mt-0">{{ $nai->nome }} - {{ $nai->siglaNai }}</h1>
                 <div class="mb-2 border-bottom border-light pb-2 pt-2">
                     <p class="mb-1"><i class="fas fa-building text-primary me-1"></i>Instituição: {{ $nai->siglaInstituicao }}</p>
                     <p class="mb-1"><i class="fas fa-map-marker-alt text-primary me-1"></i>Estado: {{ $nai->estado }}</p>

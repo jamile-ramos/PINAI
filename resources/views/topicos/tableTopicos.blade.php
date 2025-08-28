@@ -50,7 +50,7 @@
                                 @if($topico->status_situacao != 'aprovado')
                                 <button
                                     type="button"
-                                    class="btn btn-info btn-statusTop"
+                                    class="btn btn-primary btn-statusTop"
                                     data-id="{{ $topico->id }}"
                                     data-selected="{{ $topico->getRawOriginal('status_situacao') }}">
                                     Alterar status
@@ -58,18 +58,20 @@
                                 @else
                                 <button
                                     type="button"
-                                    class="btn btn-info btn-statusTop"
+                                    class="btn btn-primary btn-statusTop"
                                     style="visibility: hidden;">
                                     Alterar status
                                 </button>
                                 @endif
-                                <button
-                                    type="button"
+                                <button type="button"
                                     class="btn btn-danger btn-remove"
-                                    data-modal="#confirmExcluirModal"
-                                    data-url="{{ route('sugestoes.destroy', $topico->id) }}"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#confirmExcluirModal"
                                     data-bs-toggle="tooltip"
-                                    title="Excluir">
+                                    data-bs-placement="top"
+                                    title="Excluir"
+                                    aria-label="Excluir tópico"
+                                   data-url="{{ route('sugestoes.destroy', $topico->id) }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                                 @else
@@ -79,19 +81,20 @@
                                 @if(Auth::user()->tipoUsuario != 'comum' || (Auth::user()->id == $topico->idUsuario && $tipoAba == 'myTopicos'))
                                 <button
                                     type="button"
-                                    class="btn btn-info btn-editTopico"
+                                    class="btn btn-primary btn-editTopico"
                                     data-id="{{ $topico->id }}">
                                     Editar
                                 </button>
                                 @endif
-                                <button
-                                    type="button"
-                                    class="btn btn-danger btn-remove"
+                                <button type="button"
+                                    class="btn btn-danger btn-md flex-fill text-center btn-remove"
                                     data-bs-toggle="modal"
                                     data-bs-target="#confirmExcluirModal"
-                                    data-url="{{ route('topicos.destroy', $topico->id) }}"
                                     data-bs-toggle="tooltip"
-                                    title="Excluir">
+                                    data-bs-placement="top"
+                                    title="Excluir"
+                                    aria-label="Excluir tópico"
+                                    data-url="{{ route('topicos.destroy', $topico->id) }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
 
@@ -142,7 +145,7 @@
                     <div class="d-flex gap-2 flex-wrap border-top pt-2 border-secondary">
                         @if($title == 'Tópicos Sugeridos')
                         @if($topico->status_situacao != 'aprovado')
-                        <button type="button" class="btn btn-info btn-md flex-fill text-center btn-statusTop"
+                        <button type="button" class="btn btn-primary btn-md flex-fill text-center btn-statusTop"
                             data-id="{{ $topico->id }}"
                             data-selected="{{ $topico->getRawOriginal('status_situacao') }}">
                             Alterar status
@@ -158,16 +161,20 @@
                             Ver Tópico
                         </a>
                         @if(Auth::user()->tipoUsuario != 'comum' || (Auth::user()->id == $topico->idUsuario && $tipoAba == 'myTopicos'))
-                        <button type="button" class="btn btn-info btn-md flex-fill text-center btn-editTopico"
+                        <button type="button" class="btn btn-primary btn-md flex-fill text-center btn-editTopico"
                             data-id="{{ $topico->id }}">
                             Editar
                         </button>
                         @endif
-                        <button type="button" class="btn btn-danger btn-md flex-fill text-center btn-remove"
+                        <button type="button"
+                            class="btn btn-danger btn-md flex-fill text-center btn-remove"
                             data-bs-toggle="modal"
                             data-bs-target="#confirmExcluirModal"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            title="Excluir"
+                            aria-label="Excluir tópico"
                             data-url="{{ route('topicos.destroy', $topico->id) }}">
-                            Excluir
                         </button>
                         @endif
                     </div>

@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="container-abas" id="abaDocumentos">
+<div class="container-abas w-100" id="abaDocumentos">
 
     {{ Breadcrumbs::render('documentos')}}
 
@@ -33,7 +33,7 @@
     <header class="text-center py-3 mb-4">
         <div class="container">
             <h1 class="display-4 fw-bold">Biblioteca Digital</h1>
-            <p class="text-secondary mt-3 ">Acesse, compartilhe e construa juntos um acervo de conhecimento para todos os NAIs.</p>
+            <p class="mt-3 ">Acesse, compartilhe e construa juntos um acervo de conhecimento para todos os NAIs.</p>
         </div>
     </header>
 
@@ -59,7 +59,7 @@
     @endif
     
     <!-- Conteúdo das abas -->
-    <div class="tab-contents">
+    <div class="tab-contents w-100">
         <div class="content-link" id="visaoDocumentos">
             <div class="infos">
                 @include('documentos.init', ['categorias' => $categorias, 'documentos' => $documentos])

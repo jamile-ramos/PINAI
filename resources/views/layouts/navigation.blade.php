@@ -15,10 +15,14 @@
             <i class="gg-menu"></i>
           </button>
         </div>
-        <button class="topbar-toggler more">
-          <i class="gg-more-vertical-alt"></i>
+        <button class="topbar-toggler more"
+          aria-label="Abrir menu superior quando a tela for pequena"
+          aria-expanded="false"
+          aria-controls="menu-superior">
+          <i class="gg-more-vertical-alt" aria-hidden="true"></i>
         </button>
       </div>
+
       <!-- End Logo Header -->
     </div>
     <div class="sidebar-wrapper scrollbar scrollbar-inner" role="navigation">
@@ -83,7 +87,7 @@
             <span class="sidebar-mini-icon">
               <i class="fa fa-ellipsis-h"></i>
             </span>
-            <p class="h4 text-section">Outras páginas</p>
+            <p class="text-section text-light">Outras páginas</p>
           </li>
           <li class="nav-item {{ request()->is('myProfile*') || request()->is('profile*') ? 'active submenu' : ''}}">
             <a href="/myProfile" data-btnNav="profile" aria-label="Ir para Meu perfil">
@@ -114,7 +118,7 @@
       <div class="main-header-logo">
         <!-- Logo Header -->
         <div class="logo-header" data-background-color="dark">
-          <a href="index.html" class="logo" aria-label="Ir para página inicial">
+          <a href="/dashboard" class="logo" aria-label="Ir para página inicial">
             <img src="/img/pinai-branca.svg" alt="Logotipo da Plataforma PINAI" class="navbar-brand" height="40" />
           </a>
           <div class="nav-toggle" tabindex="0">
@@ -139,15 +143,15 @@
           </nav>
           <ul class="navbar-nav topbar-nav align-items-start small d-none d-md-flex">
             <li class="nav-item topbar-icon dropdown hidden-caret me-2 d-flex align-items-center">
-              <a href="#main-content" class="skip-link text-white-50 fs-7 link-underline-opacity-0 link-underline-opacity-100-hover px-1">Ir para o conteúdo</a>
+              <a href="#main-content" class="skip-link text-white-70 fs-7 link-underline-opacity-0 link-underline-opacity-100-hover px-1">Ir para o conteúdo</a>
               <span class="badge text-bg-primary rounded-pill py-0 px-1" style="font-size: 0.65rem;">1</span>
             </li>
             <li class="nav-item topbar-icon dropdown hidden-caret me-2 d-flex align-items-center">
-              <a href="#menu" class="skip-link text-white-50 fs-7 link-underline-opacity-0 link-underline-opacity-100-hover px-1">Ir para o menu</a>
+              <a href="#menu" class="skip-link text-white-70 fs-7 link-underline-opacity-0 link-underline-opacity-100-hover px-1">Ir para o menu</a>
               <span class="badge text-bg-primary rounded-pill py-0 px-1" style="font-size: 0.65rem;">2</span>
             </li>
             <li class="nav-item topbar-icon dropdown hidden-caret me-2 d-flex align-items-center">
-              <a href="#rodape" class="skip-link text-white-50 fs-7 link-underline-opacity-0 link-underline-opacity-100-hover px-1">Ir para o rodapé</a>
+              <a href="#rodape" class="skip-link text-white-70 fs-7 link-underline-opacity-0 link-underline-opacity-100-hover px-1">Ir para o rodapé</a>
               <span class="badge text-bg-primary rounded-pill py-0 px-1" style="font-size: 0.65rem;">3</span>
             </li>
           </ul>
@@ -168,10 +172,10 @@
             </li>
 
             <li class="nav-item topbar-user dropdown hidden-caret">
-              <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
+              <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false" aria-label="Abrir menu do usuário {{ Auth::user()->name }}">
                 <div class="avatar-sm">
                   <div class="user-icon-circle">
-                    <i class="fa fa-user"></i>
+                    <i class="fa fa-user" aria-hidden="true"></i>
                   </div>
                 </div>
                 <span class="profile-username">

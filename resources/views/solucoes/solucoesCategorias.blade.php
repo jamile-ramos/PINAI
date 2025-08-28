@@ -20,7 +20,7 @@
     <div class="col">
       <div class="card h-100 border-0 shadow-lg rounded-4">
         <div class="card-body d-flex flex-column p-4">
-          <h5 class="card-title text-primary fw-bold mb-3">{{ $solucao->titulo }}</h5>
+          <h2 class="fs-5 card-title text-primary fw-bold mb-3">{{ $solucao->titulo }}</h2>
           <p class="text-secondary mb-4"><strong>Por:</strong> NAi</p> <!-- Nome do NAI -->
           <p class="card-text text-muted mb-4">{{ Str::limit($solucao->descricao, 120) }}</p>
           <div class="d-flex justify-content-between mt-auto">

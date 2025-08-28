@@ -62,16 +62,18 @@
         </header>
 
         <!-- Imagem -->
+        @if($noticia->imagem)
         <div class="mb-4">
             <img src="{{ asset('img/imgNoticias/' . $noticia->imagem) }}"
                 alt="Imagem da notícia: {{ $noticia->titulo }}"
                 class="img-fluid w-100 rounded"
                 style="object-fit: cover; max-height: 400px;">
         </div>
+        @endif
 
         <!-- Conteúdo -->
         <section class="fs-6 lh-lg conteudo">
-        {!! $noticia->conteudo !!}
+            {!! $noticia->conteudo !!}
         </section>
     </article>
 
@@ -83,11 +85,11 @@
                 @foreach($ultimasNoticias as $noticia)
                 <div class="col-md-4 mb-2">
                     <div class="card h-100 bg-transparent border-0 shadow-none">
-                        <img src="{{ asset('img/imgNoticias/' . $noticia->imagem) }}" class="card-img-top img-capa" alt="{{ 'Imagem da notícia: ' . Str::limit($noticia->titulo, 80) }}">
+                        <img src="{{ $noticia->imagem ? asset('img/imgNoticias/' . $noticia->imagem) : asset('/img/noticia-sem-imagem.png') }}" class="card-img-top img-capa" alt="{{ 'Imagem da notícia: ' . Str::limit($noticia->titulo, 80) }}">
                         <div>
-                            <h5 class="h5 card-title pt-3 hover-underline">
+                            <h3 class="fs-5 card-title pt-3 hover-underline">
                                 <a href="{{ route('noticias.show', ['id' => $noticia->id, 'slug' => $noticia->slug]) }}">{{ $noticia->titulo }}</a>
-                            </h5>
+                            </h3>
                             <p class="card-text">
                                 <small class="text-muted">Publicado dia {{ $noticia->created_at->format('d/m/Y') }}</small>
                             </p>

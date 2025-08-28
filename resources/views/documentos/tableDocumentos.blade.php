@@ -49,7 +49,7 @@
                         </a>
                         @if(Auth::user()->tipoUsuario != 'comum' || (Auth::user()->id == $documento->idUsuario && $tipoAba == 'myDocumentos'))
                         <button type="button" data-bs-toggle="tooltip"
-                            class="btn btn-info btn-edit"
+                            class="btn btn-primary btn-edit"
                             data-url="{{ route('documentos.edit', $documento->id) }}"
                             data-original-title="Editar"
                             aria-label="Editar notícia">
@@ -101,7 +101,7 @@
                         Visualizar
                     </a>
                     @if(Auth::user()->tipoUsuario != 'comum' || (Auth::user()->id == $documento->idUsuario && $tipoAba == 'myDocumentos'))
-                    <a class="btn btn-md btn-info flex-fill text-center" href="{{ route('documentos.edit', $documento->id) }}">
+                    <a class="btn btn-md btn-primary flex-fill text-center" href="{{ route('documentos.edit', $documento->id) }}">
                         Editar
                     </a>
                     @endif

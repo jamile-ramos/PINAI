@@ -15,6 +15,7 @@ use App\Http\Controllers\RespostaController;
 use App\Http\Controllers\SolucaoController;
 use App\Http\Controllers\SugestaoTopicoController;
 use App\Http\Controllers\TopicoController;
+use App\Http\Controllers\UploadController;
 use App\Models\Comentario;
 use App\Models\Documento;
 use App\Models\Noticia;
@@ -88,7 +89,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/destroy/{id}', 'destroy')->name('destroy');
         Route::get('/edit/{id}', 'edit')->name('edit');
         Route::put('/update/{id}', 'update')->name('update');
-        Route::get('/{id}-{slug}', 'show')->name('show'); 
+        Route::get('/{id}-{slug}', 'show')->name('show');
     });
 
     // Postagens
@@ -159,5 +160,7 @@ Route::middleware('auth')->group(function () {
     // Páginas estáticas
     Route::view('/acessibilidade', 'acessibilidade')->name('acessibilidade');
     Route::view('/sobre', 'sobre')->name('sobre');
-    
+
+    // routes/web.php
+    Route::post('/upload-imagem', [UploadController::class, 'store'])->name('upload.imagem');
 });

@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="container-abas" id="abaTopicos">
+<div class="container-abas w-100" id="abaTopicos">
 
     {{ Breadcrumbs::render('topicos') }}
 
@@ -26,7 +26,7 @@
     <header class="text-center py-3 mb-4">
         <div class="container">
             <h1 class="display-4 fw-bold">Fórum de Discussão </h1>
-            <p class="text-secondary mt-3 ">Converse, colabore e construa soluções inclusivas junto à comunidade.</p>
+            <p class="mt-3 ">Converse, colabore e construa soluções inclusivas junto à comunidade.</p>
         </div>
     </header>
 

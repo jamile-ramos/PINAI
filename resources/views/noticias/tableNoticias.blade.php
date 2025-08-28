@@ -49,7 +49,7 @@
                             </a>
                             @if(Auth::user()->tipoUsuario != 'comum' || (Auth::user()->id == $noticia->idUsuario && $tipoAba == 'myNoticias'))
                             <button type="button" data-bs-toggle="tooltip"
-                                class="btn btn-info btn-edit flex-fill"
+                                class="btn btn-primary btn-edit flex-fill"
                                 data-url="{{ route('noticias.edit', $noticia->id) }}"
                                 data-original-title="Editar"
                                 aria-label="Editar notícia">
@@ -85,9 +85,9 @@
         @forelse($noticias as $noticia)
         <div class="card mb-3 shadow-md">
             <div class="card-body">
-                <h5 class="card-title fw-bold mt-0 border-bottom border-secondary pb-2">
+                <h1 class="fs-5 card-title fw-bold mt-0 border-bottom border-secondary pb-2">
                     {{ $noticia->titulo }}
-                </h5>
+                </h1>
                 <div class="mb-2 border-bottom border-light pb-2 pt-2">
                     {{-- Categoria --}}
                     <p class="mb-1">
@@ -114,7 +114,7 @@
                         Ver
                     </a>
                     @if(Auth::user()->tipoUsuario != 'comum' && $tipoAba == 'allNoticias')
-                    <a class="btn btn-md btn-info flex-fill text-center" href="{{ route('noticias.edit', $noticia->id) }}">
+                    <a class="btn btn-md btn-primary flex-fill text-center" href="{{ route('noticias.edit', $noticia->id) }}">
                         Editar
                     </a>
                     @endif

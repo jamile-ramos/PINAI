@@ -316,7 +316,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const currentStatus = this.getAttribute('data-status');
 
             document.getElementById('status').value = (currentStatus == 'ativo') ? 'ativo' : 'inativo';
-            const buttonText = currentStatus == 'ativo' ? 'Desabilitar' : 'Ativar';
+            const buttonText = currentStatus == 'ativo' ? 'Desativar' : 'Ativar';
             const buttonClass = currentStatus == 'ativo' ? 'btn-danger' : 'btn-success';
 
             const confirmButton = document.getElementById('confirmActionBtn');
@@ -1047,6 +1047,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     .then(cidades => {
                         cidadeSelect.innerHTML = '<option value="" disabled selected>Selecione a cidade</option>';
                         cidades.forEach(cidade => {
+                            console.log('Carregando')
                             const option = document.createElement('option');
                             option.value = cidade.nome;
                             if (cidadeBd) {
@@ -1102,30 +1103,74 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    ClassicEditor
-        .create(document.querySelector('#conteudo'), {
-            toolbar: [
-                'bold', 'italic', 'link',
-                'blockQuote', 'undo', 'redo'
-            ]
-        })
-        .then(editor => {
-            const form = document.querySelector('#formNoticia');
-            form.addEventListener('submit', () => {
-                document.querySelector('#conteudo').value = editor.getData();
+    /*const editorElement = document.querySelector('#conteudo');
+    const form = document.querySelector('#formNoticia');
+    if (editorElement && form) {
+        ClassicEditor
+            .create(document.querySelector('#conteudo'), {
+                toolbar: [
+                    'bold', 'italic', 'link',
+                    'blockQuote', 'undo', 'redo'
+                ]
+            })
+            .then(editor => {
+                form.addEventListener('submit', () => {
+                    document.querySelector('#conteudo').value = editor.getData();
+                });
+            })
+            .catch(error => {
+                console.error(error);
             });
-        })
-        .catch(error => {
-            console.error(error);
+    }*/
+
+    function inicializarSummernote(selector, placeholder) {
+        $(selector).summernote({
+            lang: 'pt-BR',
+            placeholder: placeholder,
+            tabsize: 2,
+            height: 500,
+            toolbar: [
+                ['font', ['bold', 'underline', 'clear']],
+                ['para', ['paragraph']],
+                ['insert', ['link', 'picture', 'video']],
+            ],
+            callbacks: {
+                onImageUpload: function (files) {
+                    let data = new FormData();
+                    data.append("file", files[0]);
+                    data.append("_token", $('meta[name="csrf-token"]').attr('content'));
+
+                    $.ajax({
+                        url: '/upload-imagem',
+                        method: 'POST',
+                        data: data,
+                        contentType: false,
+                        processData: false,
+                        success: function (resp) {
+                            // 👉 insere no editor correto
+                            $(selector).summernote('insertImage', resp.location);
+                        }
+                    });
+                }
+            }
         });
+    }
+
+    // Inicializa os dois editores
+    inicializarSummernote('#passosImplementacao', 'Passos de Implementação');
+    inicializarSummernote('#conteudo', 'Insira o conteúdo da sua notícia');
+
+
 });
 
-// Evento para ocultar alertas com jQuery
+// Evento para ocultar alertas com jQuery*/*
 $(document).ready(function () {
     setTimeout(function () {
         $('.alert').fadeOut('slow');
     }, 3000);
 });
+
+
 
 // Compartilhar noticia
 function compartilharNoticia(url) {

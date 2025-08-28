@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="container-abas" id="abaSolucoes">
+<div class="container-abas w-100" id="abaSolucoes">
 
     {{Breadcrumbs::render('solucoes')}}
 
@@ -32,7 +32,7 @@
     <header class="text-center py-3 mb-4">
         <div class="container">
             <h1 class="display-4 fw-bold">Banco de soluções</h1>
-            <p class="text-secondary mt-3 ">Compartilhe e descubra boas práticas e soluções acessíveis para seu NAI.</p>
+            <p class="mt-3 ">Compartilhe e descubra boas práticas e soluções acessíveis para seu NAI.</p>
         </div>
     </header>
 

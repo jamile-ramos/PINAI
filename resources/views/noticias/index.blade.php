@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="container-abas" id="abaNoticias">
+<div class="container-abas w-100" id="abaNoticias">
 
     {{ Breadcrumbs::render('noticias') }}
 
@@ -32,7 +32,7 @@
     <header class="text-center py-3 mb-4">
         <div class="container">
             <h1 class="display-4 fw-bold">Portal de Notícias</h1>
-            <p class="text-secondary mt-3 ">Atualizações, eventos e novidades sobre acessibilidade nos NAIs de todo o Brasil.</p>
+            <p class="mt-3 ">Atualizações, eventos e novidades sobre acessibilidade nos NAIs de todo o Brasil.</p>
         </div>
     </header>
 
@@ -76,7 +76,7 @@
             </div>
         </div>
 
-        <div class="content-link" id="categoriasNoticias">
+        <div class="content-link w-100" id="categoriasNoticias">
             <div class="infos" id="categorias-content">
                 @include('layouts.tabelaCategorias', ['categorias' => $categoriasNoticias, 'tipo' => "noticias"])
             </div>

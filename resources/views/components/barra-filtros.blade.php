@@ -18,9 +18,11 @@
         aria-haspopup="listbox"
         aria-expanded="false"
         aria-controls="dropdown-options"
+        aria-labelledby="selected-option"
         aria-activedescendant=""
-        tabindex="0">
-        <div class="select-option" id="selected-option" role="textbox" aria-selected="true">Visão Geral</div>
+        tabindex="0"
+        aria-label="Selecionar aba de navegação">
+        <div class="select-option" id="selected-option">Visão Geral</div>
         <i class="dropdown-icon fas fa-chevron-down"></i>
 
         <div class="dropdown-select close-drop"

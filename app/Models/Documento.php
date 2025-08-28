@@ -15,7 +15,8 @@ class Documento extends Model
         'status',
         'idUsuario',
         'idCategoria',
-        'slug'
+        'slug',
+        'link'
     ];
 
     public function user()

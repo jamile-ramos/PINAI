@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="container-abas" id="abaPostagens">
+<div class="container-abas w-100" id="abaPostagens">
 
     {{ Breadcrumbs::render('postagens', $topico) }}
     @php
@@ -22,7 +22,7 @@
     <header class="text-center py-3 mb-4">
         <div class="container">
             <h1 class="display-4 fw-bold">Fórum de Discussão </h1>
-            <p class="text-secondary mt-3 ">Converse, colabore e construa soluções inclusivas junto à comunidade.</p>
+            <p class="mt-3 ">Converse, colabore e construa soluções inclusivas junto à comunidade.</p>
         </div>
     </header>
 
@@ -49,7 +49,7 @@
     @endforeach
     @endif
     <!-- Conteúdo das abas -->
-    <div class="tab-contents">
+    <div class="tab-contents w-100">
         <div class="content-link" id="visaoPostagens">
             <div class="infos">
                 @include('postagens.init', ['postagens' => $postagens, 'topico' => $topico])
@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        <div class="content-link" id="myPostagens">
+        <div class="content-link w-100" id="myPostagens">
             <div class="infos">
                 @include('postagens.tablePostagens', ['postagens' => $minhasPostagens, 'tipoAba' => 'myPostagens'])
             </div>

@@ -24,7 +24,7 @@
           <div class="row g-0 h-100">
             <div class="col-md-4">
               <div class="h-100 w-100 overflow-hidden">
-                <img src="{{ asset('img/imgNoticias/' . $noticia->imagem) }}"
+                <img src="{{ $noticia->imagem ? asset('img/imgNoticias/' . $noticia->imagem) : asset('/img/noticia-sem-imagem.png') }}"
                   class="img-fluid rounded w-100 h-100"
                   style="min-height: 200px; max-height: 200px; object-fit: cover;"
                   alt="{{ $noticia->titulo }}">
@@ -32,11 +32,11 @@
             </div>
             <div class="col-md-8">
               <div class="card-body d-flex flex-column h-100 bg-transparent p-0">
-                <h3 class=" h3 card-title title-new mb-2 pl-0">
+                <h2 class="fs-3 card-title title-new mb-2 pl-0">
                   <a href="{{ route('noticias.show', ['id' => $noticia->id, 'slug' => $noticia->slug]) }}" class="text-decoration-none text-dark" data-btn="noticias">
                     {{ $noticia->titulo }}
                   </a>
-                </h3>
+                </h2>
 
                 <p class="card-text mb-5">{{ Str::limit($noticia->subtitulo, 150) }}</p>
                 <p class="card-text"><small class="text-muted">Publicado dia {{ $noticia->created_at->format('d/m/Y') }}</small></p>

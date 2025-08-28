@@ -33,7 +33,7 @@ $tipoForm = isset($solucao) ? 'Editar Solução' : 'Adicionar Solução';
     <div class="card shadow-lg p-4">
         <div class="card-header">
             <div class="d-flex align-items-center">
-                <h4 class="card-title"> {{ isset($solucao) ? 'Editar Solução' : 'Adicionar Solução' }}</h4>
+                <h1 class="fs-5 card-title"> {{ isset($solucao) ? 'Editar Solução' : 'Adicionar Solução' }}</h1>
             </div>
         </div>
         <form id="formSolucao" action="{{ isset($solucao) ? route('solucoes.update', $solucao->id) : route('solucoes.store') }}" method="post" enctype="multipart/form-data">
@@ -44,7 +44,7 @@ $tipoForm = isset($solucao) ? 'Editar Solução' : 'Adicionar Solução';
 
             <!-- Campo Nome do arquivo -->
             <div class="form-group mb-4">
-                <label for="titulo" class="form-label">Título da soluçãos</label>
+                <label for="titulo" class="form-label fw-bold">Título da soluçãos</label>
                 <input
                     name="titulo"
                     type="text"
@@ -56,7 +56,7 @@ $tipoForm = isset($solucao) ? 'Editar Solução' : 'Adicionar Solução';
 
             <!-- Campo Descricao-->
             <div class="form-group mb-4">
-                <label for="descricao" class="form-label">Descrição</label>
+                <label for="descricao" class="form-label fw-bold">Descrição</label>
                 <input
                     name="descricao"
                     type="text"
@@ -69,7 +69,7 @@ $tipoForm = isset($solucao) ? 'Editar Solução' : 'Adicionar Solução';
 
             <!-- Campo Passos de Implementação da solução -->
             <div class="form-group mb-4">
-                <label for="passosImplementacao" class="form-label">Passos de implementação</label>
+                <label for="passosImplementacao" class="form-label fw-bold">Passos de implementação</label>
                 <textarea
                     name="passosImplementacao"
                     class="form-control"
@@ -81,7 +81,7 @@ $tipoForm = isset($solucao) ? 'Editar Solução' : 'Adicionar Solução';
 
             <!-- Públicos-Alvo -->
             <div class="form-group mb-4">
-                <label for="publicos" class="form-label">Públicos-Alvo</label>
+                <label for="publicos" class="form-label fw-bold">Públicos-Alvo</label>
                 <div class="row">
                     @foreach($publicosAlvo->chunk(ceil($publicosAlvo->count() / 2)) as $chunk)
                     <div class="col-md-6">
@@ -113,7 +113,7 @@ $tipoForm = isset($solucao) ? 'Editar Solução' : 'Adicionar Solução';
 
             <!-- Campo Categoria -->
             <div class="form-group mb-4">
-                <label for="categoria" class="form-label">Categoria</label>
+                <label for="categoria" class="form-label fw-bold">Categoria</label>
                 <select name="idCategoria" class="form-select form-control" id="categoria" data-tipo="solucoes" required>
                     <option value="" disabled selected>Selecione uma categoria...</option>
                     @foreach($categorias as $categoria)
@@ -127,7 +127,7 @@ $tipoForm = isset($solucao) ? 'Editar Solução' : 'Adicionar Solução';
 
             <!-- Upload de novo arquivo -->
             <div class="mb-3">
-                <label for="arquivo" class="form-label px-3 fw-semibold">
+                <label for="arquivo" class="form-label fw-bold px-3 fw-semibold">
                     {{ isset($solucao) ? 'Substituir o arquivo (Imagem ou PDF)' : 'Selecione um arquivo para upload se necessário' }}
                 </label>
                 <input class="form-control" type="file" id="arquivo" name="arquivo" accept=".pdf,.jpg,.jpeg,.png">

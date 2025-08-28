@@ -27,11 +27,11 @@
 
         <!-- Público-Alvo -->
         <div class="mb-5 p-4 bg-light rounded-4 shadow-sm">
-            <h5 class="text-primary mb-3 d-flex align-items-center fw-bold">
+            <h2 class="fs-5 text-primary mb-3 d-flex align-items-center fw-bold">
                 <i class="fas fa-users me-2 fs-5 pr-2"></i>
                 Público-Alvo
-            </h5>
-            <ul class="ps-3 mb-0 text-secondary publico-alvo-list">
+            </h2>
+            <ul class="ps-3 mb-0 text-muted publico-alvo-list">
                 @forelse($solucao->publicosAlvo as $publico)
                 <li>{{ $publico->nome }}</li>
                 @empty
@@ -42,18 +42,18 @@
 
         <!-- Passos de Implementação -->
         <div class="bg-light p-4 rounded-4 shadow-sm mb-3">
-            <h5 class="text-primary mb-3 d-flex align-items-center fw-bold">
+            <h2 class="fs-5 text-primary mb-3 d-flex align-items-center fw-bold">
                 <i class="fas fa-clipboard-list me-2 fs-5 pr-2"></i>
                 Passos para Implementação
-            </h5>
-            <p class="text-secondary" style="text-align: justify;">
-                {!! nl2br(e($solucao->passosImplementacao)) !!}
+            </h2>
+            <p class="text-muted" style="text-align: justify;">
+                {!! $solucao->passosImplementacao !!}
             </p>
         </div>
 
         <!-- Arquivo (opcional) -->
         <div class="mt-5">
-            <h5 class="text-primary mb-3 d-flex align-items-center fw-bold"><i class="bi bi-paperclip me-2"></i>Material Complementar</h5>
+            <h2 class="fs-5text-primary mb-3 d-flex align-items-center fw-bold"><i class="bi bi-paperclip me-2"></i>Material Complementar</h2>
             @if($solucao->arquivo)
             @php
             $extensao = pathinfo($solucao->arquivo, PATHINFO_EXTENSION);

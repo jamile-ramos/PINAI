@@ -18,13 +18,13 @@
         <table class="table table-hover table-striped ">
             <thead class="forum-azul">
                 <tr>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>NAI</th>
-                    <th>Tipo de usuário</th>
-                    <th>Status</th>
-                    <th>Data de criação</th>
-                    <th style="width: 10%">Ação</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">NAI</th>
+                    <th scope="col">Tipo de usuário</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Data de criação</th>
+                    <th scope="col" style="width: 10%">Ação</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,7 +45,7 @@
                     <td>{{ $usuario->created_at->format('d/m/Y') }}</td>
                     <td>
                         <div class="form-button-action">
-                            <button type="button" class="btn btn-info d-inline btn-alterar"
+                            <button type="button" class="btn btn-primary btn-info d-inline btn-alterar"
                                 data-id="{{ $usuario->id }}"
                                 data-name="{{ $usuario->name }}"
                                 data-email="{{ $usuario->email }}"
@@ -57,8 +57,9 @@
                             <button type="button" class="btn toggle-status btn-status {{ $usuario->status == 'ativo' ? 'btn-danger' : 'btn-success' }}"
                                 data-id="{{ $usuario->id }}"
                                 data-status="{{ $usuario->status }}"
-                                aria-label="{{ $usuario->status == 'ativo' ? 'Desabilitar' : 'Ativar' }} usuário">
-                                {{ $usuario->status == 'ativo' ? 'Desabilitar' : 'Ativar' }}
+                                aria-label="{{ $usuario->status == 'ativo' ? 'Desativar' : 'Ativar' }} usuário">
+                                <span class="visually-hidden">{{ $usuario->status == 'ativo' ? 'Desativar' : 'Ativar' }} usuário"</span>
+                                {{ $usuario->status == 'ativo' ? 'Desativar' : 'Ativar' }}
                             </button>
                         </div>
                     </td>
@@ -77,7 +78,7 @@
         @forelse($usuarios as $usuario)
         <div class="card mb-3 shadow-md border-0 rounded-3 overflow-hidden">
             <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                <h5 class="card-title mb-0 fw-bold">{{ $usuario->name }}</h5>
+                <h1 class="fs-5 card-title mb-0 fw-bold">{{ $usuario->name }}</h1>
                 <span class="badge {{ $usuario->status == 'ativo' ? 'bg-success' : 'bg-danger' }}">
                     {{ $usuario->status == 'ativo' ? 'Ativo' : 'Inativo' }}
                 </span>
@@ -93,7 +94,7 @@
                     @endswitch
                 </p>
                 <div class="d-flex gap-2 flex-wrap mt-2">
-                    <button type="button" class="btn btn-md btn-info btn-alterar flex-grow-1"
+                    <button type="button" class="btn btn-md btn-primary btn-alterar flex-grow-1"
                         data-id="{{ $usuario->id }}"
                         data-name="{{ $usuario->name }}"
                         data-email="{{ $usuario->email }}"
@@ -105,7 +106,7 @@
                         data-id="{{ $usuario->id }}"
                         data-status="{{ $usuario->status }}">
                         <i class="fas {{ $usuario->status == 'ativo' ? 'fa-ban' : 'fa-check' }} me-1"></i>
-                        {{ $usuario->status == 'ativo' ? 'Desabilitar' : 'Ativar' }}
+                        {{ $usuario->status == 'ativo' ? 'desativar' : 'Ativar' }}
                     </button>
                 </div>
             </div>
@@ -182,9 +183,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title fw-bold" id="confirmModalLabel">Confirmar Ação</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Fechar">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
             </div>
             <div class="modal-body body-confirmar">
                 <div class="texto-confirmar">
@@ -197,7 +196,7 @@
                     <input type="hidden" name="status" id="status">
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" id="confirmActionBtn" class="btn">Desabilitar</button>
+                        <button type="submit" id="confirmActionBtn" class="btn">Desativar</button>
                     </div>
                 </form>
             </div>

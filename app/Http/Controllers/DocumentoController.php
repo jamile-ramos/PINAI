@@ -141,18 +141,30 @@ class DocumentoController extends Controller
     {
         $request->validate([
             'nomeArquivo' => 'required|string|max:255',
-            'descricao' => 'required|string',
+            'descricao' => 'required|string|max:150',
             'idCategoria' => 'required|exists:categorias_documentos,id',
-            'arquivo' => 'required|file|mimes:pdf|max:20480', //10mb
+            'link' => 'nullable|url|max:255',
+            'arquivo' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx|max:2048',
         ]);
 
-        $caminho = $request->file('arquivo')->store('documentos', 'public');
+        if (!$request->filled('link') && !$request->hasFile('arquivo')) {
+            return back()
+                ->withErrors(['Você deve informar pelo menos um link ou enviar um arquivo.'])
+                ->withInput();
+        }
 
+        if($request->file('arquivo')){
+            $caminho = $request->file('arquivo')->store('documentos', 'public');
+        }else{
+            $caminho = null;
+        }
+        
         $documento = Documento::create([
             'nomeArquivo' => $request->nomeArquivo,
             'descricao' => $request->descricao,
             'idCategoria' => $request->idCategoria,
             'caminhoArquivo' => $caminho,
+            'link' => $request->link,
             'idUsuario' => Auth::id()
         ]);
         event(new \App\Events\DocumentoCriado($documento));

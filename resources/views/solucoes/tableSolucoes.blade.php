@@ -16,7 +16,7 @@
         <table class="table table-hover table-striped">
             <thead class="forum-azul">
                 <tr>
-                    <th>Título</th>
+                    <th style="width: 30%">Título</th>
                     <th>Categoria</th>
                     <th>Público-alvo</th>
                     @if($tipoAba == 'allSolucoes')
@@ -68,7 +68,7 @@
                             </a>
                             @if(Auth::user()->tipoUsuario != 'comum' || (Auth::user()->id == $solucao->idUsuario && $tipoAba == 'mySolucoes'))
                             <button type="button" data-bs-toggle="tooltip"
-                                class="btn btn-info btn-edit"
+                                class="btn btn-primary btn-edit"
                                 data-url="{{ route('solucoes.edit', $solucao->id) }}"
                                 data-original-title="Editar"
                                 aria-label="Editar solução">
@@ -144,7 +144,7 @@
                 <div class="d-flex gap-2 flex-wrap">
                     <a class="btn btn-md btn-visualizar flex-fill text-center" href="{{ route('solucoes.show', ['id' => $solucao->id, 'slug' => $solucao->slug]) }}">Ver</a>
                     @if(Auth::user()->tipoUsuario != 'comum' || (Auth::user()->id == $solucao->idUsuario && $tipoAba == 'mySolucoes'))
-                    <a class="btn btn-md btn-info flex-fill text-center" href="{{ route('solucoes.edit', $solucao->id) }}">Editar</a>
+                    <a class="btn btn-md btn-primary flex-fill text-center" href="{{ route('solucoes.edit', $solucao->id) }}">Editar</a>
                     @endif
                     <button class="btn btn-md btn-danger btn-remove flex-fill text-center"
                         data-bs-toggle="modal"

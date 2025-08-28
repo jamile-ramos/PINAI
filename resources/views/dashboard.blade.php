@@ -8,17 +8,17 @@
 <div class="content-home">
   <div class="home-text">
     <h1 class="pb-5">Bem vindo à PINAI, {{ Auth::user()->name }}!</h1>
-    <p class="h4 fw-normal texto-justificado">
+    <p class="fs-4 fw-normal texto-justificado">
       A Plataforma Interativa de Núcleos de Acessibilidade e Inclusão (PINAI) é uma plataforma criada para
       centralizar e facilitar a comunicação entre os Núcleos de Acessibilidade e Inclusão (NAIs).
     </p>
   </div>
-  <h2 class="h3 fw-bolder mt-5 pt-3 mb-5">Principais funcionalidades</h2>
+  <h2 class="fs-3 fw-bolder mt-5 pt-3 mb-5">Principais funcionalidades</h2>
   <div class="content-card">
     <div class="card text-center" style="width: 18rem;">
       <div class="card-body card-functions">
         <i class="fas fa-newspaper" aria-hidden="true"></i>
-        <h3 class="card-title h5" id="titulo-noticias">Notícias</h3>
+        <h3 class="card-title fs-5" id="titulo-noticias">Notícias</h3>
         <p class="card-text card-home">Fique por dentro das últimas atualizações sobre acessibilidade e inclusão.</p>
         <a href="/noticias" class="btn btn-home" data-btn="noticias" id="link-noticias" aria-labelledby="titulo-noticias link-noticias">
           Ver mais
@@ -62,7 +62,7 @@
 
     <!-- Card de Noticias -->
     <div class="home-news container mb-5 mt-5">
-      <h2 class="h3 fw-bolder mb-0 pb-0">Últimas Notícias</h2>
+      <h2 class="fs-3 fw-bolder mb-0 pb-0">Últimas Notícias</h2>
 
       <div class="row row-cols-1 g-4">
         @foreach($noticias as $noticia)
@@ -71,15 +71,15 @@
             <div class="row g-0 h-100">
               <div class="col-md-4">
                 <div class="h-100 w-100 overflow-hidden">
-                  <img src="{{ asset('img/imgNoticias/' . $noticia->imagem) }}"
-                    class="img-fluid rounded w-100 h-100"
+                  <img src="{{ $noticia->imagem ? asset('img/imgNoticias/' . $noticia->imagem) : asset('/img/noticia-sem-imagem.png') }}"
+                    class=" img-fluid rounded w-100 h-100"
                     style="min-height: 200px; max-height: 200px; object-fit: cover;"
                     alt="Imagem ilustrativa da notícia: {{ $noticia->titulo }}">
                 </div>
               </div>
               <div class="col-md-8">
                 <div class="card-body d-flex flex-column h-100 bg-transparent p-0">
-                  <h3 class="card-title title-new mb-2 h4">
+                  <h3 class="card-title title-new mb-2 fs-4">
                     <a href="{{ route('noticias.show',['id' => $noticia->id, 'slug' => $noticia->slug]) }}" class="text-decoration-none" data-btn="noticias" aria-label="Abrir a notícia completa: {{ $noticia->titulo }}">
                       {{ $noticia->titulo }}
                     </a>
@@ -99,7 +99,7 @@
     <!-- Último tópicos -->
     <section class="forum-topics mb-5 w-100">
       <div class="d-flex align-items-center mb-4">
-        <h2 class="h3 fw-bolder mb-0 pb-0">Atividades Recentes no Fórum</h2>
+        <h2 class="fs-3 fw-bolder mb-0 pb-0">Atividades Recentes no Fórum</h2>
       </div>
 
       <div class="card shadow-sm rounded-3">
@@ -110,7 +110,7 @@
               <a href="{{ route('topicos.show', ['id' => $topico->id, 'slug' => $topico->slug]) }}" class="text-decoration-none d-flex w-100">
 
                 <div class="flex-grow-1">
-                  <h5 class="h6 fw-bold text-dark mb-1">{{ Str::limit($topico->titulo, 80) }}</h5>
+                  <h3 class="fw-bold text-dark mb-1">{{ Str::limit($topico->titulo, 80) }}</h3>
                   <div class="d-flex flex-wrap small text-muted">
                     <span class="d-flex align-items-center">
                       <i class="fas fa-file-alt me-1 text-primary"></i>
@@ -134,7 +134,7 @@
     <!-- Soluções em Destaque -->
     <section class="highlighted-solutions w-100">
       <div class="d-flex align-items-center mb-4">
-        <h2 class="h3 fw-bolder mb-0 pb-0">Soluções em destaque</h2>
+        <h2 class="fs-3 fw-bolder mb-0 pb-0">Soluções em destaque</h2>
       </div>
 
       <div class="row g-4">
@@ -148,7 +148,7 @@
               <div class="text-center mb-3">
                 <i class="fas fa-lightbulb fa-2x text-primary"></i>
               </div>
-              <h3 class="h6 fw-bold text-dark mb-2 text-truncate">
+              <h3 class="fs-6 fw-bold text-dark mb-2 text-truncate">
                 {{ $solucao->titulo }}
               </h3>
               <p class="text-muted small flex-grow-1">

@@ -3,7 +3,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title fw-bold" id="modalTituloConfirmacao">Alterar status</h5>
+                <h2 class="fs-5 modal-title fw-bold" id="modalTituloConfirmacao">Alterar status</h2>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

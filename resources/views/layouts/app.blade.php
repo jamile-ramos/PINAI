@@ -4,15 +4,22 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="theme-color" content="#000000">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="{{ asset('img/favicon-azul.svg') }}">
 
-    <!-- CSS do Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Summernote CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
 
+
+    <!-- CSS do Bootstrap -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" />
+
+    <!-- jQuery (obrigatório) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- CSS de bibliotecas externas -->
     <link rel="stylesheet" href="/css/plugins.min.css" />
@@ -84,9 +91,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Carregar o script do VLibras (deve ser carregado antes de outros scripts personalizados) -->
-    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <!--<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
     <script>
-        new window.VLibras.Widget('https://vlibras.gov.br/app');
+        new window.VLibras.Widget('https://vlibras.gov.br/app');-->
     </script>
 
     <!-- Carregar os scripts locais principais -->
@@ -111,7 +118,10 @@
     <script src="/js/setting-demo.js"></script>
 
     <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
-    
+    <!-- Summernote JS -->
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/lang/summernote-pt-BR.min.js"></script>
+
 
 </body>
 

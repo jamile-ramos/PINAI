@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UsuarioAtivo;
+use App\Events\UsuarioInativo;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Nai;
 use Laravel\Pail\ValueObjects\Origin\Console;
+use League\CommonMark\Extension\SmartPunct\EllipsesParser;
 
 class UsuarioController extends Controller
 {
@@ -78,16 +81,22 @@ class UsuarioController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
+
+        $user = User::findOrFail($id);
+
         if ($request->status == 'ativo') {
             $status = 'inativo';
         } else {
             $status = 'ativo';
         }
-
-        $user = User::findOrFail($id);
-
         $user->update(['status' => $status]);
 
-        return redirect('/painelUsuarios')->with('success', 'Status atualizado com sucesso!');
+        if ($status === 'ativo') {
+            event(new UsuarioAtivo($user));
+        } else{
+            event(new UsuarioInativo($user));
+        }
+
+        return redirect()->back()->with('success', 'Status atualizado com sucesso!');
     }
 }

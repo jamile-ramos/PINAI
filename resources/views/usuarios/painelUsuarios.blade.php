@@ -4,12 +4,12 @@
 
 @section('content')
 
-<div class="container-abas" id="abaUsuarios">
+<div class="container-abas w-100" id="abaUsuarios">
     {{ Breadcrumbs::render('painelUsuarios') }}
     <header class="text-center py-3 mb-4">
         <div class="container">
             <h1 class="display-4 fw-bold">Painel de Usuários</h1>
-            <p class="text-secondary mt-3 ">Gerencie e acompanhe os membros dos NAIs com facilidade e transparência.</p>
+            <p class="mt-3 ">Gerencie e acompanhe os membros dos NAIs com facilidade e transparência.</p>
         </div>
     </header>
 
@@ -28,7 +28,7 @@
     </div>
     @endif
     @endforeach
-    
+
     @if ($errors->any())
     @foreach ($errors->all() as $message)
     <div class="alert alert-danger alert-dismissible fade show mt-2 mx-3 rounded" role="alert">
@@ -44,11 +44,13 @@
             @include('usuarios.tableUsuarios', ['usuarios' => $usuarios])
         </div>
     </div>
-    <div class="tab-contents-users" role="tabpanel" id="panel-1" aria-labelledby="tab-1" tabindex="0">
+
+    <div class="tab-contents-users" role="tabpanel" id="panel-2" aria-labelledby="tab-2" tabindex="0">
         <div class="content-link" id="all-nais">
             @include('usuarios.tableNais', ['nais' => $nais])
         </div>
     </div>
+
 </div>
 
 @include('layouts.modalExclusao')

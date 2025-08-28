@@ -1,3 +1,21 @@
+:root {
+    --bs-primary: #025ADE;
+    --bs-primary-rgb: 2, 90, 222;
+}
+
+.btn-primary {
+    background-color: var(--bs-primary) !important;
+    border-color: var(--bs-primary) !important;
+}
+
+.text-primary {
+    color: var(--bs-primary) !important;
+}
+
+.text-white-70 {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
 .navigation-container {
     margin: 0;
     padding: 0;
@@ -65,7 +83,7 @@
 }
 
 .btn-edit {
-    background: #007BFF;
+    background: #025ADE;
 }
 
 .card-functions i {
@@ -133,7 +151,7 @@ p {
     margin-top: 20px;
 }
 
-.logo-login img {
+img.logo-login {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -155,7 +173,6 @@ p {
 }
 
 .container-abas {
-    width: 95%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -327,10 +344,6 @@ select {
     display: none;
 }
 
-.show {
-    display: flex;
-}
-
 .tab-buttons {
     background: #fff;
     width: 100%;
@@ -475,16 +488,15 @@ input.search-input {
     background-color: #23272b;
 }
 
+label {
+    color: #495057;
+}
+
 .btns-select {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin: 10px;
-}
-
-.mt-5,
-.my-5 {
-    margin-top: 1rem !important;
 }
 
 .py-12 {
@@ -619,21 +631,8 @@ ul.pagination.justify-content-center {
     margin-top: 30px;
 }
 
-label.form-label {
-    color: #8d9498 !important;
-}
-
 .btn:not(:disabled):not(.disabled) {
     white-space: nowrap;
-}
-
-.btn-danger {
-    background: #DC3545 !important;
-}
-
-.btn-info {
-    background: #007bff !important;
-    color: white !important;
 }
 
 .text-obs {
@@ -763,7 +762,7 @@ label.form-label {
 
 .post-date {
     font-size: 0.9em;
-    color: #aaa;
+    color: #6c757d;
 }
 
 .main-post-title {
@@ -790,7 +789,7 @@ label.form-label {
 .btn-response {
     display: inline-block;
     padding: 8px 20px;
-    background-color: #007bff;
+    background-color: #025ADE;
     color: white;
     text-decoration: none;
     border-radius: 6px;
@@ -857,7 +856,11 @@ label.form-label {
 
 .response-date {
     font-size: 0.9em;
-    color: #777;
+    color: #6c757d;
+}
+
+.btn-info {
+    color: #fff;
 }
 
 .response-content {
@@ -1106,8 +1109,8 @@ label.form-label {
 }
 
 .btn-danger {
-    background-color: #ff4d4d;
-    border-color: #ff4d4d;
+    background-color: #C72334 !important;
+    border-color: #C72334 !important;
     color: #fff;
 }
 
@@ -1197,7 +1200,6 @@ label.form-label {
 }
 
 #abaProfile {
-    width: 75% !important;
     display: block !important;
 }
 
@@ -1475,6 +1477,19 @@ button:focus-visible,
     cursor: pointer;
 }
 
+/* Faz o modal do Summernote sobrepor o backdrop */
+.note-editor .modal {
+    z-index: 9999 !important;
+    display: block !important;
+    /* garante que apareça */
+}
+
+/* Opcional: diminui a prioridade do backdrop */
+.modal-backdrop {
+    z-index: 1050 !important;
+}
+
+
 /* Contraste */
 
 /* === Alto Contraste Global === */
@@ -1556,13 +1571,14 @@ button:focus-visible,
 .alto-contraste section.space-y-6,
 .alto-contraste section.space-y-6 p,
 .alto-contraste .modal-body input.form-control::placeholder,
-.alto-contraste .my-4.mb-0.pb-4 > h1.h2.fw-bolder.text-uppercase.text-dark.mb-0.position-relative,
-.alto-contraste .my-4.mb-0.pb-4 > h1.h2.fw-bolder.text-uppercase.text-dark.mb-0.position-relative, i.fas.fa-folder.me-3.text-primary,
-.alto-contraste .my-4.mb-0 > h1.h2.fw-bolder.text-uppercase.text-dark.mb-0.position-relative,
-.my-4.mb-0 > h1.h2.fw-bolder.text-uppercase.text-dark.mb-0.position-relative i.fas.fa-folder.me-3.text-primary,
+.alto-contraste .my-4.mb-0.pb-4>h1.h2.fw-bolder.text-uppercase.text-dark.mb-0.position-relative,
+.alto-contraste .my-4.mb-0.pb-4>h1.h2.fw-bolder.text-uppercase.text-dark.mb-0.position-relative,
+.alto-contraste i.fas.fa-folder.me-3.text-primary,
+.alto-contraste .my-4.mb-0>h1.h2.fw-bolder.text-uppercase.text-dark.mb-0.position-relative,
+.alto-contraste .my-4.mb-0>h1.h2.fw-bolder.text-uppercase.text-dark.mb-0.position-relative i.fas.fa-folder.me-3.text-primary,
 .alto-contraste .forum-topics .list-group-item,
 .alto-contraste .forum-topics h5,
-.alto-contraste  #editUserModal .form-control,
+.alto-contraste #editUserModal .form-control,
 .alto-contraste #editUserModal .form-select,
 .alto-contraste #imagem {
     color: #fff !important;
@@ -1635,13 +1651,15 @@ button:focus-visible,
 .alto-contraste .mention-suggestions .dropdown-item:hover i,
 .alto-contraste .mention-suggestions .dropdown-item:focus i,
 .alto-contraste .result-count span.text-primary,
-.alto-contraste .result-count{
+.alto-contraste .result-count {
     color: #000 !important;
 }
+
 .alto-contraste .mention-suggestions strong,
 .alto-contraste .mention-suggestions span {
-  color: inherit !important;
+    color: inherit !important;
 }
+
 /* === Fundos === */
 
 /* Fundo Transparente */
@@ -1660,7 +1678,7 @@ button:focus-visible,
 .alto-contraste .user-icon-circle-profile,
 .alto-contraste .d-flex.justify-content-center.mt-3 .page-link,
 .alto-contraste #editUserModal .form-control,
-.alto-contraste  #editUserModal .form-select {
+.alto-contraste #editUserModal .form-select {
     background-color: #000 !important;
 }
 
@@ -1717,7 +1735,7 @@ button:focus-visible,
 .alto-contraste .bg-white,
 .alto-contraste .dark\:bg-gray-800,
 .alto-contraste #acessibilidade .card,
-.alto-contraste .d-flex.justify-content-center.mt-3 > nav[role="navigation"],
+.alto-contraste .d-flex.justify-content-center.mt-3>nav[role="navigation"],
 .alto-contraste .mention-suggestions.dropdown-menu.shadow.rounded-3.overflow-auto,
 .alto-contraste .card-body.d-flex.flex-column.solutions,
 .alto-contraste .forum-topics .list-group-item {
@@ -1860,7 +1878,7 @@ button:focus-visible,
 .comment-options .options-menu {
     min-width: 120px;
     border-radius: 6px;
-    box-shadow: 0px 4px 6px rgba(0,0,0,0.15);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
     font-size: 0.9rem;
     padding: 5px 0;
 }
@@ -1879,6 +1897,7 @@ button:focus-visible,
     font-weight: bold;
     cursor: pointer;
 }
+
 .mention:hover {
     text-decoration: underline;
 }
@@ -1886,11 +1905,12 @@ button:focus-visible,
 .topic-icon-container {
     width: 40px;
     height: 40px;
-  }
-  .avatar-sm {
+}
+
+.avatar-sm {
     width: 40px;
     height: 40px;
-  }
+}
 
 
 @media (max-width: 576px) {
@@ -1932,21 +1952,26 @@ button:focus-visible,
     .publico-alvo-list {
         column-count: 1;
     }
+
     .alto-contraste .table-responsive {
         border: 1px solid transparent !important;
     }
+
     .alto-contraste .card .card-body i.fas {
         color: #fff !important;
     }
+
     .alto-contraste .card .card-body p {
-    color: #fff !important;
-  }
-  .alto-contraste .card .card-body p {
-    color: #fff !important;
-  }
-  .alto-contraste .card-not-home{
-    background-color: #000;
-  }
+        color: #fff !important;
+    }
+
+    .alto-contraste .card .card-body p {
+        color: #fff !important;
+    }
+
+    .alto-contraste .card-not-home {
+        background-color: #000;
+    }
 
 }
 
@@ -1960,38 +1985,53 @@ button:focus-visible,
     }
 }
 
-/* Usuário comum: aplicar a partir de telas menores que 1400px */
-@media screen and (max-width: 500px) {
-    body.is-comum .btn-dark { background: #343a40 !important; }
-    body.is-comum i.dropdown-icon.fas.fa-chevron-down { position: absolute; top: 30%; right: 10px; }
-    body.is-comum .hidden { display: none; }
-    body.is-comum .select-btn { display: inline-block; }
-    body.is-comum .tab-btn { display: none; }
+/* Usuário comum: aplicar a partir de telas menores que 500px */
+@media screen and (max-width: 650px) {
+    body.is-comum .btn-dark {
+        background: #343a40 !important;
+    }
+
+    body.is-comum i.dropdown-icon.fas.fa-chevron-down {
+        position: absolute;
+        top: 30%;
+        right: 10px;
+    }
+
+    body.is-comum .hidden {
+        display: none;
+    }
+
+    body.is-comum .select-btn {
+        display: inline-block;
+    }
+
+    body.is-comum .tab-btn {
+        display: none;
+    }
+
     body.is-comum .line-button,
-    body.is-comum .btns-select { display: none; }
-    body.is-comum .tab-buttons .active { border-bottom: 0px; }
-    body.is-comum .tab-buttons button:hover { color: white; }
-    body.is-comum .add { top: 20%; }
-    body.is-comum .btn { padding: 10px; }
+    body.is-comum .btns-select {
+        display: none;
+    }
+
+    body.is-comum .tab-buttons .active {
+        border-bottom: 0px;
+    }
+
+    body.is-comum .tab-buttons button:hover {
+        color: white;
+    }
+
+    body.is-comum .add {
+        top: 20%;
+    }
+
+    body.is-comum .btn {
+        padding: 10px;
+    }
 }
 
 /* Admin e Moderador: aplicar a partir de telas menores que 1490px */
-@media screen and (max-width: 1490px) {
-    body.is-admin .btn-dark { background: #343a40 !important; }
-    body.is-admin i.dropdown-icon.fas.fa-chevron-down { position: absolute; top: 30%; right: 10px; }
-    body.is-admin .hidden { display: none; }
-    body.is-admin .select-btn { display: inline-block; }
-    body.is-admin .tab-btn { display: none; }
-    body.is-admin .line-button,
-    body.is-admin .btns-select { display: none; }
-    body.is-admin .tab-buttons .active { border-bottom: 0px; }
-    body.is-admin .tab-buttons button:hover { color: white; }
-    body.is-admin .add { top: 20%; }
-    body.is-admin .btn { padding: 10px; }
-}
-
-
-/* Para usuário admin: aplicar a partir de telas menores que 1490px */
 @media screen and (max-width: 1490px) {
     body.is-admin .btn-dark {
         background: #343a40 !important;
@@ -2037,18 +2077,30 @@ button:focus-visible,
     }
 }
 
+@media screen and (max-width: 600px) {
 
-@media screen and (max-width: 1040px) {
-
-    .line-button,
-    .btns-select {
+    body.is-comum .line-button,
+    body.is-comum .btns-select {
         display: flex;
     }
 
-    .add-btn {
+    body.is-comum .add-btn {
         display: none;
     }
 }
+
+@media screen and (max-width: 1040px) {
+
+    body.is-admin .line-button,
+    body.is-admin .btns-select {
+        display: flex;
+    }
+
+    body.is-admin .add-btn {
+        display: none;
+    }
+}
+
 
 @media screen and (max-width: 390px) {
     .search-icon {

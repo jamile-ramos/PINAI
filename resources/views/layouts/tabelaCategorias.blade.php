@@ -38,16 +38,15 @@
 
                     <td>
                         <div class="form-button-action">
-                            <button type="button"
-                                class="btn btn-danger btn-remove"
-                                data-bs-toggle="tooltip"
-                                data-modal="#confirmExcluirModal"
-                                data-url="{{ route('categorias.destroy', ['tipo' => $tipo, 'id' => $categoria->id]) }}"
-                                data-id="{{ $categoria->id }}"
-                                title="Excluir">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-
+                            <div class="d-flex gap-2 mt-3">
+                                <button class="btn btn-md btn-danger btn-remove flex-fill text-center"
+                                    data-bs-toggle="modal"
+                                    data-original-title="Remover"
+                                    data-bs-target="#confirmExcluirModal"
+                                    data-url="{{ route('categorias.destroy', ['tipo' => $tipo, 'id' => $categoria->id]) }}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
                         </div>
                     </td>
                 </tr>
@@ -78,13 +77,11 @@
 
                 {{-- Botão de ação --}}
                 <div class="d-flex gap-2 mt-3">
-                    <button class="btn btn-md btn-danger flex-fill text-center btn-remove"
+                    <button class="btn btn-md btn-danger btn-remove flex-fill text-center"
                         data-bs-toggle="modal"
+                        data-original-title="Remover"
                         data-bs-target="#confirmExcluirModal"
-                        data-url="{{ route('categorias.destroy', ['tipo' => $tipo, 'id' => $categoria->id]) }}"
-                        data-id="{{ $categoria->id }}"
-                        aria-label="Excluir categoria {{ $categoria->nomeCategoria }}">
-                        <i class="fas fa-trash-alt me-1" aria-hidden="true"></i>
+                        data-url="{{ route('categorias.destroy', ['tipo' => $tipo, 'id' => $categoria->id]) }}">
                         Excluir
                     </button>
                 </div>

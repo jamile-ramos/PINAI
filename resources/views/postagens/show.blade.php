@@ -45,7 +45,7 @@
                 </div>
                 <span class="post-date">{{ $postagem->created_at->format('d/m/Y') }}</span>
             </div>
-            <div class="main-post-title">{{ $postagem->titulo }}</div>
+            <div class="main-post-title"><h1 class="fs-3">{{ $postagem->titulo }}</h1></div>
             <div class="main-post-content">
                 {!! nl2br(e($postagem->conteudo)) !!}
             </div>
@@ -65,7 +65,7 @@
 
         <!-- Container de Respostas -->
         <div class="respostas-container">
-            <h3 class="responses-title">Respostas ({{ $postagem->respostas->count() }})</h3>
+            <h2 class="fs-4 responses-title">Respostas ({{ $postagem->respostas->count() }})</h2>
 
             @foreach($postagem->respostas as $resposta)
             <div class="response-card">

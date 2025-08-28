@@ -41,7 +41,7 @@
                                 Ver postagem
                             </a>
                             @if(Auth::user()->tipoUsuario != 'comum' || (Auth::user()->id == $postagem->idUsuario && $tipoAba == 'myPostagens'))
-                            <button type="button" class="btn btn-info btn-edit"
+                            <button type="button" class="btn btn-primary btn-edit"
                                 data-bs-toggle="tooltip"
                                 data-url="{{ route('postagens.edit', $postagem->id) }}"
                                 data-original-title="Editar">
@@ -89,7 +89,7 @@
                     Ver
                 </a>
                 @if(Auth::user()->tipoUsuario != 'comum' || (Auth::user()->id == $postagem->idUsuario && $tipoAba == 'myPostagens'))
-                <button type="button" class="btn btn-info btn-md btn-edit flex-fill text-center"
+                <button type="button" class="btn btn-primary btn-md btn-edit flex-fill text-center"
                     data-bs-toggle="tooltip"
                     data-url="{{ route('postagens.edit', $postagem->id) }}"
                     data-original-title="Editar">

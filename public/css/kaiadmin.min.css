@@ -256,10 +256,10 @@ strong {
    color: #f25961 !important
 }
 
-label {
+/*label {
    color: #495057 !important;
    font-size: 14px !important
-}
+}*/
 
 .text-small {
    font-size: 11px
@@ -2730,12 +2730,12 @@ body[data-background-color=dark] .border-top {
    word-break: normal
 }
 
-label {
+/*label {
    font-size: 1rem;
    font-weight: 400;
    color: #8d9498;
    margin-bottom: 0
-}
+}*/
 
 .card-transparent {
    background: 0 0 !important;
@@ -4339,13 +4339,13 @@ label {
    padding: 10px
 }
 
-.form-check label,
+/*.form-check label,
 .form-group label {
    margin-bottom: .5rem;
    color: #495057;
    font-size: 1rem;
    white-space: nowrap
-}
+}*/
 
 .form-group-default {
    background-color: #fff;

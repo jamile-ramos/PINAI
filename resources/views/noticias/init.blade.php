@@ -21,19 +21,21 @@
                     <div class="row g-0 h-100">
                         <div class="col-md-4">
                             <div class="h-100 w-100 overflow-hidden">
-                                <img src="{{ asset('img/imgNoticias/' . $noticia->imagem) }}"
+                                <img
+                                    src="{{ $noticia->imagem ? asset('img/imgNoticias/' . $noticia->imagem) : asset('/img/noticia-sem-imagem.png') }}"
                                     class="img-fluid rounded w-100 h-100"
                                     style="min-height: 200px; max-height: 200px; object-fit: cover;"
-                                    alt="{{ $noticia->titulo }}">
+                                    alt="{{ $noticia->imagem ? 'Imagem da notícia: ' . $noticia->titulo : 'Imagem padrão: notícia sem imagem' }}">
+
                             </div>
                         </div>
                         <div class="col-md-8">
                             <div class="card-body d-flex flex-column h-100 bg-transparent p-0">
-                                <h5 class="h5 card-title title-new mb-2">
+                                <h2 class="fs-5 card-title title-new mb-2">
                                     <a href="{{ route('noticias.show', ['id' => $noticia->id, 'slug' => $noticia->slug]) }}" class="text-decoration-none text-dark" data-btn="noticias">
                                         {{ $noticia->titulo }}
                                     </a>
-                                </h5>
+                                </h2>
 
                                 <p class="card-text mb-5">{{ Str::limit($noticia->subtitulo, 150) }}</p>
                                 <p class="card-text"><small class="text-muted">Publicado dia {{ $noticia->created_at->format('d/m/Y') }}</small></p>
@@ -70,7 +72,8 @@
                 @foreach($noticiasRecentes as $index => $noticia)
                 <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
                     <div class="carousel-image-container position-relative">
-                        <img src="{{ asset('img/imgNoticias/' . $noticia->imagem) }}" class="d-block w-100" alt="{{ 'Imagem da notícia: ' . Str::limit($noticia->titulo, 80) }}">
+                        <img src="{{ $noticia->imagem ? asset('img/imgNoticias/' . $noticia->imagem) : asset('/img/noticia-sem-imagem.png') }}"
+                            class="d-block w-100" alt="{{ 'Imagem da notícia: ' . Str::limit($noticia->titulo, 80) }}">
                         <!-- Sombreado aplicado com gradiente -->
                         <div class="carousel-overlay position-absolute top-0 start-0 w-100 h-100"></div>
                     </div>
@@ -93,28 +96,29 @@
         </div>
     </div>
 
+    <!-- NOTÍCIAS SEPERADAS POR CATEGORIAS-->
     @foreach($categorias as $categoria)
 
     @if($categoria->noticias->isNotEmpty())
     <div class="home-news titulo-categoria mb-2 mt-4 pt-2">
-        <p class=" h3 fw-bolder nomeCategoria">
+        <h2 class="fs-3 fw-bolder nomeCategoria">
             <a href="{{ route('noticias.noticiasCategorias', $categoria->id) }}" class="categoria d-inline-flex align-items-center gap-2">
                 {{ $categoria->nomeCategoria }}
                 <svg viewBox="0 0 32 32" focusable="false" aria-hidden="true" width="22" height="15" fill="currentColor">
                     <path d="M21.6 14.3L5.5 31h6.4l14.6-15L11.9 1H5.5l16.1 16.7v-3.4z"></path>
                 </svg>
             </a>
-        </p>
+        </h2>
 
         <div class="row">
             @foreach($categoria->noticias as $noticiaCategoria)
             <div class="col-md-4 mb-2">
                 <div class="card h-100 bg-transparent border-0 shadow-none">
-                    <img src="{{ asset('img/imgNoticias/' . $noticiaCategoria->imagem) }}" class="card-img-top img-capa" alt="{{ 'Imagem da notícia: ' . Str::limit($noticiaCategoria->titulo, 80) }}">
+                    <img src="{{ $noticiaCategoria->imagem ? asset('img/imgNoticias/' . $noticiaCategoria->imagem) : asset('/img/noticia-sem-imagem.png') }}" class="card-img-top img-capa" alt="{{ 'Imagem da notícia: ' . Str::limit($noticiaCategoria->titulo, 80) }}">
                     <div>
-                        <h5 class="h5 card-title pt-3 hover-underline">
-                            <a href="{{ route('noticias.show', ['id' => $noticia->id, 'slug' => $noticia->slug]) }}">{{ $noticiaCategoria->titulo }}</a>
-                        </h5>
+                        <h3 class="fs-5 card-title pt-3 hover-underline">
+                            <a href="{{ route('noticias.show', ['id' => $noticiaCategoria->id, 'slug' => $noticiaCategoria->slug]) }}">{{ $noticiaCategoria->titulo }}</a>
+                        </h3>
                         <p class="card-text">
                             <small class="text-muted">Publicado dia {{ $noticiaCategoria->created_at->format('d/m/Y') }}</small>
                         </p>

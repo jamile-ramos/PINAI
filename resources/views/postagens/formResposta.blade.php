@@ -21,7 +21,7 @@ $tipoForm = isset($resposta) ? 'Editar Resposta' : 'Adicionar Resposta';
             </span>
 
 
-            <h5 class="fw-bold mb-3">📌 {{ $postagem->titulo }}</h5>
+            <h1 class="fs-6 fw-bold mb-3">📌 {{ $postagem->titulo }}</h1>
 
             <div class="row border rounded p-2 mb-3 m-3 g-3">
 
@@ -82,9 +82,17 @@ $tipoForm = isset($resposta) ? 'Editar Resposta' : 'Adicionar Resposta';
                     $conteudo = old('conteudo', isset($resposta) ? $resposta->conteudo : '');
                     @endphp
 
-                    <textarea name="conteudo" id="conteudo" class="form-control shadow-sm rounded-3" rows="6" placeholder="Compartilhe sua resposta ou opinião..." required>{{ $conteudo }}</textarea>
-
+                    <textarea name="conteudo" id="conteudo"
+                        class="form-control shadow-sm rounded-3 @error('conteudo') is-invalid @enderror"
+                        aria-describedby="@error('conteudo') error-conteudo @enderror"
+                        rows="6" placeholder="Compartilhe sua resposta ou opinião..." required>{{ $conteudo }}</textarea>
                     </textarea>
+
+                    @error('conteudo')
+                    <div id="error-conteudo" class="invalid-feedback d-block">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
 
                 <div class="d-flex justify-content-end gap-2 mt-4">

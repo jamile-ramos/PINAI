@@ -3,7 +3,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header border-bottom border-secondary">
-                <h5 class="modal-title fw-bold" id="exampleModalLabel">Adicionar Categoria</h5>
+                <h2 class="fs-5 modal-title fw-bold" id="exampleModalLabel">Adicionar Categoria</h2>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -11,7 +11,7 @@
             <form id="formAddCategoria" method="POST" action="{{ route('categorias.store', $tipo) }}">   
                     @csrf
                     <div class="form-group">
-                        <label for="nomeCategoria">Nome da categoria</label>
+                        <label for="nomeCategoria" class="fw-bold mb-3 mt-2">Nome da categoria</label>
                         <input type="text" class="form-control" id="nomeCategoria" name="nomeCategoria">
                     </div>
                     <div class="modal-footer border-top pt-2 mt-2 border-light">

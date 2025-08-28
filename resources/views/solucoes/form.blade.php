@@ -50,7 +50,7 @@ $tipoForm = isset($solucao) ? 'Editar Solução' : 'Adicionar Solução';
                     type="text"
                     class="form-control"
                     id="titulo"
-                    placeholder="Digite o título da solução"
+                    placeholder="Ex: Atividade adaptada para alunos com deficiência visual"
                     value="{{ old('titulo', isset($solucao) ? $solucao->titulo : '') }}" />
             </div>
 
@@ -62,7 +62,7 @@ $tipoForm = isset($solucao) ? 'Editar Solução' : 'Adicionar Solução';
                     type="text"
                     class="form-control"
                     id="descricao"
-                    placeholder="Digite a descrição da solucão"
+                    placeholder="Descreva a solução e o problema que ela resolve, incluindo recursos utilizados (materiais, softwares, atividades, vídeos, metodologias)."
                     required
                     value="{{ old('descricao', isset($solucao) ? $solucao->descricao : '') }}" />
             </div>
@@ -75,7 +75,7 @@ $tipoForm = isset($solucao) ? 'Editar Solução' : 'Adicionar Solução';
                     class="form-control"
                     id="passosImplementacao"
                     rows="10"
-                    placeholder="Escreva os passos de implementação da solução"
+                    placeholder="Descreva passo a passo como aplicar a solução, incluindo recursos, tempo e resultados esperados."
                     required>{{ old('passosImplementacao', isset($solucao) ? $solucao->passosImplementacao : '') }}</textarea>
             </div>
 

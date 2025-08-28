@@ -38,15 +38,7 @@ class PostagemController extends Controller
         $postagem->idTopico = $request->idTopico;
         $postagem->idUsuario = Auth::user()->id;
 
-        //upload Postagem
-        if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
-            $requestImage = $request->file('imagem');
-            $extension = $requestImage->extension();
-            $imageName = md5($requestImage->getClientOriginalName() . strtotime('now') . $extension);
-            $requestImage->move(public_path('img/imgPostagens'), $imageName);
-            $postagem->imagem = $imageName;
-        }
-        $postagem->save();
+         $postagem->save();
 
         // Notificação via email
         $topico = Topico::findOrFail($postagem->idTopico);
@@ -70,14 +62,6 @@ class PostagemController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->all();
-        //upload Postagem
-        if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
-            $requestImage = $request->file('imagem');
-            $extension = $requestImage->extension();
-            $imageName = md5($requestImage->getClientOriginalName() . strtotime('now') . $extension);
-            $requestImage->move(public_path('img/imgPostagens'), $imageName);
-            $data['imagem'] = $imageName;
-        }
         $postagem = Postagem::findOrFail($id);
         $postagem->update($data);
 

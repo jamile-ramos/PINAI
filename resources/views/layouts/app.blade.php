@@ -91,9 +91,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Carregar o script do VLibras (deve ser carregado antes de outros scripts personalizados) -->
-    <!--<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
     <script>
-        new window.VLibras.Widget('https://vlibras.gov.br/app');-->
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
     </script>
 
     <!-- Carregar os scripts locais principais -->

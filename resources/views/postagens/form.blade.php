@@ -78,34 +78,6 @@ $idTopico = $postagem->idTopico;
                 @enderror
             </div>
 
-            <!-- Campo Imagem -->
-            <div class="px-3" id="campoImagem">
-                <label for="imagem" class="form-label fw-bold">
-                    Imagem
-                </label>
-                <input
-                    name="imagem"
-                    type="file"
-                    class="form-control @error('imagem') is-invalid @enderror"
-                    aria-describedby="@error('imagem') error-titulo @enderror"
-                    id="imagem"
-                    tabindex="0" />
-                @error('imagem')
-                <div id="error-imagem" class="invalid-feedback d-block">
-                    {{ $message }}
-                </div>
-                @enderror
-            </div>
-
-            <!-- Prévia da Imagem (se já existir uma imagem) -->
-            @if(isset($postagem) && $postagem->imagem)
-            <div class="mb-3" id="preview">
-                <label for="imagemPreview" class="form-label fw-bold">Prévia da Imagem</label>
-                <img src="{{ asset('img/imgPostagens/'.$postagem->imagem) }}" alt="Prévia da Imagem" class="img-fluid" id="imagemPreview" style="max-width: 300px;">
-                <button type="button" class="btn btn-danger mt-2" id="removeImageBtn">Remover Imagem</button>
-            </div>
-            @endif
-
             <!-- Campo Tópico -->
             <div class="form-group mb-4">
                 <label for="topico" class="form-label fw-bold">Topico <span class="text-danger">*</span><span class="visually-hidden">(campo obrigatório)</span></label>

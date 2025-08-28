@@ -29,28 +29,28 @@
                         <div class="col-6 cardMy">
                             <div class="card card-profile cardMyChild text-center">
                                 <span class="mb-1 text-roxo"><i class="fas fa-newspaper"></i></span>
-                                <p class="h5 fw-bold mb-0">{{ $myNoticias->count() }}</p>
+                                <p class="fs-5 fw-bold mb-0">{{ $myNoticias->count() }}</p>
                                 <p class="text-small px-4 fw-bold">Notícias</p>
                             </div>
                         </div>
                         <div class="col-6 cardMy">
                             <div class="card card-profile cardMyChild text-center">
                                 <span class="mb-1 text-roxo"><i class="fas fa-pencil-alt"></i></span>
-                                <p class="h5 fw-bold mb-0">{{ $myPostagens->count() }}</p>
+                                <p class="fs-5 fw-bold mb-0">{{ $myPostagens->count() }}</p>
                                 <p class="text-small px-4 fw-bold">Postagens</p>
                             </div>
                         </div>
                         <div class="col-6 cardMy">
                             <div class="card card-profile cardMyChild text-center">
                                 <span class="mb-1 text-roxo"><i class="fas fa-file-alt"></i></span>
-                                <p class="h5 fw-bold mb-0">{{ $myDocumentos->count() }}</p>
+                                <p class="fs-5 fw-bold mb-0">{{ $myDocumentos->count() }}</p>
                                 <p class="text-small fw-bold">Documentos</p>
                             </div>
                         </div>
                         <div class="col-6 cardMy">
                             <div class="card card-profile cardMyChild text-center">
                                 <span class="mb-1 text-roxo"><i class="fas fa-tools"></i></span>
-                                <p class="h5 fw-bold mb-0">{{ $mySolucoes->count() }}</p>
+                                <p class="fs-5 fw-bold mb-0">{{ $mySolucoes->count() }}</p>
                                 <p class="text-small fw-bold">Solucões</p>
                             </div>
                         </div>
@@ -161,7 +161,8 @@
                     </div>
                     <!-- PAGINAÇÃO -->
                     <div class="d-flex justify-content-center mt-3">
-                        {{ $myNoticias->appends(request()->except('myNoticias_page'))->links('vendor.pagination.bootstrap-5')  }}
+                        {{ $myNoticias->appends(request()->except('myNoticias_page'))->appends(['abaAtiva' => 'myNoticias'])->links('vendor.pagination.bootstrap-5') }}
+
                     </div>
                 </div>
 
@@ -197,7 +198,7 @@
                                 <h2 class="fs-5">{{ $postagem->titulo }}</h2>
                             </div>
                             <div class="post-content border-bottom border-light pb-3">
-                                {{ Str::limit($postagem->conteudo, 100, '...') }}
+                                {{ Str::limit(strip_tags($postagem->conteudo), 100, '...') }}
                             </div>
                             <div class="post-footer mt-2">
                                 <a href="{{ route('postagens.show', ['id' => $postagem->id, 'slug' => $postagem->slug] )}}" class="btn btn-primary">Ver Postagem</a>
@@ -219,7 +220,7 @@
                     </div>
                     <!-- Paginação -->
                     <div class="d-flex justify-content-center mt-3">
-                        {{ $myPostagens->appends(request()->except('myPostagensProfile_page'))->links('vendor.pagination.bootstrap-5') }}
+                        {{ $myPostagens->appends(request()->except('myPostagens_page'))->appends(['abaAtiva' => 'myPostagens'])->links('vendor.pagination.bootstrap-5') }}
                     </div>
                 </div>
 
@@ -240,20 +241,39 @@
                     <div class="infos">
                         <div class="row g-4">
                             @forelse($myDocumentos as $documento)
-                            <div class="col-md-4 col-md-6">
+                            <div class="col-md-4 col-sm-6">
                                 <div class="card h-100 shadow rounded-4 border-0">
                                     <div class="card-body text-center d-flex flex-column justify-content-between">
-                                        <div class="mb-3">
-                                            <i class="fa fa-file-pdf fa-3x text-primary"></i>
-                                        </div>
-                                        <h2 class="fs-5card-title fw-semibold">{{ $documento->nomeArquivo }}</h2>
-                                        <p class="card-text text-muted small">{{ Str::limit($documento->descricao, 100) }}</p>
-                                        <a href="{{ asset('storage/' . $documento->caminhoArquivo) }}" target="_blank" class="btn btn-link text-wrap">
-                                            <i class="fa fa-eye"></i> Visualizar
+
+                                        <i class="fa fa-file-alt fa-3x text-primary"></i>
+
+                                        {{-- Nome e descrição --}}
+                                        <h2 class="fs-5 card-title fw-semibold">{{ $documento->nomeArquivo }}</h2>
+                                        <p class="card-text text-muted small">{{ Str::limit($documento->descricao, 150) }}</p>
+
+                                        {{-- Se for arquivo PDF/Word/etc e link --}}
+                                        @if($documento->caminhoArquivo && $documento->link)
+                                        <a href="{{ $documento->link }}"
+                                            target="_blank" class="btn btn-link text-wrap">
+                                            <i class="fa fa-external-link-alt"></i> Acessar Link
                                         </a>
-                                        <a href="{{ asset('storage/' . $documento->caminhoArquivo) }}" download class="btn btn-primary text-wrap">
-                                            <i class="fa fa-download"></i> Download
+                                        <a href="{{ asset('storage/' . $documento->caminhoArquivo) }}"
+                                            target="_blank" class="btn btn-primary text-wrap mb-2">
+                                            <i class="fa fa-eye"></i> Visualizar Arquivo
                                         </a>
+                                        {{-- Se for link externo --}}
+                                        @elseif ($documento->link)
+                                        <a href="{{ $documento->link }}"
+                                            target="_blank" class="btn btn-link text-wrap">
+                                            <i class="fa fa-external-link-alt"></i> Acessar Link
+                                        </a>
+                                        {{-- Se for só documento --}}
+                                        @else
+                                        <a href="{{ asset('storage/' . $documento->caminhoArquivo) }}"
+                                            target="_blank" class="btn btn-primary text-wrap mb-2">
+                                            <i class="fa fa-eye"></i> Visualizar Arquivo
+                                        </a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -273,7 +293,7 @@
                     </div>
                     <!-- Paginação -->
                     <div class="d-flex justify-content-center mt-3">
-                        {{ $myDocumentos->appends(request()->except('myDocumentos_page'))->links('vendor.pagination.bootstrap-5') }}
+                        {{ $myDocumentos->appends(request()->except('myDocumentos_page'))->appends(['abaAtiva' => 'myDocumentos'])->links('vendor.pagination.bootstrap-5') }}
                     </div>
                 </div>
 
@@ -296,7 +316,7 @@
                         <div class="col">
                             <div class="card h-100 border-0 shadow-lg rounded-4">
                                 <div class="card-body d-flex flex-column p-4">
-                                    <h2 class="fs-5card-title text-primary fw-bold mb-3">{{ $solucao->titulo }}</h2>
+                                    <h2 class="fs-5 card-title text-primary fw-bold mb-3">{{ $solucao->titulo }}</h2>
                                     <p class="text-muted mb-2 small mb-4"><strong>Por:</strong> {{ $solucao->user->nai->siglaNai }} - {{ $solucao->user->nai->siglaInstituicao }}</p>
                                     <p class="card-text text-muted mb-4">{{ Str::limit($solucao->descricao, 120) }}</p>
                                     <div class="d-flex justify-content-between mt-auto">
@@ -328,10 +348,10 @@
                         </div>
                         @endforelse
                     </div>
-                </div>
-                <!-- Paginação -->
+                    <!-- Paginação -->
                 <div class="d-flex justify-content-center mt-3">
-                    {{ $mySolucoes->appends(request()->except('mySolucoes_page'))->links('vendor.pagination.bootstrap-5') }}
+                    {{ $mySolucoes->appends(request()->except('mySolucoes_page'))->appends(['abaAtiva' => 'mySolucoes'])->links('vendor.pagination.bootstrap-5') }}
+                </div>
                 </div>
             </div>
         </div>

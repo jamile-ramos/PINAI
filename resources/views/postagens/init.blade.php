@@ -47,9 +47,11 @@
             <span class="text-muted">{{ $postagem->created_at->format('d/m/Y') }}</span>
         </div>
 
-        <div class="post-title"><h3 class="fs-5">{{ $postagem->titulo }}</h3></div>
+        <div class="post-title">
+            <h3 class="fs-5">{{ $postagem->titulo }}</h3>
+        </div>
         <div class="post-content border-bottom border-light pb-3">
-            {{ Str::limit($postagem->conteudo, 100, '...') }}
+            {{ Str::limit(strip_tags($postagem->conteudo), 100, '...') }}
         </div>
         <div class="post-footer mt-2">
             <a href="{{ route('postagens.show', ['id' => $postagem->id, 'slug' => $postagem->slug] )}}" class="btn btn-primary">Ver Postagem</a>
@@ -59,9 +61,9 @@
     @endforeach
     @endif
 
-<!-- Paginação -->
-<div class="d-flex justify-content-center mt-3">
-    {{ $postagens->appends(request()->except('postagens_page'))->links('vendor.pagination.bootstrap-5') }}
-</div>
+    <!-- Paginação -->
+    <div class="d-flex justify-content-center mt-3">
+        {{ $postagens->appends(request()->except('postagens_page'))->links('vendor.pagination.bootstrap-5') }}
+    </div>
 
 </div>

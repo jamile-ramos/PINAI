@@ -1589,7 +1589,13 @@ button:focus-visible,
 .alto-contraste .forum-topics h5,
 .alto-contraste #editUserModal .form-control,
 .alto-contraste #editUserModal .form-select,
-.alto-contraste #imagem {
+.alto-contraste #imagem,
+.alto-contraste .notif-box.animated.fadeIn,
+.alto-contraste .notif-box.animated.fadeIn a,
+.alto-contraste .notif-box.animated.fadeIn .dropdown-title,
+.alto-contraste .notif-box.animated.fadeIn .notif-content,
+.alto-contraste .responses-title
+ {
     color: #fff !important;
 }
 
@@ -1747,7 +1753,13 @@ button:focus-visible,
 .alto-contraste .d-flex.justify-content-center.mt-3>nav[role="navigation"],
 .alto-contraste .mention-suggestions.dropdown-menu.shadow.rounded-3.overflow-auto,
 .alto-contraste .card-body.d-flex.flex-column.solutions,
-.alto-contraste .forum-topics .list-group-item {
+.alto-contraste .forum-topics .list-group-item,
+.alto-contraste .col-12.col-md-6 .card,
+.alto-contraste .notif-box.animated.fadeIn,
+.alto-contraste .notif-box.animated.fadeIn a,
+.alto-contraste .notif-box.animated.fadeIn .dropdown-title,
+.alto-contraste .notif-box.animated.fadeIn .notif-content,
+.alto-contraste ul.list-unstyled.mt-2 li{
     background-color: #222 !important;
 }
 
@@ -1810,7 +1822,8 @@ button:focus-visible,
 .alto-contraste .sm\:p-8,
 .alto-contraste .bg-white,
 .alto-contraste .dark\:bg-gray-800,
-.alto-contraste #acessibilidade .card {
+.alto-contraste #acessibilidade .card,
+.alto-contraste .col-12.col-md-6 .card  {
     border: 1px solid #fff !important;
 }
 

@@ -1157,7 +1157,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Inicializa os dois editores
-    inicializarSummernote('#passosImplementacao', 'Passos de Implementação');
+    inicializarSummernote('#passosImplementacao', 'Descreva a solução passo a passo, incluindo recursos, tempo, resultados esperados e imagens explicativas.');
     inicializarSummernote('#conteudo', 'Insira o conteúdo da sua notícia');
 
 

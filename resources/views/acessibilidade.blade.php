@@ -30,7 +30,7 @@
         <div class="col-md-6 mb-4">
             <div class="card h-100 shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title d-flex align-items-center text-primary"><i class="fas fa-keyboard text-primary icon-acessibilidade"></i>Navegação por Teclado</h5>
+                    <h2 class="fs-5 card-title d-flex align-items-center text-primary"><i class="fas fa-keyboard text-primary icon-acessibilidade"></i>Navegação por Teclado</h5>
                     <p class="card-text lh-lg texto-justificado">
                         Muitos usuários com deficiências motoras ou visuais dependem do teclado para navegar. Nosso site foi projetado para ser <strong>totalmente navegável sem a necessidade de um mouse</strong>. Você pode usar a tecla <strong>Tab</strong> para percorrer todos os links e campos de formulário e a tecla <strong>Enter</strong> para ativá-los.
                     </p>
@@ -40,7 +40,7 @@
         <div class="col-md-6 mb-4">
             <div class="card h-100 shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title d-flex align-items-center text-primary"><i class="fas fa-circle-half-stroke text-primary icon-acessibilidade"></i>Alto Contraste</h5>
+                    <h2 class="fs-5 card-title d-flex align-items-center text-primary"><i class="fas fa-circle-half-stroke text-primary icon-acessibilidade"></i>Alto Contraste</h5>
                     <p class="card-text texto-justificado">
                         O modo de alto contraste é um recurso essencial para pessoas com baixa visão, daltonismo e até mesmo para quem sofre de fadiga ocular. Ao ativá-lo, as cores do site são ajustadas para criar uma <strong>diferenciação máxima entre o texto e o fundo</strong>, tornando a leitura mais confortável e eficiente.
                     </p>
@@ -50,7 +50,7 @@
         <div class="col-md-6 mb-4">
             <div class="card h-100 shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title d-flex align-items-center text-primary"><i class="fas fa-hand-holding-heart text-primary icon-acessibilidade"></i>VLibras</h5>
+                    <h2 class="fs-5 card-title d-flex align-items-center text-primary"><i class="fas fa-hand-holding-heart text-primary icon-acessibilidade"></i>VLibras</h5>
                     <p class="card-text texto-justificado">
                         Para a comunidade surda, a comunicação em Libras (Língua Brasileira de Sinais) é fundamental. Nosso site utiliza o VLibras, um assistente virtual que <strong>traduz automaticamente o conteúdo</strong> do texto para Libras, oferecendo um canal de comunicação mais natural e acessível.
                     </p>
@@ -60,7 +60,7 @@
         <div class="col-md-6 mb-4">
             <div class="card h-100 shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title d-flex align-items-center text-primary"><i class="fas fa-magnifying-glass-plus text-primary icon-acessibilidade"></i>Zoom de Conteúdo</h5>
+                    <h2 class="fs-5 card-title d-flex align-items-center text-primary"><i class="fas fa-magnifying-glass-plus text-primary icon-acessibilidade"></i>Zoom de Conteúdo</h5>
                     <p class="card-text texto-justificado">
                         Sabemos que o tamanho da fonte ideal varia para cada pessoa. Por isso, nosso site permite que você ajuste facilmente o nível de zoom. Você pode usar os atalhos padrão do seu navegador: <strong>Ctrl +</strong> (ou ⌘ + no Mac) para aumentar o zoom e <strong>Ctrl -</strong> (ou ⌘ - no Mac) para diminuir o zoom.
                     </p>
@@ -72,7 +72,7 @@
     <div class="container my-5">
         <div class="row">
             <div class="col-12 text-center">
-                <h2 class="mb-3">Estamos aqui para ajudar</h2>
+                <h2 class="fs-2 mb-3">Estamos aqui para ajudar</h2>
                 <p class="lead mb-4">
                     Se você encontrar algum problema de acessibilidade, por favor, entre em contato conosco.
                 </p>

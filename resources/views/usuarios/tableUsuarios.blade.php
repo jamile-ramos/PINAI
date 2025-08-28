@@ -30,7 +30,7 @@
             <tbody>
                 @forelse($usuarios as $usuario)
                 <tr>
-                    <td>{{ $usuario->name }}</td>
+                    <td class="fw-bold">{{ $usuario->name }}</td>
                     <td>{{ $usuario->email }}</td>
                     <td>{{ $usuario->nai?->siglaNai ?? 'Não selecionado' }}</td>
                     <td>@if ($usuario->tipoUsuario == 'comum')

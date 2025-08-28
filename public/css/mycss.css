@@ -344,6 +344,15 @@ select {
     display: none;
 }
 
+th {
+    background: #011C37 !important;
+    color: #fff !important;
+}
+
+section.fs-6.lh-lg.conteudo {
+    font-size: 16px !important;
+}
+
 .tab-buttons {
     background: #fff;
     width: 100%;

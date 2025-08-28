@@ -201,3 +201,9 @@ Breadcrumbs::for('categoriaSolucao', function (BreadcrumbTrail $trail, $categori
     $trail->parent('solucoes');
     $trail->push($categoria->nomeCategoria, route('solucoes.index'));
 });
+
+// Página Inicial > Notificações
+Breadcrumbs::for('notificacoes', function (BreadcrumbTrail $trail) {
+    $trail->push('Página Inicial', route('dashboard')); 
+    $trail->push('Notificações', route('notificacoes.index'));
+});

@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Events\NaiCriado;
 use Illuminate\Http\Request;
 use App\Models\Nai;
+use App\Models\User;
+use App\Notifications\NaiCriadoNotification;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Auth;
 
 class NaiController extends Controller
 {
@@ -57,7 +61,15 @@ class NaiController extends Controller
             'site' => $request->site
         ]);
 
-        event(new NaiCriado($nai)); 
+        // Notificacao via email
+        event(new NaiCriado($nai));
+
+        // Notificação do site
+        $destinatarios = User::where('tipoUsuario', 'admin')
+            ->where('id', '!=', Auth::id())
+            ->get();
+        Notification::send($destinatarios, new NaiCriadoNotification($nai));
+
         return redirect()->route('painel.usuarios')->with('success', 'NAI cadastrado com sucesso!');
     }
 

@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Events\ConteudoExcluido;
 use App\Models\CategoriaDocumento;
 use App\Models\Documento;
+use App\Models\User;
+use App\Notifications\NovoDocumentoNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Notification;
 
 class DocumentoController extends Controller
 {
@@ -153,12 +156,12 @@ class DocumentoController extends Controller
                 ->withInput();
         }
 
-        if($request->file('arquivo')){
+        if ($request->file('arquivo')) {
             $caminho = $request->file('arquivo')->store('documentos', 'public');
-        }else{
+        } else {
             $caminho = null;
         }
-        
+
         $documento = Documento::create([
             'nomeArquivo' => $request->nomeArquivo,
             'descricao' => $request->descricao,
@@ -167,8 +170,16 @@ class DocumentoController extends Controller
             'link' => $request->link,
             'idUsuario' => Auth::id()
         ]);
+
+        // Notificações via email
         event(new \App\Events\DocumentoCriado($documento));
         return redirect()->route('documentos.index')->with('success', 'Documento adicionado com sucesso!');
+
+        // Notificação do site
+        $userId = Auth::id();
+        $destinatarios = User::where('id', '!=', $userId)->get();
+        dd(Auth::id(), Auth::user(), $destinatarios);
+        Notification::send($destinatarios, new NovoDocumentoNotification($documento));
     }
 
     public function edit(Request $request, $id)

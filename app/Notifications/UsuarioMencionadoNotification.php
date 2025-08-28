@@ -28,7 +28,7 @@ class UsuarioMencionadoNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -40,12 +40,27 @@ class UsuarioMencionadoNotification extends Notification
         $postagem   = Postagem::findOrFail($idPostagem);
 
         return (new MailMessage)
-            ->subject('Você foi mencionado em um comentário!!')
+            ->subject('Você foi mencionado em um comentário!')
             ->markdown('emails.comentarios.novo', [
                 'notifiable' => $notifiable,
                 'comentario' => $this->comentario,
                 'url'        => url('/postagens/' . $postagem->id . '-' . $postagem->slug),
             ]);
+    }
+
+    public function toDatabase(object $notifiable): array
+    {
+        $postagem = $this->comentario->resposta->postagem;
+
+        return [
+            'type'       => 'novo.comentario',
+            'title'      => 'Você foi mencionado em um comentário!',
+            'message'    => $this->comentario->conteudo,
+            'comentario_id' => $this->comentario->id,
+            'icon'       => 'fas fa-comment-dots',
+            'badgeClass' => 'notif-info',
+            'url'        => route('postagens.show', ['id' => $postagem->id, 'slug' => $postagem->slug]),
+        ];
     }
 
     /**

@@ -26,7 +26,7 @@ class NovaSolucaoNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -41,6 +41,21 @@ class NovaSolucaoNotification extends Notification
                 'solucao'     => $this->solucao,
                 'url'        => url('/solucoes/' . $this->solucao->id . '-' .  $this->solucao->slug),
             ]);
+    }
+
+    public function toDatabase(object $notifiable): array
+    {
+        return [
+            'type'       => 'nova.solucao',
+            'title'      => 'Nova solução adicionada',
+            'message'    => $this->solucao->titulo,
+            'subtitulo'  => $this->solucao->subtitulo,
+            'slug'       => $this->solucao->slug,
+            'solucao_id' => $this->solucao->id,
+            'icon'       => 'fas fa-lightbulb',
+            'badgeClass' => 'notif-success',
+            'url'        => url('/solucoes/' . $this->solucao->id . '-' . $this->solucao->slug),
+        ];
     }
 
     /**

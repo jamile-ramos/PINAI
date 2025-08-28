@@ -26,7 +26,7 @@ class NaiCriadoNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -41,6 +41,20 @@ class NaiCriadoNotification extends Notification
                 'nai'     => $this->nai,
                 'url' => url('/painelUsuarios/nais/show/'. $this->nai->id),
             ]);
+    }
+
+    
+    public function toDatabase(object $notifiable): array
+    {
+        return [
+            'type'       => 'nova.nai',
+            'title'      => 'Novo NAI adicionado',
+            'message'    => $this->nai->nome,
+            'nai_id' => $this->nai->id,
+            'icon'       => 'fas fa-landmark',
+            'badgeClass' => 'notif-dark',
+            'url'        => route('nais.show', $this->nai->id),
+        ];
     }
 
     /**

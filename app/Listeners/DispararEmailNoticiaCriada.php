@@ -8,6 +8,7 @@ use App\Notifications\NovaNoticiaNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Auth;
 
 class DispararEmailNoticiaCriada
 {
@@ -24,7 +25,7 @@ class DispararEmailNoticiaCriada
      */
     public function handle(NoticiaCriada $event): void
     {
-        User::ativos()->select('id', 'name', 'email')
+        User::ativos()->where('id', '!=', Auth::id())->select('id', 'name', 'email')
         ->chunkById(500, function($users) use ($event){
             Notification::send($users, new NovaNoticiaNotification($event->noticia));
         });

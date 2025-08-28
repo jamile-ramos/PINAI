@@ -45,7 +45,7 @@ class RespostaController extends Controller
         // Atualizando os dados da notícia
         $resposta = Resposta::findOrFail($idResposta);
         $resposta->update($data);
-        $postagem = $resposta->idPostagem;
+        $postagem = Postagem::findOrFail($resposta->idPostagem);
         return redirect()->route('postagens.show', ['id' => $postagem->id, 'slug' => $postagem->slug])->with('success', 'Resposta atualizada com sucesso!');
     }
 

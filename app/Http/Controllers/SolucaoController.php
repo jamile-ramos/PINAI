@@ -7,9 +7,13 @@ use App\Http\Controllers\Concerns\EnforcesCorrectSlug;
 use App\Models\CategoriaSolucao;
 use App\Models\Solucao;
 use App\Models\PublicoAlvo;
+use App\Models\User;
+use App\Notifications\NovaSolucaoNotification;
+use App\Notifications\novaSolucaoSiteNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Notification;
 use PhpParser\Node\Expr\FuncCall;
 
 class SolucaoController extends Controller
@@ -48,21 +52,20 @@ class SolucaoController extends Controller
         }
 
         // Gerenciar Soluções
-        if($query && $abaAtiva == 'allSolucoes'){
+        if ($query && $abaAtiva == 'allSolucoes') {
             $allSolucoes = $this->buscarSolucoesComQuery($query, $pages['allSolucoes'], $abaAtiva);
-        } else{
+        } else {
             $allSolucoes = $this->buscarSolucoesComQuery(null, $pages['allSolucoes'], $abaAtiva);
         }
 
         // Categorias
-        if($query && $abaAtiva == 'categoriasSolucoes'){
+        if ($query && $abaAtiva == 'categoriasSolucoes') {
             $categoriasSolucoes = $this->buscarCategoriaSolucao($query, $pages['categoriasSolucoes'], $abaAtiva, 'categoriasSolucoes_page');
-        }else{
+        } else {
             $categoriasSolucoes = $this->buscarCategoriaSolucao(null, $pages['categoriasSolucoes'], $abaAtiva, 'categoriasSolucoes_page');
         }
-        
+
         return view('solucoes.index', compact('categorias', 'solucoes', 'mySolucoes', 'allSolucoes', 'abaAtiva', 'query', 'categoriasSolucoes'));
-        
     }
 
     public function buscarSolucoesComQuery($query, $pagina, $abaAtiva)
@@ -85,20 +88,20 @@ class SolucaoController extends Controller
     {
         $resultado = CategoriaSolucao::ativos();
 
-        if($abaAtiva == 'visaoSolucoes'){
+        if ($abaAtiva == 'visaoSolucoes') {
             $resultado->whereHas('solucoes', function ($q) {
                 $q->ativos();
             });
         }
-        if($abaAtiva == 'categoriasSolucoes'){
+        if ($abaAtiva == 'categoriasSolucoes') {
             $resultado->where('nomeCategoria', 'like', '%' . $query . '%');
         }
-            $resultado->with(['solucoes' => function ($q) {
-                $q->where('status', 'ativo')
-                    ->latest()
-                    ->take(2)
-                    ->with(['user.nai', 'publicosAlvo']);  // eager load
-            }]);
+        $resultado->with(['solucoes' => function ($q) {
+            $q->where('status', 'ativo')
+                ->latest()
+                ->take(2)
+                ->with(['user.nai', 'publicosAlvo']);  // eager load
+        }]);
 
         return $resultado->paginate(5, ['*'], $nomePagina, $pagina)
             ->appends(['query' => $query, 'abaAtiva' => $abaAtiva]);
@@ -150,7 +153,14 @@ class SolucaoController extends Controller
         ]);
 
         $solucao->publicosAlvo()->attach($request->publicos_alvo);
+
+        // Notificação via email
         event(new \App\Events\SolucaoCriada($solucao));
+
+        // Notificação do site
+        $destinatarios = User::where('id', '!=', Auth::id())->get();
+        Notification::send($destinatarios, new NovaSolucaoNotification($solucao));
+
         return redirect()->route('solucoes.index')->with('success', 'Solução criada com sucesso!');
     }
 
@@ -161,11 +171,11 @@ class SolucaoController extends Controller
         $solucao = Solucao::findOrFail($id);
 
         $ultimasSolucoes = Solucao::where('id', '!=', $solucao->id)
-        ->latest()
-        ->take(3)
-        ->get();
+            ->latest()
+            ->take(3)
+            ->get();
 
-        if($r = $this->redirectIfWrongSlug($solucao, $slug, 'solucoes.show')){
+        if ($r = $this->redirectIfWrongSlug($solucao, $slug, 'solucoes.show')) {
             return $r;
         }
 
@@ -197,7 +207,7 @@ class SolucaoController extends Controller
             'arquivo' => $caminho,
             'idCategoria' => $request->input('idCategoria'),
             'idUsuario' => Auth::user()->id
-        ]);        
+        ]);
 
         $solucao->publicosAlvo()->sync($request->publicos_alvo);
         return redirect()->route('solucoes.index')->with('success', 'Solução atualizada com sucesso!');

@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\NoticiaController;
+use App\Http\Controllers\NotificacaoController;
 use App\Http\Controllers\PostagemController;
 use App\Http\Controllers\PublicoAlvoController;
 use App\Http\Controllers\RespostaController;
@@ -161,6 +162,16 @@ Route::middleware('auth')->group(function () {
     Route::view('/acessibilidade', 'acessibilidade')->name('acessibilidade');
     Route::view('/sobre', 'sobre')->name('sobre');
 
-    // routes/web.php
+    // Upload da imagem usada nos editores 
     Route::post('/upload-imagem', [UploadController::class, 'store'])->name('upload.imagem');
+
+    // Rota para página de notificações
+    Route::prefix('notificacoes')->name('notificacoes.')->controller(NotificacaoController::class)->group(function(){
+        Route::get('/', 'index')->name('index');
+        Route::get('/ler/{id}','markAsRead')->name('ler');
+        Route::post('/{id}/marcar-lida', 'marcarLida')->name('marcarLida');
+        Route::post('/{id}/marcar-nao-lida', 'marcarNaoLida')->name('marcarNaoLida');
+        Route::delete('/destroy/{id}', 'destroy')->name('destroy');
+    });
+   
 });

@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Notifications\NovoDocumentoNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 
 class DispararEmailDocumentoCriado
@@ -24,8 +25,10 @@ class DispararEmailDocumentoCriado
      */
     public function handle(DocumentoCriado $event): void
     {
-        User::ativos()->select('id', 'name', 'email')  // ajuste campos conforme seu schema
-            ->chunkById(500, function($users) use ($event) {
+        User::ativos()
+            ->where('id', '!=', Auth::id())   
+            ->select('id', 'name', 'email')
+            ->chunkById(500, function ($users) use ($event) {
                 Notification::send($users, new NovoDocumentoNotification($event->documento));
             });
     }

@@ -25,7 +25,7 @@ class DispararEmailPostagemCriada
     public function handle(PostagemCriada $event): void
     {
         $topico = $event->postagem->topico;
-        $usersIds = $topico->postagens()->pluck('idUsuario')->unique();
+        $usersIds = $topico->postagens()->where('idUsuario', '!=', $event->postagem->idUsuario)->pluck('idUsuario')->unique();
         $users = User::whereIn('id', $usersIds)->get();
         Notification::send($users, new NovaPostagemNotification($event->postagem));
     }

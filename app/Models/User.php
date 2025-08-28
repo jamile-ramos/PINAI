@@ -132,4 +132,75 @@ class User extends Authenticatable
     {
         return $q->where('role', 'moderator');
     }
+
+
+    public function notificacoes()
+    {
+        // pega todas não lidas
+        $naoLidas = $this->unreadNotifications;
+
+        if ($naoLidas->isEmpty()) {
+            return collect(); 
+        }
+
+        // Agrupa por tipo de notificação
+        $porTipo = $naoLidas->groupBy(fn($n) => $n->data['type'] ?? 'default');
+
+        $resultado = [];
+
+        foreach ($porTipo as $tipo => $notificacoes) {
+            // notificacoes de cada grupo
+            $qtd = $notificacoes->count();
+
+            if ($qtd === 1) {
+                $n = $notificacoes->first();
+                $resultado[] = [
+                    'id'         => $n->id, 
+                    'qtd' => 1,
+                    'icon'       => $n->data['icon'] ?? 'fas fa-bell',
+                    'badgeClass' => $n->data['badgeClass'] ?? 'notif-primary',
+                    'title'      => $n->data['title'] ?? 'Nova notificação',
+                    'message'    => $n->data['message'] ?? '',
+                    'time'       => $n->created_at->diffForHumans(),
+                    'url'        => $n->data['url'] ?? '#',
+                ];
+            } else {
+                $topico = 0;
+                if($tipo == 'nova.postagem'){
+                    $topico = Topico::findOrFail($notificacoes->first()->data['idTopico']);
+                }
+            
+                $resultado[] = [
+                    'id'         => $notificacoes->first()->id, 
+                    'qtd' => $qtd,
+                    'icon'       => $notificacoes->first()->data['icon'] ?? 'fas fa-bell',
+                    'badgeClass' => $notificacoes->first()->data['badgeClass'] ?? 'notif-primary',
+                    'title'      => "$qtd " . match ($tipo) {
+                        'nova.noticia' => 'notícias publicadas',
+                        'novo.topico'  => 'tópicos criados',
+                        'nova.solucao' => 'soluções adicionadas',
+                        'nova.postagem' => 'postagens criadas',
+                        'novo.documento' => 'documentos adicionados',
+                        'novo.comentario' => 'menções em comentários',
+                        'novo.nai' => 'nais adicionados',
+                        default        => 'notificações',
+                    },
+                    'message'    => '',
+                    'time'       => 'Agora mesmo',
+                    'url'        => match ($tipo) {
+                        'nova.noticia' => route('noticias.index'),
+                        'nova.solucao' => route('solucoes.index'),
+                        'novo.documento' => route('documentos.index'),
+                        'nova.postagem' => route('topicos.show', ['id' => $topico->id, 'slug' => $topico->slug ]),
+                        'novo.topico' => route('topicos.index'),
+                        'novo.comentario' => route('topicos.index'),
+                        'novo.nai' => route('painel.usuarios'),
+                        default        => route('notificacoes.index'),
+                    },
+                ];
+            }            
+        }
+
+        return collect($resultado);
+    }
 }

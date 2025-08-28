@@ -169,7 +169,13 @@ class NoticiaController extends Controller
         }
         $noticia->save();
 
+        // Notificação via email
         event(new NoticiaCriada($noticia));
+
+        // Notificação do site
+        $destinatarios = User::where('id', '!=', Auth::id())->get();
+        Notification::send($destinatarios, new NovaNoticiaNotification($noticia));
+        
 
         return redirect()->route('noticias.index')->with('success', 'Notícia criada com sucesso!');
     }

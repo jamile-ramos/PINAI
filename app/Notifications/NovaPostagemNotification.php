@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\Postagem;
+use App\Models\Topico;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -27,7 +28,7 @@ class NovaPostagemNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -42,6 +43,21 @@ class NovaPostagemNotification extends Notification
                 'postagem'     => $this->postagem,
                 'url' => url('/postagens/' . $this->postagem->id . '-' . $this->postagem->slug),
             ]);
+    }
+
+    public function toDatabase(object $notifiable): array
+    {
+        return [
+            'type'       => 'nova.postagem',
+            'title'      => 'Nova postagem publicada',
+            'message'    => $this->postagem->titulo,
+            'slug'       => $this->postagem->slug,
+            'postagem_id' => $this->postagem->id,
+            'idTopico' => $this->postagem->idTopico,
+            'icon'       => 'fas fa-edit',
+            'badgeClass' => 'notif-secondary',
+            'url'        => route('postagens.show', ['id' => $this->postagem->id, 'slug' => $this->postagem->slug]),
+        ];
     }
 
     /**

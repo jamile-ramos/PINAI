@@ -10,6 +10,9 @@ use App\Models\Postagem;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Resposta;
 use App\Models\User;
+use App\Notifications\UsuarioAtivoNotification;
+use App\Notifications\UsuarioMencionadoNotification;
+use Illuminate\Support\Facades\Notification;
 
 class ComentarioController extends Controller
 {
@@ -53,8 +56,15 @@ class ComentarioController extends Controller
                         'idUsuarioMencionado' => $mencao['id'],
                         'idUsuarioMencionou' => Auth::id(),
                     ]);
-                    // dispara o evento para o usuário mencionado
+                    // dispara email para o usuário mencionado
                     event(new UsuarioMencionado($comentario));
+
+                    // Notificação do site para usuario mencionado
+                    $usuarioMencionado = User::find($mencao['id']);
+
+                    if ($usuarioMencionado) {
+                        $usuarioMencionado->notify(new UsuarioMencionadoNotification($comentario));
+                    }
                 }
             }
         }

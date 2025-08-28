@@ -26,7 +26,7 @@ class NovoDocumentoNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -36,7 +36,7 @@ class NovoDocumentoNotification extends Notification
     {
         $caminhoArquivo = $this->documento->caminhoArquivo;
         $url = asset('storage/' . $caminhoArquivo);
-        
+
         return (new MailMessage)
             ->subject('Novo documento disponível!')
             ->markdown('emails.documentos.novo', [
@@ -45,6 +45,22 @@ class NovoDocumentoNotification extends Notification
                 'url'        => $url,
             ]);
     }
+
+    public function toDatabase(object $notifiable): array
+    {
+        return [
+            'type'       => 'novo.documento',
+            'title'      => 'Novo documento publicado',
+            'message'    => $this->documento->titulo,
+            'subtitulo'  => $this->documento->subtitulo,
+            'slug'       => $this->documento->slug,
+            'documento_id' => $this->documento->id,
+            'icon'       => 'fas fa-file-alt',
+            'badgeClass' => 'notif-danger',
+            'url'        => url('/documentos/'),
+        ];
+    }
+
 
     /**
      * Get the array representation of the notification.

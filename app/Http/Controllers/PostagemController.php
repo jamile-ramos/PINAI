@@ -11,6 +11,8 @@ use App\Models\Topico;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Concerns\EnforcesCorrectSlug;
+use App\Notifications\NovaPostagemNotification;
+use Illuminate\Support\Facades\Notification;
 
 class PostagemController extends Controller
 {
@@ -46,8 +48,15 @@ class PostagemController extends Controller
         }
         $postagem->save();
 
+        // Notificação via email
         $topico = Topico::findOrFail($postagem->idTopico);
         event(new PostagemCriada($postagem));
+
+        // Notificação do site
+        $destinatarios = User::where('id', '!=', Auth::id())->get();
+        Notification::send($destinatarios, new NovaPostagemNotification($postagem));
+
+
         return redirect()->route('topicos.show', ['id' => $postagem->idTopico, 'slug' => $topico->slug])->with('success', 'Postagem criada com sucesso!');
     }
 
@@ -94,7 +103,7 @@ class PostagemController extends Controller
                 $query->where('status', 'ativo')
                     ->with(['comentarios' => function ($q) {
                         $q->where('status', 'ativo')
-                        ->with(['user', 'mencoes']);
+                            ->with(['user', 'mencoes']);
                     }]);
             }
         ])->findOrFail($id);

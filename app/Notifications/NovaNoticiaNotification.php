@@ -36,7 +36,7 @@ class NovaNoticiaNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -51,6 +51,21 @@ class NovaNoticiaNotification extends Notification
                 'noticia'     => $this->noticia,
                 'url' => url('/noticias/' . $this->noticia->id . '-' . $this->noticia->slug),
             ]);
+    }
+
+    public function toDatabase(object $notifiable): array
+    {
+        return [
+            'type'       => 'nova.noticia',
+            'title'      => 'Nova notícia publicada',
+            'message'    => $this->noticia->titulo,
+            'subtitulo'  => $this->noticia->subtitulo,
+            'slug'       => $this->noticia->slug,
+            'noticia_id' => $this->noticia->id,
+            'icon'       => 'fas fa-newspaper',
+            'badgeClass' => 'notif-primary',
+            'url'        => url('/noticias/' . $this->noticia->id . '-' . $this->noticia->slug),
+        ];
     }
 
     /**

@@ -26,7 +26,7 @@ class NovoTopicoNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
     
     /**
@@ -42,6 +42,21 @@ class NovoTopicoNotification extends Notification
             'url'        => url('/topicos/'.$this->topico->id . '-' .  $this->topico->slug),
         ]);
     }
+
+    public function toDatabase(object $notifiable): array
+    {
+        return [
+            'type'       => 'novo.topico',
+            'title'      => 'Novo topico publicado',
+            'message'    => $this->topico->titulo,
+            'slug'       => $this->topico->slug,
+            'topico_id' => $this->topico->id,
+            'icon'       => 'fas fa-folder-open',
+            'badgeClass' => 'notif-secondary',
+            'url'        => url('/topicos/'),
+        ];
+    }
+
 
     /**
      * Get the array representation of the notification.

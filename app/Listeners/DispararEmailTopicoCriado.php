@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Events\TopicoCriado;
 use App\Models\User;
 use App\Notifications\NovoTopicoNotification;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 
 class DispararEmailTopicoCriado
@@ -22,7 +23,7 @@ class DispararEmailTopicoCriado
      */
     public function handle(TopicoCriado $event): void
     {
-        User::ativos()->select('id','name', 'email')
+        User::ativos()->where('id', '!=', Auth::id())->select('id','name', 'email')
         ->chunkById(500, function($users) use ($event){
             Notification::send($users, new NovoTopicoNotification($event->topico));
         });

@@ -47,7 +47,7 @@
             </div>
             <div class="main-post-title"><h1 class="fs-3">{{ $postagem->titulo }}</h1></div>
             <div class="main-post-content">
-                {!! nl2br(e($postagem->conteudo)) !!}
+                {!! $postagem->conteudo !!}
             </div>
             <!-- Imagem da postagem -->
             @if($postagem->imagem)
@@ -99,7 +99,7 @@
                     @endif
                 </div>
                 <div class="response-content">
-                    {{ $resposta->conteudo }}
+                    {!! $resposta->conteudo !!}
                 </div>
 
                 <!-- Botão Criar Resposta -->

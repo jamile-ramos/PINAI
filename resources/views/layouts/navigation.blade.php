@@ -171,6 +171,51 @@
               </a>
             </li>
 
+            <li class="nav-item topbar-icon dropdown hidden-caret">
+              <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-bs-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-bell"></i>
+                <span class="notification">{{ Auth::user()->notificacoes()->sum(fn($n) => $n['qtd'] ?? 1) }}</span>
+              </a>
+              <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
+                <li>
+                  <div class="dropdown-title">
+                    @if(Auth::user()->unreadNotifications->count() > 0)
+                    Você tem {{ Auth::user()->unreadNotifications->count() }} novas notificações
+                    @else
+                    Você não tem novas notificações
+                    @endif
+                  </div>
+                </li>
+                <li>
+                  <div class="notif-scroll scrollbar-outer">
+                    <div class="notif-center">
+                      @forelse(Auth::user()->notificacoes() as $n)
+                      <a href="{{ route('notificacoes.ler', ['id' => $n['id']]) }}">
+                        <div class="notif-icon {{ $n['badgeClass'] }}">
+                          <i class="{{ $n['icon'] }}"></i>
+                        </div>
+                        <div class="notif-content">
+                          <span class="block">{{ $n['title'] }}</span>
+                          <span class="time">{{ $n['time'] }}</span>
+                        </div>
+                      </a>
+                      @empty
+                      <div class="p-2 text-center text-muted">Nenhuma notificação</div>
+                      @endforelse
+                    </div>
+                  </div>
+                </li>
+
+                <li>
+                  <a class="see-all" href="{{ route('notificacoes.index') }}">
+                    Ver todas <i class="fa fa-angle-right"></i>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+
             <li class="nav-item topbar-user dropdown hidden-caret">
               <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false" aria-label="Abrir menu do usuário {{ Auth::user()->name }}">
                 <div class="avatar-sm">

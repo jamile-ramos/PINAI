@@ -93,7 +93,7 @@
                 <!-- Campo Imagem -->
                 <div class="px-3 mb-3" id="campoImagem">
                     <label for="imagem" class="form-label fw-bold fw-bold">
-                        Imagem
+                        Imagem da capa da notícia
                     </label>
                     <input
                         name="imagem"

@@ -18,7 +18,7 @@
         <div class="col-12 mb-4">
             <div class="card shadow-sm border-0 rounded-3">
                 <div class="card-body p-4">
-                    <h2 class="fs-2 card-title text-primary fw-bold mb-3">Nossa Missão e Solução</h>
+                    <h2 class="fs-2 card-title text-primary fw-bold mb-3">Nossa Missão e Solução</h2>
                     <p class="card-text texto-justificado">
                         Nas Instituições Federais de Ensino, os Núcleos de Acessibilidade e Inclusão (NAIs) enfrentam o desafio de garantir oportunidades iguais de aprendizado para todos os estudantes. Historicamente, cada núcleo atuava isoladamente, limitando o alcance de suas ações. Para resolver isso, nasceu o <strong>PINAI</strong> — a Plataforma Interativa de Núcleos de Acessibilidade e Inclusão. Ela proporciona um espaço digital para que os NAIs compartilhem recursos, boas práticas e soluções inovadoras, promovendo colaboração, troca de experiências e fortalecimento de toda a rede de acessibilidade, contribuindo para um futuro educacional mais inclusivo.
                     </p>

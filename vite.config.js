@@ -8,4 +8,8 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    build: {
+        outDir: 'public/build', // <- pasta onde o Laravel procura o manifest.json
+        manifest: true,         // <- gera o arquivo manifest.json
+    },
 });

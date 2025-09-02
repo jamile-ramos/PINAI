@@ -5,11 +5,16 @@ export default defineConfig({
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
-            refresh: true,
+            refresh: true, // hot-reload no local
+            // não use buildDirectory
         }),
     ],
     build: {
-        outDir: 'public/build', // <- pasta onde o Laravel procura o manifest.json
-        manifest: true,         // <- gera o arquivo manifest.json
+        outDir: 'public/build', // saída final
+        manifest: true,         // gera manifest.json
+        emptyOutDir: true,      // limpa a pasta antes
+        rollupOptions: {
+            input: ['resources/css/app.css', 'resources/js/app.js'],
+        },
     },
 });
